@@ -234,7 +234,7 @@ void printSex(SEX sex)
 void printStats(stats inStats)
 {
     std::cout << std::endl << "Strength: " << inStats.strength << std::endl;
-    if(inStats.strength > 17){
+    if(inStats.strength > 17 && inStats.excStren > 0){
         std::cout << "Exceptional Strength: " << inStats.excStren << " Fighter Paladin or Ranger only!" << std::endl;
     }
     std::cout << "Intelligence: " << inStats.intellignece << std::endl;
@@ -367,10 +367,17 @@ void printIntTbl(inteligenceTable intTbl)
 
 void printWisTbl(wisdomTable wisTbl)
 {
-    std::cout << "\r\nWisdomTable:" << std::endl;
+    std::cout << "\r\nWisdom Table:" << std::endl;
     std::cout << "Magic Attack Adjustment: " << wisTbl.magicAttackAdj << std::endl;
     std::cout << "Spell bonus (1 for each level under shown level): " << wisTbl.spellBonus << std::endl;
     std::cout << "Chance for Spell Failure: " << wisTbl.spellFailPer << '%' << std::endl;
+}
+
+void printDexTbl(dexterityTable dexTbl)
+{
+    std::cout << "\r\nDexterity Table:" << std::endl;
+    std::cout << "Reaction/Attacking Adjustment: " << dexTbl.reactAttkAdj << std::endl;
+    std::cout << "Defensive Adjustment: " << dexTbl.defenseAdj << std::endl;
 }
 
 bool raceStatCheck(stats inStats, RACE race)

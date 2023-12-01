@@ -53,6 +53,7 @@ int main(){
     printStrTbl(dude.getStrTbl());
     printIntTbl(dude.getIntTbl());
     printWisTbl(dude.getWisTbl());
+    printDexTbl(dude.getDexTbl());
 
     dude.saveChar();
     std::string charFile = "characters/" + dude.getName() + ".json";

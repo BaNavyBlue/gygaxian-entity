@@ -32,6 +32,7 @@ void printClass(CHAR_CLASS cClass);
 void printStrTbl(strengthTable strTbl);
 void printIntTbl(inteligenceTable intTbl);
 void printWisTbl(wisdomTable wisTbl);
+void printDexTbl(dexterityTable dexTbl);
 bool reRoll();
 bool raceStatCheck(stats inStats, RACE race);
 bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align);

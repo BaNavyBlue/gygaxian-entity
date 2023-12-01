@@ -287,6 +287,57 @@ void Entity::setIntTbl()
 
  }
 
+void Entity::setDexTbl()
+{
+    switch(_stats.dexterity){
+        case 3:
+            _dexTbl.reactAttkAdj = -3;
+            _dexTbl.defenseAdj = 4;
+            break;
+        case 4:
+            _dexTbl.reactAttkAdj = -2;
+            _dexTbl.defenseAdj = 3;
+            break;
+        case 5:
+            _dexTbl.reactAttkAdj = -1;
+            _dexTbl.defenseAdj = 2;
+            break;
+        case 6:
+            _dexTbl.reactAttkAdj = 0;
+            _dexTbl.defenseAdj = 1;
+            break;
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+            _dexTbl.reactAttkAdj = 0;
+            _dexTbl.defenseAdj = 0;
+            break;
+        case 15:
+            _dexTbl.reactAttkAdj = 0;
+            _dexTbl.defenseAdj = -1; // lower armorclass better
+            break;
+        case 16:
+            _dexTbl.reactAttkAdj = 1;
+            _dexTbl.defenseAdj = -2;
+            break;
+        case 17:
+            _dexTbl.reactAttkAdj = 2;
+            _dexTbl.defenseAdj = -3;
+            break;
+        case 18:
+            _dexTbl.reactAttkAdj = 3;
+            _dexTbl.defenseAdj = -4;
+            break;
+        default:
+            break;
+    }
+}
+
 void Entity::setPossLang()
 {
     switch(_stats.intellignece){
@@ -585,6 +636,7 @@ bool Entity::setClass(CHAR_CLASS inClass)
     setIntTbl();
     setPossLang();
     setWisTbl();
+    setDexTbl();
 }
 
 strengthTable Entity::getStrTbl()
@@ -600,6 +652,11 @@ inteligenceTable Entity::getIntTbl()
 wisdomTable Entity::getWisTbl()
 {
     return _wisTbl;
+}
+
+dexterityTable Entity::getDexTbl()
+{
+    return _dexTbl;
 }
 
 bool Entity::isFighter(){
