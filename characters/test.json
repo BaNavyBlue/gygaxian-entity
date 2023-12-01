@@ -3,30 +3,56 @@
         "name":"test",
         "alignment":4,
         "sex":2,
-        "race":1,
+        "race":0,
         "level":1,
-        "class":2,
+        "class":0,
         "stats":{
-            "strength":10,
-            "excStrength":0,
-            "intelligence":12,
-            "wisdom":12,
-            "dexterity":14,
-            "constitution":10,
-            "charisma":17
+            "strength":14,
+            "excStrength":38,
+            "intelligence":13,
+            "wisdom":9,
+            "dexterity":15,
+            "constitution":15,
+            "charisma":11
         },
         "strengthTable":{
             "hitProb":0,
             "damageAdj":0,
-            "weightAllowMod":0,
+            "weightAllowMod":200,
             "openDoors":2,
-            "bendBarsLiftGatesPer":2
+            "bendBarsLiftGatesPer":7
+        },
+        "wisTable":{
+            "magicAttackAdj":0,
+            "spellBonus":0,
+            "spellFailPer":20
         },
         "intTable":{
-            "chanceToKnowPer":45,
-            "minimumSpellsPer":5,
-            "maximumSpellsPer":7,
+            "chanceToKnowPer":55,
+            "minimumSpellsPer":4,
+            "maximumSpellsPer":6,
             "possibleAddLang":3
+        },
+        "dexTable":{
+            "reactAttkAdj":0,
+            "defenseAdj":-1
+        },
+        "dexThief":{
+            "pickPocketPer":0,
+            "openLocks":0,
+            "locRemTraps":0,
+            "movSilent":0,
+            "hideInShadows":0
+        },
+        "consTbl":{
+            "hpAdj":1,
+            "sysShockSurPer":91,
+            "resurSurvPer":94
+        },
+        "charTbl":{
+            "maxHenchMen":4,
+            "loyaltyBasePer":0,
+            "reactAdjustPer":0
         }
     }
 }
