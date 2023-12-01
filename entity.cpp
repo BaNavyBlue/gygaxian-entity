@@ -454,6 +454,102 @@ void Entity::setDexThief()
     }
 }
 
+void Entity::setConsTbl()
+{
+    switch(_stats.constitution){
+        case 3:
+            _consTbl.hpAdj = -2;
+            _consTbl.sysShockSurPer = 35;
+            _consTbl.resurSurvPer = 40;
+            break;
+        case 4:
+            _consTbl.hpAdj = -1;
+            _consTbl.sysShockSurPer = 40;
+            _consTbl.resurSurvPer = 45;
+            break;
+        case 5:
+            _consTbl.hpAdj = -1;
+            _consTbl.sysShockSurPer = 45;
+            _consTbl.resurSurvPer = 50;
+            break;
+        case 6:
+            _consTbl.hpAdj = -1;
+            _consTbl.sysShockSurPer = 50;
+            _consTbl.resurSurvPer = 55;
+            break;
+        case 7:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 55;
+            _consTbl.resurSurvPer = 60;
+            break;
+        case 8:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 60;
+            _consTbl.resurSurvPer = 65;
+            break;
+        case 9:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 65;
+            _consTbl.resurSurvPer = 70;
+            break;
+        case 10:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 70;
+            _consTbl.resurSurvPer = 75;
+            break;
+        case 11:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 75;
+            _consTbl.resurSurvPer = 80;
+            break;
+        case 12:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 80;
+            _consTbl.resurSurvPer = 85;
+            break;
+        case 13:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 85;
+            _consTbl.resurSurvPer = 90;
+            break;
+        case 14:
+            _consTbl.hpAdj = 0;
+            _consTbl.sysShockSurPer = 88;
+            _consTbl.resurSurvPer = 92;
+            break;
+        case 15:
+            _consTbl.hpAdj = 1;
+            _consTbl.sysShockSurPer = 91;
+            _consTbl.resurSurvPer = 94;
+            break;
+        case 16:
+            _consTbl.hpAdj = 2;
+            _consTbl.sysShockSurPer = 95;
+            _consTbl.resurSurvPer = 96;
+            break;
+        case 17:
+            if(_chrClass[0] == FIGHTER || _chrClass[0] == PALADIN || _chrClass[0] == RANGER){
+                _consTbl.hpAdj = 3;                
+            } else {
+            _consTbl.hpAdj = 2;
+            }
+
+            _consTbl.sysShockSurPer = 97;
+            _consTbl.resurSurvPer = 98;
+            break;
+        case 18:
+            if(_chrClass[0] == FIGHTER || _chrClass[0] == PALADIN || _chrClass[0] == RANGER){
+                _consTbl.hpAdj = 4;                
+            } else {
+            _consTbl.hpAdj = 2;
+            }
+
+            _consTbl.sysShockSurPer = 99;
+            _consTbl.resurSurvPer = 100;
+            break;
+    }
+}
+
 stats Entity::getStats()
 {
     return _stats;
@@ -718,6 +814,7 @@ bool Entity::setClass(CHAR_CLASS inClass)
     if(_chrClass[0] == THIEF || _chrClass[0] == ASSASSIN){
         setDexThief();
     }
+    setConsTbl();
 }
 
 strengthTable Entity::getStrTbl()
@@ -743,6 +840,11 @@ dexterityTable Entity::getDexTbl()
 dexThieves Entity::getDexTheif()
 {
     return _dexThief;
+}
+
+constitutionTable Entity::getConsTbl()
+{
+    return _consTbl;
 }
 
 bool Entity::isFighter(){

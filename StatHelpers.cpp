@@ -390,6 +390,14 @@ void printDexThief(dexThieves dexThief)
     std::cout << "Hiding In Shadows: " << dexThief.hideInShadows << '%' << std::endl;
 }
 
+void printConsTbl(constitutionTable consTbl)
+{
+    std::cout << "\r\nConstitution Table:" << std::endl;
+    std::cout << "Hit Point Adjustment: " << consTbl.hpAdj << std::endl;
+    std::cout << "System Shock Survivial: " << consTbl.sysShockSurPer << '%' << std::endl;
+    std::cout << "Resurection Survival: " << consTbl.resurSurvPer << '%' << std::endl;
+}
+
 bool raceStatCheck(stats inStats, RACE race)
 {
     switch(race){
