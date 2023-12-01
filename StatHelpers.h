@@ -33,7 +33,7 @@ void printStrTbl(strengthTable strTbl);
 void printIntTbl(inteligenceTable intTbl);
 void printWisTbl(wisdomTable wisTbl);
 void printDexTbl(dexterityTable dexTbl);
-void printDexTheif(dexThieves dexTheif);
+void printDexThief(dexThieves dexThief);
 bool reRoll();
 bool raceStatCheck(stats inStats, RACE race);
 bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align);

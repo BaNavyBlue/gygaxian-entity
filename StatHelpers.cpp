@@ -380,14 +380,14 @@ void printDexTbl(dexterityTable dexTbl)
     std::cout << "Defensive Adjustment: " << dexTbl.defenseAdj << std::endl;
 }
 
-void printDexTheif(dexThieves dexTheif)
+void printDexThief(dexThieves dexThief)
 {
     std::cout << "\r\nThieves Dexterity Table:" << std::endl;
-    std::cout << "Picking Pockets: " << dexTheif.pickPocketPer << '%' << std::endl;
-    std::cout << "Opening Locks: " << dexTheif.openLocks << '%' << std::endl;
-    std::cout << "Locating/Removing Traps: " << dexTheif.locRemTraps << '%' << std::endl;
-    std::cout << "Moving Silently: " << dexTheif.movSilent << '%' << std::endl;
-    std::cout << "Hiding In Shadows: " << dexTheif.hideInShadows << '%' << std::endl;
+    std::cout << "Picking Pockets: " << dexThief.pickPocketPer << '%' << std::endl;
+    std::cout << "Opening Locks: " << dexThief.openLocks << '%' << std::endl;
+    std::cout << "Locating/Removing Traps: " << dexThief.locRemTraps << '%' << std::endl;
+    std::cout << "Moving Silently: " << dexThief.movSilent << '%' << std::endl;
+    std::cout << "Hiding In Shadows: " << dexThief.hideInShadows << '%' << std::endl;
 }
 
 bool raceStatCheck(stats inStats, RACE race)
