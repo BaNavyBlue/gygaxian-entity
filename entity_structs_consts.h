@@ -87,7 +87,7 @@ struct dexterityTable{
     int defenseAdj = 0;
 };
 
-struct dexThievs{ // pg. 12
+struct dexThieves{ // pg. 12
     int pickPocketPer = 0;
     int openLocks = 0;
     int locRemTraps = 0;

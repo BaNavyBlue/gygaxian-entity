@@ -25,6 +25,7 @@ protected:
     inteligenceTable _intTbl;
     wisdomTable _wisTbl;
     dexterityTable _dexTbl;
+    dexThieves _dexThief;
     unsigned char _level = 1;
     std::vector<CHAR_CLASS> _chrClass;
     RACE _race;
@@ -37,6 +38,7 @@ protected:
     void setPossLang();
     void setWisTbl();
     void setDexTbl();
+    void setDexThief();
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     bool loadEntity(std::string file);
 public:
@@ -47,6 +49,7 @@ public:
     inteligenceTable getIntTbl();
     wisdomTable getWisTbl();
     dexterityTable getDexTbl();
+    dexThieves getDexTheif();
     std::string getName();
     SEX getSex();
     RACE getRace();

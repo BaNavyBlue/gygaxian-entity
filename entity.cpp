@@ -376,6 +376,84 @@ void Entity::setPossLang()
     }
 }
 
+void Entity::setDexThief()
+{
+    switch(_stats.dexterity){
+        case 9:
+            _dexThief.pickPocketPer = -15;
+            _dexThief.openLocks = -10;
+            _dexThief.locRemTraps = -10;
+            _dexThief.movSilent = -20;
+            _dexThief.hideInShadows = -10;
+            break;
+        case 10:
+             _dexThief.pickPocketPer = -10;
+            _dexThief.openLocks = -5;
+            _dexThief.locRemTraps = -10;
+            _dexThief.movSilent = -15;
+            _dexThief.hideInShadows = -5;
+            break;           
+        case 11:
+            _dexThief.pickPocketPer = -5;
+            _dexThief.openLocks = 0;
+            _dexThief.locRemTraps = -5;
+            _dexThief.movSilent = -10;
+            _dexThief.hideInShadows = 0;
+            break;
+        case 12:
+            _dexThief.pickPocketPer = 0;
+            _dexThief.openLocks = 0;
+            _dexThief.locRemTraps = 0;
+            _dexThief.movSilent = -5;
+            _dexThief.hideInShadows = 0;
+            break;
+        case 13:
+            _dexThief.pickPocketPer = 0;
+            _dexThief.openLocks = 0;
+            _dexThief.locRemTraps = 0;
+            _dexThief.movSilent = 0;
+            _dexThief.hideInShadows = 0;
+            break;
+        case 14:
+            _dexThief.pickPocketPer = 0;
+            _dexThief.openLocks = 0;
+            _dexThief.locRemTraps = 0;
+            _dexThief.movSilent = 0;
+            _dexThief.hideInShadows = 0;
+            break;
+        case 15:
+            _dexThief.pickPocketPer = 0;
+            _dexThief.openLocks = 0;
+            _dexThief.locRemTraps = 0;
+            _dexThief.movSilent = 0;
+            _dexThief.hideInShadows = 0;
+            break;
+        case 16:
+            _dexThief.pickPocketPer = 0;
+            _dexThief.openLocks = 5;
+            _dexThief.locRemTraps = 0;
+            _dexThief.movSilent = 0;
+            _dexThief.hideInShadows = 0;
+            break;
+        case 17:
+            _dexThief.pickPocketPer = 5;
+            _dexThief.openLocks = 10;
+            _dexThief.locRemTraps = 0;
+            _dexThief.movSilent = 5;
+            _dexThief.hideInShadows = 5;
+            break;
+        case 18:
+            _dexThief.pickPocketPer = 10;
+            _dexThief.openLocks = 15;
+            _dexThief.locRemTraps = 5;
+            _dexThief.movSilent = 10;
+            _dexThief.hideInShadows = 10;
+            break;
+        default:
+            break;
+    }
+}
+
 stats Entity::getStats()
 {
     return _stats;
@@ -637,6 +715,9 @@ bool Entity::setClass(CHAR_CLASS inClass)
     setPossLang();
     setWisTbl();
     setDexTbl();
+    if(_chrClass[0] == THIEF || _chrClass[0] == ASSASSIN){
+        setDexThief();
+    }
 }
 
 strengthTable Entity::getStrTbl()
@@ -657,6 +738,11 @@ wisdomTable Entity::getWisTbl()
 dexterityTable Entity::getDexTbl()
 {
     return _dexTbl;
+}
+
+dexThieves Entity::getDexTheif()
+{
+    return _dexThief;
 }
 
 bool Entity::isFighter(){
