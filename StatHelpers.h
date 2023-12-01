@@ -35,6 +35,7 @@ void printWisTbl(wisdomTable wisTbl);
 void printDexTbl(dexterityTable dexTbl);
 void printDexThief(dexThieves dexThief);
 void printConsTbl(constitutionTable consTbl);
+void printCharTbl(charismaTable charTbl);
 bool reRoll();
 bool raceStatCheck(stats inStats, RACE race);
 bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align);

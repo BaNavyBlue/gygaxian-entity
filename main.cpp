@@ -56,6 +56,7 @@ int main(){
     printDexTbl(dude.getDexTbl());
     printDexThief(dude.getDexTheif());
     printConsTbl(dude.getConsTbl());
+    printCharTbl(dude.getCharTbl());
 
     dude.saveChar();
     std::string charFile = "characters/" + dude.getName() + ".json";

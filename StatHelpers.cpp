@@ -398,6 +398,14 @@ void printConsTbl(constitutionTable consTbl)
     std::cout << "Resurection Survival: " << consTbl.resurSurvPer << '%' << std::endl;
 }
 
+void printCharTbl(charismaTable charTbl)
+{
+    std::cout << "\r\nCharisma Table: " << std::endl;
+    std::cout << "Maimum Number of Followers: " << charTbl.maxHenchMen << std::endl;
+    std::cout << "Loyalty Percentage: " << charTbl.loyaltyBasePer << '%' << std::endl;
+    std::cout << "Reaction of others: " << charTbl.reactAdjustPer << '%' << std::endl;
+}
+
 bool raceStatCheck(stats inStats, RACE race)
 {
     switch(race){

@@ -550,6 +550,84 @@ void Entity::setConsTbl()
     }
 }
 
+void Entity::setCharTbl()
+{
+    switch(_stats.charisma){
+        case 3:
+            _charTbl.maxHenchMen = 1;
+            _charTbl.loyaltyBasePer = -30;
+            _charTbl.reactAdjustPer = -25;
+            break;
+        case 4:
+            _charTbl.maxHenchMen = 1;
+            _charTbl.loyaltyBasePer = -25;
+            _charTbl.reactAdjustPer = -20;
+            break;
+        case 5:
+            _charTbl.maxHenchMen = 2;
+            _charTbl.loyaltyBasePer = -20;
+            _charTbl.reactAdjustPer = -15;
+            break;
+        case 6:
+            _charTbl.maxHenchMen = 2;
+            _charTbl.loyaltyBasePer = -15;
+            _charTbl.reactAdjustPer = -10;
+            break;
+        case 7:
+            _charTbl.maxHenchMen = 3;
+            _charTbl.loyaltyBasePer = -10;
+            _charTbl.reactAdjustPer = -05;
+            break;
+        case 8:
+            _charTbl.maxHenchMen = 3;
+            _charTbl.loyaltyBasePer = -05;
+            _charTbl.reactAdjustPer = 0;
+            break;
+        case 9:
+        case 10:
+        case 11:
+            _charTbl.maxHenchMen = 4;
+            _charTbl.loyaltyBasePer = 0;
+            _charTbl.reactAdjustPer = 0;
+            break;
+        case 12:
+            _charTbl.maxHenchMen = 5;
+            _charTbl.loyaltyBasePer = 0;
+            _charTbl.reactAdjustPer = 0;
+            break;
+        case 13:
+            _charTbl.maxHenchMen = 5;
+            _charTbl.loyaltyBasePer = 0;
+            _charTbl.reactAdjustPer = 5;
+            break;
+        case 14:
+            _charTbl.maxHenchMen = 6;
+            _charTbl.loyaltyBasePer = 5;
+            _charTbl.reactAdjustPer = 10;
+            break;
+        case 15:
+            _charTbl.maxHenchMen = 7;
+            _charTbl.loyaltyBasePer = 15;
+            _charTbl.reactAdjustPer = 15;
+            break;
+        case 16:
+            _charTbl.maxHenchMen = 8;
+            _charTbl.loyaltyBasePer = 20;
+            _charTbl.reactAdjustPer = 25;
+            break;
+        case 17:
+            _charTbl.maxHenchMen = 10;
+            _charTbl.loyaltyBasePer = 30;
+            _charTbl.reactAdjustPer = 30;
+            break;
+        case 18:
+            _charTbl.maxHenchMen = 15;
+            _charTbl.loyaltyBasePer = 40;
+            _charTbl.reactAdjustPer = 35;
+            break;
+    }
+}
+
 stats Entity::getStats()
 {
     return _stats;
@@ -845,6 +923,11 @@ dexThieves Entity::getDexTheif()
 constitutionTable Entity::getConsTbl()
 {
     return _consTbl;
+}
+
+charismaTable Entity::getCharTbl()
+{
+    return _charTbl;
 }
 
 bool Entity::isFighter(){
