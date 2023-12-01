@@ -20,6 +20,8 @@ Stat rolls are next follows the "Best 3 out of 4" approach.  Stat Rolls show whi
 Race is selected next since race choice can modify stats. Only viable races based on stats will be availble.
 # Class:
 Class is limited by Race and Stats. Like race, only viable classes based on race and stats will be available.
+# Stat Tables:
+Stat Tables are generated and printed.
 
 # Character Writen.
 The current code saves the generated character in the /characters folder as \<chosen name\>.json
