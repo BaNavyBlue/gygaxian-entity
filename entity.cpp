@@ -450,6 +450,11 @@ void Entity::setDexThief()
             _dexThief.hideInShadows = 10;
             break;
         default:
+            _dexThief.pickPocketPer = -15;
+            _dexThief.openLocks = -10;
+            _dexThief.locRemTraps = -10;
+            _dexThief.movSilent = -20;
+            _dexThief.hideInShadows = -10;
             break;
     }
 }
@@ -965,11 +970,37 @@ bool Entity::saveChar()
     outTxt += "            \"openDoors\":" + std::to_string(_strTbl.openDoors) + ",\r\n";
     outTxt += "            \"bendBarsLiftGatesPer\":" + std::to_string(_strTbl.bendBarsLiftGatesPer) + "\r\n";
     outTxt += "        },\r\n";
+    outTxt += "        \"wisTable\":{\r\n";
+    outTxt += "            \"magicAttackAdj\":" + std::to_string(_wisTbl.magicAttackAdj) + ",\r\n";
+    outTxt += "            \"spellBonus\":" + std::to_string(_wisTbl.spellBonus) + ",\r\n";
+    outTxt += "            \"spellFailPer\":" + std::to_string(_wisTbl.spellFailPer) + "\r\n";
+    outTxt += "        },\r\n";
     outTxt += "        \"intTable\":{\r\n";
     outTxt += "            \"chanceToKnowPer\":" + std::to_string(_intTbl.chanceToKnowPer) + ",\r\n";
     outTxt += "            \"minimumSpellsPer\":" + std::to_string(_intTbl.minumumSpellsPerLevel) + ",\r\n";
     outTxt += "            \"maximumSpellsPer\":" + std::to_string(_intTbl.maxiumSpellsPerlevel) + ",\r\n";
     outTxt += "            \"possibleAddLang\":" + std::to_string(_intTbl.possibAddLang) + "\r\n";
+    outTxt += "        },\r\n";
+    outTxt += "        \"dexTable\":{\r\n";
+    outTxt += "            \"reactAttkAdj\":" + std::to_string(_dexTbl.reactAttkAdj) + ",\r\n";
+    outTxt += "            \"defenseAdj\":" + std::to_string(_dexTbl.defenseAdj) + "\r\n";
+    outTxt += "        },\r\n";
+    outTxt += "        \"dexThief\":{\r\n";
+    outTxt += "            \"pickPocketPer\":" + std::to_string(_dexThief.pickPocketPer) + ",\r\n";
+    outTxt += "            \"openLocks\":" + std::to_string(_dexThief.openLocks) + ",\r\n";
+    outTxt += "            \"locRemTraps\":" + std::to_string(_dexThief.locRemTraps) + ",\r\n";
+    outTxt += "            \"movSilent\":" + std::to_string(_dexThief.movSilent) + ",\r\n";
+    outTxt += "            \"hideInShadows\":" + std::to_string(_dexThief.hideInShadows) + "\r\n";
+    outTxt += "        },\r\n";
+    outTxt += "        \"consTbl\":{\r\n";
+    outTxt += "            \"hpAdj\":" + std::to_string(_consTbl.hpAdj) + ",\r\n";
+    outTxt += "            \"sysShockSurPer\":" + std::to_string(_consTbl.sysShockSurPer) + ",\r\n";
+    outTxt += "            \"resurSurvPer\":" + std::to_string(_consTbl.resurSurvPer) + "\r\n";
+    outTxt += "        },\r\n";
+    outTxt += "        \"charTbl\":{\r\n";
+    outTxt += "            \"maxHenchMen\":" + std::to_string(_charTbl.maxHenchMen) + ",\r\n";
+    outTxt += "            \"loyaltyBasePer\":" + std::to_string(_charTbl.loyaltyBasePer) + ",\r\n";
+    outTxt += "            \"reactAdjustPer\":" + std::to_string(_charTbl.reactAdjustPer) + "\r\n";
     outTxt += "        }\r\n";
     outTxt += "    }\r\n";
     outTxt += "}";
@@ -999,7 +1030,7 @@ bool Entity::loadEntity(std::string file)
     _race = (RACE)uint64_t(charData["data"]["race"]);
     // _chrClass is a vector of CHAR_CLASS ENUMS
     _chrClass.push_back((CHAR_CLASS)uint64_t(charData["data"]["class"]));
-    _level = (unsigned)uint64_t(charData["data"]["level"]);
+    _level = uint64_t(charData["data"]["level"]);
     _stats.strength = uint64_t(charData["data"]["stats"]["strength"]);
     _stats.intellignece = uint64_t(charData["data"]["stats"]["intelligence"]);
     _stats.wisdom = uint64_t(charData["data"]["stats"]["wisdom"]);
@@ -1017,18 +1048,43 @@ bool Entity::loadEntity(std::string file)
     _intTbl.minumumSpellsPerLevel = uint64_t(charData["data"]["intTable"]["minimumSpellsPer"]);
     _intTbl.maxiumSpellsPerlevel = uint64_t(charData["data"]["intTable"]["maximumSpellsPer"]);
     _intTbl.possibAddLang = uint64_t(charData["data"]["intTable"]["possibleAddLang"]);
-    
 
+    _wisTbl.magicAttackAdj = int64_t(charData["data"]["wisTable"]["magicAttackAdj"]);
+    _wisTbl.spellBonus = uint64_t(charData["data"]["wisTable"]["spellBonus"]);
+    _wisTbl.spellFailPer = uint64_t(charData["data"]["wisTable"]["spellFailPer"]);
+
+    _dexTbl.reactAttkAdj = int64_t(charData["data"]["dexTable"]["reactAttkAdj"]);
+    _dexTbl.defenseAdj = int64_t(charData["data"]["dexTable"]["defenseAdj"]);
+
+    _dexThief.pickPocketPer = int64_t(charData["data"]["dexThief"]["pickPocketPer"]);
+    _dexThief.openLocks = int64_t(charData["data"]["dexThief"]["openLocks"]);
+    _dexThief.locRemTraps = int64_t(charData["data"]["dexThief"]["locRemTraps"]);
+    _dexThief.movSilent = int64_t(charData["data"]["dexThief"]["movSilent"]);
+    _dexThief.hideInShadows = int64_t(charData["data"]["dexThief"]["hideInShadows"]);
+
+    _consTbl.hpAdj = int64_t(charData["data"]["consTbl"]["hpAdj"]);
+    _consTbl.sysShockSurPer = uint64_t(charData["data"]["consTbl"]["sysShockSurPer"]);
+    _consTbl.resurSurvPer = uint64_t(charData["data"]["consTbl"]["resurSurvPer"]);
+
+    _charTbl.maxHenchMen = uint64_t(charData["data"]["charTbl"]["maxHenchMen"]);
+    _charTbl.loyaltyBasePer = int64_t(charData["data"]["charTbl"]["loyaltyBasePer"]);
+    _charTbl.reactAdjustPer = int64_t(charData["data"]["charTbl"]["reactAdjustPer"]);
+
+    std::cout << "\r\nPrinting Loaded Character .json" << std::endl;
     std::cout << "Name: " << _name << std::endl;
     printAlign(_alignment);
     printSex(_sex);
     printRace(_race);
     printClass(_chrClass[0]);
-    std::cout << "Level: " << _level << std::endl;
+    std::cout << "Level: " << (int)_level << std::endl;
     printStats(_stats);
     printStrTbl(_strTbl);
     printIntTbl(_intTbl);
-
+    printWisTbl(_wisTbl);
+    printDexTbl(_dexTbl);
+    printDexThief(_dexThief);
+    printConsTbl(_consTbl);
+    printCharTbl(_charTbl);
 }
 
 Entity::Entity(const char* filename)
