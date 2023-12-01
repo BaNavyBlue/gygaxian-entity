@@ -1,0 +1,32 @@
+{
+    "data":{
+        "name":"test",
+        "alignment":4,
+        "sex":2,
+        "race":1,
+        "level":1,
+        "class":2,
+        "stats":{
+            "strength":10,
+            "excStrength":0,
+            "intelligence":12,
+            "wisdom":12,
+            "dexterity":14,
+            "constitution":10,
+            "charisma":17
+        },
+        "strengthTable":{
+            "hitProb":0,
+            "damageAdj":0,
+            "weightAllowMod":0,
+            "openDoors":2,
+            "bendBarsLiftGatesPer":2
+        },
+        "intTable":{
+            "chanceToKnowPer":45,
+            "minimumSpellsPer":5,
+            "maximumSpellsPer":7,
+            "possibleAddLang":3
+        }
+    }
+}
