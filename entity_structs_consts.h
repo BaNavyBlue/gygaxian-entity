@@ -1,3 +1,6 @@
+/*
+    Antone Bajor 2023
+*/
 #ifndef ENTITY_STRUCTS_CONSTS_H
 #define ENTITY_STRUCTS_CONSTS_H
 

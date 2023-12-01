@@ -1,3 +1,6 @@
+/*
+    Antone Bajor 2023
+*/
 #include "entity.h"
 
 // Stat Dice Helper Function best 3 out of 4

@@ -1,3 +1,14 @@
+/*
+    Antone Bajor 2023
+    Everything here is simply for 
+    setting and reading values in the command line code.
+
+    It also contains much of the logic handling for Sex,
+    Aligment, Race and Char_Class constraints.
+
+    The Termios library is used to switch to unbuffered character
+    reads to respond to single key strokes quickly.
+*/
 #ifndef STATHELPERS_H
 #define STATHELPERS_H
 
