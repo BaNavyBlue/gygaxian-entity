@@ -76,6 +76,37 @@ struct inteligenceTable{ // pg. 10
     unsigned possibAddLang = 0;
 };
 
+struct wisdomTable{ // pg. 11
+    int magicAttackAdj = 0;
+    unsigned spellBonus = 0;
+    unsigned spellFailPer = 0;
+};
+
+struct dexterityTable{
+    int reactAttkAdj = 0;
+    int defenseAdj = 0;
+};
+
+struct dexThievs{ // pg. 12
+    int pickPocketPer = 0;
+    int openLocks = 0;
+    int locRemTraps = 0;
+    int movSilent = 0;
+    int hideInShadows = 0;
+};
+
+struct constitutionTable{ // pg. 12
+    int hpAdj = 0;
+    unsigned sysShockSurPer = 70; // for const 10
+    unsigned resurSurvPer = 75;
+};
+
+struct charismaTable{
+    unsigned maxHenchMen = 4; // for charisma 10
+    int loyaltyBasePer = 0;
+    int reactAdjustPer = 0;
+};
+
 // For pairing string with Enum
 struct racePair{
     RACE race;

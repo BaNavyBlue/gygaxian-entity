@@ -365,6 +365,14 @@ void printIntTbl(inteligenceTable intTbl)
     std::cout << "Possible Number of Additional Languages: " << intTbl.possibAddLang << std::endl;
 }
 
+void printWisTbl(wisdomTable wisTbl)
+{
+    std::cout << "\r\nWisdomTable:" << std::endl;
+    std::cout << "Magic Attack Adjustment: " << wisTbl.magicAttackAdj << std::endl;
+    std::cout << "Spell bonus (1 for each level under shown level): " << wisTbl.spellBonus << std::endl;
+    std::cout << "Chance for Spell Failure: " << wisTbl.spellFailPer << '%' << std::endl;
+}
+
 bool raceStatCheck(stats inStats, RACE race)
 {
     switch(race){

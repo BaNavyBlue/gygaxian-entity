@@ -52,6 +52,7 @@ int main(){
     printStats(dude.getStats());
     printStrTbl(dude.getStrTbl());
     printIntTbl(dude.getIntTbl());
+    printWisTbl(dude.getWisTbl());
 
     dude.saveChar();
     std::string charFile = "characters/" + dude.getName() + ".json";

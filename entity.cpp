@@ -217,6 +217,76 @@ void Entity::setIntTbl()
     }  
 }
 
+ void Entity::setWisTbl(){
+
+    switch(_stats.wisdom){
+        case 3:
+            _wisTbl.magicAttackAdj = -3;
+            break;
+        case 4:
+            _wisTbl.magicAttackAdj = -2;
+            break;
+        case 5:
+        case 6:
+        case 7:
+            _wisTbl.magicAttackAdj = -1;
+        case 8:
+        case 9:
+            _wisTbl.magicAttackAdj = 0;
+            _wisTbl.spellBonus = 0;
+            _wisTbl.spellFailPer = 20;
+            break;
+        case 10:
+            _wisTbl.magicAttackAdj = 0;
+            _wisTbl.spellBonus = 0;
+            _wisTbl.spellFailPer = 15;
+            break;
+        case 11:
+            _wisTbl.magicAttackAdj = 0;
+            _wisTbl.spellBonus = 0;
+            _wisTbl.spellFailPer = 10;
+            break;
+        case 12:
+            _wisTbl.magicAttackAdj = 0;
+            _wisTbl.spellBonus = 0;
+            _wisTbl.spellFailPer = 5;
+            break;
+        case 13:
+            _wisTbl.magicAttackAdj = 0;
+            _wisTbl.spellBonus = 1;
+            _wisTbl.spellFailPer = 0;
+            break;
+        case 14:
+            _wisTbl.magicAttackAdj = 0;
+            _wisTbl.spellBonus = 1;
+            _wisTbl.spellFailPer = 0;
+            break;
+        case 15:
+            _wisTbl.magicAttackAdj = 1;
+            _wisTbl.spellBonus = 2;
+            _wisTbl.spellFailPer = 0;
+            break;
+        case 16:
+            _wisTbl.magicAttackAdj = 2;
+            _wisTbl.spellBonus = 2;
+            _wisTbl.spellFailPer = 0;
+            break;
+        case 17:
+            _wisTbl.magicAttackAdj = 3;
+            _wisTbl.spellBonus = 3;
+            _wisTbl.spellFailPer = 0;
+            break;
+        case 18:
+            _wisTbl.magicAttackAdj = 4;
+            _wisTbl.spellBonus = 4;
+            _wisTbl.spellFailPer = 0;
+            break;
+        default:
+            break;
+    }
+
+ }
+
 void Entity::setPossLang()
 {
     switch(_stats.intellignece){
@@ -514,6 +584,7 @@ bool Entity::setClass(CHAR_CLASS inClass)
     setStrenTbl();
     setIntTbl();
     setPossLang();
+    setWisTbl();
 }
 
 strengthTable Entity::getStrTbl()
@@ -524,6 +595,11 @@ strengthTable Entity::getStrTbl()
 inteligenceTable Entity::getIntTbl()
 {
     return _intTbl;
+}
+
+wisdomTable Entity::getWisTbl()
+{
+    return _wisTbl;
 }
 
 bool Entity::isFighter(){
