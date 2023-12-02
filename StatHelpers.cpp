@@ -102,12 +102,12 @@ RACE inputRace(stats inStats)
     //std::vector<std::string> races = {"Human: 0", "Elf: 1", "Half-Orc: 2", "Halfling: 3", "Dwarf: 4", "Half-Elf: 5", "Gnome: 6"};
     std::string message = "\r\nSelect Race: \r\n";
     std::string nonViable = "\r\nNon-Viable Races: \r\n";
-    std::unordered_map<char, RACE> rList;
+    std::unordered_map<char, RACE> rMap;
     char idx = '0';
     int nonV = 0;
     for(int i = 0; i < racePairs.size(); ++i){
-        if(raceStatCheck(inStats, racePairs[i].race)){
-            rList[idx] = racePairs[i].race;
+        if(raceStatCheck(inStats, racePairs[i].race)&&checkRaceStats(racePairs[i].race, inStats)){
+            rMap[idx] = racePairs[i].race;
             message += racePairs[i].raceS + ": " + idx + "\r\n";
             idx++;         
         } else {
@@ -128,13 +128,137 @@ RACE inputRace(stats inStats)
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < idx){
                 std::cout << std::endl;
-                return rList[inChar];
+                return rMap[inChar];
             } else {
                 write(STD_OUT, "Invalid Selection\r\n",20);
                 write(STD_OUT, message.c_str(), message.size());
             }
         //} 
     }while(true);
+}
+
+// A Viability Hack to prevent a race that can't select a class
+// Thank you Gary
+bool checkRaceStats(RACE race, stats _stats)
+{
+    switch(race){
+        // check for failures before adding race bonus's
+        case HUMAN:
+            // Check Stat Limitation.
+            return true;
+        case ELF:
+            // Stat Limitation Check
+            if(_stats.dexterity + 1 < 7){
+                std::cout << "Elf can not have dexterity bellow 7" << std::endl;
+                return false;
+            }
+            if(_stats.constitution - 1 < 6){
+                std::cout << "Elf can not have constitution bellow 6" << std::endl;
+                return false;
+            }
+            // Apply Standard Elf Modifiers
+            _stats.constitution--;
+            _stats.dexterity++;
+            return rollFailure(_stats);
+        case HALF_ORC:
+            if(_stats.strength + 1 < 6){
+                std::cout << "Half-Orc Strength bellow 6" << std::endl;
+                return false;
+            }
+
+            if(_stats.constitution + 1 < 13){
+                std::cout << "Half-Orc constitution bellow 13" << std::endl;
+                return false;
+            }
+
+            if(_stats.charisma - 2 > 12){
+                std::cout << "Half-Orc Charisma being set to cap 12" << std::endl;
+                _stats.charisma = 12;
+            } else if(_stats.charisma - 2 < 3) {
+                std::cout << "Half-Orc Charisma minimum being set to 3" << std::endl;
+                _stats.charisma = 3;            
+            } else {
+                _stats.charisma -= 2;
+            }
+
+            if(_stats.strength + 1 > 18){
+                std::cout << "Half-Orc strength set to cap 18" << std::endl;
+                _stats.strength = 18;
+            } else {
+                _stats.strength++;
+            }
+
+            _stats.constitution++;
+            return rollFailure(_stats);
+        case DWARF:
+            if(_stats.constitution + 1 < 12){
+                std::cout << "Dwarf constitution bellow 12" << std::endl;
+                return false;            
+            }
+
+            if(_stats.strength < 8){
+                std::cout << "Dwarf strength bellow 8" << std::endl;
+                return false;            
+            }
+
+            if(_stats.dexterity < 6){
+                std::cout << "Dwarf dexterity bellow 6 Cleric Case" << std::endl;
+                return false;            
+            }
+
+            if(_stats.charisma - 1 > 16){
+                std::cout << "Dwarf charisma cap 16" << std::endl;
+                _stats.charisma = 16;
+            } else {
+                _stats.charisma--;
+            }
+
+            _stats.constitution++;
+            return rollFailure(_stats);
+        case HALFLING:
+            if(_stats.strength - 1 < 6){
+                std::cout << "Halfling strength bellow 6 Magic-User Case" << std::endl;
+                return false;                  
+            }
+
+            if(_stats.dexterity + 1 < 8){
+                std::cout << "Halfling dexterity bellow 8 Cleric Case" << std::endl;
+                return false;
+            }
+
+            if(_stats.constitution < 6){
+                std::cout << "Halfling constititon bellow 6 Illusionist Case" << std::endl;
+                return false;                  
+            }
+
+            if(_stats.charisma - 1 < 6){
+                std::cout << "Halfling charisma bellow 6 Assassin Case" << std::endl;
+                return false;                  
+            }
+
+            _stats.strength--;
+            _stats.dexterity++;
+
+            return rollFailure(_stats);
+        case HALF_ELF:
+            if(_stats.constitution < 6){
+                std::cout << "Constitution bellow 6 Illusionist Only Case" << std::endl;
+                return false;
+            }
+            return true;
+        case GNOME:
+            if(_stats.strength < 6){
+                std::cout << "Strength bellow 6 magic user only case" << std::endl;
+                return false;
+            }
+            if(_stats.dexterity < 6){
+                std::cout << "Dexterity bellow 6 cleric only case" << std::endl;
+                return false;
+            }
+            return true;
+        default:
+            return true;
+    }
 }
 
 ALIGNMENT inputAlign()
@@ -795,35 +919,46 @@ char choice;
 // This checks to see of stat rolls will generate non viable class
 // Based off of Gygaxian 1st Ed. rules.
 bool rollFailure(stats inStats){
-    std::cout << "\r\nChecking roll" << std::endl;
     if(inStats.constitution < 6 && (inStats.intellignece < 15 || inStats.dexterity < 16)){
         //fails illusionist only case const <= 5
-        std::cout << "\r\nFailed Illusionist only" << std::endl;
+        std::cout << "\r\nCursed Stats:" << std::endl;
+        printStats(inStats);
+        std::cout << "\r\nFailed Illusionist only.\r\nAuto re-roll." << std::endl;
         return false;
     }
     if(inStats.intellignece < 6 && inStats.strength < 9){
         //fails Fighter only case int <= 5
-        std::cout << "\r\nFailed Fighter only" << std::endl;
+        std::cout << "\r\nCursed Stats:" << std::endl;
+        printStats(inStats);
+        std::cout << "\r\nFailed Fighter only\r\nAuto re-roll." << std::endl;
         return false;
     }
     if(inStats.wisdom < 6 && inStats.dexterity < 9){
         //fails Thief only case wis <= 5
-        std::cout << "\r\nFailed Thief only" << std::endl;
+        std::cout << "\r\nCursed Stats:" << std::endl;
+        printStats(inStats);
+        std::cout << "\r\nFailed Thief only\r\nAuto re-roll." << std::endl;
         return false;
     }
     if(inStats.strength < 6 && inStats.intellignece < 9){
         //fails Magic User only case
-        std::cout << "\r\nFailed Magic-User only" << std::endl;
+        std::cout << "\r\nCursed Stats:" << std::endl;
+        printStats(inStats);
+        std::cout << "\r\nFailed Magic-User only\r\nAuto re-roll." << std::endl;
         return false;
     }
     if(inStats.dexterity < 6 && inStats.wisdom < 9){
         //fails Cleric only case
-        std::cout << "\r\nFailed Cleric only" << std::endl;
+        std::cout << "\r\nCursed Stats:" << std::endl;
+        printStats(inStats);
+        std::cout << "\r\nFailed Cleric only\r\nAuto re-roll." << std::endl;
         return false;
     }
     if(inStats.charisma < 6 && (inStats.strength < 12 || inStats.intellignece < 11 || inStats.dexterity < 12)){
         //fails Assasin only case
-        std::cout << "\r\nFailed Assasin only" << std::endl;
+        std::cout << "\r\nCursed Stats:" << std::endl;
+        printStats(inStats);
+        std::cout << "\r\nFailed Assasin only\r\nAuto re-roll." << std::endl;
         return false;
     }
     return true;

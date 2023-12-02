@@ -43,6 +43,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats);
 bool checkExists(std::string name);
 bool yesNoChoice();
 bool rollFailure(stats inStats);  // Handle Borked Gygaxian
+bool checkRaceStats(RACE race, stats _stats);
 std::string strenFails(stats inStats);
 std::string intFails(stats inStats);
 std::string wisFails(stats inStats);
