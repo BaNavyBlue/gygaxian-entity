@@ -29,6 +29,10 @@ it then opens the saved character using the simdjson library. https://github.com
 
 # So What?
 These is the initial steps toward creating a fully functional roleplaying game.
+
+The original AD&E 1e mechanics are somewhat jenky and have some non-viable cases which need to be handled and auto re-rolled.
+This adds to the charm and challenge of implementing the OG rule system.
+
 Once the character creating system is completed, it will be expanded to have a basic combat system and a method to create npc entities.
 
 The goal is to create something that is easily adaptable into a text based or graphics based role playing game.
