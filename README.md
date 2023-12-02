@@ -23,7 +23,7 @@ Class is limited by Race and Stats. Like race, only viable classes based on race
 # Stat Tables:
 Stat Tables are generated and printed.
 
-# Character Writen.
+# Character Written.
 The current code saves the generated character in the /characters folder as \<chosen name\>.json
 it then opens the saved character using the simdjson library. https://github.com/simdjson/simdjson
 
