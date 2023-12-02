@@ -19,7 +19,7 @@ Stat rolls are next follows the "Best 3 out of 4" approach.  Stat Rolls show whi
 # Race:
 Race is selected next since race choice can modify stats. Only viable races based on stats will be availble. Modified Stats will also check for edge case stat/class thresholds.  Because some races are not allowed to play certain classes, these races will be pruned from the list of options if they introduce a stat condition that forces them to be a forbiden class, resulting in no class option.
 # Class:
-Class is limited by Race and Stats. Like race, only viable classes based on race and stats will be available.
+Class is limited by Race and Stats. Like race, only viable classes based on race, alignment and stats will be available.
 # Stat Tables:
 Stat Tables are generated and printed.
 
