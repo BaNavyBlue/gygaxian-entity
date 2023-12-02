@@ -17,7 +17,7 @@ Alignment is the next choice, each alignment shows compatible Char Classes.
 # Stats:
 Stat rolls are next follows the "Best 3 out of 4" approach.  Stat Rolls show which Class and Race requirements are failed. User has the Option to keep or re-roll.
 # Race:
-Race is selected next since race choice can modify stats. Only viable races based on stats will be availble.
+Race is selected next since race choice can modify stats. Only viable races based on stats will be availble. Modified Stats will also check for edge case stat/class thresholds.  Because some races are not allowed to play certain classes, these races will be pruned from the list of options if they introduce a stat condition that forces them to be a forbiden class.
 # Class:
 Class is limited by Race and Stats. Like race, only viable classes based on race and stats will be available.
 # Stat Tables:
