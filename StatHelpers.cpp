@@ -584,36 +584,36 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
 {
     switch(cClass){
         case CLERIC:
-            if(inStats.strength < 5){
+            if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 5){
+            if(inStats.intellignece < 6){
                 return false;
             }
             if(inStats.wisdom < 9){
                 return false;
             }
-            if(inStats.constitution < 5){
+            if(inStats.constitution < 6){
                 return false;
             }
-            if(inStats.charisma < 5){
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
         case DRUID:
-            if(inStats.strength < 5){
+            if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 5){
+            if(inStats.intellignece < 6){
                 return false;
             }
             if(inStats.wisdom < 12){
                 return false;
             }
-            if(inStats.dexterity < 5){
+            if(inStats.dexterity < 6){
                 return false;
             }
-            if(inStats.constitution < 5){
+            if(inStats.constitution < 6){
                 return false;
             }
             if(inStats.charisma < 15){
@@ -624,16 +624,16 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 9){
                 return false;
             }
-            if(inStats.wisdom < 5){
+            if(inStats.wisdom < 6){
                 return false;
             }
-            if(inStats.dexterity < 5){
+            if(inStats.dexterity < 6){
                 return false;
             }
             if(inStats.constitution < 7){
                 return false;
             }
-            if(inStats.charisma < 5){
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
@@ -647,7 +647,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.wisdom < 13){
                 return false;
             }
-            if(inStats.dexterity < 5){
+            if(inStats.dexterity < 6){
                 return false;
             }
             if(inStats.constitution < 9){
@@ -661,19 +661,19 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 13){
                 return false;
             }
-            if(inStats.intellignece < 5){
+            if(inStats.intellignece < 6){
                 return false;
             }
             if(inStats.wisdom < 14){
                 return false;
             }
-            if(inStats.dexterity < 5){
+            if(inStats.dexterity < 6){
                 return false;
             }
             if(inStats.constitution < 14){
                 return false;
             }
-            if(inStats.charisma < 5){
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
@@ -681,47 +681,47 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.intellignece < 9){
                 return false;
             }
-            if(inStats.wisdom < 5){
+            if(inStats.wisdom < 6){
                 return false;
             }
             if(inStats.dexterity < 6){
                 return false;
             }
-            if(inStats.constitution < 5){
+            if(inStats.constitution < 6){
                 return false;
             }
             return true;
         case ILLUSIONIST:
-            if(inStats.strength < 5){
+            if(inStats.strength < 6){
                 return false;
             }
             if(inStats.intellignece < 15){
                 return false;
             }
-            if(inStats.wisdom < 5){
+            if(inStats.wisdom < 6){
                 return false;
             }
             if(inStats.dexterity < 16){
                 return false;
             }
-            if(inStats.charisma < 5){
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
         case THIEF:
-            if(inStats.strength < 5){
+            if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 5){
+            if(inStats.intellignece < 6){
                 return false;
             }
             if(inStats.dexterity < 9){
                 return false;
             }
-            if(inStats.constitution < 5){
+            if(inStats.constitution < 6){
                 return false;
             }
-            if(inStats.charisma < 5){
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
@@ -732,13 +732,13 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.intellignece < 11){
                 return false;
             }
-            if(inStats.wisdom < 5){
+            if(inStats.wisdom < 6){
                 return false;
             }
             if(inStats.dexterity < 12){
                 return false;
             }
-            if(inStats.constitution < 5){
+            if(inStats.constitution < 6){
                 return false;
             }
             return true;
@@ -746,7 +746,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 15){
                 return false;
             }
-            if(inStats.intellignece < 5){
+            if(inStats.intellignece < 6){
                 return false;
             }
             if(inStats.wisdom < 15){
@@ -758,7 +758,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.constitution < 11){
                 return false;
             }
-            if(inStats.charisma < 5){
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
