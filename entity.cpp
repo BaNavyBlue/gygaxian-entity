@@ -29,15 +29,17 @@ Entity::Entity(ALIGNMENT align, SEX sex, std::string name)
     _sex = sex;
     _alignment = align;
     unsigned str_mod = 0;
-    _stats.strength = bestThree();
-    if(_stats.strength > 17){
-        _stats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
-    }
-    _stats.intellignece = bestThree();
-    _stats.wisdom = bestThree();
-    _stats.charisma = bestThree();
-    _stats.dexterity = bestThree();
-    _stats.constitution = bestThree();
+    do{
+        _stats.strength = bestThree();
+        if(_stats.strength > 17){
+            _stats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
+        }
+        _stats.intellignece = bestThree();
+        _stats.wisdom = bestThree();
+        _stats.charisma = bestThree();
+        _stats.dexterity = bestThree();
+        _stats.constitution = bestThree();
+    }while(!rollFailure(_stats));
 }
 
 void Entity::setStrenTbl()
@@ -862,15 +864,17 @@ bool Entity::checkRaceStats(RACE race)
 
 void Entity::reRollStats()
 {
-    _stats.strength = bestThree();
-    if(_stats.strength > 17){
-        _stats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
-    }
-    _stats.intellignece = bestThree();
-    _stats.wisdom = bestThree();
-    _stats.charisma = bestThree();
-    _stats.dexterity = bestThree();
-    _stats.constitution = bestThree();  
+    do{
+        _stats.strength = bestThree();
+        if(_stats.strength > 17){
+            _stats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
+        }
+        _stats.intellignece = bestThree();
+        _stats.wisdom = bestThree();
+        _stats.charisma = bestThree();
+        _stats.dexterity = bestThree();
+        _stats.constitution = bestThree();
+    }while(!rollFailure(_stats));  
 }
 
 RACE Entity::getRace(){

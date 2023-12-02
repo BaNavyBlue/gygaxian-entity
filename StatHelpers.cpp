@@ -792,6 +792,43 @@ char choice;
     }   
 }
 
+// This checks to see of stat rolls will generate non viable class
+// Based off of Gygaxian 1st Ed. rules.
+bool rollFailure(stats inStats){
+    std::cout << "\r\nChecking roll" << std::endl;
+    if(inStats.constitution < 6 && (inStats.intellignece < 15 || inStats.dexterity < 16)){
+        //fails illusionist only case const <= 5
+        std::cout << "\r\nFailed Illusionist only" << std::endl;
+        return false;
+    }
+    if(inStats.intellignece < 6 && inStats.strength < 9){
+        //fails Fighter only case int <= 5
+        std::cout << "\r\nFailed Fighter only" << std::endl;
+        return false;
+    }
+    if(inStats.wisdom < 6 && inStats.dexterity < 9){
+        //fails Thief only case wis <= 5
+        std::cout << "\r\nFailed Thief only" << std::endl;
+        return false;
+    }
+    if(inStats.strength < 6 && inStats.intellignece < 9){
+        //fails Magic User only case
+        std::cout << "\r\nFailed Magic-User only" << std::endl;
+        return false;
+    }
+    if(inStats.dexterity < 6 && inStats.wisdom < 9){
+        //fails Cleric only case
+        std::cout << "\r\nFailed Cleric only" << std::endl;
+        return false;
+    }
+    if(inStats.charisma < 6 && (inStats.strength < 12 || inStats.intellignece < 11 || inStats.dexterity < 12)){
+        //fails Assasin only case
+        std::cout << "\r\nFailed Assasin only" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 void printAlign(ALIGNMENT align)
 {
     std::unordered_map<ALIGNMENT, std::string> aMap;
