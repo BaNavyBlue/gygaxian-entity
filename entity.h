@@ -29,7 +29,8 @@ protected:
     constitutionTable _consTbl;
     charismaTable _charTbl;
     unsigned char _level = 1;
-    std::vector<CHAR_CLASS> _chrClass;
+    std::vector<CHAR_CLASS> _chrClass; // for multiclass
+    std::vector<LANGUAGE> _languages;
     RACE _race;
     SEX _sex;
     ALIGNMENT _alignment;
@@ -43,6 +44,7 @@ protected:
     void setDexThief();
     void setConsTbl();
     void setCharTbl();
+    void setBaseLanguages();
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     bool loadEntity(std::string file);
 public:
@@ -61,6 +63,7 @@ public:
     RACE getRace();
     ALIGNMENT getAlign();
     std::vector<CHAR_CLASS> getClass();
+    std::vector<LANGUAGE> getLanguages();
     bool checkRaceStats(RACE race);
     bool setClass(CHAR_CLASS cls);
     void setRace(RACE race);

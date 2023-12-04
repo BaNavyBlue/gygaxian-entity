@@ -896,12 +896,39 @@ bool Entity::setClass(CHAR_CLASS inClass)
     setStrenTbl();
     setIntTbl();
     setPossLang();
+    setBaseLanguages();
     setWisTbl();
     setDexTbl();
     if(_chrClass[0] == THIEF || _chrClass[0] == ASSASSIN){
         setDexThief();
     }
     setConsTbl();
+}
+
+void Entity::setBaseLanguages(){
+    switch(_race){
+        case HUMAN:
+            _languages.insert(_languages.end(), {COMMON_L});
+            break;
+        case ELF:
+            _languages.insert(_languages.end(), {COMMON_L, ELVISH, GNOMISH, HALFLING_L, GOBLIN_L, HOBGOBLIN_L, ORCISH, GNOLL});
+            break;        
+        case GNOME:
+            _languages.insert(_languages.end(), {COMMON_L, GNOMISH, DWARVISH, HALFLING_L, GOBLIN_L, KOBOLD, BURROWING_ANIMALS});
+            break;
+        case HALF_ELF:
+            _languages.insert(_languages.end(), {COMMON_L, ELVISH, GNOMISH, HALFLING_L, GOBLIN_L, HOBGOBLIN_L, ORCISH, GNOLL});
+            break;
+        case HALFLING:
+            _languages.insert(_languages.end(), {COMMON_L, HALFLING_L, DWARVISH, ELVISH, GNOMISH,GOBLIN_L, ORCISH});
+            break;
+        case HALF_ORC:
+            _languages.insert(_languages.end(), {COMMON_L, ORCISH});
+            break;
+        case DWARF:
+            _languages.insert(_languages.end(), {COMMON_L, DWARVISH, GNOMISH, GOBLIN_L, KOBOLD, ORCISH});
+            break;
+    } 
 }
 
 strengthTable Entity::getStrTbl()
@@ -939,6 +966,11 @@ charismaTable Entity::getCharTbl()
     return _charTbl;
 }
 
+std::vector<LANGUAGE> Entity::getLanguages()
+{
+    return _languages;
+}
+
 bool Entity::isFighter(){
     for(int i = 0; i < _chrClass.size(); i++){
         if(_chrClass[i] == FIGHTER || _chrClass[i] == PALADIN || _chrClass[i] == RANGER){
@@ -950,6 +982,7 @@ bool Entity::isFighter(){
 
 bool Entity::saveChar()
 {
+
     // Making Fun Difficult Hardcoding the Jason Format.
     std::string outTxt = "{\r\n    \"data\":{\r\n";
     outTxt += "        \"name\":\"" + _name + "\",\r\n";
@@ -1006,7 +1039,20 @@ bool Entity::saveChar()
     outTxt += "            \"maxHenchMen\":" + std::to_string(_charTbl.maxHenchMen) + ",\r\n";
     outTxt += "            \"loyaltyBasePer\":" + std::to_string(_charTbl.loyaltyBasePer) + ",\r\n";
     outTxt += "            \"reactAdjustPer\":" + std::to_string(_charTbl.reactAdjustPer) + "\r\n";
-    outTxt += "        }\r\n";
+    outTxt += "        },\r\n";
+    outTxt += "        \"languages\":{\r\n";
+    outTxt += "            \"count\":" + std::to_string(_languages.size()) + ",\r\n";
+    outTxt += "            \"index\":{\r\n";
+    for(int i = 0; i < _languages.size(); ++i){
+        outTxt += "                \"" + std::to_string(i) + "\":" + std::to_string(_languages[i]);
+        if(i < _languages.size() - 1){
+            outTxt += ",\r\n";       
+        } else {
+            outTxt += "\r\n            }\r\n        }\r\n";
+        }
+    }
+    // outTxt += "            \"reactAdjustPer\":" + std::to_string(_charTbl.reactAdjustPer) + "\r\n";
+    // outTxt += "        }\r\n";
     outTxt += "    }\r\n";
     outTxt += "}";
 
@@ -1075,6 +1121,11 @@ bool Entity::loadEntity(std::string file)
     _charTbl.maxHenchMen = uint64_t(charData["data"]["charTbl"]["maxHenchMen"]);
     _charTbl.loyaltyBasePer = int64_t(charData["data"]["charTbl"]["loyaltyBasePer"]);
     _charTbl.reactAdjustPer = int64_t(charData["data"]["charTbl"]["reactAdjustPer"]);
+    
+    for(int i = 0; i < int64_t(charData["data"]["languages"]["count"]); ++i){
+        std::string idx = std::to_string(i);
+        _languages.push_back((LANGUAGE)(uint64_t(charData["data"]["languages"]["index"][idx])));
+    }
 
     std::cout << "\r\nPrinting Loaded Character .json" << std::endl;
     std::cout << "Name: " << _name << std::endl;
@@ -1091,6 +1142,7 @@ bool Entity::loadEntity(std::string file)
     printDexThief(_dexThief);
     printConsTbl(_consTbl);
     printCharTbl(_charTbl);
+    printLanguages(_languages);
 }
 
 Entity::Entity(const char* filename)

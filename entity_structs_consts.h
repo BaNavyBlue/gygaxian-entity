@@ -54,13 +54,32 @@ enum SEX{
 enum LANGUAGE{
     ELVISH,
     GNOMISH,
-    SHIRESPEAK,
+    DWARVISH,
+    HALFLING_L,
     GOBLIN_L,
     HOBGOBLIN_L,
     ORCISH,
     GNOLL,
-    KOBOLD
+    KOBOLD,
+    BURROWING_ANIMALS,
+    COMMON_L
 };
+
+struct langPair{
+    LANGUAGE langE;
+    std::string langS;
+};
+
+const std::vector<langPair> langPairs = {{ELVISH, "Elvish"},
+                                                   {GNOMISH, "Gnomish"},
+                                                   {DWARVISH, "Dwarvish"},
+                                                   {HALFLING_L, "Halfling"},
+                                                   {GOBLIN_L, "Goblin"},
+                                                   {HOBGOBLIN_L, "Hobgoblin"},
+                                                   {ORCISH, "Orcish"},
+                                                   {KOBOLD, "Kobold"},
+                                                   {BURROWING_ANIMALS, "Burrowing Animals"},
+                                                   {COMMON_L, "Common"}};
 
 struct stats{
     unsigned strength;

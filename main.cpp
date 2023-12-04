@@ -48,6 +48,7 @@ int main(){
     for(int i = 0; i < dude.getClass().size(); ++i){
         printClass(dude.getClass()[i]);
     }
+    printLanguages(dude.getLanguages());
     std::cout << dude.getName() << "'s stats: " << std::endl;
     printStats(dude.getStats());
     printStrTbl(dude.getStrTbl());
@@ -57,6 +58,7 @@ int main(){
     printDexThief(dude.getDexTheif());
     printConsTbl(dude.getConsTbl());
     printCharTbl(dude.getCharTbl());
+    printLanguages(dude.getLanguages());
 
     dude.saveChar();
     std::string charFile = "characters/" + dude.getName() + ".json";

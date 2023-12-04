@@ -531,6 +531,22 @@ void printCharTbl(charismaTable charTbl)
     std::cout << "Reaction of others: " << charTbl.reactAdjustPer << '%' << std::endl;
 }
 
+void printLanguages(std::vector<LANGUAGE> lang)
+{
+    std::unordered_map<LANGUAGE, std::string> langMap;
+    for(int i = 0; i < langPairs.size(); ++i){
+        langMap[langPairs[i].langE] = langPairs[i].langS;
+    }
+    std::cout << "\r\nKnown Languages: " << std::endl;
+    for(int i = 0; i < lang.size(); ++i){
+        std::cout << langMap[lang[i]];
+        if(i < lang.size() - 1){
+            std::cout << ", ";
+        }
+    }
+    std::cout << std::endl << std::endl;
+}
+
 bool raceStatCheck(stats inStats, RACE race)
 {
     switch(race){
