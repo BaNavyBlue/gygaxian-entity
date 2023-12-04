@@ -36,7 +36,7 @@ Entity::Entity(ALIGNMENT align, SEX sex, std::string name)
         }
         _stats.intellignece = bestThree();
         _stats.wisdom = bestThree();
-        _stats.charisma = bestThree();
+        _stats.charisma = _stats.raceCharisma = bestThree();
         _stats.dexterity = bestThree();
         _stats.constitution = bestThree();
     }while(!rollFailure(_stats));
@@ -871,7 +871,7 @@ void Entity::reRollStats()
         }
         _stats.intellignece = bestThree();
         _stats.wisdom = bestThree();
-        _stats.charisma = bestThree();
+        _stats.charisma = _stats.raceCharisma = bestThree();
         _stats.dexterity = bestThree();
         _stats.constitution = bestThree();
     }while(!rollFailure(_stats));  
@@ -965,7 +965,8 @@ bool Entity::saveChar()
     outTxt += "            \"wisdom\":" + std::to_string(_stats.wisdom) + ",\r\n";
     outTxt += "            \"dexterity\":" + std::to_string(_stats.dexterity) + ",\r\n";
     outTxt += "            \"constitution\":" + std::to_string(_stats.constitution) + ",\r\n";
-    outTxt += "            \"charisma\":" + std::to_string(_stats.charisma) + "\r\n";
+    outTxt += "            \"charisma\":" + std::to_string(_stats.charisma) + ",\r\n";
+    outTxt += "            \"raceCharisma\":" + std::to_string(_stats.raceCharisma) + "\r\n";
     outTxt += "        },\r\n";
     outTxt += "        \"strengthTable\":{\r\n";
     outTxt += "            \"hitProb\":" + std::to_string(_strTbl.hitProb) + ",\r\n";
@@ -1041,6 +1042,7 @@ bool Entity::loadEntity(std::string file)
     _stats.dexterity = uint64_t(charData["data"]["stats"]["dexterity"]);
     _stats.constitution = uint64_t(charData["data"]["stats"]["constitution"]);
     _stats.charisma = uint64_t(charData["data"]["stats"]["charisma"]);
+    _stats.raceCharisma = uint64_t(charData["data"]["stats"]["raceCharisma"]);
 
     _strTbl.hitProb = int64_t(charData["data"]["strengthTable"]["hitProb"]);
     _strTbl.damageAdj = int64_t(charData["data"]["strengthTable"]["damageAdj"]);

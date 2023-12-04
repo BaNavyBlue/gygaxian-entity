@@ -364,6 +364,7 @@ void printStats(stats inStats)
     std::cout << "Intelligence: " << inStats.intellignece << std::endl;
     std::cout << "Wisdom: " << inStats.wisdom << std::endl;
     std::cout << "Charisma: " << inStats.charisma << std::endl;
+    std::cout << "Charisma to ones own race: " << inStats.raceCharisma << std::endl;
     std::cout << "Dexterity: " << inStats.dexterity << std::endl;
     std::cout << "Constitution: " << inStats.constitution << std::endl;
 }

@@ -51,12 +51,24 @@ enum SEX{
     MALE
 };
 
+enum LANGUAGE{
+    ELVISH,
+    GNOMISH,
+    SHIRESPEAK,
+    GOBLIN_L,
+    HOBGOBLIN_L,
+    ORCISH,
+    GNOLL,
+    KOBOLD
+};
+
 struct stats{
     unsigned strength;
     unsigned excStren = 0;
     unsigned intellignece;
     unsigned wisdom;
     unsigned charisma;
+    unsigned raceCharisma;
     unsigned dexterity;
     unsigned constitution;
 };

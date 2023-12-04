@@ -1,19 +1,20 @@
 {
     "data":{
         "name":"test",
-        "alignment":4,
-        "sex":2,
-        "race":0,
+        "alignment":0,
+        "sex":0,
+        "race":2,
         "level":1,
-        "class":0,
+        "class":2,
         "stats":{
             "strength":14,
-            "excStrength":38,
-            "intelligence":13,
-            "wisdom":9,
-            "dexterity":15,
-            "constitution":15,
-            "charisma":11
+            "excStrength":0,
+            "intelligence":6,
+            "wisdom":14,
+            "dexterity":14,
+            "constitution":14,
+            "charisma":11,
+            "raceCharisma":13
         },
         "strengthTable":{
             "hitProb":0,
@@ -24,18 +25,18 @@
         },
         "wisTable":{
             "magicAttackAdj":0,
-            "spellBonus":0,
-            "spellFailPer":20
+            "spellBonus":1,
+            "spellFailPer":0
         },
         "intTable":{
-            "chanceToKnowPer":55,
-            "minimumSpellsPer":4,
-            "maximumSpellsPer":6,
-            "possibleAddLang":3
+            "chanceToKnowPer":10,
+            "minimumSpellsPer":2,
+            "maximumSpellsPer":3,
+            "possibleAddLang":1
         },
         "dexTable":{
             "reactAttkAdj":0,
-            "defenseAdj":-1
+            "defenseAdj":0
         },
         "dexThief":{
             "pickPocketPer":0,
@@ -45,9 +46,9 @@
             "hideInShadows":0
         },
         "consTbl":{
-            "hpAdj":1,
-            "sysShockSurPer":91,
-            "resurSurvPer":94
+            "hpAdj":0,
+            "sysShockSurPer":88,
+            "resurSurvPer":92
         },
         "charTbl":{
             "maxHenchMen":4,
