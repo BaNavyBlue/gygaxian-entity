@@ -8,6 +8,7 @@
 #include "StatHelpers.h"
 #include "dice_roll.h"
 #include "simdjson.h"
+#include "skills.h"
 
 namespace sj = simdjson;
 
@@ -18,6 +19,8 @@ protected:
 
     //std::string _char_class;
     //std::string _race;
+    CHR_CLASS_SKILLS _chrSkills;
+    RACE_SKILLS _raceSkills;
     std::string _name;
     bool _undead = false;
     stats _stats;

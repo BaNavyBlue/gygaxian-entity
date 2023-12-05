@@ -185,5 +185,10 @@ const std::vector<alignPair> alignPairs = {{CHAOTIC_EVIL, "Chaotic Evil"},
                                      {NEUTRAL_GOOD, "Neutral Good"},
                                      {TRUE_NEUTRAL, "True Neutral"}}; 
 
+struct rollPair{
+    u8 sidedDie;
+    u8 maxRange;
+};
+
 
 #endif

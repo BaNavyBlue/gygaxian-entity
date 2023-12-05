@@ -1,6 +1,7 @@
 #ifndef PROJECT_HEADERS_H
 #define PROJECT_HEADERS_H
 
+using u8 = unsigned char;
 #include <string>
 #include <vector>
 #include <fstream>
