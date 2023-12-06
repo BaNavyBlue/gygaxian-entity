@@ -30,21 +30,21 @@ Entity::Entity(ALIGNMENT align, SEX sex, std::string name)
     _alignment = align;
     unsigned str_mod = 0;
     do{
-        _stats.strength = bestThree();
+        _stats.strength = _modStats.strength = bestThree();
         if(_stats.strength > 17){
-            _stats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
+            _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
         }
-        _stats.intellignece = bestThree();
-        _stats.wisdom = bestThree();
-        _stats.charisma = _stats.raceCharisma = bestThree();
-        _stats.dexterity = bestThree();
-        _stats.constitution = bestThree();
+        _stats.intellignece = _modStats.intellignece = bestThree();
+        _stats.wisdom = _modStats.intellignece = bestThree();
+        _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
+        _stats.dexterity = _modStats.dexterity = bestThree();
+        _stats.constitution = _modStats.constitution = bestThree();
     }while(!rollFailure(_stats));
 }
 
 void Entity::setStrenTbl()
 {
-    switch(_stats.strength){
+    switch(_modStats.strength){
         case 3:
             _strTbl.hitProb = -3;
             _strTbl.damageAdj = -1;
@@ -115,26 +115,26 @@ void Entity::setStrenTbl()
             _strTbl.bendBarsLiftGatesPer = 13;
             break;
         case 18:
-            if(_stats.excStren > 0 && isFighter()){
-                if(_stats.excStren < 51){
+            if(_modStats.excStren > 0 && isFighter()){
+                if(_modStats.excStren < 51){
                     _strTbl.hitProb = 1;
                     _strTbl.damageAdj = 2;
                     _strTbl.weightAllowMod = 1000;
                     _strTbl.openDoors = 3;
                     _strTbl.bendBarsLiftGatesPer = 20;
-                } else if(_stats.excStren < 76){
+                } else if(_modStats.excStren < 76){
                     _strTbl.hitProb = 2;
                     _strTbl.damageAdj = 3;
                     _strTbl.weightAllowMod = 1250;
                     _strTbl.openDoors = 4;
                     _strTbl.bendBarsLiftGatesPer = 25;
-                } else if(_stats.excStren < 91){
+                } else if(_modStats.excStren < 91){
                     _strTbl.hitProb = 2;
                     _strTbl.damageAdj = 4;
                     _strTbl.weightAllowMod = 1500;
                     _strTbl.openDoors = 4;
                     _strTbl.bendBarsLiftGatesPer = 30;
-                } else if(_stats.excStren < 100){
+                } else if(_modStats.excStren < 100){
                     _strTbl.hitProb = 2;
                     _strTbl.damageAdj = 5;
                     _strTbl.weightAllowMod = 2000;
@@ -153,7 +153,7 @@ void Entity::setStrenTbl()
                 _strTbl.weightAllowMod = 750;
                 _strTbl.openDoors = 3;
                 _strTbl.bendBarsLiftGatesPer = 16;
-                _stats.excStren = 0;
+                _stats.excStren = _modStats.excStren = 0;
             }
             break;
         default:
@@ -168,7 +168,7 @@ void Entity::setStrenTbl()
 
 void Entity::setIntTbl()
 {
-    switch(_stats.intellignece){
+    switch(_modStats.intellignece){
         case 9:
             _intTbl.chanceToKnowPer = 35;
             _intTbl.minumumSpellsPerLevel = 4;
@@ -209,7 +209,7 @@ void Entity::setIntTbl()
             _intTbl.maxiumSpellsPerlevel = 255;
             break;
         default:
-            if(_stats.intellignece > 19){
+            if(_modStats.intellignece > 19){
             _intTbl.chanceToKnowPer = 95;
             _intTbl.minumumSpellsPerLevel = 10;
             _intTbl.maxiumSpellsPerlevel = 255;
@@ -221,7 +221,7 @@ void Entity::setIntTbl()
 
  void Entity::setWisTbl(){
 
-    switch(_stats.wisdom){
+    switch(_modStats.wisdom){
         case 3:
             _wisTbl.magicAttackAdj = -3;
             break;
@@ -291,7 +291,7 @@ void Entity::setIntTbl()
 
 void Entity::setDexTbl()
 {
-    switch(_stats.dexterity){
+    switch(_modStats.dexterity){
         case 3:
             _dexTbl.reactAttkAdj = -3;
             _dexTbl.defenseAdj = 4;
@@ -342,7 +342,7 @@ void Entity::setDexTbl()
 
 void Entity::setPossLang()
 {
-    switch(_stats.intellignece){
+    switch(_modStats.intellignece){
         case 3:
         case 4:
         case 5:
@@ -380,7 +380,7 @@ void Entity::setPossLang()
 
 void Entity::setDexThief()
 {
-    switch(_stats.dexterity){
+    switch(_modStats.dexterity){
         case 9:
             _dexThief.pickPocketPer = -15;
             _dexThief.openLocks = -10;
@@ -463,7 +463,7 @@ void Entity::setDexThief()
 
 void Entity::setConsTbl()
 {
-    switch(_stats.constitution){
+    switch(_modStats.constitution){
         case 3:
             _consTbl.hpAdj = -2;
             _consTbl.sysShockSurPer = 35;
@@ -559,7 +559,7 @@ void Entity::setConsTbl()
 
 void Entity::setCharTbl()
 {
-    switch(_stats.charisma){
+    switch(_modStats.charisma){
         case 3:
             _charTbl.maxHenchMen = 1;
             _charTbl.loyaltyBasePer = -30;
@@ -637,7 +637,7 @@ void Entity::setCharTbl()
 
 stats Entity::getStats()
 {
-    return _stats;
+    return _modStats;
 }
 
 std::string Entity::getName()
@@ -663,7 +663,7 @@ bool Entity::checkRaceStats(RACE race)
             // Check Stat Limitation.
             if(_stats.excStren > 51 && _sex == FEMALE){
                 std::cout << "Human Female Exceptional Strength Capped at 51" << std::endl;
-                _stats.excStren = 51;
+                _stats.excStren = _modStats.excStren = 51;
             }
             _race = race;
             return true;
@@ -687,11 +687,11 @@ bool Entity::checkRaceStats(RACE race)
             }
             if(_sex == FEMALE && _stats.strength > 16){
                 std::cout << "Elf Female Strength Capped at 16" << std::endl;
-                _stats.strength = 16;
+                _stats.strength = _modStats.strength = 16;
             }
             // Apply Standard Elf Modifiers
-            _stats.constitution--;
-            _stats.dexterity++;
+            _stats.constitution--; _modStats.constitution--;
+            _stats.dexterity++; _modStats.dexterity++;
             _race = race;
             return true;
         case HALF_ORC:
@@ -707,37 +707,37 @@ bool Entity::checkRaceStats(RACE race)
 
             if(_stats.intellignece > 17){
                 std::cout << "Half-Orc Intelligence being set to cap 17" << std::endl;
-                _stats.intellignece = 17;
+                _stats.intellignece = _modStats.intellignece = 17;
             }
 
             if(_stats.dexterity > 17){
                 std::cout << "Half-Orc Dexterity being set to cap 17" << std::endl;
-                _stats.dexterity = 17;
+                _stats.dexterity = _modStats.dexterity = 17;
             }
 
             if(_stats.wisdom > 14){
                 std::cout << "Half-Orc Wisdom being set to cap 14" << std::endl;
-                _stats.wisdom = 14;
+                _stats.wisdom = _modStats.wisdom = 14;
             }
 
             if(_stats.charisma - 2 > 12){
                 std::cout << "Half-Orc Charisma being set to cap 12" << std::endl;
-                _stats.charisma = 12;
+                _stats.charisma = _modStats.charisma = 12;
             } else if(_stats.charisma - 2 < 3) {
                 std::cout << "Half-Orc Charisma minimum being set to 3" << std::endl;
-                _stats.charisma = 3;            
+                _stats.charisma = _modStats.charisma = 3;            
             } else {
-                _stats.charisma -= 2;
+                _stats.charisma -= 2; _modStats.charisma -=2;
             }
 
             if(_stats.strength + 1 > 18){
                 std::cout << "Half-Orc strength set to cap 18" << std::endl;
-                _stats.strength = 18;
+                _stats.strength = _modStats.strength = 18;
             } else {
-                _stats.strength++;
+                _stats.strength++; _stats.strength++;
             }
 
-            _stats.constitution++;
+            _stats.constitution++; _modStats.constitution++;
             _race = race;
             return true;
         case DWARF:
@@ -753,22 +753,22 @@ bool Entity::checkRaceStats(RACE race)
             
             if(_stats.strength > 17 && _sex == FEMALE){
                 std::cout << "Female Dwarf strength cap 17" << std::endl;
-                _stats.strength = 17;
+                _stats.strength = _modStats.strength = 17;
             }
 
             if(_stats.dexterity > 17){
                 std::cout << "Dwarf dexterity cap 17" << std::endl;
-                _stats.dexterity = 17;            
+                _stats.dexterity = _modStats.dexterity = 17;            
             }
 
             if(_stats.charisma - 1 > 16){
                 std::cout << "Dwarf charisma cap 16" << std::endl;
-                _stats.charisma = 16;
+                _stats.charisma = _modStats.charisma = 16;
             } else {
-                _stats.charisma--;
+                _stats.charisma--; _modStats.charisma--;
             }
 
-            _stats.constitution++;
+            _stats.constitution++; _modStats.constitution++;
             _race = race;
             return true;
         case HALFLING:
@@ -794,18 +794,18 @@ bool Entity::checkRaceStats(RACE race)
 
             if(_stats.strength - 1 > 14 && _sex == FEMALE){
                 std::cout << "Female Halfling strength cap 14" << std::endl;
-                _stats.strength = 14;
-                _stats.excStren = 0;
+                _stats.strength = _modStats.strength = 14;
+                _stats.excStren = _modStats.excStren = 0;
             } else {
-                _stats.strength--;
+                _stats.strength--; _modStats.strength--;
             }                    
 
             if(_stats.wisdom > 17){
                 std::cout << "Halfling wisdom cap 17" << std::endl;
-                _stats.wisdom = 17;
+                _stats.wisdom = _modStats.wisdom = 17;
             }
 
-            _stats.dexterity++;
+            _stats.dexterity++; _modStats.dexterity++;
             _race = race;
             return true;
         case HALF_ELF:
@@ -826,12 +826,12 @@ bool Entity::checkRaceStats(RACE race)
 
             if(_stats.excStren > 90){
                 std::cout << "Half-Elf exceptional strength cap 90" << std::endl;
-                _stats.excStren = 90;
+                _stats.excStren = _modStats.excStren = 90;
             }
 
             if(_stats.strength > 17 && _sex == FEMALE){
                 std::cout << "Female Half-Elf strength cap 17" << std::endl;
-                _stats.strength = 17;
+                _stats.strength = _modStats.strength = 17;
             }
 
             _race = race;
@@ -854,7 +854,7 @@ bool Entity::checkRaceStats(RACE race)
 
             if(_stats.strength > 15 && _sex == FEMALE){
                 std::cout << "Female Gnome strength cap 15" << std::endl;
-                _stats.strength = 15;
+                _stats.strength = _modStats.strength = 15;
             }            
 
             _race = race;
@@ -865,15 +865,15 @@ bool Entity::checkRaceStats(RACE race)
 void Entity::reRollStats()
 {
     do{
-        _stats.strength = bestThree();
+        _stats.strength = _modStats.strength = bestThree();
         if(_stats.strength > 17){
-            _stats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
+            _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
         }
-        _stats.intellignece = bestThree();
-        _stats.wisdom = bestThree();
-        _stats.charisma = _stats.raceCharisma = bestThree();
-        _stats.dexterity = bestThree();
-        _stats.constitution = bestThree();
+        _stats.intellignece = _modStats.intellignece = bestThree();
+        _stats.wisdom = _modStats.intellignece = bestThree();
+        _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
+        _stats.dexterity = _modStats.dexterity = bestThree();
+        _stats.constitution = _modStats.constitution = bestThree();
     }while(!rollFailure(_stats));  
 }
 

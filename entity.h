@@ -19,11 +19,12 @@ protected:
 
     //std::string _char_class;
     //std::string _race;
-    CHR_CLASS_SKILLS _chrSkills;
+    std::vector<CHR_CLASS_SKILLS> _chrSkills;
     RACE_SKILLS _raceSkills;
     std::string _name;
     bool _undead = false;
-    stats _stats;
+    stats _stats; // Base Stats upon creation.
+    stats _modStats; // Stats altered by effects.
     strengthTable _strTbl;
     inteligenceTable _intTbl;
     wisdomTable _wisTbl;
