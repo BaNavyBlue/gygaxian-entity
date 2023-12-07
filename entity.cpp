@@ -49,11 +49,16 @@ Entity::~Entity()
 
 void Entity::setRaceSkillType()
 {
-    //switch(_race){
-    //    case DWARF:
+    switch(_race){
+        case DWARF:
             _raceSkills = std::make_shared<Dwarf>();
             _raceSkills->listRaceSkills();
-    //}
+            break;
+        case ELF:
+            _raceSkills = std::make_shared<Elf>();
+            _raceSkills->listRaceSkills();
+            break;    
+    }
 }
 
 void Entity::setStrenTbl()
@@ -924,7 +929,6 @@ bool Entity::setClass(CHAR_CLASS inClass)
     }
     setConsTbl();
     setRaceSkillType();
-    _raceSkills->listRaceSkills();
 }
 
 void Entity::setBaseLanguages(){
@@ -1166,7 +1170,7 @@ bool Entity::loadEntity(std::string file)
         std::string idx = std::to_string(i);
         _languages.push_back((LANGUAGE)(uint64_t(charData["data"]["languages"]["index"][idx])));
     }
-
+    setRaceSkillType();
     std::cout << "\r\nPrinting Loaded Character .json" << std::endl;
     std::cout << "Name: " << _name << std::endl;
     printAlign(_alignment);
