@@ -526,7 +526,7 @@ void printConsTbl(constitutionTable consTbl)
 void printCharTbl(charismaTable charTbl)
 {
     std::cout << "\r\nCharisma Table: " << std::endl;
-    std::cout << "Maimum Number of Followers: " << charTbl.maxHenchMen << std::endl;
+    std::cout << "Maximum Number of Followers: " << charTbl.maxHenchMen << std::endl;
     std::cout << "Loyalty Percentage: " << charTbl.loyaltyBasePer << '%' << std::endl;
     std::cout << "Reaction of others: " << charTbl.reactAdjustPer << '%' << std::endl;
 }

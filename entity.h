@@ -19,8 +19,8 @@ protected:
 
     //std::string _char_class;
     //std::string _race;
-    std::vector<CHR_CLASS_SKILLS> _chrSkills;
-    RACE_SKILLS _raceSkills;
+    std::vector<std::shared_ptr<CHR_CLASS_SKILLS>> _chrSkills;
+    std::shared_ptr<RACE_SKILLS> _raceSkills;
     std::string _name;
     bool _undead = false;
     stats _stats; // Base Stats upon creation.
@@ -48,13 +48,16 @@ protected:
     void setDexThief();
     void setConsTbl();
     void setCharTbl();
-    void setBaseLanguages();
+    void setBaseLanguages(); 
+    void setRaceSkillType();
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     bool loadEntity(std::string file);
 public:
     Entity(ALIGNMENT align, SEX sex, std::string name);
     Entity(const char* filename);
+    ~Entity();
     stats getStats();
+    stats getModStats();
     strengthTable getStrTbl();
     inteligenceTable getIntTbl();
     wisdomTable getWisTbl();

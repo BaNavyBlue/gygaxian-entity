@@ -35,11 +35,25 @@ Entity::Entity(ALIGNMENT align, SEX sex, std::string name)
             _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
         }
         _stats.intellignece = _modStats.intellignece = bestThree();
-        _stats.wisdom = _modStats.intellignece = bestThree();
+        _stats.wisdom = _modStats.wisdom = bestThree();
         _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
         _stats.dexterity = _modStats.dexterity = bestThree();
         _stats.constitution = _modStats.constitution = bestThree();
     }while(!rollFailure(_stats));
+}
+
+Entity::~Entity()
+{
+    ///delete _raceSkills;
+}
+
+void Entity::setRaceSkillType()
+{
+    //switch(_race){
+    //    case DWARF:
+            _raceSkills = std::make_shared<Dwarf>();
+            _raceSkills->listRaceSkills();
+    //}
 }
 
 void Entity::setStrenTbl()
@@ -637,6 +651,12 @@ void Entity::setCharTbl()
 
 stats Entity::getStats()
 {
+    return _stats;
+}
+
+
+stats Entity::getModStats()
+{
     return _modStats;
 }
 
@@ -870,7 +890,7 @@ void Entity::reRollStats()
             _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
         }
         _stats.intellignece = _modStats.intellignece = bestThree();
-        _stats.wisdom = _modStats.intellignece = bestThree();
+        _stats.wisdom = _modStats.wisdom = bestThree();
         _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
         _stats.dexterity = _modStats.dexterity = bestThree();
         _stats.constitution = _modStats.constitution = bestThree();
@@ -903,6 +923,8 @@ bool Entity::setClass(CHAR_CLASS inClass)
         setDexThief();
     }
     setConsTbl();
+    setRaceSkillType();
+    _raceSkills->listRaceSkills();
 }
 
 void Entity::setBaseLanguages(){
@@ -1001,6 +1023,16 @@ bool Entity::saveChar()
     outTxt += "            \"charisma\":" + std::to_string(_stats.charisma) + ",\r\n";
     outTxt += "            \"raceCharisma\":" + std::to_string(_stats.raceCharisma) + "\r\n";
     outTxt += "        },\r\n";
+    outTxt += "        \"modStats\":{\r\n";
+    outTxt += "            \"strength\":" + std::to_string(_stats.strength) + ",\r\n";
+    outTxt += "            \"excStrength\":" + std::to_string(_stats.excStren) + ",\r\n";
+    outTxt += "            \"intelligence\":" + std::to_string(_stats.intellignece) + ",\r\n";
+    outTxt += "            \"wisdom\":" + std::to_string(_stats.wisdom) + ",\r\n";
+    outTxt += "            \"dexterity\":" + std::to_string(_stats.dexterity) + ",\r\n";
+    outTxt += "            \"constitution\":" + std::to_string(_stats.constitution) + ",\r\n";
+    outTxt += "            \"charisma\":" + std::to_string(_stats.charisma) + ",\r\n";
+    outTxt += "            \"raceCharisma\":" + std::to_string(_stats.raceCharisma) + "\r\n";
+    outTxt += "        },\r\n";
     outTxt += "        \"strengthTable\":{\r\n";
     outTxt += "            \"hitProb\":" + std::to_string(_strTbl.hitProb) + ",\r\n";
     outTxt += "            \"damageAdj\":" + std::to_string(_strTbl.damageAdj) + ",\r\n";
@@ -1090,6 +1122,14 @@ bool Entity::loadEntity(std::string file)
     _stats.charisma = uint64_t(charData["data"]["stats"]["charisma"]);
     _stats.raceCharisma = uint64_t(charData["data"]["stats"]["raceCharisma"]);
 
+    _modStats.strength = uint64_t(charData["data"]["modStats"]["strength"]);
+    _modStats.intellignece = uint64_t(charData["data"]["modStats"]["intelligence"]);
+    _modStats.wisdom = uint64_t(charData["data"]["modStats"]["wisdom"]);
+    _modStats.dexterity = uint64_t(charData["data"]["modStats"]["dexterity"]);
+    _modStats.constitution = uint64_t(charData["data"]["modStats"]["constitution"]);
+    _modStats.charisma = uint64_t(charData["data"]["modStats"]["charisma"]);
+    _modStats.raceCharisma = uint64_t(charData["data"]["modStats"]["raceCharisma"]);
+
     _strTbl.hitProb = int64_t(charData["data"]["strengthTable"]["hitProb"]);
     _strTbl.damageAdj = int64_t(charData["data"]["strengthTable"]["damageAdj"]);
     _strTbl.weightAllowMod = int64_t(charData["data"]["strengthTable"]["weightAllowMod"]);
@@ -1134,7 +1174,10 @@ bool Entity::loadEntity(std::string file)
     printRace(_race);
     printClass(_chrClass[0]);
     std::cout << "Level: " << (int)_level << std::endl;
+    std::cout << "\r\nStats: ";
     printStats(_stats);
+    std::cout << "\r\nMod Stats: ";
+    printStats(_modStats);
     printStrTbl(_strTbl);
     printIntTbl(_intTbl);
     printWisTbl(_wisTbl);

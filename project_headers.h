@@ -10,6 +10,7 @@ using u8 = unsigned char;
 #include <string>
 #include <sstream>
 #include <unordered_map>
+#include <memory>
 //#include <conio.h> //microsoft
 //#include <curses.h>
 #include <termios.h>

@@ -8,16 +8,18 @@ class RACE_SKILLS
 private:
 
 protected:
-   virtual void setRaceSkills();
+    virtual void setRaceSkills() = 0;
 public:
-    RACE_SKILLS(RACE race);
-    virtual void listRaceSkills();
+    RACE_SKILLS();
+    ~RACE_SKILLS();
+
+    virtual void listRaceSkills() = 0;
 };
 
 class CHR_CLASS_SKILLS
 {
 public:
-    CHR_CLASS_SKILLS(std::vector<CHAR_CLASS> chrClass);
+    CHR_CLASS_SKILLS();
     virtual void listClassSkills();
 };
 
@@ -30,8 +32,12 @@ private:
     rollPair dtctMovingWalls; // 1-4 d6
     rollPair dtctTraps; // 1-2 d4
     rollPair dtctDepth; // 1-2 d4
+protected:
     void setRaceSkills();
 public:
+    Dwarf();
+    ~Dwarf();
+
     void listRaceSkills();
 
 };
