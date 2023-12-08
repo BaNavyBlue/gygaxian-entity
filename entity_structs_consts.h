@@ -7,6 +7,15 @@
 #include <vector>
 #include <string>
 
+enum RACIAL_BIAS{
+    HATE,
+    ANTIPATHY,
+    NEUTRALITY,
+    TOLERANCE,
+    GOODWILL,
+    PREFERRED
+};
+
 enum CHAR_CLASS{
     CLERIC,
     DRUID,

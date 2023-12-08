@@ -1213,6 +1213,95 @@ std::string alignClasses(ALIGNMENT align)
     return compat;
 }
 
+RACIAL_BIAS getRacialBias(RACE race1, RACE race2)
+{
+    if(race1 == DWARF && race2 == DWARF){
+        return PREFERRED;
+    } else if(race1 == DWARF && race2 == ELF){
+        return ANTIPATHY;        
+    } else if(race1 == DWARF && race2 == GNOME){
+        return GOODWILL;        
+    } else if(race1 == DWARF && race2 == HALF_ELF){
+        return NEUTRALITY;        
+    } else if(race1 == DWARF && race2 == HALFLING){
+        return GOODWILL;        
+    } else if(race1 == DWARF && race2 == HALF_ORC){
+        return HATE;        
+    } else if(race1 == DWARF && race2 == HUMAN){
+        return NEUTRALITY;        
+    } else if(race1 == ELF && race2 == ELF){
+        return PREFERRED;        
+    } else if(race1 == ELF && race2 == GNOME){
+        return TOLERANCE;        
+    } else if(race1 == ELF && race2 == HALF_ELF){
+        return PREFERRED;        
+    } else if(race1 == ELF && race2 == HALFLING){
+        return GOODWILL;        
+    } else if(race1 == ELF && race2 == HALF_ORC){
+        return ANTIPATHY;        
+    } else if(race1 == ELF && race2 == HUMAN){
+        return NEUTRALITY;        
+    } else if(race1 == GNOME && race2 == GNOME){
+        return PREFERRED;        
+    } else if(race1 == GNOME && race2 == HALF_ELF){
+        return TOLERANCE;        
+    } else if(race1 == GNOME && race2 == HALFLING){
+        return GOODWILL;        
+    } else if(race1 == GNOME && race2 == HALF_ORC){
+        return HATE;        
+    } else if(race1 == GNOME && race2 == HUMAN){
+        return NEUTRALITY;        
+    } else if(race1 == HALF_ELF && race2 == HALF_ELF){
+        return PREFERRED;        
+    } else if(race1 == HALF_ELF && race2 == HALFLING){
+        return NEUTRALITY;        
+    } else if(race1 == HALF_ELF && race2 == HALF_ORC){
+        return ANTIPATHY;        
+    } else if(race1 == HALF_ELF && race2 == HUMAN){
+        return TOLERANCE;        
+    } else if(race1 == HALFLING && race2 == HALFLING){
+        return PREFERRED;        
+    } else if(race1 == HALFLING && race2 == HALF_ORC){
+        return NEUTRALITY;        
+    } else if(race1 == HALFLING && race2 == HUMAN){
+        return NEUTRALITY;        
+    } else if(race1 == HALF_ORC && race2 == HALF_ORC){
+        return PREFERRED;        
+    } else if(race1 == HALF_ORC && race2 == HUMAN){
+        return TOLERANCE;        
+    } else if(race1 == HUMAN && race2 == HUMAN){
+        return PREFERRED;        
+    } else {
+        return getRacialBias(race2, race1);
+    }
+}
+void printRacialBias(RACIAL_BIAS bias)
+{
+    switch(bias){
+        case HATE:
+            std::cout << "Hatred\r\n" << std::endl;
+            break;
+        case ANTIPATHY:
+            std::cout << "Antipathy\r\n" << std::endl;
+            break;
+        case NEUTRALITY:
+            std::cout << "Neutrality\r\n" << std::endl;
+            break;
+        case TOLERANCE:
+            std::cout << "Tolerance\r\n" << std::endl;
+            break;
+        case GOODWILL:
+            std::cout << "Goodwill\r\n" << std::endl;
+            break;
+        case PREFERRED:
+            std::cout << "Preferred\r\n" << std::endl;
+            break;
+        default:
+            std::cout << "Error Bias\r\n" << std::endl;
+            break;
+    }
+}
+
 /* Initialize new terminal i/o settings */
 void initTermios(int echo) 
 {

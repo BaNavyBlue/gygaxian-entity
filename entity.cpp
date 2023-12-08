@@ -1135,7 +1135,8 @@ bool Entity::loadEntity(std::string file)
     sj::ondemand::document charData = parser.iterate(json);
     std::stringstream recv;
     recv << ((charData["data"]["name"]));
-    recv >> _name;
+    //recv >> _name;
+    _name = recv.str();
     _alignment = (ALIGNMENT)uint64_t(charData["data"]["alignment"]);
     _sex = (SEX)uint64_t(charData["data"]["sex"]);
     _race = (RACE)uint64_t(charData["data"]["race"]);
