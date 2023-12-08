@@ -1137,6 +1137,13 @@ bool Entity::loadEntity(std::string file)
     recv << ((charData["data"]["name"]));
     //recv >> _name;
     _name = recv.str();
+    
+    // Remove all double-quote characters
+    _name.erase(
+    remove( _name.begin(), _name.end(), '\"' ),
+    _name.end()
+    );
+
     _alignment = (ALIGNMENT)uint64_t(charData["data"]["alignment"]);
     _sex = (SEX)uint64_t(charData["data"]["sex"]);
     _race = (RACE)uint64_t(charData["data"]["race"]);
