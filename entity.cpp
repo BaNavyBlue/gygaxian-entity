@@ -51,13 +51,37 @@ void Entity::setRaceSkillType()
 {
     switch(_race){
         case DWARF:
-            _raceSkills = std::make_shared<Dwarf>();
+            _raceSkills = std::make_shared<Dwarf>(_stats);
             _raceSkills->listRaceSkills();
             break;
         case ELF:
-            _raceSkills = std::make_shared<Elf>();
+            _raceSkills = std::make_shared<Elf>(_stats);
             _raceSkills->listRaceSkills();
-            break;    
+            break;
+        case GNOME:  
+            _raceSkills = std::make_shared<Gnome>(_stats);
+            _raceSkills->listRaceSkills();
+            break;
+        case HALF_ELF:
+            _raceSkills = std::make_shared<HalfElf>(_stats);
+            _raceSkills->listRaceSkills();
+            break;
+        case HALFLING:
+            _raceSkills = std::make_shared<Halfling>(_stats);
+            _raceSkills->listRaceSkills();
+            break;
+        case HALF_ORC:
+            _raceSkills = std::make_shared<HalfOrc>(_stats);
+            _raceSkills->listRaceSkills();
+            break;
+        case HUMAN:
+            _raceSkills = std::make_shared<Human>(_stats);
+            _raceSkills->listRaceSkills();
+            break;
+        default:
+            // _raceSkills = std::make_shared<RACE_SKILLS>(_stats);
+            // _raceSkills->listRaceSkills();
+            break;
     }
 }
 

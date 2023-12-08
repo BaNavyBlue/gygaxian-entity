@@ -63,6 +63,11 @@ int main(){
     dude.saveChar();
     std::string charFile = "characters/" + dude.getName() + ".json";
     Entity jsonTest(charFile.c_str());
+
+    // RACE_SKILLS* test = new Dwarf(dude.getStats());
+    // delete (Dwarf*)test;
+
+    
     return 0;
 }
 

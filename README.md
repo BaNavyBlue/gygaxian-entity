@@ -5,6 +5,8 @@ Originally intended this to be an excercise at using inheritance but quickly rea
 I couldn't find a compelling reason to extend the "Parrent" Entity class into "child" Races nor "child" Char_Classes.  I could extend Entity into races, and extend each race with appropriate char_classes.
 But this would be madness when one can just enumerate the races and classes and just allow an Entity to hold the enumeration values.
 
+I did end up creating a racial skills parent class each child race having different skills, and buffs.
+
 # Current State of the Code
 Currently this code runs in the terminal and allows one to create a character using AD&D 1e calculations.
 
