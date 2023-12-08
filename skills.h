@@ -16,15 +16,6 @@ public:
     virtual void listRaceSkills() = 0;
 };
 
-class CHR_CLASS_SKILLS
-{
-public:
-    CHR_CLASS_SKILLS();
-    virtual void listClassSkills();
-};
-
-
-
 class Dwarf: public RACE_SKILLS{
 private:
     rollPair detectGrade; // 1-3 d4

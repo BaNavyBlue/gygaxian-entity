@@ -267,4 +267,3 @@ void Human::listRaceSkills()
 {
     std::cout << "Humans have no bonus or penalty skills" << std::endl;
 }
-

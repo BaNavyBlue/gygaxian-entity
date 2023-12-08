@@ -660,7 +660,7 @@ bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align)
             }
             return false;
         case DRUID:
-            if(align != NEUTRAL_EVIL && align != NEUTRAL_GOOD && align != TRUE_NEUTRAL){
+            if(align != TRUE_NEUTRAL){
                 return false;
             }
             if(race == HALF_ELF || race == HUMAN){

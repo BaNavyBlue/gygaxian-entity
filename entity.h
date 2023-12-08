@@ -9,6 +9,7 @@
 #include "dice_roll.h"
 #include "simdjson.h"
 #include "skills.h"
+#include "char_class.h"
 
 namespace sj = simdjson;
 
@@ -33,13 +34,16 @@ protected:
     constitutionTable _consTbl;
     charismaTable _charTbl;
     unsigned char _level = 1;
+    std::vector<unsigned> _experience; // initialized for each class
+    unsigned _hitPointsBase;
+    unsigned _curHitPoints;
+    unsigned weightAllowedGP = 450; //Weight in Gold Pieces
+    unsigned totalWeightGP = 0;
     std::vector<CHAR_CLASS> _chrClass; // for multiclass
     std::vector<LANGUAGE> _languages;
     RACE _race;
     SEX _sex;
     ALIGNMENT _alignment;
-    unsigned weightAllowedGP = 450; //Weight in Gold Pieces
-    unsigned totalWeightGP = 0;
     void setStrenTbl();
     void setIntTbl();
     void setPossLang();
@@ -50,6 +54,7 @@ protected:
     void setCharTbl();
     void setBaseLanguages(); 
     void setRaceSkillType();
+    void setChrClassSkill(CHAR_CLASS inClass);
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     bool loadEntity(std::string file);
 public:
@@ -70,6 +75,7 @@ public:
     RACE getRace();
     ALIGNMENT getAlign();
     std::vector<CHAR_CLASS> getClass();
+    std::vector<unsigned> getExperience();
     std::vector<LANGUAGE> getLanguages();
     bool checkRaceStats(RACE race);
     bool setClass(CHAR_CLASS cls);

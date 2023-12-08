@@ -85,6 +85,15 @@ void Entity::setRaceSkillType()
     }
 }
 
+void Entity::setChrClassSkill(CHAR_CLASS inClass)
+{
+    switch(inClass){
+        case CLERIC:
+            _chrSkills.push_back(std::make_shared<Cleric>());
+            break;
+    }
+}
+
 void Entity::setStrenTbl()
 {
     switch(_modStats.strength){
@@ -953,6 +962,7 @@ bool Entity::setClass(CHAR_CLASS inClass)
     }
     setConsTbl();
     setRaceSkillType();
+    setChrClassSkill(inClass);
 }
 
 void Entity::setBaseLanguages(){
@@ -1137,7 +1147,7 @@ bool Entity::loadEntity(std::string file)
     recv << ((charData["data"]["name"]));
     //recv >> _name;
     _name = recv.str();
-    
+
     // Remove all double-quote characters
     _name.erase(
     remove( _name.begin(), _name.end(), '\"' ),

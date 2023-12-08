@@ -74,6 +74,16 @@ enum LANGUAGE{
     COMMON_L
 };
 
+enum ARMOR_TYPE
+
+{
+
+};
+
+enum WEAPON_TYPE{
+
+};
+
 struct langPair{
     LANGUAGE langE;
     std::string langS;
@@ -147,6 +157,16 @@ struct charismaTable{
     int reactAdjustPer = 0;
 };
 
+struct classTable1{ // pg 19
+    unsigned HitDieType;
+    unsigned MaxHitDie;
+    bool spellAbility;
+    int LevelLimit;
+};
+
+struct classTable2{
+
+};
 // For pairing string with Enum
 struct racePair{
     RACE race;
