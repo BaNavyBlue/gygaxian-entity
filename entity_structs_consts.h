@@ -71,7 +71,8 @@ enum LANGUAGE{
     GNOLL,
     KOBOLD,
     BURROWING_ANIMALS,
-    COMMON_L
+    COMMON_L, 
+    THIEVES_CANT
 };
 
 enum ARMOR_TYPE
@@ -98,7 +99,8 @@ const std::vector<langPair> langPairs = {{ELVISH, "Elvish"},
                                                    {ORCISH, "Orcish"},
                                                    {KOBOLD, "Kobold"},
                                                    {BURROWING_ANIMALS, "Burrowing Animals"},
-                                                   {COMMON_L, "Common"}};
+                                                   {COMMON_L, "Common"},
+                                                   {THIEVES_CANT,"Thieves' Cant"}};
 
 struct stats{
     unsigned strength;
@@ -162,6 +164,17 @@ struct classTable1{ // pg 19
     unsigned MaxHitDie;
     bool spellAbility;
     int LevelLimit;
+};
+
+struct thiefTable{
+    unsigned pickPockets = 30;
+    unsigned openLocks = 25;
+    unsigned findRemoveTraps = 20;
+    unsigned moveSilently = 15;
+    unsigned hideInShadows = 10;
+    unsigned hearNoise = 10;
+    float climbWalls = 85.0;
+    unsigned readLanguages = 0;
 };
 
 struct classTable2{

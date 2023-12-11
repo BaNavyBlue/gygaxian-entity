@@ -11,7 +11,7 @@ protected:
 public:
     CHR_CLASS_SKILLS();
     ~CHR_CLASS_SKILLS();
-    void listClassSkills();
+    virtual void listClassSkills();
     classTable1 getClassTable1();
 };
 
@@ -37,17 +37,48 @@ public:
 };
 
 class Paladin: public CHR_CLASS_SKILLS{
+private:
+    unsigned detectEvil = 60; // 60' on concentration
+    unsigned defensiveBonus = 2;
+    // immunity to all dissease
+    unsigned cureWounds = 2; // 2HP per level
+    // Cure Disease 1 + (level / 5) integer times per week
+    // continuous emination of protection from evil 1" radius
+    // 1 armor suit, 1 shield, 4 weapons 4 other.
+    unsigned magicItemLimit = 10;
+    // Will never retain wealth
+    // 10% of income/treasure goes to lawful good charity
+    // non cleric
+    // only lawful good henchmen can only adventure with
+    // non evil but only temoporarily if adventuring with neutral
+    // take service or align with lawful good characters.
+
 public:
     Paladin();
     ~Paladin();
+    void getMagicItemLimit();
     //void listClassSkills();
 };
 
 class Ranger: public CHR_CLASS_SKILLS{
+private:
+    rollPair _chanceToSurprise;
+    rollPair _chanceToBeSurprised;
+    unsigned uGTrackPassagePer = 65;
+    unsigned uGTrackDrStrPer = 55;
+    unsigned uGTrackTrpDrPer = 45;
+    unsigned uGTrackChimConDrPer = 35;
+    unsigned uGTrackScrtDoorPer = 25;
+    unsigned oDTrack = 90;
+    unsigned oDTrackMoreThan1Per = 2; // +2% per creature
+    int oDTrack24HrPer = -10;
+    int oDTrackHourPercip = -25;
+
+    // damage to giant class +1 per level
 public:
     Ranger();
     ~Ranger();
-    //void listClassSkills();
+    void listClassSkills() override;
 };
 
 class MagicUser: public CHR_CLASS_SKILLS{
@@ -65,15 +96,24 @@ public:
 };
 
 class Thief: public CHR_CLASS_SKILLS{
+protected:
+    unsigned char _surpriseAtk = 4; // +4 to hit roll
+    // back stab // blow from behind 1 + level/4 (int)
+    thiefTable _thiefTbl;
+    // if roll is 21% too high for pick pockets victim notices.
+    // -5% for everly level of victim.
+    void setRaceMod(RACE inRace);
 public:
     Thief();
+    Thief(RACE inRace, unsigned inLevel);
     ~Thief();
-    //void listClassSkills();
+    void setThiefSkills(RACE inRace, unsigned inLevel);
+    void listClassSkills();
 };
 
-class Assassin: public CHR_CLASS_SKILLS{
+class Assassin: public Thief{
 public:
-    Assassin();
+    Assassin(RACE inRace, unsigned inLevel);
     ~Assassin();
     //void listClassSkills();
 };

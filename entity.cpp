@@ -91,6 +91,48 @@ void Entity::setChrClassSkill(CHAR_CLASS inClass)
         case CLERIC:
             _chrSkills.push_back(std::make_shared<Cleric>());
             break;
+        case DRUID:
+            _chrSkills.push_back(std::make_shared<Druid>());
+            break;
+        case FIGHTER:
+            _chrSkills.push_back(std::make_shared<Fighter>());
+            break;
+        case PALADIN:
+            _chrSkills.push_back(std::make_shared<Paladin>());
+            break;
+        case RANGER:
+            _chrSkills.push_back(std::make_shared<Ranger>());
+            break;
+        case MAGIC_USER:
+            _chrSkills.push_back(std::make_shared<MagicUser>());
+            break;
+        case ILLUSIONIST:
+            _chrSkills.push_back(std::make_shared<Illusionist>());
+            break;
+        case THIEF:
+            _chrSkills.push_back(std::make_shared<Thief>(_race, _level));
+            if(std::find(_languages.begin(), _languages.end(), THIEVES_CANT) != _languages.end()){
+
+            } else {
+                _languages.push_back(THIEVES_CANT);
+                std::cout << "Thieves Cant added" << std::endl;
+            }
+            break;
+        case ASSASSIN:
+            _chrSkills.push_back(std::make_shared<Assassin>(_race, _level));
+                if(std::find(_languages.begin(), _languages.end(), THIEVES_CANT) != _languages.end()){
+
+            } else {
+                _languages.push_back(THIEVES_CANT);
+                std::cout << "Thieves Cant added" << std::endl;
+            }
+            break;
+        case MONK:
+            _chrSkills.push_back(std::make_shared<Monk>());
+            break;
+        default:
+            _chrSkills.push_back(std::make_shared<Monk>());
+            break;
     }
 }
 
@@ -687,6 +729,39 @@ void Entity::setCharTbl()
     }
 }
 
+void Entity::setMeleeAttkRnd(CHAR_CLASS inClass)
+{
+    switch(inClass){
+        case FIGHTER:
+        case PALADIN:
+            if(_level < 7){
+                _meleeAttkRound = 1.0;
+            } else if(_level < 13){
+                _meleeAttkRound = 3 / 2;
+            } else {
+                _meleeAttkRound = 2.0;
+            }
+            break;
+        case RANGER:
+            if(_level < 8){
+                _meleeAttkRound = 1.0;
+            } else if(_level < 15){
+                _meleeAttkRound = 3 / 2;
+            } else {
+                _meleeAttkRound = 2.0;
+            }
+            break;
+        default:
+            _meleeAttkRound = 1.0;
+            break;
+    }
+}
+
+float Entity::getMeleeAttkRnd()
+{
+    return _meleeAttkRound;
+}
+
 stats Entity::getStats()
 {
     return _stats;
@@ -1232,6 +1307,9 @@ bool Entity::loadEntity(std::string file)
     printConsTbl(_consTbl);
     printCharTbl(_charTbl);
     printLanguages(_languages);
+
+    setRaceSkillType();
+    setChrClassSkill(_chrClass[0]);
 }
 
 Entity::Entity(const char* filename)

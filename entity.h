@@ -37,8 +37,9 @@ protected:
     std::vector<unsigned> _experience; // initialized for each class
     unsigned _hitPointsBase;
     unsigned _curHitPoints;
-    unsigned weightAllowedGP = 450; //Weight in Gold Pieces
-    unsigned totalWeightGP = 0;
+    unsigned _weightAllowedGP = 450; //Weight in Gold Pieces
+    unsigned _totalWeightGP = 0;
+    float _meleeAttkRound = 1.0;
     std::vector<CHAR_CLASS> _chrClass; // for multiclass
     std::vector<LANGUAGE> _languages;
     RACE _race;
@@ -55,6 +56,7 @@ protected:
     void setBaseLanguages(); 
     void setRaceSkillType();
     void setChrClassSkill(CHAR_CLASS inClass);
+    void setMeleeAttkRnd(CHAR_CLASS inClass);
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     bool loadEntity(std::string file);
 public:
@@ -74,6 +76,7 @@ public:
     SEX getSex();
     RACE getRace();
     ALIGNMENT getAlign();
+    float getMeleeAttkRnd();
     std::vector<CHAR_CLASS> getClass();
     std::vector<unsigned> getExperience();
     std::vector<LANGUAGE> getLanguages();
