@@ -8,24 +8,22 @@ int main(){
     srand((unsigned int) time(NULL));
     std::cout << "**** Welcome to the Gygaxian Character Generator ****" << std::endl;
     
-
-    Entity dude(inputAlign(), inputSex(), inputName());
-    //stats dudeStats = dude.getStats();
-    std::cout << std::endl;
-    std::cout << dude.getName() << "'s ";
-    printSex(dude.getSex());
-    std::cout << dude.getName() << "'s ";
-    printAlign(dude.getAlign());
-    std::cout << dude.getName() << "'s stats: " << std::endl;
-    printStatsFails(dude.getStats());
+    stats newStats[2];
+    rollStats(newStats[0], newStats[1]);
+    printStatsFails(newStats[0]);
     while(reRoll()){
-        dude.reRollStats();
-        printStatsFails(dude.getStats());
+        rollStats(newStats[0], newStats[1]);
+        printStatsFails(newStats[0]);
     }
+    SEX newSex = inputSex();
+    RACE newRace = inputRace(newStats[0]);
+    std::vector<CHAR_CLASS> newClass;
+    newClass.push_back(inputClass(newRace, newStats[0]));
+    ALIGNMENT newAlign = inputAlign(newClass[0]);
+    std::string newName = inputName();
 
-    do{
-        //std::cout << "Choose Race:" << std::endl;
-    }while(!dude.checkRaceStats(inputRace(dude.getStats())));
+    Entity dude(newStats, newName, newSex, newRace, newClass, newAlign);
+
     std::cout << std::endl;
     std::cout << dude.getName() << "'s ";
     printSex(dude.getSex());
@@ -33,19 +31,8 @@ int main(){
     printAlign(dude.getAlign());
     std::cout << dude.getName() << "'s ";
     printRace(dude.getRace());
-    std::cout << dude.getName() << "'s stats: " << std::endl;
-    printStats(dude.getStats());
-
-    dude.setClass(inputClass(dude.getRace(), dude.getStats(), dude.getAlign()));
-    std::cout << std::endl;
     std::cout << dude.getName() << "'s ";
-    printSex(dude.getSex());
-    std::cout << dude.getName() << "'s ";
-    printAlign(dude.getAlign());
-    std::cout << dude.getName() << "'s ";
-    printRace(dude.getRace());
-    std::cout << dude.getName() << "'s ";
-    for(int i = 0; i < dude.getClass().size(); ++i){
+    for(unsigned i = 0; i < dude.getClass().size(); ++i){
         printClass(dude.getClass()[i]);
     }
     printLanguages(dude.getLanguages());
@@ -60,8 +47,14 @@ int main(){
     printCharTbl(dude.getCharTbl());
     printLanguages(dude.getLanguages());
 
-    dude.saveChar();
+    if(dude.saveChar()){
+        std::cout << "file saved" << std::endl;
+    } else {
+        std::cout << "file save failed" << std::endl;
+    }
+    
     std::string charFile = "characters/" + dude.getName() + ".json";
+    std::cout << "New file name: " << charFile << std::endl;
     Entity jsonTest(charFile.c_str());
 
     printRacialBias(getRacialBias(DWARF, HALF_ORC));

@@ -14,6 +14,41 @@
 //#include <fstream>
 // #include "entity.h"
 
+// Stat Dice Helper Function best 3 out of 4
+unsigned bestThree(){
+    std::vector<unsigned> rolls;
+    int min_idx = 0;
+    for(int i = 0; i < 4; ++i){
+        rolls.push_back(rollDice(6, false));
+    }
+    unsigned min_val = rolls[0];
+    for(int i = 1; i < 4; ++i){
+        if(rolls[i] < min_val){min_idx = i;}
+    }
+    unsigned final_val = 0;
+    for(int i = 0; i < 4; ++i){
+        if(i != min_idx){
+            final_val += rolls[i];
+        }
+    }
+    return final_val;
+}
+
+void rollStats(stats& _stats, stats& _modStats)
+{
+    do{
+        _stats.strength = _modStats.strength = bestThree();
+        if(_stats.strength > 17){
+            _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
+        }
+        _stats.intellignece = _modStats.intellignece = bestThree();
+        _stats.wisdom = _modStats.wisdom = bestThree();
+        _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
+        _stats.dexterity = _modStats.dexterity = bestThree();
+        _stats.constitution = _modStats.constitution = bestThree();
+    }while(!rollFailure(_stats, true));
+}
+
 std::string inputName()
 {
     // OS Level Write to standard Out
@@ -47,7 +82,7 @@ std::string inputName()
                 inChar = 0;
                 }
             }
-        }while(inChar != '\r' && inChar != '\n' || inputName.size() < 1);
+        }while((inChar != '\r' && inChar != '\n') || inputName.size() < 1);
         std::cout << std::endl << std::endl;
         if(checkExists(inputName)){
             std::cout << "\r\nCharacter Already exists.\r\nOver-Write (y/n): ";
@@ -105,7 +140,7 @@ RACE inputRace(stats inStats)
     std::unordered_map<char, RACE> rMap;
     char idx = '0';
     int nonV = 0;
-    for(int i = 0; i < racePairs.size(); ++i){
+    for(unsigned i = 0; i < racePairs.size(); ++i){
         if(raceStatCheck(inStats, racePairs[i].race)&&checkRaceStats(racePairs[i].race, inStats)){
             rMap[idx] = racePairs[i].race;
             message += racePairs[i].raceS + ": " + idx + "\r\n";
@@ -141,6 +176,7 @@ RACE inputRace(stats inStats)
 // Thank you Gary
 bool checkRaceStats(RACE race, stats _stats)
 {
+    // stat changes aren't applied just using for checks
     switch(race){
         // check for failures before adding race bonus's
         case HUMAN:
@@ -159,7 +195,7 @@ bool checkRaceStats(RACE race, stats _stats)
             // Apply Standard Elf Modifiers
             _stats.constitution--;
             _stats.dexterity++;
-            return rollFailure(_stats);
+            return rollFailure(_stats, false);
         case HALF_ORC:
             if(_stats.strength + 1 < 6){
                 std::cout << "Half-Orc Strength bellow 6" << std::endl;
@@ -189,7 +225,7 @@ bool checkRaceStats(RACE race, stats _stats)
             }
 
             _stats.constitution++;
-            return rollFailure(_stats);
+            return rollFailure(_stats, false);
         case DWARF:
             if(_stats.constitution + 1 < 12){
                 std::cout << "Dwarf constitution bellow 12" << std::endl;
@@ -214,7 +250,7 @@ bool checkRaceStats(RACE race, stats _stats)
             }
 
             _stats.constitution++;
-            return rollFailure(_stats);
+            return rollFailure(_stats, false);
         case HALFLING:
             if(_stats.strength - 1 < 6){
                 std::cout << "Halfling strength bellow 6 Magic-User Case" << std::endl;
@@ -239,7 +275,7 @@ bool checkRaceStats(RACE race, stats _stats)
             _stats.strength--;
             _stats.dexterity++;
 
-            return rollFailure(_stats);
+            return rollFailure(_stats, false);
         case HALF_ELF:
             if(_stats.constitution < 6){
                 std::cout << "Constitution bellow 6 Illusionist Only Case" << std::endl;
@@ -261,7 +297,7 @@ bool checkRaceStats(RACE race, stats _stats)
     }
 }
 
-ALIGNMENT inputAlign()
+ALIGNMENT inputAlign(CHAR_CLASS inClass)
 {
     // OS Level Write to standard Out
     //std::vector<std::string> races = {"Human: 0", "Elf: 1", "Half-Orc: 2", "Halfling: 3", "Dwarf: 4", "Half-Elf: 5", "Gnome: 6"};
@@ -271,10 +307,12 @@ ALIGNMENT inputAlign()
     std::unordered_map<char, ALIGNMENT> aList;
     char idx = '0';
     //int nonV = 0;
-    for(int i = 0; i < alignPairs.size(); ++i){
-            aList[idx] = alignPairs[i].align;
-            message += alignPairs[i].alignS + ": " + idx + ", Compatible Classes: " + alignClasses(alignPairs[i].align) + "\r\n";
-            idx++;         
+    for(unsigned i = 0; i < alignPairs.size(); ++i){
+            if(alignClassCheck(inClass, alignPairs[i].align)){
+                aList[idx] = alignPairs[i].align;
+                message += alignPairs[i].alignS + ": " + idx + "\r\n";
+                idx++;
+            }         
     }
 
     write(STD_OUT, message.c_str(), message.size());
@@ -294,15 +332,15 @@ ALIGNMENT inputAlign()
     }while(true);   
 }
 
-CHAR_CLASS inputClass(RACE race, stats inStats, ALIGNMENT align)
+CHAR_CLASS inputClass(RACE race, stats inStats)
 {
     std::string message = "\r\nSelect Class: \r\n";
     std::string nonViable = "\r\nNon-Viable Classes: \r\n";
     std::unordered_map<char, CHAR_CLASS> cList;
     char idx = '0';
     int nonV = 0;
-    for(int i = 0; i < classPairs.size(); ++i){
-        if(classRaceCheck(classPairs[i].cClass, race, align) && classStatCheck(classPairs[i].cClass, inStats)){
+    for(unsigned i = 0; i < classPairs.size(); ++i){
+        if(classRaceCheck(classPairs[i].cClass, race) && classStatCheck(classPairs[i].cClass, inStats)){
             cList[idx] = classPairs[i].cClass;
             message += classPairs[i].cS + ": " + idx + "\r\n";
             idx++;         
@@ -534,11 +572,11 @@ void printCharTbl(charismaTable charTbl)
 void printLanguages(std::vector<LANGUAGE> lang)
 {
     std::unordered_map<LANGUAGE, std::string> langMap;
-    for(int i = 0; i < langPairs.size(); ++i){
+    for(unsigned i = 0; i < langPairs.size(); ++i){
         langMap[langPairs[i].langE] = langPairs[i].langS;
     }
     std::cout << "\r\nKnown Languages: " << std::endl;
-    for(int i = 0; i < lang.size(); ++i){
+    for(unsigned i = 0; i < lang.size(); ++i){
         std::cout << langMap[lang[i]];
         if(i < lang.size() - 1){
             std::cout << ", ";
@@ -648,21 +686,15 @@ bool raceStatCheck(stats inStats, RACE race)
     }
 }
 
-bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align)
+bool classRaceCheck(CHAR_CLASS cClass, RACE race)
 {
     switch(cClass){
         case CLERIC:
-            if(align == TRUE_NEUTRAL){
-                return false;
-            }
             if(race == HALF_ELF || race == HALF_ORC || race == HUMAN){
                 return true;
             }
             return false;
         case DRUID:
-            if(align != TRUE_NEUTRAL){
-                return false;
-            }
             if(race == HALF_ELF || race == HUMAN){
                 return true;
             }
@@ -670,17 +702,11 @@ bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align)
         case FIGHTER:
             return true;
         case PALADIN:
-            if(align != LAWFUL_GOOD){
-                return false;
-            }
             if(race == HUMAN){
                 return true;
             }
             return false;
         case RANGER:
-            if(align != CHAOTIC_GOOD && align != NEUTRAL_GOOD && align != LAWFUL_GOOD){
-                return false;
-            }
             if(race == HALF_ELF || race == HUMAN){
                 return true;
             }
@@ -696,22 +722,13 @@ bool classRaceCheck(CHAR_CLASS cClass, RACE race, ALIGNMENT align)
             }
             return false;
         case THIEF:
-            if(align == CHAOTIC_GOOD || align == LAWFUL_GOOD){
-                return false;
-            }
             return true;
         case ASSASSIN:
-            if(align != LAWFUL_EVIL && align != NEUTRAL_EVIL && align != CHAOTIC_EVIL ){
-                return false;
-            }
             if(race == HALFLING){
                 return false;
             }
             return true;
         case MONK:
-            if(align != LAWFUL_EVIL && align != LAWFUL_NEUTRAL && align != LAWFUL_GOOD){
-                return false;
-            }
             if(race == HUMAN){
                 return true;
             }
@@ -907,6 +924,55 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
     }
 }
 
+bool alignClassCheck(CHAR_CLASS inClass, ALIGNMENT inAlign)
+{
+    switch(inClass){
+        case CLERIC:
+            if(inAlign == TRUE_NEUTRAL){
+                return false;
+            } else {
+                return true;
+            }
+        case DRUID:
+            if(inAlign != TRUE_NEUTRAL){
+                return false;
+            }
+            return true;
+        case FIGHTER:
+            return true;
+        case PALADIN:
+            if(inAlign != LAWFUL_GOOD){
+                return false;
+            }
+            return true;
+        case RANGER:
+            if(inAlign != CHAOTIC_GOOD && inAlign != NEUTRAL_GOOD && inAlign != LAWFUL_GOOD){
+                return false;
+            }
+        case MAGIC_USER:
+            return true;
+        case ILLUSIONIST:
+            return true;
+        case THIEF:
+            if(inAlign == CHAOTIC_GOOD || inAlign == LAWFUL_GOOD){
+                return false;
+            }
+            return true;
+        case ASSASSIN:
+            if(inAlign != LAWFUL_EVIL && inAlign != NEUTRAL_EVIL && inAlign != CHAOTIC_EVIL ){
+                return false;
+            }
+            return true;
+        case MONK:
+            if(inAlign != LAWFUL_EVIL && inAlign != LAWFUL_NEUTRAL && inAlign != LAWFUL_GOOD){
+                return false;
+            }
+            return true;
+        default:
+            return true;
+    }
+}
+
 bool checkExists(std::string name)
 {
     std::string file = "characters/" + name + ".json";
@@ -935,47 +1001,59 @@ char choice;
 
 // This checks to see of stat rolls will generate non viable class
 // Based off of Gygaxian 1st Ed. rules.
-bool rollFailure(stats inStats){
+bool rollFailure(stats inStats, bool printMsg){
     if(inStats.constitution < 6 && (inStats.intellignece < 15 || inStats.dexterity < 16)){
         //fails illusionist only case const <= 5
-        std::cout << "\r\nCursed Stats:" << std::endl;
-        printStats(inStats);
-        std::cout << "\r\nFailed Illusionist only.\r\nAuto re-roll." << std::endl;
+        if(printMsg){
+            std::cout << "\r\nCursed Stats:" << std::endl;
+            printStats(inStats);
+            std::cout << "\r\nFailed Illusionist only.\r\nAuto re-roll." << std::endl;
+        }
         return false;
     }
     if(inStats.intellignece < 6 && inStats.strength < 9){
         //fails Fighter only case int <= 5
-        std::cout << "\r\nCursed Stats:" << std::endl;
-        printStats(inStats);
-        std::cout << "\r\nFailed Fighter only\r\nAuto re-roll." << std::endl;
+        if(printMsg){
+            std::cout << "\r\nCursed Stats:" << std::endl;
+            printStats(inStats);
+            std::cout << "\r\nFailed Fighter only\r\nAuto re-roll." << std::endl;
+        }
         return false;
     }
     if(inStats.wisdom < 6 && inStats.dexterity < 9){
         //fails Thief only case wis <= 5
-        std::cout << "\r\nCursed Stats:" << std::endl;
-        printStats(inStats);
-        std::cout << "\r\nFailed Thief only\r\nAuto re-roll." << std::endl;
+        if(printMsg){
+            std::cout << "\r\nCursed Stats:" << std::endl;
+            printStats(inStats);
+            std::cout << "\r\nFailed Thief only\r\nAuto re-roll." << std::endl;
+        }
         return false;
     }
     if(inStats.strength < 6 && inStats.intellignece < 9){
         //fails Magic User only case
-        std::cout << "\r\nCursed Stats:" << std::endl;
-        printStats(inStats);
-        std::cout << "\r\nFailed Magic-User only\r\nAuto re-roll." << std::endl;
+        if(printMsg){
+            std::cout << "\r\nCursed Stats:" << std::endl;
+            printStats(inStats);
+            std::cout << "\r\nFailed Magic-User only\r\nAuto re-roll." << std::endl;
+        }
         return false;
     }
     if(inStats.dexterity < 6 && inStats.wisdom < 9){
         //fails Cleric only case
-        std::cout << "\r\nCursed Stats:" << std::endl;
-        printStats(inStats);
-        std::cout << "\r\nFailed Cleric only\r\nAuto re-roll." << std::endl;
+        if(printMsg){
+            std::cout << "\r\nCursed Stats:" << std::endl;
+            printStats(inStats);
+            std::cout << "\r\nFailed Cleric only\r\nAuto re-roll." << std::endl;
+        }
         return false;
     }
     if(inStats.charisma < 6 && (inStats.strength < 12 || inStats.intellignece < 11 || inStats.dexterity < 12)){
         //fails Assasin only case
-        std::cout << "\r\nCursed Stats:" << std::endl;
-        printStats(inStats);
-        std::cout << "\r\nFailed Assasin only\r\nAuto re-roll." << std::endl;
+        if(printMsg){
+            std::cout << "\r\nCursed Stats:" << std::endl;
+            printStats(inStats);
+            std::cout << "\r\nFailed Assasin only\r\nAuto re-roll." << std::endl;
+        }
         return false;
     }
     return true;
@@ -984,7 +1062,7 @@ bool rollFailure(stats inStats){
 void printAlign(ALIGNMENT align)
 {
     std::unordered_map<ALIGNMENT, std::string> aMap;
-    for(int i = 0; i < alignPairs.size(); ++i){
+    for(unsigned i = 0; i < alignPairs.size(); ++i){
         aMap[alignPairs[i].align] = alignPairs[i].alignS;
     }
     std::cout << "Alignment: " << aMap[align] << std::endl;
@@ -993,7 +1071,7 @@ void printAlign(ALIGNMENT align)
 void printClass(CHAR_CLASS cClass)
 {
     std::unordered_map<CHAR_CLASS, std::string> cMap;
-    for(int i = 0; i < classPairs.size(); ++i){
+    for(unsigned i = 0; i < classPairs.size(); ++i){
         cMap[classPairs[i].cClass] = classPairs[i].cS;
     }
     std::cout << "Class: " << cMap[cClass] << std::endl;   

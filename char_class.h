@@ -118,9 +118,21 @@ public:
     //void listClassSkills();
 };
 
-class Monk: public CHR_CLASS_SKILLS{
+// Monk extends Thief only because uses some thief tables.
+class Monk: public Thief{
+private:
+    // chance to surprise goes down 1% at level 2
+    // and goes down 2% every level thereafter.
+    unsigned _chanceToBeSurprise = 33; 
+    int effectiveAC = 10; // -1 per level
+    unsigned char moveInches = 15; // +1" per level
+    unsigned char openHandMeleeAtk = 1; // increases with level
+    // Open handed damage changes with level
+    unsigned char openHandedDUpper = 3;
+    unsigned char openHandedDLower = 1;
+    //
 public:
-    Monk();
+    Monk(RACE inRace, unsigned inLevel);
     ~Monk();
     //void listClassSkills();
 };

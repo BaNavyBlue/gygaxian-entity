@@ -434,7 +434,7 @@ Assassin::~Assassin(){
     std::cout << "Assasin Destructor" << std::endl; 
 }
 
-Monk::Monk(){
+Monk::Monk(RACE inRace, unsigned inLevel){
     _classTbl.HitDieType = 4; // starts 2d4
     _classTbl.MaxHitDie = 17;
     _classTbl.spellAbility = false;

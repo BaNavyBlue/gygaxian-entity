@@ -3,43 +3,30 @@
 */
 #include "entity.h"
 
-// Stat Dice Helper Function best 3 out of 4
-unsigned bestThree(){
-    std::vector<unsigned> rolls;
-    int min_idx = 0;
-    for(int i = 0; i < 4; ++i){
-        rolls.push_back(rollDice(6, false));
-    }
-    unsigned min_val = rolls[0];
-    for(int i = 1; i < 4; ++i){
-        if(rolls[i] < min_val){min_idx = i;}
-    }
-    unsigned final_val = 0;
-    for(int i = 0; i < 4; ++i){
-        if(i != min_idx){
-            final_val += rolls[i];
-        }
-    }
-    return final_val;
-}
 
-Entity::Entity(ALIGNMENT align, SEX sex, std::string name)
+Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vector<CHAR_CLASS> chrClass, ALIGNMENT align)
 {
     _name = name;
     _sex = sex;
     _alignment = align;
-    unsigned str_mod = 0;
-    do{
-        _stats.strength = _modStats.strength = bestThree();
-        if(_stats.strength > 17){
-            _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
-        }
-        _stats.intellignece = _modStats.intellignece = bestThree();
-        _stats.wisdom = _modStats.wisdom = bestThree();
-        _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
-        _stats.dexterity = _modStats.dexterity = bestThree();
-        _stats.constitution = _modStats.constitution = bestThree();
-    }while(!rollFailure(_stats));
+    _stats = inStats[0];
+    _modStats = inStats[1];
+    _race = race;
+    _chrClass = chrClass;
+    checkRaceStats(_race);
+    setStrenTbl();
+    setIntTbl();
+    setPossLang();
+    setBaseLanguages();
+    setWisTbl();
+    setDexTbl();
+    if(_chrClass[0] == THIEF || _chrClass[0] == ASSASSIN){
+        setDexThief();
+    }
+    setConsTbl();
+    setRaceSkillType();
+    setChrClassSkill(_chrClass[0]);
+    //unsigned str_mod = 0;
 }
 
 Entity::~Entity()
@@ -128,10 +115,10 @@ void Entity::setChrClassSkill(CHAR_CLASS inClass)
             }
             break;
         case MONK:
-            _chrSkills.push_back(std::make_shared<Monk>());
+            _chrSkills.push_back(std::make_shared<Monk>(_race, _level));
             break;
         default:
-            _chrSkills.push_back(std::make_shared<Monk>());
+            _chrSkills.push_back(std::make_shared<Cleric>());
             break;
     }
 }
@@ -995,20 +982,20 @@ bool Entity::checkRaceStats(RACE race)
     }
 }
 
-void Entity::reRollStats()
-{
-    do{
-        _stats.strength = _modStats.strength = bestThree();
-        if(_stats.strength > 17){
-            _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
-        }
-        _stats.intellignece = _modStats.intellignece = bestThree();
-        _stats.wisdom = _modStats.wisdom = bestThree();
-        _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
-        _stats.dexterity = _modStats.dexterity = bestThree();
-        _stats.constitution = _modStats.constitution = bestThree();
-    }while(!rollFailure(_stats));  
-}
+// void Entity::reRollStats()
+// {
+//     do{
+//         _stats.strength = _modStats.strength = bestThree();
+//         if(_stats.strength > 17){
+//             _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
+//         }
+//         _stats.intellignece = _modStats.intellignece = bestThree();
+//         _stats.wisdom = _modStats.wisdom = bestThree();
+//         _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
+//         _stats.dexterity = _modStats.dexterity = bestThree();
+//         _stats.constitution = _modStats.constitution = bestThree();
+//     }while(!rollFailure(_stats));  
+// }
 
 RACE Entity::getRace(){
     return _race;
@@ -1023,7 +1010,7 @@ std::vector<CHAR_CLASS> Entity::getClass()
     return _chrClass;
 }
 
-bool Entity::setClass(CHAR_CLASS inClass)
+void Entity::setClass(CHAR_CLASS inClass)
 {
     _chrClass.push_back(inClass);
     setStrenTbl();
@@ -1107,7 +1094,7 @@ std::vector<LANGUAGE> Entity::getLanguages()
 }
 
 bool Entity::isFighter(){
-    for(int i = 0; i < _chrClass.size(); i++){
+    for(unsigned i = 0; i < _chrClass.size(); i++){
         if(_chrClass[i] == FIGHTER || _chrClass[i] == PALADIN || _chrClass[i] == RANGER){
             return true;
         }
@@ -1188,7 +1175,7 @@ bool Entity::saveChar()
     outTxt += "        \"languages\":{\r\n";
     outTxt += "            \"count\":" + std::to_string(_languages.size()) + ",\r\n";
     outTxt += "            \"index\":{\r\n";
-    for(int i = 0; i < _languages.size(); ++i){
+    for(unsigned i = 0; i < _languages.size(); ++i){
         outTxt += "                \"" + std::to_string(i) + "\":" + std::to_string(_languages[i]);
         if(i < _languages.size() - 1){
             outTxt += ",\r\n";       
@@ -1210,11 +1197,14 @@ bool Entity::saveChar()
         myFile.close();
     } else {
         std::cout << "File Can't open path " << filename << " invalid or cannot be accessed." << std::endl;
+        return false;
     }
+    return true;
 }
 
-bool Entity::loadEntity(std::string file)
+void Entity::loadEntity(std::string file)
 {
+    std::cout << "loading: " << file << std::endl;
     sj::ondemand::parser parser;
     sj::padded_string json = sj::padded_string::load(file.c_str());
     sj::ondemand::document charData = parser.iterate(json);
@@ -1308,8 +1298,9 @@ bool Entity::loadEntity(std::string file)
     printCharTbl(_charTbl);
     printLanguages(_languages);
 
-    setRaceSkillType();
+    //setRaceSkillType();
     setChrClassSkill(_chrClass[0]);
+    std::cout << "finished loading character" << std::endl;
 }
 
 Entity::Entity(const char* filename)

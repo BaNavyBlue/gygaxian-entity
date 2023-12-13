@@ -6,7 +6,6 @@
 
 #include "project_headers.h"
 #include "StatHelpers.h"
-#include "dice_roll.h"
 #include "simdjson.h"
 #include "skills.h"
 #include "char_class.h"
@@ -57,10 +56,13 @@ protected:
     void setRaceSkillType();
     void setChrClassSkill(CHAR_CLASS inClass);
     void setMeleeAttkRnd(CHAR_CLASS inClass);
+    bool checkRaceStats(RACE race);
+    void setClass(CHAR_CLASS cls);
+    void setRace(RACE race);
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
-    bool loadEntity(std::string file);
+    void loadEntity(std::string file);
 public:
-    Entity(ALIGNMENT align, SEX sex, std::string name);
+    Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vector<CHAR_CLASS> chrClass, ALIGNMENT align);
     Entity(const char* filename);
     ~Entity();
     stats getStats();
@@ -80,10 +82,7 @@ public:
     std::vector<CHAR_CLASS> getClass();
     std::vector<unsigned> getExperience();
     std::vector<LANGUAGE> getLanguages();
-    bool checkRaceStats(RACE race);
-    bool setClass(CHAR_CLASS cls);
-    void setRace(RACE race);
-    void reRollStats();
+    //void reRollStats();
     bool saveChar();
 };
 #endif
