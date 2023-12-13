@@ -100,6 +100,7 @@ const std::vector<langPair> langPairs = {{ELVISH, "Elvish"},
                                                    {KOBOLD, "Kobold"},
                                                    {BURROWING_ANIMALS, "Burrowing Animals"},
                                                    {COMMON_L, "Common"},
+                                                   {GNOLL, "Gnoll"},
                                                    {THIEVES_CANT,"Thieves' Cant"}};
 
 struct stats{
