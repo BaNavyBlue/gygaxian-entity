@@ -21,7 +21,7 @@ Race is selected next since race choice can modify stats. Only viable races base
 # Class:
 Class is limited by Race and Stats. Like race, only viable classes based on race and stats will be shown.
 # Alignment:
-Following the Player Handbook order alignment is the next choice. Only alignments compatible with chose class will be available.
+Following the Player Handbook order alignment is the next choice. Only alignments compatible with chosen class will be available.
 # Name:
 Moved name until after the primary stats, sex, race, classes and Alignment is specified. User can enter a name based on whatever criteria.  If name already exists one can choose to over-write existing file or not.
 
