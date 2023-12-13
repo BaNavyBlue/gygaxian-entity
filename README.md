@@ -1,8 +1,9 @@
 # gygaxian-entity
 This is a stream of conciousness project based on the original Gary Gygax Advanced Dungeons and Dragons first Edition character creation mechanics. There is a mix of c and c++ coding, sometimes just because it was the first thing that popped into my head.
 
-Originally intended this to be an excercise at using inheritance but quickly realized the error of my ways and remembered that inheritance is seldom a good solution for anything.
-I couldn't find a compelling reason to extend the "Parrent" Entity class into "child" Races nor "child" Char_Classes.  I could extend Entity into races, and extend each race with appropriate char_classes.
+Originally intended this to be an excercise at using inheritance but quickly realized the error of my ways and remembered that inheritance is seldom a good solution for anything. Increasing memory indirection and making code brittle to changes isn't as wonderful for maintainability as OOP guru's would like one to believe.
+
+I couldn't find a compelling reason to extend the "Parent" Entity class into "child" Races nor "child" Char_Classes.  I could extend Entity into races, and extend each race with appropriate char_classes.
 But this would be madness when one can just enumerate the races and classes and just allow an Entity to hold the enumeration values.
 
 I did end up creating a racial skills parent class each child race having different skills, and buffs. The Assassin class is a grand child of the main class descending from Thief.
@@ -12,7 +13,7 @@ Currently this code runs in the terminal and allows one to create a character us
 
 
 # Stats:
-Stat rolls are next follows the "Best 3 out of 4" approach.  Stat Rolls show which Class and Race requirements are failed. User has the Option to keep or re-roll. The stat roll also auto rerolls upon what I'm calling cursed rolls (i.e.) when the constitution is so low the only playable class is illusionist and the other stats disqualify character from being an illusionist.
+Stat rolls are first and follows the "Best 3 out of 4" approach.  Stat Rolls show which Class and Race requirements are failed. User has the Option to keep or re-roll. The stat roll also auto rerolls upon what I'm calling cursed rolls (i.e.) when the constitution is so low the only playable class is illusionist and the other stats disqualify character from being an illusionist.
 # Sex:
 Next user can choose 1 of 5 sex's.  (AD&D 1e only has 2).
 # Race:
