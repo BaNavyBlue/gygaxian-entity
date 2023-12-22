@@ -38,6 +38,7 @@ int main(){
     printLanguages(dude.getLanguages());
     std::cout << dude.getName() << "'s stats: " << std::endl;
     printStats(dude.getStats());
+    printMoney(dude.getMoney());
     printStrTbl(dude.getStrTbl());
     printIntTbl(dude.getIntTbl());
     printWisTbl(dude.getWisTbl());

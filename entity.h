@@ -24,6 +24,7 @@ protected:
     std::string _name;
     bool _undead = false;
     stats _stats; // Base Stats upon creation.
+    money _money;
     stats _modStats; // Stats altered by effects.
     strengthTable _strTbl;
     inteligenceTable _intTbl;
@@ -82,6 +83,7 @@ public:
     std::vector<CHAR_CLASS> getClass();
     std::vector<unsigned> getExperience();
     std::vector<LANGUAGE> getLanguages();
+    money getMoney();
     //void reRollStats();
     bool saveChar();
 };

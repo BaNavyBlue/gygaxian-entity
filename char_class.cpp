@@ -5,6 +5,11 @@ CHR_CLASS_SKILLS::CHR_CLASS_SKILLS()
 
 }
 
+unsigned CHR_CLASS_SKILLS::generateGold()
+{
+    return (rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false))*10;
+}
+
 CHR_CLASS_SKILLS::~CHR_CLASS_SKILLS()
 {
     std::cout << "In CHR_CLASS_SKILLS destructor." << std::endl;
@@ -43,6 +48,11 @@ Cleric::~Cleric(){
     std::cout << "Cleric Destructor" << std::endl;
 }
 
+unsigned Cleric::generateGold()
+{
+    return (rollDice(6, false) + rollDice(6, false) + rollDice(6, false))*10;
+}
+
 Druid::Druid(){
     _classTbl.HitDieType = 8;
     _classTbl.MaxHitDie = 14;
@@ -53,6 +63,11 @@ Druid::Druid(){
 
 Druid::~Druid(){
     std::cout << "Druid Destructor" << std::endl;
+}
+
+unsigned Druid::generateGold()
+{
+    return (rollDice(6, false) + rollDice(6, false) + rollDice(6, false))*10;
 }
 
 Fighter::Fighter(){
@@ -134,6 +149,11 @@ MagicUser::~MagicUser(){
     std::cout << "MagicUser Destructor" << std::endl; 
 }
 
+unsigned MagicUser::generateGold()
+{
+    return (rollDice(4, false) + rollDice(4, false))*10;
+}
+
 Illusionist::Illusionist(){
     _classTbl.HitDieType = 4;
     _classTbl.MaxHitDie = 10;
@@ -144,6 +164,11 @@ Illusionist::Illusionist(){
 
 Illusionist::~Illusionist(){
     std::cout << "Illusionist Destructor" << std::endl; 
+}
+
+unsigned Illusionist::generateGold()
+{
+    return (rollDice(4, false) + rollDice(4, false))*10;
 }
 
 Thief::Thief()
@@ -162,6 +187,11 @@ Thief::Thief(RACE inRace, unsigned inLevel){
 
 Thief::~Thief(){
     std::cout << "Thief Destructor" << std::endl; 
+}
+
+unsigned Thief::generateGold()
+{
+    return (rollDice(6, false) + rollDice(6, false))*10;
 }
 
 void Thief::listClassSkills()
@@ -440,6 +470,11 @@ Monk::Monk(RACE inRace, unsigned inLevel){
     _classTbl.spellAbility = false;
     _classTbl.LevelLimit = 17;
     listClassSkills();
+}
+
+unsigned Monk::generateGold()
+{
+    return (rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false));
 }
 
 Monk::~Monk(){

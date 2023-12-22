@@ -3,35 +3,42 @@
         "name":"test",
         "alignment":0,
         "sex":0,
-        "race":6,
+        "race":2,
         "level":1,
-        "class":8,
+        "class":2,
+        "money":{
+            "gold":120,
+            "silver":0,
+            "copper":0,
+            "electrum":0,
+            "platinum":0
+        },
         "stats":{
-            "strength":10,
-            "excStrength":56,
-            "intelligence":18,
+            "strength":18,
+            "excStrength":83,
+            "intelligence":11,
             "wisdom":14,
-            "dexterity":16,
+            "dexterity":15,
             "constitution":15,
-            "charisma":14,
-            "raceCharisma":14
+            "charisma":9,
+            "raceCharisma":11
         },
         "modStats":{
-            "strength":10,
-            "excStrength":56,
-            "intelligence":18,
+            "strength":18,
+            "excStrength":83,
+            "intelligence":11,
             "wisdom":14,
-            "dexterity":16,
+            "dexterity":15,
             "constitution":15,
-            "charisma":14,
-            "raceCharisma":14
+            "charisma":9,
+            "raceCharisma":11
         },
         "strengthTable":{
-            "hitProb":0,
-            "damageAdj":0,
-            "weightAllowMod":0,
-            "openDoors":2,
-            "bendBarsLiftGatesPer":2
+            "hitProb":2,
+            "damageAdj":4,
+            "weightAllowMod":1500,
+            "openDoors":4,
+            "bendBarsLiftGatesPer":30
         },
         "wisTable":{
             "magicAttackAdj":0,
@@ -39,14 +46,14 @@
             "spellFailPer":0
         },
         "intTable":{
-            "chanceToKnowPer":85,
-            "minimumSpellsPer":9,
-            "maximumSpellsPer":18,
-            "possibleAddLang":7
+            "chanceToKnowPer":45,
+            "minimumSpellsPer":5,
+            "maximumSpellsPer":7,
+            "possibleAddLang":2
         },
         "dexTable":{
-            "reactAttkAdj":1,
-            "defenseAdj":-2
+            "reactAttkAdj":0,
+            "defenseAdj":-1
         },
         "dexThief":{
             "pickPocketPer":0,
@@ -66,15 +73,10 @@
             "reactAdjustPer":0
         },
         "languages":{
-            "count":7,
+            "count":2,
             "index":{
                 "0":10,
-                "1":1,
-                "2":2,
-                "3":3,
-                "4":4,
-                "5":8,
-                "6":9
+                "1":6
             }
         }
     }

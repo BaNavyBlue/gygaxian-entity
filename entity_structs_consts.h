@@ -114,6 +114,14 @@ struct stats{
     unsigned constitution;
 };
 
+struct money{
+    unsigned gold = 0;
+    unsigned silver = 0;
+    unsigned copper = 0;
+    unsigned electrum = 0;
+    unsigned platinum = 0;
+};
+
 struct strengthTable{ // pg. 9
     int hitProb = 0;
     int damageAdj = 0;

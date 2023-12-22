@@ -26,6 +26,9 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     setConsTbl();
     setRaceSkillType();
     setChrClassSkill(_chrClass[0]);
+    if(_chrSkills.size() < 2){
+        _money.gold = _chrSkills[0]->generateGold();
+    }
     //unsigned str_mod = 0;
 }
 
@@ -1025,6 +1028,10 @@ void Entity::setClass(CHAR_CLASS inClass)
     setConsTbl();
     setRaceSkillType();
     setChrClassSkill(inClass);
+    std::cout << "_chrSkills.size(): " << _chrSkills.size() << std::endl;
+    if(_chrSkills.size() < 2){
+        _money.gold = _chrSkills[0]->generateGold();
+    }
 }
 
 void Entity::setBaseLanguages(){
@@ -1093,6 +1100,11 @@ std::vector<LANGUAGE> Entity::getLanguages()
     return _languages;
 }
 
+money Entity::getMoney()
+{
+    return _money;
+}
+
 bool Entity::isFighter(){
     for(unsigned i = 0; i < _chrClass.size(); i++){
         if(_chrClass[i] == FIGHTER || _chrClass[i] == PALADIN || _chrClass[i] == RANGER){
@@ -1113,6 +1125,13 @@ bool Entity::saveChar()
     outTxt += "        \"race\":" + std::to_string(_race) + ",\r\n";
     outTxt += "        \"level\":" + std::to_string(_level) + ",\r\n";
     outTxt += "        \"class\":" + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
+    outTxt += "        \"money\":{\r\n";
+    outTxt += "            \"gold\":" + std::to_string(_money.gold) + ",\r\n";
+    outTxt += "            \"silver\":" + std::to_string(_money.silver) + ",\r\n";
+    outTxt += "            \"copper\":" + std::to_string(_money.copper) + ",\r\n";
+    outTxt += "            \"electrum\":" + std::to_string(_money.electrum) + ",\r\n";
+    outTxt += "            \"platinum\":" + std::to_string(_money.platinum) + "\r\n";
+    outTxt += "        },\r\n";
     outTxt += "        \"stats\":{\r\n";
     outTxt += "            \"strength\":" + std::to_string(_stats.strength) + ",\r\n";
     outTxt += "            \"excStrength\":" + std::to_string(_stats.excStren) + ",\r\n";
@@ -1233,6 +1252,12 @@ void Entity::loadEntity(std::string file)
     _stats.charisma = uint64_t(charData["data"]["stats"]["charisma"]);
     _stats.raceCharisma = uint64_t(charData["data"]["stats"]["raceCharisma"]);
 
+    _money.gold = uint64_t(charData["data"]["money"]["gold"]);
+    _money.silver = uint64_t(charData["data"]["money"]["silver"]);
+    _money.copper = uint64_t(charData["data"]["money"]["copper"]);
+    _money.electrum = uint64_t(charData["data"]["money"]["electrum"]);
+    _money.platinum = uint64_t(charData["data"]["money"]["platinum"]);
+
     _modStats.strength = uint64_t(charData["data"]["modStats"]["strength"]);
     _modStats.intellignece = uint64_t(charData["data"]["modStats"]["intelligence"]);
     _modStats.wisdom = uint64_t(charData["data"]["modStats"]["wisdom"]);
@@ -1287,6 +1312,7 @@ void Entity::loadEntity(std::string file)
     std::cout << "Level: " << (int)_level << std::endl;
     std::cout << "\r\nStats: ";
     printStats(_stats);
+    printMoney(_money);
     std::cout << "\r\nMod Stats: ";
     printStats(_modStats);
     printStrTbl(_strTbl);

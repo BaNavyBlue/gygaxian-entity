@@ -40,6 +40,7 @@ void printConsTbl(constitutionTable consTbl);
 void printCharTbl(charismaTable charTbl);
 void printLanguages(std::vector<LANGUAGE> lang);
 void printRacialBias(RACIAL_BIAS bias);
+void printMoney(money inMoney);
 bool reRoll();
 bool raceStatCheck(stats inStats, RACE race);
 bool classRaceCheck(CHAR_CLASS cClass, RACE race);

@@ -12,6 +12,7 @@ public:
     CHR_CLASS_SKILLS();
     ~CHR_CLASS_SKILLS();
     virtual void listClassSkills();
+    virtual unsigned generateGold();
     classTable1 getClassTable1();
 };
 
@@ -19,6 +20,7 @@ class Cleric: public CHR_CLASS_SKILLS{
 public:
     Cleric();
     ~Cleric();
+    unsigned generateGold() override;
     //void listClassSkills();
 };
 
@@ -26,6 +28,7 @@ class Druid: public CHR_CLASS_SKILLS{
 public:
     Druid();
     ~Druid();
+    unsigned generateGold() override;
     //void listClassSkills();
 };
 
@@ -85,6 +88,7 @@ class MagicUser: public CHR_CLASS_SKILLS{
 public:
     MagicUser();
     ~MagicUser();
+    unsigned generateGold() override;
     //void listClassSkills();
 };
 
@@ -92,6 +96,7 @@ class Illusionist: public CHR_CLASS_SKILLS{
 public:
     Illusionist();
     ~Illusionist();
+    unsigned generateGold() override;
     //void listClassSkills();
 };
 
@@ -109,6 +114,7 @@ public:
     ~Thief();
     void setThiefSkills(RACE inRace, unsigned inLevel);
     void listClassSkills();
+    unsigned generateGold() override;
 };
 
 class Assassin: public Thief{
@@ -134,6 +140,7 @@ private:
 public:
     Monk(RACE inRace, unsigned inLevel);
     ~Monk();
+    unsigned generateGold() override;
     //void listClassSkills();
 };
 #endif

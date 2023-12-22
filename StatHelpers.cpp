@@ -585,6 +585,16 @@ void printLanguages(std::vector<LANGUAGE> lang)
     std::cout << std::endl << std::endl;
 }
 
+void printMoney(money inMoney)
+{
+    std::cout << "\r\nChar Money: " << std::endl;
+    std::cout << "gold: " << inMoney.gold << std::endl;
+    std::cout << "silver: " << inMoney.silver << std::endl;
+    std::cout << "copper: " << inMoney.copper << std::endl;
+    std::cout << "electrum: " << inMoney.electrum << std::endl;
+    std::cout << "platinum: " << inMoney.platinum << std::endl;
+}
+
 bool raceStatCheck(stats inStats, RACE race)
 {
     switch(race){
