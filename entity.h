@@ -37,7 +37,7 @@ protected:
     std::vector<unsigned> _experience; // initialized for each class
     unsigned _hitPointsBase;
     unsigned _curHitPoints;
-    unsigned _weightAllowedGP = 450; //Weight in Gold Pieces
+    unsigned _weightAllowedGP = 350; //Weight in Gold Pieces
     unsigned _totalWeightGP = 0;
     float _meleeAttkRound = 1.0;
     std::vector<CHAR_CLASS> _chrClass; // for multiclass
@@ -84,6 +84,10 @@ public:
     std::vector<unsigned> getExperience();
     std::vector<LANGUAGE> getLanguages();
     money getMoney();
+    unsigned getMaxHP();
+    unsigned getCurHP();
+    unsigned getWeightAllowed();
+    unsigned getWeightCarried();
     //void reRollStats();
     bool saveChar();
 };

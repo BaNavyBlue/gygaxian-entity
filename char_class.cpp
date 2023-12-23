@@ -10,6 +10,11 @@ unsigned CHR_CLASS_SKILLS::generateGold()
     return (rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false))*10;
 }
 
+unsigned CHR_CLASS_SKILLS::rollHP()
+{
+    return rollDice(_classTbl.HitDieType, false);
+}
+
 CHR_CLASS_SKILLS::~CHR_CLASS_SKILLS()
 {
     std::cout << "In CHR_CLASS_SKILLS destructor." << std::endl;
@@ -129,7 +134,7 @@ Ranger::Ranger(){
     _chanceToSurprise.maxRange = 3; // 1-3
     _chanceToBeSurprised.sidedDie = 6;
     _chanceToBeSurprised.maxRange = 1; // 1-1
-    std::cout << "Should Show Raneger variables" << std::endl;
+    std::cout << "Should Show Ranger variables" << std::endl;
     listClassSkills();
 }
 

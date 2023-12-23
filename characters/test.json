@@ -1,11 +1,15 @@
 {
     "data":{
         "name":"test",
-        "alignment":0,
-        "sex":0,
-        "race":2,
+        "alignment":1,
+        "sex":1,
+        "race":0,
         "level":1,
-        "class":2,
+        "maxHP":9,
+        "curHP":9,
+        "weightAllow":550,
+        "totalWeight":120,
+        "class":3,
         "money":{
             "gold":120,
             "silver":0,
@@ -14,31 +18,31 @@
             "platinum":0
         },
         "stats":{
-            "strength":18,
-            "excStrength":83,
-            "intelligence":11,
+            "strength":14,
+            "excStrength":0,
+            "intelligence":10,
             "wisdom":14,
-            "dexterity":15,
-            "constitution":15,
-            "charisma":9,
-            "raceCharisma":11
+            "dexterity":11,
+            "constitution":14,
+            "charisma":15,
+            "raceCharisma":15
         },
         "modStats":{
-            "strength":18,
-            "excStrength":83,
-            "intelligence":11,
+            "strength":14,
+            "excStrength":0,
+            "intelligence":10,
             "wisdom":14,
-            "dexterity":15,
-            "constitution":15,
-            "charisma":9,
-            "raceCharisma":11
+            "dexterity":11,
+            "constitution":14,
+            "charisma":15,
+            "raceCharisma":15
         },
         "strengthTable":{
-            "hitProb":2,
-            "damageAdj":4,
-            "weightAllowMod":1500,
-            "openDoors":4,
-            "bendBarsLiftGatesPer":30
+            "hitProb":0,
+            "damageAdj":0,
+            "weightAllowMod":200,
+            "openDoors":2,
+            "bendBarsLiftGatesPer":7
         },
         "wisTable":{
             "magicAttackAdj":0,
@@ -53,7 +57,7 @@
         },
         "dexTable":{
             "reactAttkAdj":0,
-            "defenseAdj":-1
+            "defenseAdj":0
         },
         "dexThief":{
             "pickPocketPer":0,
@@ -63,9 +67,9 @@
             "hideInShadows":0
         },
         "consTbl":{
-            "hpAdj":1,
-            "sysShockSurPer":91,
-            "resurSurvPer":94
+            "hpAdj":0,
+            "sysShockSurPer":88,
+            "resurSurvPer":92
         },
         "charTbl":{
             "maxHenchMen":4,
@@ -73,10 +77,9 @@
             "reactAdjustPer":0
         },
         "languages":{
-            "count":2,
+            "count":1,
             "index":{
-                "0":10,
-                "1":6
+                "0":10
             }
         }
     }

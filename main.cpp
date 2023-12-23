@@ -38,6 +38,9 @@ int main(){
     printLanguages(dude.getLanguages());
     std::cout << dude.getName() << "'s stats: " << std::endl;
     printStats(dude.getStats());
+    std::cout << "\r\nMax HP: " << dude.getMaxHP() << std::endl;
+    std::cout << "\r\nWeight Allowed in gold pieces (gp): " << dude.getWeightAllowed() << std::endl;
+    std::cout << "\r\nTotal Weight gp: " << dude.getWeightCarried() << std::endl;
     printMoney(dude.getMoney());
     printStrTbl(dude.getStrTbl());
     printIntTbl(dude.getIntTbl());

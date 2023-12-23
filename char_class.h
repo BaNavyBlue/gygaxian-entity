@@ -13,6 +13,7 @@ public:
     ~CHR_CLASS_SKILLS();
     virtual void listClassSkills();
     virtual unsigned generateGold();
+    virtual unsigned rollHP();
     classTable1 getClassTable1();
 };
 
@@ -21,6 +22,7 @@ public:
     Cleric();
     ~Cleric();
     unsigned generateGold() override;
+    //unsigned rollHP() override;
     //void listClassSkills();
 };
 

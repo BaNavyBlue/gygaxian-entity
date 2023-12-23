@@ -15,6 +15,7 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     _chrClass = chrClass;
     checkRaceStats(_race);
     setStrenTbl();
+    _weightAllowedGP += _strTbl.weightAllowMod;
     setIntTbl();
     setPossLang();
     setBaseLanguages();
@@ -28,6 +29,14 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     setChrClassSkill(_chrClass[0]);
     if(_chrSkills.size() < 2){
         _money.gold = _chrSkills[0]->generateGold();
+    }
+    _totalWeightGP += _money.gold;
+
+    // First HP roll for Ranger and Monk is double.
+    if(_chrClass[0] == RANGER || _chrClass[0] == MONK){
+        _hitPointsBase = _curHitPoints = _chrSkills[0]->rollHP() + _chrSkills[0]->rollHP() + _consTbl.hpAdj;
+    } else {
+        _hitPointsBase = _curHitPoints = _chrSkills[0]->rollHP() + _consTbl.hpAdj;
     }
     //unsigned str_mod = 0;
 }
@@ -1105,6 +1114,26 @@ money Entity::getMoney()
     return _money;
 }
 
+unsigned Entity::getMaxHP()
+{
+    return _hitPointsBase;
+}
+
+unsigned Entity::getCurHP()
+{
+    return _curHitPoints;
+}
+
+unsigned Entity::getWeightAllowed()
+{
+    return _weightAllowedGP;
+}
+
+unsigned Entity::getWeightCarried()
+{
+    return _totalWeightGP;
+}
+
 bool Entity::isFighter(){
     for(unsigned i = 0; i < _chrClass.size(); i++){
         if(_chrClass[i] == FIGHTER || _chrClass[i] == PALADIN || _chrClass[i] == RANGER){
@@ -1124,6 +1153,10 @@ bool Entity::saveChar()
     outTxt += "        \"sex\":" + std::to_string(_sex) + ",\r\n";
     outTxt += "        \"race\":" + std::to_string(_race) + ",\r\n";
     outTxt += "        \"level\":" + std::to_string(_level) + ",\r\n";
+    outTxt += "        \"maxHP\":" + std::to_string(_hitPointsBase) + ",\r\n";
+    outTxt += "        \"curHP\":" + std::to_string(_curHitPoints) + ",\r\n";
+    outTxt += "        \"weightAllow\":" + std::to_string(_weightAllowedGP) + ",\r\n";
+    outTxt += "        \"totalWeight\":" + std::to_string(_totalWeightGP) + ",\r\n";
     outTxt += "        \"class\":" + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
     outTxt += "        \"money\":{\r\n";
     outTxt += "            \"gold\":" + std::to_string(_money.gold) + ",\r\n";
@@ -1244,6 +1277,8 @@ void Entity::loadEntity(std::string file)
     // _chrClass is a vector of CHAR_CLASS ENUMS
     _chrClass.push_back((CHAR_CLASS)uint64_t(charData["data"]["class"]));
     _level = uint64_t(charData["data"]["level"]);
+    _hitPointsBase = uint64_t(charData["data"]["maxHP"]);
+    _curHitPoints = uint64_t(charData["data"]["curHP"]);
     _stats.strength = uint64_t(charData["data"]["stats"]["strength"]);
     _stats.intellignece = uint64_t(charData["data"]["stats"]["intelligence"]);
     _stats.wisdom = uint64_t(charData["data"]["stats"]["wisdom"]);
@@ -1251,6 +1286,8 @@ void Entity::loadEntity(std::string file)
     _stats.constitution = uint64_t(charData["data"]["stats"]["constitution"]);
     _stats.charisma = uint64_t(charData["data"]["stats"]["charisma"]);
     _stats.raceCharisma = uint64_t(charData["data"]["stats"]["raceCharisma"]);
+    _weightAllowedGP = uint64_t(charData["data"]["weightAllow"]);
+    _totalWeightGP = uint64_t(charData["data"]["totalWeight"]);
 
     _money.gold = uint64_t(charData["data"]["money"]["gold"]);
     _money.silver = uint64_t(charData["data"]["money"]["silver"]);
@@ -1312,6 +1349,10 @@ void Entity::loadEntity(std::string file)
     std::cout << "Level: " << (int)_level << std::endl;
     std::cout << "\r\nStats: ";
     printStats(_stats);
+    std::cout << "\r\nMax HP: " << getMaxHP() << std::endl;
+    std::cout << "\r\nCurrent HP: " << getCurHP() << std::endl;
+    std::cout << "\r\nWeight Allowed in gold pieces (gp): " << getWeightAllowed() << std::endl;
+    std::cout << "\r\nTotal Weight gp: " << getWeightCarried() << std::endl;
     printMoney(_money);
     std::cout << "\r\nMod Stats: ";
     printStats(_modStats);
