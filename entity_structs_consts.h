@@ -75,16 +75,68 @@ enum LANGUAGE{
     THIEVES_CANT
 };
 
+enum EQUIP_TYPE{
+    ARMOR,
+    ARMS,
+    AMMO,
+    PROJECTILE,
+    CLOTHING,
+    LIVESTOCK,
+    MISC,
+    PROVISIONS,
+    RELIGIOUS,
+    TACK_HARNESS,
+    TRANSPORT
+};
+
 enum ARMOR_TYPE
 
 {
-
+    LEATHER,
+    PADDED,
+    STUDDED,
+    CHAIN,
+    SCALE,
+    BANDED,
+    SPLINT,
+    PLATE
 };
 
 enum WEAPON_TYPE{
-
+    KNIFE,    // 0
+    DAGGER,   // 1
+    SWORD,    // 2
+    AXE,      // 3
+    POLEARM,  // 4
+    BOW,      // 5
+    CROSSBOW, // 6
+    ARROW,    // 7
+    BOLT,     // 8
+    DART      // 9
 };
 
+struct ULPair{
+    unsigned lower;
+    unsigned upper;
+};
+
+struct DefenseAdj{
+    int8_t a2;
+    int8_t a3;
+    int8_t a4;
+    int8_t a5;
+    int8_t a6;
+    int8_t a7;
+    int8_t a8;
+    int8_t a9;
+    int8_t a10;
+};
+
+struct Range{
+    unsigned shortRange;
+    unsigned medRange;
+    unsigned longRange;
+};
 struct langPair{
     LANGUAGE langE;
     std::string langS;

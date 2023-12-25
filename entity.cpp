@@ -1134,6 +1134,11 @@ unsigned Entity::getWeightCarried()
     return _totalWeightGP;
 }
 
+float Entity::getEquivalentGP()
+{
+    return _money.gold + static_cast<float>(_money.copper) / 200 +  static_cast<float>(_money.silver) / 20 + static_cast<float>(_money.electrum) / 2 + _money.platinum * 5;
+}
+
 bool Entity::isFighter(){
     for(unsigned i = 0; i < _chrClass.size(); i++){
         if(_chrClass[i] == FIGHTER || _chrClass[i] == PALADIN || _chrClass[i] == RANGER){
@@ -1267,7 +1272,7 @@ void Entity::loadEntity(std::string file)
 
     // Remove all double-quote characters
     _name.erase(
-    remove( _name.begin(), _name.end(), '\"' ),
+    std::remove( _name.begin(), _name.end(), '\"' ),
     _name.end()
     );
 

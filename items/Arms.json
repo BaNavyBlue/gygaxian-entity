@@ -1,0 +1,394 @@
+{
+    "data":{
+        "count": 9,
+        "index":{
+            "0":{
+                "name": "Arrow, normal",
+                "count": 1,
+                "type" : 2,
+                "wType": 7,
+                "descrip": "A fletched wodden arrow.",
+                "money":{
+                    "gold": 0,
+                    "silver": 2,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 2,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "1":{
+                "name": "Arrow, silver",
+                "count": 1,
+                "type" : 2,
+                "wType": 7,
+                "descrip": "A gleaming silver arrow.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 2,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "2":{
+                "name": "Axe, battle",
+                "count": 1,
+                "type" : 1,
+                "wType": 3,
+                "descrip": "A massive battle axe made for cleaving bodies in two.",
+                "money":{
+                    "gold": 5,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 75,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 48,
+                "spaceReq": 48,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 2
+                }
+            },
+            "3":{
+                "name": "Axe, hand",
+                "count": 1,
+                "type" : 3,
+                "wType": 3,
+                "descrip": "A handy axe for wood and limb chopping, can be thrown.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 18,
+                "spaceReq": 12,
+                "speedFactor": 4,
+                "fireRate": 1,
+                "range":{
+                    "short": 12,
+                    "medium": 24,
+                    "long": 36
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -2,
+                    "a4": -2,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 1
+                }
+            },
+            "4":{
+                "name": "Bardiche",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "This polearm has a large wicked curved blade at the end perfect for thrust and slash attacks.",
+                "money":{
+                    "gold": 7,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 125,
+                "smallMedDMG":{
+                    "sides": 4,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 3
+                },
+                "lengthInch": 60,
+                "spaceReq": 60,
+                "speedFactor": 9,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 1,
+                    "a8": 2,
+                    "a9": 2,
+                    "a10": 3
+                }
+            },
+            "5":{
+                "name": "Bec de corbin",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "This polearm has two nasty spikes and a striking surface good for piercing armor and crushing helms.",
+                "money":{
+                    "gold": 6,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 72,
+                "spaceReq": 72,
+                "speedFactor": 9,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 2,
+                    "a3": 2,
+                    "a4": 2,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": -1
+                }
+            },
+            "6":{
+                "name": "Bill-Guisarme",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "This polearm has applications in agriculture as well as combat with it's curved blades for hooking and flat blade for slashing and spearing.",
+                "money":{
+                    "gold": 6,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 150,
+                "smallMedDMG":{
+                    "sides": 4,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 10,
+                    "rolls": 1
+                },
+                "lengthInch": 96,
+                "spaceReq": 24,
+                "speedFactor": 10,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "7":{
+                "name": "Bow, composite short",
+                "count": 1,
+                "type" : 3,
+                "wType": 5,
+                "descrip": "A finely crafted bow made from multiple natural materials.",
+                "money":{
+                    "gold": 75,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 15,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 2,
+                "range":{
+                    "short": 60,
+                    "medium": 120,
+                    "long": 216
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -3,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 2,
+                    "a8": 2,
+                    "a9": 2,
+                    "a10": 3
+                }
+            },
+            "8":{
+                "name": "Bow, composite long",
+                "count": 1,
+                "type" : 3,
+                "wType": 5,
+                "descrip": "A finely crafted long bow made from multiple natural materials.",
+                "money":{
+                    "gold": 100,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 2,
+                "range":{
+                    "short": 72,
+                    "medium": 144,
+                    "long": 252
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 2,
+                    "a8": 2,
+                    "a9": 3,
+                    "a10": 3
+                }
+            }
+        }
+    }
+}

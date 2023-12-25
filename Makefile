@@ -1,6 +1,6 @@
 #OBJS specifies which files to compile as part of the project
 MAIN = main.cpp
-SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp
+SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
 
 
 OBJS = $(MAIN) $(SRC)

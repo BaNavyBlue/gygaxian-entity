@@ -6,9 +6,9 @@
 
 #include "project_headers.h"
 #include "StatHelpers.h"
-#include "simdjson.h"
 #include "skills.h"
 #include "char_class.h"
+#include "items.h"
 
 namespace sj = simdjson;
 
@@ -88,6 +88,7 @@ public:
     unsigned getCurHP();
     unsigned getWeightAllowed();
     unsigned getWeightCarried();
+    float getEquivalentGP();
     //void reRollStats();
     bool saveChar();
 };

@@ -8,6 +8,9 @@ class CHR_CLASS_SKILLS
 {
 protected:
     classTable1 _classTbl;
+    unsigned _initNumWeap;
+    int _nonProfPenalty;
+    unsigned _addedWeapLvlDen;
 public:
     CHR_CLASS_SKILLS();
     ~CHR_CLASS_SKILLS();

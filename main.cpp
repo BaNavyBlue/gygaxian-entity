@@ -4,6 +4,8 @@
 #include <iostream>
 #include "entity.h"
 
+std::vector<std::shared_ptr<Items>> armsList;
+
 int main(){
     srand((unsigned int) time(NULL));
     std::cout << "**** Welcome to the Gygaxian Character Generator ****" << std::endl;
@@ -64,6 +66,18 @@ int main(){
     printRacialBias(getRacialBias(DWARF, HALF_ORC));
     printRacialBias(getRacialBias(HALF_ORC, DWARF));
     printRacialBias(getRacialBias(HALF_ELF, ELF));
+
+    std::cout << "loading: " << "items/Arms.json" << std::endl;
+    sj::ondemand::parser parser;
+    sj::padded_string json = sj::padded_string::load("items/Arms.json");
+    sj::ondemand::document itemsData = parser.iterate(json);
+
+
+    unsigned itemCount = uint64_t(itemsData["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        armsList.push_back(std::make_shared<Arms>(itemsData, i));
+    }
     // RACE_SKILLS* test = new Dwarf(dude.getStats());
     // delete (Dwarf*)test;
 

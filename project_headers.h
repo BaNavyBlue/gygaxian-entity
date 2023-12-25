@@ -17,5 +17,6 @@ using u8 = unsigned char;
 #include <unistd.h>
 #include "entity_structs_consts.h"
 #include "dice_roll.h"
+#include "simdjson.h"
 
 #endif

@@ -38,6 +38,9 @@ void CHR_CLASS_SKILLS::listClassSkills()
     } else {
         std::cout << "No class level Limit unless multiclass" << std::endl;
     }
+    std::cout << "Initial Number of Weapons: " << _initNumWeap << std::endl;
+    std::cout << "Non proficieny pentalty: " << _nonProfPenalty << std::endl;
+    std::cout << "Added Proficiency in Weapons Per Level: 1/" << _addedWeapLvlDen << std::endl;
 }
 
 Cleric::Cleric(){
@@ -45,6 +48,9 @@ Cleric::Cleric(){
     _classTbl.MaxHitDie = 9;
     _classTbl.spellAbility = true;
     _classTbl.LevelLimit = -1; // -1 = no limit
+    _initNumWeap = 2;
+    _nonProfPenalty = -3;
+    _addedWeapLvlDen = 4;
     std::cout << "This should list Cleric HitDieType" << std::endl;
     listClassSkills();
 }
@@ -63,6 +69,9 @@ Druid::Druid(){
     _classTbl.MaxHitDie = 14;
     _classTbl.spellAbility = true;
     _classTbl.LevelLimit = 14; // The Great Druid
+    _initNumWeap = 2;
+    _nonProfPenalty = -4;
+    _addedWeapLvlDen = 5;
     listClassSkills();
 }
 
@@ -80,6 +89,9 @@ Fighter::Fighter(){
     _classTbl.MaxHitDie = 9;
     _classTbl.spellAbility = false;
     _classTbl.LevelLimit = -1;
+    _initNumWeap = 4;
+    _nonProfPenalty = -2;
+    _addedWeapLvlDen = 3;
     listClassSkills();
 }
 
@@ -92,6 +104,9 @@ Paladin::Paladin(){
     _classTbl.MaxHitDie = 9;
     _classTbl.spellAbility = true;
     _classTbl.LevelLimit = -1;
+    _initNumWeap = 3;
+    _nonProfPenalty = -2;
+    _addedWeapLvlDen = 3;
     listClassSkills();
 }
 
@@ -112,6 +127,9 @@ void Ranger::listClassSkills()
     } else {
         std::cout << "No class level Limit unless multiclass" << std::endl;
     }
+    std::cout << "Initial Number of Weapons: " << _initNumWeap << std::endl;
+    std::cout << "Non proficieny pentalty: " << _nonProfPenalty << std::endl;
+    std::cout << "Added Proficiency in Weapons Per Level: 1/" << _addedWeapLvlDen << std::endl;
     std::cout << "Chance to be surprised d" << (int)_chanceToBeSurprised.sidedDie << " roll 1-" << (int)_chanceToBeSurprised.maxRange << std::endl;
     std::cout << "Chance to surprise d" << (int)_chanceToSurprise.sidedDie << " roll 1-" << (int)_chanceToSurprise.maxRange << std::endl;
     std::cout << "Track underground normal passage: " << (int)uGTrackPassagePer << "%" << std::endl;
@@ -134,6 +152,9 @@ Ranger::Ranger(){
     _chanceToSurprise.maxRange = 3; // 1-3
     _chanceToBeSurprised.sidedDie = 6;
     _chanceToBeSurprised.maxRange = 1; // 1-1
+    _initNumWeap = 3;
+    _nonProfPenalty = -2;
+    _addedWeapLvlDen = 3;
     std::cout << "Should Show Ranger variables" << std::endl;
     listClassSkills();
 }
@@ -147,6 +168,9 @@ MagicUser::MagicUser(){
     _classTbl.MaxHitDie = 11;
     _classTbl.spellAbility = true;
     _classTbl.LevelLimit = -1;
+    _initNumWeap = 1;
+    _nonProfPenalty = -5;
+    _addedWeapLvlDen = 6;
     listClassSkills();
 }
 
@@ -164,6 +188,9 @@ Illusionist::Illusionist(){
     _classTbl.MaxHitDie = 10;
     _classTbl.spellAbility = true;
     _classTbl.LevelLimit = -1;
+    _initNumWeap = 1;
+    _nonProfPenalty = -5;
+    _addedWeapLvlDen = 6;
     listClassSkills();
 }
 
@@ -186,6 +213,9 @@ Thief::Thief(RACE inRace, unsigned inLevel){
     _classTbl.MaxHitDie = 10;
     _classTbl.spellAbility = false;
     _classTbl.LevelLimit = -1;
+    _initNumWeap = 2;
+    _nonProfPenalty = -3;
+    _addedWeapLvlDen = 4;
     setThiefSkills(inRace, inLevel);
     listClassSkills();
 }
@@ -212,6 +242,9 @@ void Thief::listClassSkills()
     } else {
         std::cout << "No class level Limit unless multiclass" << std::endl;
     }
+    std::cout << "Initial Number of Weapons: " << _initNumWeap << std::endl;
+    std::cout << "Non proficieny pentalty: " << _nonProfPenalty << std::endl;
+    std::cout << "Added Proficiency in Weapons Per Level: 1/" << _addedWeapLvlDen << std::endl;
     std::cout << "Bonus to hit while sneak/backstab: +" <<  (int)_surpriseAtk << std::endl;
     std::cout << "Pick Pockets: " << (int)_thiefTbl.pickPockets << "%" << std::endl;
     std::cout << "Open Locks: " << (int)_thiefTbl.openLocks << "%" << std::endl;
@@ -461,6 +494,9 @@ Assassin::Assassin(RACE inRace, unsigned inLevel)
     _classTbl.MaxHitDie = 15;
     _classTbl.spellAbility = false;
     _classTbl.LevelLimit = 14;
+    _initNumWeap = 3;
+    _nonProfPenalty = -2;
+    _addedWeapLvlDen = 4;
     setThiefSkills(inRace, inLevel);
     listClassSkills();
 }
@@ -474,6 +510,9 @@ Monk::Monk(RACE inRace, unsigned inLevel){
     _classTbl.MaxHitDie = 17;
     _classTbl.spellAbility = false;
     _classTbl.LevelLimit = 17;
+    _initNumWeap = 1;
+    _nonProfPenalty = -3;
+    _addedWeapLvlDen = 2;
     listClassSkills();
 }
 
