@@ -48,7 +48,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats);
 bool checkExists(std::string name);
 bool yesNoChoice();
 bool rollFailure(stats inStats, bool printMsg);  // Handle Borked Gygaxian
-bool checkRaceStats(RACE race, stats _stats);
+stats checkRaceStats(RACE race, stats _stats);
 bool alignClassCheck(CHAR_CLASS inClass, ALIGNMENT inAlign);
 std::string strenFails(stats inStats);
 std::string intFails(stats inStats);

@@ -41,7 +41,7 @@ void rollStats(stats& _stats, stats& _modStats)
         if(_stats.strength > 17){
             _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
         }
-        _stats.intellignece = _modStats.intellignece = bestThree();
+        _stats.intelligence = _modStats.intelligence = bestThree();
         _stats.wisdom = _modStats.wisdom = bestThree();
         _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
         _stats.dexterity = _modStats.dexterity = bestThree();
@@ -141,7 +141,7 @@ RACE inputRace(stats inStats)
     char idx = '0';
     int nonV = 0;
     for(unsigned i = 0; i < racePairs.size(); ++i){
-        if(raceStatCheck(inStats, racePairs[i].race)&&checkRaceStats(racePairs[i].race, inStats)){
+        if(raceStatCheck(inStats, racePairs[i].race)/*&&checkRaceStats(racePairs[i].race, inStats)*/){
             rMap[idx] = racePairs[i].race;
             message += racePairs[i].raceS + ": " + idx + "\r\n";
             idx++;         
@@ -174,38 +174,38 @@ RACE inputRace(stats inStats)
 
 // A Viability Hack to prevent a race that can't select a class
 // Thank you Gary
-bool checkRaceStats(RACE race, stats _stats)
+stats checkRaceStats(RACE race, stats _stats)
 {
     // stat changes aren't applied just using for checks
     switch(race){
         // check for failures before adding race bonus's
         case HUMAN:
             // Check Stat Limitation.
-            return true;
+            return _stats;
         case ELF:
             // Stat Limitation Check
-            if(_stats.dexterity + 1 < 7){
-                std::cout << "Elf can not have dexterity bellow 7" << std::endl;
-                return false;
-            }
-            if(_stats.constitution - 1 < 6){
-                std::cout << "Elf can not have constitution bellow 6" << std::endl;
-                return false;
-            }
+            // if(_stats.dexterity + 1 < 7){
+            //     std::cout << "Elf can not have dexterity bellow 7" << std::endl;
+            //     return false;
+            // }
+            // if(_stats.constitution - 1 < 6){
+            //     std::cout << "Elf can not have constitution bellow 6" << std::endl;
+            //     return false;
+            // }
             // Apply Standard Elf Modifiers
             _stats.constitution--;
             _stats.dexterity++;
-            return rollFailure(_stats, false);
+            return _stats;
         case HALF_ORC:
-            if(_stats.strength + 1 < 6){
-                std::cout << "Half-Orc Strength bellow 6" << std::endl;
-                return false;
-            }
+            // if(_stats.strength + 1 < 6){
+            //     std::cout << "Half-Orc Strength bellow 6" << std::endl;
+            //     return false;
+            // }
 
-            if(_stats.constitution + 1 < 13){
-                std::cout << "Half-Orc constitution bellow 13" << std::endl;
-                return false;
-            }
+            // if(_stats.constitution + 1 < 13){
+            //     std::cout << "Half-Orc constitution bellow 13" << std::endl;
+            //     return false;
+            // }
 
             if(_stats.charisma - 2 > 12){
                 std::cout << "Half-Orc Charisma being set to cap 12" << std::endl;
@@ -225,22 +225,22 @@ bool checkRaceStats(RACE race, stats _stats)
             }
 
             _stats.constitution++;
-            return rollFailure(_stats, false);
+            return _stats;
         case DWARF:
-            if(_stats.constitution + 1 < 12){
-                std::cout << "Dwarf constitution bellow 12" << std::endl;
-                return false;            
-            }
+            // if(_stats.constitution + 1 < 12){
+            //     std::cout << "Dwarf constitution bellow 12" << std::endl;
+            //     return false;            
+            // }
 
-            if(_stats.strength < 8){
-                std::cout << "Dwarf strength bellow 8" << std::endl;
-                return false;            
-            }
+            // if(_stats.strength < 8){
+            //     std::cout << "Dwarf strength bellow 8" << std::endl;
+            //     return false;            
+            // }
 
-            if(_stats.dexterity < 6){
-                std::cout << "Dwarf dexterity bellow 6 Cleric Case" << std::endl;
-                return false;            
-            }
+            // if(_stats.dexterity < 6){
+            //     std::cout << "Dwarf dexterity bellow 6 Cleric Case" << std::endl;
+            //     return false;            
+            // }
 
             if(_stats.charisma - 1 > 16){
                 std::cout << "Dwarf charisma cap 16" << std::endl;
@@ -250,50 +250,50 @@ bool checkRaceStats(RACE race, stats _stats)
             }
 
             _stats.constitution++;
-            return rollFailure(_stats, false);
+            return _stats;
         case HALFLING:
-            if(_stats.strength - 1 < 6){
-                std::cout << "Halfling strength bellow 6 Magic-User Case" << std::endl;
-                return false;                  
-            }
+            // if(_stats.strength - 1 < 6){
+            //     std::cout << "Halfling strength bellow 6 Magic-User Case" << std::endl;
+            //     return false;                  
+            // }
 
-            if(_stats.dexterity + 1 < 8){
-                std::cout << "Halfling dexterity bellow 8 Cleric Case" << std::endl;
-                return false;
-            }
+            // if(_stats.dexterity + 1 < 8){
+            //     std::cout << "Halfling dexterity bellow 8 Cleric Case" << std::endl;
+            //     return false;
+            // }
 
-            if(_stats.constitution < 6){
-                std::cout << "Halfling constititon bellow 6 Illusionist Case" << std::endl;
-                return false;                  
-            }
+            // if(_stats.constitution < 6){
+            //     std::cout << "Halfling constititon bellow 6 Illusionist Case" << std::endl;
+            //     return false;                  
+            // }
 
-            if(_stats.charisma - 1 < 6){
-                std::cout << "Halfling charisma bellow 6 Assassin Case" << std::endl;
-                return false;                  
-            }
+            // if(_stats.charisma - 1 < 6){
+            //     std::cout << "Halfling charisma bellow 6 Assassin Case" << std::endl;
+            //     return false;                  
+            // }
 
             _stats.strength--;
             _stats.dexterity++;
 
-            return rollFailure(_stats, false);
+            return _stats;
         case HALF_ELF:
-            if(_stats.constitution < 6){
-                std::cout << "Constitution bellow 6 Illusionist Only Case" << std::endl;
-                return false;
-            }
-            return true;
+            // if(_stats.constitution < 6){
+            //     std::cout << "Constitution bellow 6 Illusionist Only Case" << std::endl;
+            //     return false;
+            // }
+            return _stats;
         case GNOME:
-            if(_stats.strength < 6){
-                std::cout << "Strength bellow 6 magic user only case" << std::endl;
-                return false;
-            }
-            if(_stats.dexterity < 6){
-                std::cout << "Dexterity bellow 6 cleric only case" << std::endl;
-                return false;
-            }
-            return true;
+            // if(_stats.strength < 6){
+            //     std::cout << "Strength bellow 6 magic user only case" << std::endl;
+            //     return false;
+            // }
+            // if(_stats.dexterity < 6){
+            //     std::cout << "Dexterity bellow 6 cleric only case" << std::endl;
+            //     return false;
+            // }
+            return _stats;
         default:
-            return true;
+            return _stats;
     }
 }
 
@@ -339,6 +339,7 @@ CHAR_CLASS inputClass(RACE race, stats inStats)
     std::unordered_map<char, CHAR_CLASS> cList;
     char idx = '0';
     int nonV = 0;
+    inStats = checkRaceStats(race, inStats); // Fix that race stat mods aren't taken into class consideration;
     for(unsigned i = 0; i < classPairs.size(); ++i){
         if(classRaceCheck(classPairs[i].cClass, race) && classStatCheck(classPairs[i].cClass, inStats)){
             cList[idx] = classPairs[i].cClass;
@@ -399,7 +400,7 @@ void printStats(stats inStats)
     if(inStats.strength > 17 && inStats.excStren > 0){
         std::cout << "Exceptional Strength: " << inStats.excStren << " Fighter Paladin or Ranger only!" << std::endl;
     }
-    std::cout << "Intelligence: " << inStats.intellignece << std::endl;
+    std::cout << "Intelligence: " << inStats.intelligence << std::endl;
     std::cout << "Wisdom: " << inStats.wisdom << std::endl;
     std::cout << "Charisma: " << inStats.charisma << std::endl;
     std::cout << "Charisma to ones own race: " << inStats.raceCharisma << std::endl;
@@ -421,7 +422,7 @@ void printStatsFails(stats inStats)
     if(inStats.strength > 17){
         std::cout << "Exceptional Strength: " << inStats.excStren << " Fighter Paladin or Ranger only!" << std::endl;
     }
-    std::cout << "Intelligence: " << inStats.intellignece;
+    std::cout << "Intelligence: " << inStats.intelligence;
     chkFails = intFails(inStats);
     if(chkFails.size()){
         std::cout << ", Fails: " << chkFails << std::endl;
@@ -601,7 +602,7 @@ bool raceStatCheck(stats inStats, RACE race)
         case HUMAN:
             return true;
         case ELF:
-            if(inStats.intellignece < 8){
+            if(inStats.intelligence < 8){
                 //std::cout << "Elf can not have intelligence bellow 8" << std::endl;
                 return false;
             }
@@ -646,7 +647,7 @@ bool raceStatCheck(stats inStats, RACE race)
                 return false;                  
             }
 
-            if(inStats.intellignece < 6){
+            if(inStats.intelligence < 6){
                 //std::cout << "Halfling intelligence bellow 6" << std::endl;
                 return false;                
             }
@@ -662,7 +663,7 @@ bool raceStatCheck(stats inStats, RACE race)
             }
             return true;
         case HALF_ELF:
-           if(inStats.intellignece < 4){
+           if(inStats.intelligence < 4){
                 //std::cout << "Intelligence bellow 4" << std::endl;
                 return false;
             }
@@ -683,7 +684,7 @@ bool raceStatCheck(stats inStats, RACE race)
                 return false;
             }
 
-            if(inStats.intellignece < 7){
+            if(inStats.intelligence < 7){
                 //std::cout << "Intelligence bellow 7" << std::endl;
                 return false;
             }
@@ -755,7 +756,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 6){
+            if(inStats.intelligence < 6){
                 return false;
             }
             if(inStats.wisdom < 9){
@@ -772,7 +773,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 6){
+            if(inStats.intelligence < 6){
                 return false;
             }
             if(inStats.wisdom < 12){
@@ -809,7 +810,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 12){
                 return false;
             }
-            if(inStats.intellignece < 9){
+            if(inStats.intelligence < 9){
                 return false;
             }
             if(inStats.wisdom < 13){
@@ -829,7 +830,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 13){
                 return false;
             }
-            if(inStats.intellignece < 6){
+            if(inStats.intelligence < 6){
                 return false;
             }
             if(inStats.wisdom < 14){
@@ -846,7 +847,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             }
             return true;
         case MAGIC_USER:
-            if(inStats.intellignece < 9){
+            if(inStats.intelligence < 9){
                 return false;
             }
             if(inStats.wisdom < 6){
@@ -863,7 +864,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 15){
+            if(inStats.intelligence < 15){
                 return false;
             }
             if(inStats.wisdom < 6){
@@ -880,7 +881,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 6){
                 return false;
             }
-            if(inStats.intellignece < 6){
+            if(inStats.intelligence < 6){
                 return false;
             }
             if(inStats.dexterity < 9){
@@ -897,7 +898,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 12){
                 return false;
             }
-            if(inStats.intellignece < 11){
+            if(inStats.intelligence < 11){
                 return false;
             }
             if(inStats.wisdom < 6){
@@ -914,7 +915,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
             if(inStats.strength < 15){
                 return false;
             }
-            if(inStats.intellignece < 6){
+            if(inStats.intelligence < 6){
                 return false;
             }
             if(inStats.wisdom < 15){
@@ -1012,7 +1013,7 @@ char choice;
 // This checks to see of stat rolls will generate non viable class
 // Based off of Gygaxian 1st Ed. rules.
 bool rollFailure(stats inStats, bool printMsg){
-    if(inStats.constitution < 6 && (inStats.intellignece < 15 || inStats.dexterity < 16)){
+    if(inStats.constitution < 6 && (inStats.intelligence < 15 || inStats.dexterity < 16)){
         //fails illusionist only case const <= 5
         if(printMsg){
             std::cout << "\r\nCursed Stats:" << std::endl;
@@ -1021,7 +1022,7 @@ bool rollFailure(stats inStats, bool printMsg){
         }
         return false;
     }
-    if(inStats.intellignece < 6 && inStats.strength < 9){
+    if(inStats.intelligence < 6 && inStats.strength < 9){
         //fails Fighter only case int <= 5
         if(printMsg){
             std::cout << "\r\nCursed Stats:" << std::endl;
@@ -1039,7 +1040,7 @@ bool rollFailure(stats inStats, bool printMsg){
         }
         return false;
     }
-    if(inStats.strength < 6 && inStats.intellignece < 9){
+    if(inStats.strength < 6 && inStats.intelligence < 9){
         //fails Magic User only case
         if(printMsg){
             std::cout << "\r\nCursed Stats:" << std::endl;
@@ -1057,7 +1058,7 @@ bool rollFailure(stats inStats, bool printMsg){
         }
         return false;
     }
-    if(inStats.charisma < 6 && (inStats.strength < 12 || inStats.intellignece < 11 || inStats.dexterity < 12)){
+    if(inStats.charisma < 6 && (inStats.strength < 12 || inStats.intelligence < 11 || inStats.dexterity < 12)){
         //fails Assasin only case
         if(printMsg){
             std::cout << "\r\nCursed Stats:" << std::endl;
@@ -1093,11 +1094,13 @@ std::string strenFails(stats inStats)
     switch(inStats.strength){
         case 3:
         case 4:
-            // Strength +1 Half-Orc
-            failures += "Halfling Gnome Half-Orc Dwarf and all classes but Magic-User ";
+            failures += "Half-Orc";
+            failures += "Halfling Gnome Dwarf and all classes but Magic-User";
             return failures;
         case 5:
-            failures += "Gnome ";
+            // Strength +1 Half-Orc
+            failures += "Halfling Gnome Dwarf and all classes but Magic-User except for Half-Orcs";
+            return failures;
         case 6:
             failures += "HalfLing "; // Strength -1 Halfling
         case 7:
@@ -1120,15 +1123,14 @@ std::string strenFails(stats inStats)
 std::string intFails(stats inStats)
 {   
     std::string failures;
-    switch(inStats.intellignece){
+    switch(inStats.intelligence){
         case 3:
             failures += "Half-Elf ";
         case 4:
-            // Strength +1 Half-Orc
-            failures += "Halfling Gnome Elf and all classes but Fighter ";
-            return failures;
         case 5:
             failures += "Halfling ";
+            failures += "Gnome Elf All classes but Fighter";
+            return failures;
         case 6:
             failures += "Gnome ";
         case 7:
@@ -1153,10 +1155,9 @@ std::string wisFails(stats inStats)
     switch(inStats.wisdom){
         case 3:
         case 4:
-            // Strength +1 Half-Orc
+        case 5:
             failures += "All classes but Thief ";
             return failures;
-        case 5:
         case 6:
         case 7:
         case 8: 
@@ -1181,14 +1182,13 @@ std::string dexFails(stats inStats)
     switch(inStats.dexterity){
         case 3:
         case 4:
+        case 5:
             failures += "Half-Elf Elf Halfling and all classes but Cleric ";
             return failures;
-        case 5:
-            // Elf dex + 1
-            failures += "Half-Elf Elf Magic-User";
         case 6:
             // Halfling dex + 1
-            failures += "Halfling ";
+            failures += "Magic-User ";
+            failures += "Halfling Elf ";
         case 7:
         case 8: 
             failures += "Thief ";
@@ -1248,6 +1248,7 @@ std::string charisFails(stats inStats)
             return failures;
         case 6:
         case 7:
+            failures += "Elf ";
         case 8: 
         case 9:
         case 10:

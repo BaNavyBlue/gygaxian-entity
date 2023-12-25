@@ -23,6 +23,10 @@ public:
     std::string getName();
     std::string getDescription();
     money getValue();
+    unsigned getID();
+    unsigned getCount();
+    unsigned getWeight();
+    void increaseCount(unsigned numToAdd);
 };
 
 class Arms : public Items

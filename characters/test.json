@@ -1,59 +1,74 @@
 {
     "data":{
         "name":"test",
-        "alignment":1,
-        "sex":1,
-        "race":0,
+        "alignment":0,
+        "sex":0,
+        "race":2,
         "level":1,
-        "maxHP":9,
-        "curHP":9,
-        "weightAllow":550,
-        "totalWeight":120,
-        "class":3,
+        "maxHP":6,
+        "curHP":6,
+        "weightAllow":200,
+        "totalWeight":86,
+        "class":0,
         "money":{
-            "gold":120,
+            "gold":80,
             "silver":0,
             "copper":0,
             "electrum":0,
             "platinum":0
         },
+        "inventory":{
+            "count":2,
+            "index":{
+                "0":{
+                    "itemID":0,
+                    "type":2,
+                    "count":2
+                },
+                "1":{
+                    "itemID":1,
+                    "type":2,
+                    "count":1
+                }
+            }
+        },
         "stats":{
-            "strength":14,
+            "strength":9,
             "excStrength":0,
-            "intelligence":10,
-            "wisdom":14,
-            "dexterity":11,
-            "constitution":14,
-            "charisma":15,
-            "raceCharisma":15
+            "intelligence":17,
+            "wisdom":10,
+            "dexterity":8,
+            "constitution":15,
+            "charisma":8,
+            "raceCharisma":10
         },
         "modStats":{
-            "strength":14,
+            "strength":9,
             "excStrength":0,
-            "intelligence":10,
-            "wisdom":14,
-            "dexterity":11,
-            "constitution":14,
-            "charisma":15,
-            "raceCharisma":15
+            "intelligence":17,
+            "wisdom":10,
+            "dexterity":8,
+            "constitution":15,
+            "charisma":8,
+            "raceCharisma":10
         },
         "strengthTable":{
-            "hitProb":0,
+            "hitProb":-1,
             "damageAdj":0,
-            "weightAllowMod":200,
-            "openDoors":2,
-            "bendBarsLiftGatesPer":7
+            "weightAllowMod":-150,
+            "openDoors":1,
+            "bendBarsLiftGatesPer":0
         },
         "wisTable":{
             "magicAttackAdj":0,
-            "spellBonus":1,
-            "spellFailPer":0
+            "spellBonus":0,
+            "spellFailPer":15
         },
         "intTable":{
-            "chanceToKnowPer":45,
-            "minimumSpellsPer":5,
-            "maximumSpellsPer":7,
-            "possibleAddLang":2
+            "chanceToKnowPer":75,
+            "minimumSpellsPer":8,
+            "maximumSpellsPer":14,
+            "possibleAddLang":6
         },
         "dexTable":{
             "reactAttkAdj":0,
@@ -67,9 +82,9 @@
             "hideInShadows":0
         },
         "consTbl":{
-            "hpAdj":0,
-            "sysShockSurPer":88,
-            "resurSurvPer":92
+            "hpAdj":1,
+            "sysShockSurPer":91,
+            "resurSurvPer":94
         },
         "charTbl":{
             "maxHenchMen":4,
@@ -77,9 +92,10 @@
             "reactAdjustPer":0
         },
         "languages":{
-            "count":1,
+            "count":2,
             "index":{
-                "0":10
+                "0":10,
+                "1":6
             }
         }
     }

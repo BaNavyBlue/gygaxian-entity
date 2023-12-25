@@ -21,6 +21,7 @@ protected:
     //std::string _race;
     std::vector<std::shared_ptr<CHR_CLASS_SKILLS>> _chrSkills;
     std::shared_ptr<RACE_SKILLS> _raceSkills;
+    std::vector<Items> _inventory;
     std::string _name;
     bool _undead = false;
     stats _stats; // Base Stats upon creation.
@@ -89,6 +90,8 @@ public:
     unsigned getWeightAllowed();
     unsigned getWeightCarried();
     float getEquivalentGP();
+    void addItem(Items setItem, unsigned amount);
+    std::vector<Items> getInventory();
     //void reRollStats();
     bool saveChar();
 };

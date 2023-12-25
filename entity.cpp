@@ -261,7 +261,7 @@ void Entity::setStrenTbl()
 
 void Entity::setIntTbl()
 {
-    switch(_modStats.intellignece){
+    switch(_modStats.intelligence){
         case 9:
             _intTbl.chanceToKnowPer = 35;
             _intTbl.minumumSpellsPerLevel = 4;
@@ -302,7 +302,7 @@ void Entity::setIntTbl()
             _intTbl.maxiumSpellsPerlevel = 255;
             break;
         default:
-            if(_modStats.intellignece > 19){
+            if(_modStats.intelligence > 19){
             _intTbl.chanceToKnowPer = 95;
             _intTbl.minumumSpellsPerLevel = 10;
             _intTbl.maxiumSpellsPerlevel = 255;
@@ -435,7 +435,7 @@ void Entity::setDexTbl()
 
 void Entity::setPossLang()
 {
-    switch(_modStats.intellignece){
+    switch(_modStats.intelligence){
         case 3:
         case 4:
         case 5:
@@ -801,7 +801,7 @@ bool Entity::checkRaceStats(RACE race)
             return true;
         case ELF:
             // Stat Limitation Check
-            if(_stats.intellignece < 8){
+            if(_stats.intelligence < 8){
                 std::cout << "Elf can not have intelligence bellow 8" << std::endl;
                 return false;
             }
@@ -837,9 +837,9 @@ bool Entity::checkRaceStats(RACE race)
                 return false;
             }
 
-            if(_stats.intellignece > 17){
+            if(_stats.intelligence > 17){
                 std::cout << "Half-Orc Intelligence being set to cap 17" << std::endl;
-                _stats.intellignece = _modStats.intellignece = 17;
+                _stats.intelligence = _modStats.intelligence = 17;
             }
 
             if(_stats.dexterity > 17){
@@ -909,7 +909,7 @@ bool Entity::checkRaceStats(RACE race)
                 return false;                  
             }
 
-            if(_stats.intellignece < 6){
+            if(_stats.intelligence < 6){
                 std::cout << "Halfling intelligence bellow 6" << std::endl;
                 return false;                
             }
@@ -941,7 +941,7 @@ bool Entity::checkRaceStats(RACE race)
             _race = race;
             return true;
         case HALF_ELF:
-            if(_stats.intellignece < 4){
+            if(_stats.intelligence < 4){
                 std::cout << "Intelligence bellow 4" << std::endl;
                 return false;
             }
@@ -974,7 +974,7 @@ bool Entity::checkRaceStats(RACE race)
                 return false;
             }
 
-            if(_stats.intellignece < 7){
+            if(_stats.intelligence < 7){
                 std::cout << "Intelligence bellow 7" << std::endl;
                 return false;
             }
@@ -1001,7 +1001,7 @@ bool Entity::checkRaceStats(RACE race)
 //         if(_stats.strength > 17){
 //             _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true)*10 + 1;
 //         }
-//         _stats.intellignece = _modStats.intellignece = bestThree();
+//         _stats.intelligence = _modStats.intelligence = bestThree();
 //         _stats.wisdom = _modStats.wisdom = bestThree();
 //         _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
 //         _stats.dexterity = _modStats.dexterity = bestThree();
@@ -1170,10 +1170,26 @@ bool Entity::saveChar()
     outTxt += "            \"electrum\":" + std::to_string(_money.electrum) + ",\r\n";
     outTxt += "            \"platinum\":" + std::to_string(_money.platinum) + "\r\n";
     outTxt += "        },\r\n";
+    outTxt += "        \"inventory\":{\r\n";
+    outTxt += "            \"count\":" + std::to_string(_inventory.size()) + ",\r\n";
+    outTxt += "            \"index\":{\r\n";
+    for(std::size_t i = 0; i < _inventory.size(); ++i){
+        outTxt += "                \"" + std::to_string(i) + "\":{\r\n";
+        outTxt += "                    \"itemID\":" + std::to_string(_inventory[i].getID()) + ",\r\n";
+        outTxt += "                    \"type\":" + std::to_string(_inventory[i].getType()) + ",\r\n";
+        outTxt += "                    \"count\":" + std::to_string(_inventory[i].getCount()) + "\r\n";
+        if(i < _inventory.size() - 1){
+            outTxt += "                },\r\n";
+        } else {
+            outTxt += "                }\r\n";
+        }
+    }
+    outTxt += "            }\r\n";
+    outTxt += "        },\r\n";    
     outTxt += "        \"stats\":{\r\n";
     outTxt += "            \"strength\":" + std::to_string(_stats.strength) + ",\r\n";
     outTxt += "            \"excStrength\":" + std::to_string(_stats.excStren) + ",\r\n";
-    outTxt += "            \"intelligence\":" + std::to_string(_stats.intellignece) + ",\r\n";
+    outTxt += "            \"intelligence\":" + std::to_string(_stats.intelligence) + ",\r\n";
     outTxt += "            \"wisdom\":" + std::to_string(_stats.wisdom) + ",\r\n";
     outTxt += "            \"dexterity\":" + std::to_string(_stats.dexterity) + ",\r\n";
     outTxt += "            \"constitution\":" + std::to_string(_stats.constitution) + ",\r\n";
@@ -1183,7 +1199,7 @@ bool Entity::saveChar()
     outTxt += "        \"modStats\":{\r\n";
     outTxt += "            \"strength\":" + std::to_string(_stats.strength) + ",\r\n";
     outTxt += "            \"excStrength\":" + std::to_string(_stats.excStren) + ",\r\n";
-    outTxt += "            \"intelligence\":" + std::to_string(_stats.intellignece) + ",\r\n";
+    outTxt += "            \"intelligence\":" + std::to_string(_stats.intelligence) + ",\r\n";
     outTxt += "            \"wisdom\":" + std::to_string(_stats.wisdom) + ",\r\n";
     outTxt += "            \"dexterity\":" + std::to_string(_stats.dexterity) + ",\r\n";
     outTxt += "            \"constitution\":" + std::to_string(_stats.constitution) + ",\r\n";
@@ -1285,7 +1301,7 @@ void Entity::loadEntity(std::string file)
     _hitPointsBase = uint64_t(charData["data"]["maxHP"]);
     _curHitPoints = uint64_t(charData["data"]["curHP"]);
     _stats.strength = uint64_t(charData["data"]["stats"]["strength"]);
-    _stats.intellignece = uint64_t(charData["data"]["stats"]["intelligence"]);
+    _stats.intelligence = uint64_t(charData["data"]["stats"]["intelligence"]);
     _stats.wisdom = uint64_t(charData["data"]["stats"]["wisdom"]);
     _stats.dexterity = uint64_t(charData["data"]["stats"]["dexterity"]);
     _stats.constitution = uint64_t(charData["data"]["stats"]["constitution"]);
@@ -1301,7 +1317,7 @@ void Entity::loadEntity(std::string file)
     _money.platinum = uint64_t(charData["data"]["money"]["platinum"]);
 
     _modStats.strength = uint64_t(charData["data"]["modStats"]["strength"]);
-    _modStats.intellignece = uint64_t(charData["data"]["modStats"]["intelligence"]);
+    _modStats.intelligence = uint64_t(charData["data"]["modStats"]["intelligence"]);
     _modStats.wisdom = uint64_t(charData["data"]["modStats"]["wisdom"]);
     _modStats.dexterity = uint64_t(charData["data"]["modStats"]["dexterity"]);
     _modStats.constitution = uint64_t(charData["data"]["modStats"]["constitution"]);
@@ -1378,4 +1394,26 @@ void Entity::loadEntity(std::string file)
 Entity::Entity(const char* filename)
 {
     loadEntity(filename);
+}
+
+void Entity::addItem(Items setItem, unsigned amount)
+{
+
+    bool found = false;
+    for(auto it = _inventory.begin(); it != _inventory.end(); ++it){
+        if(it->getID() == setItem.getID() && it->getType() == setItem.getType()){
+            it->increaseCount(amount);
+            _totalWeightGP += setItem.getWeight() * amount;
+            found = true;
+        }
+    }
+    if(!found){
+        _inventory.push_back(setItem);
+        _totalWeightGP += setItem.getWeight() * amount;
+    }
+}
+
+std::vector<Items> Entity::getInventory()
+{
+    return _inventory;
 }

@@ -17,22 +17,42 @@ Items::~Items()
 
 EQUIP_TYPE Items::getType()
 {
-
+    return _type;
 }
 
 std::string Items::getName()
 {
-
+    return _name;
 }
 
 std::string Items::getDescription()
 {
-
+    return _description;
 }
 
 money Items::getValue()
 {
+    return _value;
+}
 
+unsigned Items::getID()
+{
+    return _itemID;
+}
+
+unsigned Items::getCount()
+{
+    return _itemCount;
+}
+
+void Items::increaseCount(unsigned numToAdd)
+{
+    _itemCount += numToAdd;
+}
+
+unsigned Items::getWeight()
+{
+    return _weightGP;
 }
 
 Arms::Arms()
@@ -43,6 +63,7 @@ Arms::Arms()
 Arms::Arms(sj::ondemand::document& itemData, int idx)
 {
     std::stringstream recv;
+    _itemID = idx;
     _itemCount = uint64_t(itemData["data"]["index"][std::to_string(idx)]["count"]);
     _type = (EQUIP_TYPE)uint64_t(itemData["data"]["index"][std::to_string(idx)]["type"]);
     _wType = (WEAPON_TYPE)uint64_t(itemData["data"]["index"][std::to_string(idx)]["wType"]);

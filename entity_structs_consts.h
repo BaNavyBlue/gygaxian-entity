@@ -158,7 +158,7 @@ const std::vector<langPair> langPairs = {{ELVISH, "Elvish"},
 struct stats{
     unsigned strength;
     unsigned excStren = 0;
-    unsigned intellignece;
+    unsigned intelligence;
     unsigned wisdom;
     unsigned charisma;
     unsigned raceCharisma;
