@@ -29,6 +29,10 @@ Thinking of implementing an auto name generation scheme based on sex, race, clas
 # Stat Tables:
 Stat Tables are generated and printed.
 
+# Items / Inventory
+Using some polymorphism from a parent Item type.
+Lists of standard items are currently being specified in .json format and loaded into a class structure.
+items/Arms.json is dynamically added into a vector of shared Item pointers. The character has a vector of Items, only the items ID, TYPE and cout are stored in the Character .json since the list of item parameters can get quite large. 
 
 # Character Written.
 The current code saves the generated character in the /characters folder as \<chosen name\>.json
