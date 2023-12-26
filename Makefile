@@ -1,9 +1,11 @@
 #OBJS specifies which files to compile as part of the project
 MAIN = main.cpp
+UI = ui-test.cpp
 SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
 
 
 OBJS = $(MAIN) $(SRC)
+UI_OBJ = $(UI) $(SRC)
 INCL =
 
 #CC specifies which compiler we're using
@@ -22,5 +24,6 @@ OBJ_NAME = magic
 #This is the target that compiles our executable
 all : $(OBJS)
 	$(CC) $(INCL) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
+	$(CC) $(INCL) $(UI_OBJ) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o ui-test
 
 .PHONY : clean

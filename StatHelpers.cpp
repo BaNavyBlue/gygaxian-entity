@@ -60,7 +60,7 @@ std::string inputName()
         unsigned char inChar;
         do{
             //int bytes_read = read(STD_IN, &inChar, 1);
-            inChar = getch();
+            inChar = getch_n();
             if(inChar > 0x1f && inChar < 0x80){
                 if(inChar == 0x7f){
                     if(inputName.size() > 0){
@@ -77,8 +77,8 @@ std::string inputName()
             } else {
                 if(inChar == '\33'){
 
-                inChar = getch();
-                inChar = getch();
+                inChar = getch_n();
+                inChar = getch_n();
                 inChar = 0;
                 }
             }
@@ -105,7 +105,7 @@ SEX inputSex()
     write(STD_OUT, message.c_str(), message.size());
     unsigned char inChar;
     do{
-        inChar = getch();
+        inChar = getch_n();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < '5'){
@@ -158,7 +158,7 @@ RACE inputRace(stats inStats)
     write(STD_OUT, message.c_str(), message.size());
     unsigned char inChar;
     do{
-        inChar = getch();
+        inChar = getch_n();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < idx){
@@ -318,7 +318,7 @@ ALIGNMENT inputAlign(CHAR_CLASS inClass)
     write(STD_OUT, message.c_str(), message.size());
     unsigned char inChar;
     do{
-        inChar = getch();
+        inChar = getch_n();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < idx){
@@ -358,7 +358,7 @@ CHAR_CLASS inputClass(RACE race, stats inStats)
     write(STD_OUT, message.c_str(), message.size());
     unsigned char inChar;
     do{
-        inChar = getch();
+        inChar = getch_n();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < idx){
@@ -470,7 +470,7 @@ bool reRoll()
     char choice;
 
     do{
-        choice = getch();
+        choice = getch_n();
         choice = std::tolower(choice);
     }while(choice != 'y' && choice != 'n');
 
@@ -997,7 +997,7 @@ bool yesNoChoice()
 char choice;
 
     do{
-        choice = getche();
+        choice = getch_n();
         choice = std::tolower(choice);
     }while(choice != 'y' && choice != 'n');
 
@@ -1422,7 +1422,7 @@ char getch_(int echo)
 }
 
 /* Read 1 character without echo */
-char getch(void) 
+char getch_n(void) 
 {
   return getch_(0);
 }
