@@ -38,6 +38,9 @@ items/Arms.json is dynamically added into a vector of shared Item pointers. The 
 The current code saves the generated character in the /characters folder as \<chosen name\>.json
 it then opens the saved character using the simdjson library. https://github.com/simdjson/simdjson
 
+# ROGUEUTIL
+Using https://github.com/sakhmatd/rogueutil as a starting point to create an interactive TUI.
+
 # So What?
 These are the initial steps toward creating a fully functional roleplaying game.
 
