@@ -46,7 +46,7 @@ void rollStats(stats& _stats, stats& _modStats)
         _stats.charisma = _stats.raceCharisma = _modStats.charisma = _modStats.raceCharisma = bestThree();
         _stats.dexterity = _modStats.dexterity = bestThree();
         _stats.constitution = _modStats.constitution = bestThree();
-    }while(!rollFailure(_stats, true));
+    }while(!rollFailure(_stats, false));
 }
 
 std::string inputName()
@@ -466,7 +466,7 @@ void printStatsFails(stats inStats)
 
 bool reRoll()
 {
-    std::cout << std::endl << "Would you like to keep stats? y/n: ";
+    //std::cout << std::endl << "Would you like to keep stats? y/n: ";
     char choice;
 
     do{

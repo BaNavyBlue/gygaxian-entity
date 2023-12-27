@@ -3,7 +3,6 @@
 */
 #ifndef ENTITY_H
 #define ENTITY_H
-
 #include "project_headers.h"
 #include "StatHelpers.h"
 #include "skills.h"

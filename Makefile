@@ -2,7 +2,7 @@
 MAIN = main.cpp
 UI = ui-test.cpp
 SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
-SRC_UI = 
+SRC_UI = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
 
 OBJS = $(MAIN) $(SRC)
 UI_OBJ = $(UI) $(SRC_UI)
@@ -26,6 +26,6 @@ test : $(OBJS)
 	$(CC) $(INCL) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
 
 ui : $(UI_OBJ)
-	$(CXX) $(INCL) $(UI_OBJ) $(COMPUI_FLAGS) $(LINKER_FLAGS) -o ui-test
+	$(CXX) $(INCL) $(UI_OBJ) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o ui-test
 
 .PHONY : clean

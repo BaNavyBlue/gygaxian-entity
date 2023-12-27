@@ -11,7 +11,6 @@
 */
 #ifndef STATHELPERS_H
 #define STATHELPERS_H
-
 #include "project_headers.h"
 
 const unsigned MAX_BUFFER = 32768;
