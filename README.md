@@ -1,4 +1,7 @@
 # gygaxian-entity
+
+<img src="https://github.com/BaNavyBlue/gygaxian-entity/blob/main/gygax-screen.png" alt="Sound Board Main Panel" width="750"/>
+
 This is a stream of conciousness project based on the original Gary Gygax Advanced Dungeons and Dragons first Edition character creation mechanics. There is a mix of c and c++ coding, sometimes just because it was the first thing that popped into my head.
 
 Originally intended this to be an excercise at using inheritance but quickly realized the error of my ways and remembered that inheritance is seldom a good solution for anything. Increasing memory indirection and making code brittle to changes isn't as wonderful for maintainability as OOP guru's would like one to believe.
