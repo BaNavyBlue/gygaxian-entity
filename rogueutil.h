@@ -282,6 +282,7 @@ rutil_print(RUTIL_STRING st)
 //         std::cout << st;
 // #else
         printf("%s", st);
+		fflush(stdout);
 // #endif
 }
 
@@ -844,6 +845,24 @@ setConsoleTitle(RUTIL_STRING title)
 // 	colorPrint(color, bgcolor, fmt...);
 // }
 // #else
+void
+colorPrintUTF(color_code color, color_code bgcolor, const char *fmt, ...)
+{
+	// va_list args;
+	// va_start(args, fmt);
+
+	if (color >= 0)
+        	setColor(color);
+
+	if (bgcolor >= 0)
+		setBackgroundColor(bgcolor);
+
+    printf("%s", fmt);
+	//va_end(args);
+
+	resetColor();
+}
+
 void
 colorPrint(color_code color, color_code bgcolor, const char *fmt, ...)
 {
