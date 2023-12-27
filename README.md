@@ -8,6 +8,8 @@ But this would be madness when one can just enumerate the races and classes and 
 
 I did end up creating a racial skills parent class each child race having different skills, and buffs. The Assassin class is a grand child of the main class descending from Thief.
 
+This project has also become a bit about designing a basic Terminal User Interface (TUI).  Currently it's only key stroke driven but it is capable of rescaling the main frame and centering the text.
+
 # Current State of the Code
 Currently this code runs in the terminal and allows one to create a character using AD&D 1e calculations.
 
@@ -40,6 +42,7 @@ it then opens the saved character using the simdjson library. https://github.com
 
 # ROGUEUTIL
 Using https://github.com/sakhmatd/rogueutil as a starting point to create an interactive TUI.
+I've been hacking around and modifying some things. I disappled the CPP ifdef flags and cpp code in the rogueutil header as I was observing some things not clearing properly and garbage characters in the example code. After a bit of searching I figured out how to get the TUI to print utf8 characters so I can use many fun characters if I choose, but I don't appear to have the ability to directly copy and paste them into a string and have them print correctly.  I have to create a utf lookup that takes the values over 127 and performs some bit shifts to covert them from the U+0000 format "\u0000" or 0x0000 to "\x00\x00\x00"  triple octal values. This appears to work I may go back to trying the raw hex codes.  
 
 # So What?
 These are the initial steps toward creating a fully functional roleplaying game.
