@@ -1,8 +1,9 @@
-#include "rogueutil.h"
-#include <stdlib.h> /* for srand() / rand() */
-#include <stdio.h>
-#include <vector>
-#include <string>
+//#include <stdlib.h> /* for srand() / rand() */
+//#include <stdio.h>
+// #include <vector>
+// #include <string>
+#include "entity.h"
+#include "project_headers.h"
 
 #define NOCOLOR -1
 
@@ -15,13 +16,15 @@ std::vector<std::vector<color_code>> colorMap(VECT_MAX, std::vector<color_code>(
 std::vector<std::vector<color_code>> backGColorMap(VECT_MAX, std::vector<color_code>(VECT_MAX, BLACK));
 
 void drawPrimary();
+void drawSmall(int startX, int maxX, int startY, int maxY);
 void createPrimary();
 void createRollScreen();
 std::string getUTF(int inCode);
 
 int main(){
 
-    setlocale(LC_ALL, "en_US.UTF-8");
+    setlocale(LC_ALL,"");
+    srand((unsigned int) time(NULL));
     // /* We wish to use the user's current locale. */
     // setlocale(LC_ALL, "");
 
@@ -56,7 +59,7 @@ int main(){
             char k = getkey();
             if(std::tolower(k) == 'c') {
                 createRollScreen();
-                drawPrimary();
+                drawSmall(1, 28, 1, 10);
             } 
             else if (k == KEY_LEFT){drawPrimary();}
 			else if (k == KEY_RIGHT){drawPrimary();}
@@ -101,14 +104,16 @@ void drawPrimary()
                     //printf("%s\n", utfChar.c_str());
                     colorPrintUTF(colorMap[i][j], backGColorMap[i][j], utfChar.c_str());
                 } else {
-                    char singleChar = forPrint;
-                    colorPrint(colorMap[i][j], backGColorMap[i][j], &singleChar);
+                    char singleChar[2];
+                    singleChar[0] = forPrint;
+                    singleChar[1] = '\0';
+                    colorPrint(colorMap[i][j], backGColorMap[i][j], singleChar);
                 }
             // } else {
             //     colorPrint(GREEN, BLACK, &forPrint);
             // }
         }
-        if(i < vert_char - 1) printf("\r\n");
+        //if(i < vert_char - 1) printf("\r\n");
         //locate(horz_char,vert_char);
     }
     locate(1,1);
@@ -171,7 +176,7 @@ void createPrimary()
                 colorMap[i][j] = GREEN;
                 backGColorMap[i][j] = BLACK;
             }  else {
-                primaryScreen[i][j] = ' ';
+                primaryScreen[i][j] = 0x0020;
                 colorMap[i][j] = GREEN;
                 backGColorMap[i][j] = BLACK;
             }
@@ -193,7 +198,7 @@ void createRollScreen()
     for(std::size_t i = 1; i < 10; ++i){
         for(std::size_t j = 1; j < exceptStr.size() + 6; ++j){
             if(i == 1 && j == 1){
-                primaryScreen[i][j] = '@';
+                primaryScreen[i][j] = 0x256D;
                 colorMap[i][j] = MAGENTA;
                 backGColorMap[i][j] = BLACK;
             } else if(i == 2 && j == 3) {
@@ -246,23 +251,23 @@ void createRollScreen()
                 }
                 j--;
             } else if(i == 1 && j == exceptStr.size() + 5){
-                primaryScreen[i][j] = '@';
+                primaryScreen[i][j] = 0x256E;
                 colorMap[i][j] = MAGENTA;
                 backGColorMap[i][j] = BLACK;
             } else if(i == 9 && j == 1) {
-                primaryScreen[i][j] = '@'; 
+                primaryScreen[i][j] = 0x2570; 
                 colorMap[i][j] = MAGENTA;
                 backGColorMap[i][j] = BLACK;
             } else if(i == 9 && j == exceptStr.size() + 5){
-                primaryScreen[i][j] = '@';
+                primaryScreen[i][j] = 0x256F;
                 colorMap[i][j] = MAGENTA;
                 backGColorMap[i][j] = BLACK;
             } else if(i == 1 || i == 9) {
-                primaryScreen[i][j] = '*';
+                primaryScreen[i][j] = 0x2500;
                 colorMap[i][j] = BLUE;
                 backGColorMap[i][j] = BLACK;
             } else if (j == 1 || j == exceptStr.size() + 5){
-                primaryScreen[i][j] = '*';
+                primaryScreen[i][j] = 0x2502;
                 colorMap[i][j] = BLUE;
                 backGColorMap[i][j] = BLACK;
             } else {
@@ -273,6 +278,30 @@ void createRollScreen()
         }       
     }
 
+}
+
+void drawSmall(int startX, int maxX, int startY, int maxY)
+{
+    for(int i = startY; i < maxY; ++i){
+        for(int j = startX; j < maxX; ++j){
+            int forPrint = primaryScreen[i][j];
+            //if(primaryScreen[i][j] == ' '){
+                
+                locate(j + 1, i + 1);
+                if(forPrint > 127){
+                    //std::string utfCode = std::to_string(forPrint);
+                    std::string utfChar = getUTF(forPrint);
+
+                    //printf("%s\n", utfChar.c_str());
+                    colorPrintUTF(colorMap[i][j], backGColorMap[i][j], utfChar.c_str());
+                } else {
+                    char singleChar[2];
+                    singleChar[0] = forPrint;
+                    singleChar[1] = '\0';
+                    colorPrint(colorMap[i][j], backGColorMap[i][j], singleChar);
+                }            
+        }
+    }
 }
 
 std::string getUTF(int inCode)

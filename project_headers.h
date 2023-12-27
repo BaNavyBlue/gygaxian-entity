@@ -13,6 +13,7 @@ using u8 = unsigned char;
 #include <memory>
 //#include <conio.h> //microsoft
 //#include <curses.h>
+#include "rogueutil.h"
 #include <termios.h>
 #include <unistd.h>
 #include "entity_structs_consts.h"

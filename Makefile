@@ -24,7 +24,7 @@ OBJ_NAME = magic
 #This is the target that compiles our executable
 test : $(OBJS)
 	$(CC) $(INCL) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
-	
+
 ui : $(UI_OBJ)
 	$(CXX) $(INCL) $(UI_OBJ) $(COMPUI_FLAGS) $(LINKER_FLAGS) -o ui-test
 
