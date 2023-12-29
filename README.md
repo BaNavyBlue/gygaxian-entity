@@ -1,6 +1,7 @@
 # gygaxian-entity
 
-<img src="https://github.com/BaNavyBlue/gygaxian-entity/blob/main/gygax-screen.png" alt="Sound Board Main Panel" width="750"/>
+<img src="https://github.com/BaNavyBlue/gygaxian-entity/blob/main/gygax-screen.png" alt="TUI panel" width="1000"/>
+<img src="https://github.com/BaNavyBlue/gygaxian-entity/blob/main/gygax2.png" alt="TUI panel 2" width="1000"/>
 
 This is a stream of conciousness project based on the original Gary Gygax Advanced Dungeons and Dragons first Edition character creation mechanics. There is a mix of c and c++ coding, sometimes just because it was the first thing that popped into my head.
 
