@@ -3,7 +3,7 @@
 // #include <vector>
 // #include <string>
 //#include "project_headers.h"
-#include "rogueutil.h"
+//#include "rogueutil.h"
 #include "entity.h"
 
 const int VECT_MAX = 400;
@@ -26,7 +26,10 @@ struct Perimeter{
     color_code cornerBGColr;
     color_code wallsColr;
     color_code wallsBGColr;
-    Perimeter(int uLSym, int uRSym, int bLSym, int bRSym, int topBotSym, int sideSym, color_code cornerColor, color_code cornerBGColor, color_code wallsColor, color_code wallsBGColor):
+    Perimeter(int uLSym, int uRSym, int bLSym,
+        int bRSym, int topBotSym, int sideSym,
+        color_code cornerColor, color_code cornerBGColor,
+        color_code wallsColor, color_code wallsBGColor):
     uLCorner(uLSym),
     uRCorner(uRSym),
     bLCorner(bLSym),
@@ -65,9 +68,10 @@ void createRollScreen();
 bool createRaceScreen(RACE& newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3);
 SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen);
 char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3);
-CHAR_CLASS selClassScreen(stats& inStats, ScreenVals& classScreen, ScreenVals& inScreen1, ScreenVals& inScreen2);
+CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& classScreen);
 std::string getUTF(int inCode);
 bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen);
+void reDoStatScreen();
 void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim);
 
 int main(){
@@ -388,6 +392,7 @@ void createRollScreen()
     RACE newRace;
     SEX newSex = selSexScreen(sexScreen, rollScreen);
     createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
+    CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen, sexScreen, raceScreen, classScreen);
 }
 
 bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
@@ -688,6 +693,90 @@ char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVa
         }
     }
     return -1;
+}
+
+CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& classScreen)
+{
+    std::vector<std::string> classList;
+    classList.push_back("Select Class:");
+    std::vector<std::string> nonViable;
+    nonViable.push_back("Non-Viable Classes: ");
+    std::unordered_map<char, CHAR_CLASS> cList;
+    char idx = '0';
+    int nonV = 0;
+    inStats = checkRaceStats(inRace, inStats); // Fix that race stat mods aren't taken into class consideration;
+    for(unsigned i = 0; i < classPairs.size(); ++i){
+        if(classRaceCheck(classPairs[i].cClass, inRace) && classStatCheck(classPairs[i].cClass, inStats)){
+            cList[idx] = classPairs[i].cClass;
+            classList.push_back(classPairs[i].cS + ": " + idx);
+            idx++;         
+        } else {
+            nonViable.push_back(classPairs[i].cS);
+            nonV++;
+        }
+    }
+
+    int maxLen = 0;
+    int addRow = 0;
+    int totalStrings = classList.size();
+
+    for(int i = 0; i < classList.size(); ++i){
+        if(maxLen < classList[i].size()){
+            maxLen = classList[i].size();
+        }
+    }
+    
+    if(nonViable.size() > 1){
+        for(int i = 0; i < nonViable.size(); ++i){
+            if(maxLen < nonViable[i].size()){
+                maxLen = nonViable[i].size();
+            }
+        }
+        totalStrings  += nonViable.size();
+        addRow = 1;
+    }
+
+    classScreen.xyLimits.minX = inScreen3.xyLimits.maxX + 1;
+    classScreen.xyLimits.maxX = inScreen3.xyLimits.maxX + 1 + maxLen + 6;
+    classScreen.xyLimits.minY = inScreen1.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    classScreen.xyLimits.maxY = inScreen1.xyLimits.maxY + totalStrings + addRow;
+
+    Perimeter classPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(classScreen, classPerim);
+    drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, classScreen);
+
+    for(std::size_t i = classScreen.xyLimits.minY; i < classScreen.xyLimits.maxY + 1; ++i){
+        for(std::size_t j = classScreen.xyLimits.minX; j < classScreen.xyLimits.maxX + 1 ; ++j){
+            if((i == classScreen.xyLimits.minY + 1) && j == classScreen.xyLimits.minX + 3){
+                if(nonViable.size() > 1){
+                    for(int m = 0; m < nonViable.size(); ++m){
+                        for(int n = 0; n < nonViable[m].size(); ++n){
+                            classScreen.charMap[i][j] = nonViable[m][n];
+                            classScreen.colorMap[i][j] = RED;
+                            classScreen.bGColorMap[i][j++] = BLACK;
+                        }
+                        j = classScreen.xyLimits.minX + 4; 
+                        i++;
+                    }
+                    i++;
+                    j = classScreen.xyLimits.minX + 3;
+                }
+                for(int m = 0; m < classList.size(); ++m){
+                    for(int n = 0; n < classList[m].size(); ++n){
+                        classScreen.charMap[i][j] = classList[m][n];
+                        classScreen.colorMap[i][j] = YELLOW;
+                        classScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = classScreen.xyLimits.minX + 4; 
+                    i++;
+                }
+            }
+        }
+    }
+    
+    drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, classScreen);
+
+    return CLERIC;
 }
 
 void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
