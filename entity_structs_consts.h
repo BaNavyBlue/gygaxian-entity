@@ -54,7 +54,6 @@ enum RACE{
 
 enum SEX{
     FUTA,
-    TRANS,
     INTERSEX,
     FEMALE,
     MALE
@@ -90,7 +89,6 @@ enum EQUIP_TYPE{
 };
 
 enum ARMOR_TYPE
-
 {
     LEATHER,
     PADDED,

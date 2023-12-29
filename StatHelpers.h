@@ -19,7 +19,7 @@ const unsigned char STD_OUT = 1;
 
 std::string inputName();
 SEX inputSex();
-RACE inputRace(stats inStats);
+RACE inputRace(stats inStats, std::vector<std::string>& viable, std::vector<std::string>& nonViable);
 ALIGNMENT inputAlign(CHAR_CLASS inClass);
 CHAR_CLASS inputClass(RACE race, stats inStats);
 RACIAL_BIAS getRacialBias(RACE race1, RACE race2);

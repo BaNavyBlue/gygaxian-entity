@@ -15,6 +15,29 @@ struct DrawRange{
     int maxY;
 };
 
+struct Perimeter{
+    int uLCorner;
+    int uRCorner;
+    int bLCorner;
+    int bRCorner;
+    int topBotWall;
+    int sideWalls;
+    color_code cornerColr;
+    color_code cornerBGColr;
+    color_code wallsColr;
+    color_code wallsBGColr;
+    Perimeter(int uLSym, int uRSym, int bLSym, int bRSym, int topBotSym, int sideSym, color_code cornerColor, color_code cornerBGColor, color_code wallsColor, color_code wallsBGColor):
+    uLCorner(uLSym),
+    uRCorner(uRSym),
+    bLCorner(bLSym),
+    bRCorner(bRSym),
+    topBotWall(topBotSym),
+    sideWalls(sideSym),
+    cornerColr(cornerColor),
+    cornerBGColr(cornerBGColor),
+    wallsColr(wallsColor),
+    wallsBGColr(wallsBGColor){}
+};
 struct ScreenVals{
     std::vector<std::vector<int>> charMap;
     std::vector<std::vector<color_code>> colorMap;
@@ -39,8 +62,13 @@ void drawPrimary();
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen);
 void createPrimary();
 void createRollScreen();
+bool createRaceScreen(RACE& newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3);
+SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen);
+char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3);
+CHAR_CLASS selClassScreen(stats& inStats, ScreenVals& classScreen, ScreenVals& inScreen1, ScreenVals& inScreen2);
 std::string getUTF(int inCode);
 bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen);
+void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim);
 
 int main(){
 
@@ -195,6 +223,9 @@ void createRollScreen()
     int prevMax = 0;
     int prevRow = 0;
     ScreenVals rollScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals sexScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals raceScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals classScreen(VECT_MAX, ' ', YELLOW, BLACK);
 
     stats newStats[2];
     rollStats(newStats[0], newStats[1]);
@@ -264,20 +295,22 @@ void createRollScreen()
         if(prevRow < addRow){
             prevRow = addRow;
         }
-        drawSmall(1, prevMax + 5, 1, 11 + prevRow, primaryScreen);
+        drawSmall(1, prevMax + 5, 1, 10 + prevRow, primaryScreen);
 
         rollScreen.xyLimits.minX = 1;
         rollScreen.xyLimits.maxX = maxLen + 5;
         rollScreen.xyLimits.minY = 1;
+        rollScreen.xyLimits.maxY = 10 + addRow - 2;
+
+        Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+        
+        generatePerimeter(rollScreen, rollPerim);
+
         rollScreen.xyLimits.maxY = 10 + addRow;
 
         for(std::size_t i = 1; i < 10 + addRow; ++i){
             for(std::size_t j = 1; j < maxLen + 6; ++j){
-                if(i == 1 && j == 1){
-                    rollScreen.charMap[i][j] = 0x256D;
-                    rollScreen.colorMap[i][j] = MAGENTA;
-                    rollScreen.bGColorMap[i][j] = BLACK;
-                } else if(i == 2 && j == 3) {
+                if(i == 2 && j == 3) {
                     for(std::size_t k = 0; k < strength.size(); ++k){
                         rollScreen.charMap[i][j] = strength[k];
                         rollScreen.colorMap[i][j] = YELLOW;
@@ -326,43 +359,126 @@ void createRollScreen()
                         rollScreen.bGColorMap[i][j++] = BLACK;
                     }
                     j--;
-                } else if(i == 9 + addRow && j == 3) {
+            } else if(i == 9 + addRow && j == 3) {
+                    rollScreen.charMap[i][j - 2] = ' ';
+                    rollScreen.colorMap[i][j - 2] = RED;
+                    rollScreen.bGColorMap[i][j- 2] = BLACK;
+                    rollScreen.charMap[i][j - 1] = ' ';
+                    rollScreen.colorMap[i][j - 1] = RED;
+                    rollScreen.bGColorMap[i][j- 1] = BLACK;
                     for(std::size_t k = 0; k < choices.size(); ++k){
                         rollScreen.charMap[i][j] = choices[k];
                         rollScreen.colorMap[i][j] = RED;
                         rollScreen.bGColorMap[i][j++] = BLACK;
                     }
+                    int x = 0 ;
+                    while(j + x < maxLen + 5){
+                        rollScreen.charMap[i][j + x] = ' ';
+                        rollScreen.colorMap[i][j + x] = RED;
+                        rollScreen.bGColorMap[i][j + x] = BLACK;
+                        ++x;
+                    }
                     j--;                 
-                } else if(i == 1 && j == maxLen + 5){
-                    rollScreen.charMap[i][j] = 0x256E;
-                    rollScreen.colorMap[i][j] = MAGENTA;
-                    rollScreen.bGColorMap[i][j] = BLACK;
-                } else if(i == 8 + addRow && j == 1) {
-                    rollScreen.charMap[i][j] = 0x2570; 
-                    rollScreen.colorMap[i][j] = MAGENTA;
-                    rollScreen.bGColorMap[i][j] = BLACK;
-                } else if(i == 8 + addRow && j == maxLen + 5){
-                    rollScreen.charMap[i][j] = 0x256F;
-                    rollScreen.colorMap[i][j] = MAGENTA;
-                    rollScreen.bGColorMap[i][j] = BLACK;
-                } else if(i == 1 || i == 8 + addRow) {
-                    rollScreen.charMap[i][j] = 0x2500;
-                    rollScreen.colorMap[i][j] = BLUE;
-                    rollScreen.bGColorMap[i][j] = BLACK;
-                } else if ((j == 1 || j == maxLen + 5) && i < 8 + addRow){
-                    rollScreen.charMap[i][j] = 0x2502;
-                    rollScreen.colorMap[i][j] = BLUE;
-                    rollScreen.bGColorMap[i][j] = BLACK;
-                } else {
-                    rollScreen.charMap[i][j] = ' ';
-                    rollScreen.colorMap[i][j] = YELLOW;
-                    rollScreen.bGColorMap[i][j] = BLACK;               
-                }
+                } 
             }       
         }
         drawSmall(1, rollScreen.xyLimits.maxX, 1, rollScreen.xyLimits.maxY, rollScreen);
     } while(reRollOptions(newStats[0], newStats[1], rollScreen));
+    drawSmall(1, rollScreen.xyLimits.maxX, rollScreen.xyLimits.maxY - 1, rollScreen.xyLimits.maxY, primaryScreen);
+    RACE newRace;
+    SEX newSex = selSexScreen(sexScreen, rollScreen);
+    createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
+}
 
+bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
+{
+    //ScreenVals raceScreen(VECT_MAX, ' ', GREEN, BLACK);
+    std::vector<std::string> viable;
+    std::vector<std::string> nonViable;
+
+    viable.push_back("Select Race:");
+    nonViable.push_back("Non-Viable Races:");
+    std::unordered_map<char, RACE> rMap;
+    char idx = '0';
+    int nonV = 0;
+    for(unsigned i = 0; i < racePairs.size(); ++i){
+        if(raceStatCheck(inStats, racePairs[i].race)/*&&checkRaceStats(racePairs[i].race, inStats)*/){
+            rMap[idx] = racePairs[i].race;
+            viable.push_back(racePairs[i].raceS + ": " + idx);
+            idx++;         
+        } else {
+            nonViable.push_back(racePairs[i].raceS);
+            nonV++;
+        }
+    }
+
+    int maxLen = 0;
+    int addRow = 0;
+    int totalStrings = viable.size();
+
+    for(int i = 0; i < viable.size(); ++i){
+        if(maxLen < viable[i].size()){
+            maxLen = viable[i].size();
+        }
+    }
+    
+    if(nonViable.size() > 1){
+        for(int i = 0; i < nonViable.size(); ++i){
+            if(maxLen < nonViable[i].size()){
+                maxLen = nonViable[i].size();
+            }
+        }
+        totalStrings  += nonViable.size();
+        addRow = 1;
+    }
+
+    inScreen3.xyLimits.minX = inScreen2.xyLimits.maxX + 1;
+    inScreen3.xyLimits.maxX = inScreen2.xyLimits.maxX + 1 + maxLen + 6;
+    inScreen3.xyLimits.minY = inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    inScreen3.xyLimits.maxY = inScreen.xyLimits.maxY + totalStrings + addRow;
+
+    Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(inScreen3, racePerim);
+
+    for(std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i){
+        for(std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1 ; ++j){
+            if((i == inScreen3.xyLimits.minY + 1) && j == inScreen3.xyLimits.minX + 3){
+                if(nonViable.size() > 1){
+                    for(int m = 0; m < nonViable.size(); ++m){
+                        for(int n = 0; n < nonViable[m].size(); ++n){
+                            inScreen3.charMap[i][j] = nonViable[m][n];
+                            inScreen3.colorMap[i][j] = RED;
+                            inScreen3.bGColorMap[i][j++] = BLACK;
+                        }
+                        j = inScreen3.xyLimits.minX + 4; 
+                        i++;
+                    }
+                    i++;
+                    j = inScreen3.xyLimits.minX + 3;
+                }
+                for(int m = 0; m < viable.size(); ++m){
+                    for(int n = 0; n < viable[m].size(); ++n){
+                        inScreen3.charMap[i][j] = viable[m][n];
+                        inScreen3.colorMap[i][j] = YELLOW;
+                        inScreen3.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = inScreen3.xyLimits.minX + 4; 
+                    i++;
+                }
+            }
+        }
+    }
+    
+    drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
+
+    char raceSelection = selRace(idx, inScreen, inScreen2, inScreen3);
+    if(raceSelection < 0){
+        printf("Something Unpossible happened!\r\n");
+        return false;
+    } else {
+        newRace = rMap[raceSelection];
+    }         
+    return true;
 }
 
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
@@ -387,6 +503,88 @@ void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
                 }            
         }
     }
+}
+
+SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen)
+{
+    std::vector<std::string> sexList;
+    sexList.push_back("Select Sex:");
+    sexList.push_back("Futa: 0");
+    sexList.push_back("Intersex*: 1");
+    sexList.push_back("Female**: 2");
+    sexList.push_back("Male: 3");
+    sexList.push_back("");
+    sexList.push_back("*Intersex");
+    sexList.push_back("const -1.");
+    sexList.push_back("charis +1.");
+    sexList.push_back("");
+    sexList.push_back("**Females");
+    sexList.push_back("have stren.");
+    sexList.push_back("caps.");
+    
+    
+    int maxLen = 0;
+
+    for(int i = 0; i < sexList.size(); ++i){
+        if(maxLen < sexList[i].size()){
+            maxLen = sexList[i].size();
+        }
+    }
+
+    sexScreen.xyLimits.minX = inScreen.xyLimits.minX;
+    sexScreen.xyLimits.maxX = maxLen + 6;
+    sexScreen.xyLimits.minY = inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    sexScreen.xyLimits.maxY = inScreen.xyLimits.maxY + sexList.size();
+
+    Perimeter sexPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(sexScreen, sexPerim);
+
+    for(std::size_t i = sexScreen.xyLimits.minY; i < sexScreen.xyLimits.maxY + 1; ++i){
+        for(std::size_t j = 1; j < maxLen + 7; ++j){
+            if((i == sexScreen.xyLimits.minY + 1) && j == 4){
+                for(int m = 0; m < sexList.size(); ++m){
+                    for(int n = 0; n < sexList[m].size(); ++n){
+                        sexScreen.charMap[i][j] = sexList[m][n];
+                        sexScreen.colorMap[i][j] = YELLOW;
+                        sexScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = 5; 
+                    i++;
+                }
+            }
+        }
+    }
+    drawSmall(1, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
+    char choice;
+    while(true){
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if(horz_char != new_horz || vert_char != new_vert){
+            horz_char = new_horz;
+            vert_char = new_vert;
+            createPrimary();
+            drawPrimary();
+            drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY - 1, inScreen);
+            drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
+        }
+        
+        if(kbhit()){
+            char k = getkey();
+            if(k >= '0' && k < '4'){
+                switch(k){
+                    case '0':
+                        return FUTA;
+                    case '1':
+                        return INTERSEX;
+                    case '2':
+                        return FEMALE;
+                    case '3':
+                        return MALE;
+                }
+            }
+        }
+    }
+    return FUTA;   
 }
 
 std::string getUTF(int inCode)
@@ -456,10 +654,6 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
             } else if(std::tolower(k) == 'y'){
                 return false;
             }
-            else if (k == KEY_LEFT){}
-            else if (k == KEY_RIGHT){}
-            else if (k == KEY_UP){}
-            else if (k == KEY_DOWN){}
             else if (k == KEY_ESCAPE) {
                 drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
                 return false;
@@ -467,5 +661,68 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
         }
     }
     return false;
+}
 
+char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3)
+{
+    //std::cout << std::endl << "Would you like to keep stats? y/n: ";
+    char choice;
+    while(true){
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if(horz_char != new_horz || vert_char != new_vert){
+            horz_char = new_horz;
+            vert_char = new_vert;
+            createPrimary();
+            drawPrimary();
+            drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1, inScreen1);
+            drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1, inScreen2);
+            drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
+        }
+        
+        if(kbhit()){
+            char k = getkey();
+            if(k >= '0' && k < maxIdx){
+                return k;
+            } 
+        }
+    }
+    return -1;
+}
+
+void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
+{
+    for(std::size_t i = inScreen.xyLimits.minY; i < inScreen.xyLimits.maxY + 1; ++i){
+        for(std::size_t j = inScreen.xyLimits.minX; j < inScreen.xyLimits.maxX + 1; ++j){
+            if(i == inScreen.xyLimits.minY && j == inScreen.xyLimits.minX){
+                inScreen.charMap[i][j] = inPerim.uLCorner;
+                inScreen.colorMap[i][j] = inPerim.cornerColr;
+                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
+            } else if(i == inScreen.xyLimits.minY  && j == inScreen.xyLimits.maxX){
+                inScreen.charMap[i][j] = inPerim.uRCorner;
+                inScreen.colorMap[i][j] = inPerim.cornerColr;
+                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
+            } else if((i == inScreen.xyLimits.maxY) && j == inScreen.xyLimits.minX) {
+                inScreen.charMap[i][j] = inPerim.bLCorner;
+                inScreen.colorMap[i][j] = inPerim.cornerColr;
+                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
+            } else if((i == inScreen.xyLimits.maxY) && j == inScreen.xyLimits.maxX){
+                inScreen.charMap[i][j] = inPerim.bRCorner;
+                inScreen.colorMap[i][j] = inPerim.cornerColr;
+                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
+            } else if(i == inScreen.xyLimits.minY || (i == inScreen.xyLimits.maxY)) {
+                inScreen.charMap[i][j] = inPerim.topBotWall;
+                inScreen.colorMap[i][j] = inPerim.wallsColr;
+                inScreen.bGColorMap[i][j] = inPerim.wallsBGColr;
+            } else if ((j == inScreen.xyLimits.minX || j == inScreen.xyLimits.maxX) && (i < inScreen.xyLimits.maxY)){
+                inScreen.charMap[i][j] = inPerim.sideWalls;
+                inScreen.colorMap[i][j] = inPerim.wallsColr;
+                inScreen.bGColorMap[i][j] = inPerim.wallsBGColr;
+            } else {
+                inScreen.charMap[i][j] = ' ';
+                inScreen.colorMap[i][j] = GREEN;
+                inScreen.bGColorMap[i][j] = BLACK;               
+            }
+        }
+    }
 }

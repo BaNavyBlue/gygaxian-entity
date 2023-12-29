@@ -101,7 +101,7 @@ std::string inputName()
 SEX inputSex()
 {
     // OS Level Write to standard Out
-    std::string message = "Choose Sex: \r\nFuta: 0 \r\nTrans: 1\r\nIntersex: 2\r\nFemale: 3\r\nMale: 4";
+    std::string message = "Choose Sex: \r\nFuta: 0 \r\nIntersex: 1\r\nFemale: 2\r\nMale: 3";
     write(STD_OUT, message.c_str(), message.size());
     unsigned char inChar;
     do{
@@ -114,12 +114,10 @@ SEX inputSex()
                     case '0':
                         return FUTA;
                     case '1':
-                        return TRANS;
-                    case '2':
                         return INTERSEX;
-                    case '3':
+                    case '2':
                         return FEMALE;
-                    case '4':
+                    case '3':
                         return MALE;
                 }
             } else {
@@ -131,45 +129,45 @@ SEX inputSex()
     std::cout << std::endl;
 }
 
-RACE inputRace(stats inStats)
+RACE inputRace(stats inStats, std::vector<std::string>& viable, std::vector<std::string>& nonViable)
 {
     // OS Level Write to standard Out
     //std::vector<std::string> races = {"Human: 0", "Elf: 1", "Half-Orc: 2", "Halfling: 3", "Dwarf: 4", "Half-Elf: 5", "Gnome: 6"};
-    std::string message = "\r\nSelect Race: \r\n";
-    std::string nonViable = "\r\nNon-Viable Races: \r\n";
+    viable.push_back("Select Race:");
+    nonViable.push_back("Non-Viable Races:");
     std::unordered_map<char, RACE> rMap;
     char idx = '0';
     int nonV = 0;
     for(unsigned i = 0; i < racePairs.size(); ++i){
         if(raceStatCheck(inStats, racePairs[i].race)/*&&checkRaceStats(racePairs[i].race, inStats)*/){
             rMap[idx] = racePairs[i].race;
-            message += racePairs[i].raceS + ": " + idx + "\r\n";
+            viable.push_back(racePairs[i].raceS + ": " + idx);
             idx++;         
         } else {
-            nonViable += racePairs[i].raceS + "\r\n";
+            nonViable.push_back(racePairs[i].raceS);
             nonV++;
         }
     }
 
-    if(nonV){
-        write(STD_OUT, nonViable.c_str(), nonViable.size());
-    }
+    //if(nonV){
+    //    write(STD_OUT, nonViable.c_str(), nonViable.size());
+    //}
 
-    write(STD_OUT, message.c_str(), message.size());
-    unsigned char inChar;
-    do{
-        inChar = getch_n();
-        //int bytes_read = read(STD_IN, &inChar, 1);
-        //if(bytes_read > 0){
-            if(inChar >= '0' && inChar < idx){
-                std::cout << std::endl;
-                return rMap[inChar];
-            } else {
-                write(STD_OUT, "Invalid Selection\r\n",20);
-                write(STD_OUT, message.c_str(), message.size());
-            }
-        //} 
-    }while(true);
+    //write(STD_OUT, message.c_str(), message.size());
+    // unsigned char inChar;
+    // do{
+    //     inChar = getch_n();
+    //     //int bytes_read = read(STD_IN, &inChar, 1);
+    //     //if(bytes_read > 0){
+    //         if(inChar >= '0' && inChar < idx){
+    //             std::cout << std::endl;
+    //             return rMap[inChar];
+    //         } //else {
+    //         //    write(STD_OUT, "Invalid Selection\r\n",20);
+    //         //    write(STD_OUT, message.c_str(), message.size());
+    //        // }
+    //     //} 
+    // }while(true);
 }
 
 // A Viability Hack to prevent a race that can't select a class
@@ -374,13 +372,10 @@ CHAR_CLASS inputClass(RACE race, stats inStats)
 
 void printSex(SEX sex)
 {
-    std::cout << "Sex: ";
+    //std::cout << "Sex: ";
     switch(sex){
         case FUTA:
             std::cout << "Futa." << std::endl;
-            break;
-        case TRANS:
-            std::cout << "Trans." << std::endl;
             break;
         case INTERSEX:
             std::cout << "InterSex." << std::endl;
