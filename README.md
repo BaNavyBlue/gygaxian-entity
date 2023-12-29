@@ -48,7 +48,9 @@ it then opens the saved character using the simdjson library. https://github.com
 Using https://github.com/sakhmatd/rogueutil as a starting point to create an interactive TUI.
 I've been hacking around and modifying some things. I disappled the CPP ifdef flags and cpp code in the rogueutil header as I was observing some things not clearing properly and garbage characters in the example code.
 
-After a bit of searching I figured out how to get the TUI to print utf8 characters so I can use many fun characters if I choose, but I don't appear to have the ability to directly copy and paste them into a string and have them print correctly.  I have to create a utf lookup that takes the values over 127 and performs some bit shifts to covert them from the Unicode U+0000 format "\u0000" or 0x0000 to UTF-8 sequences "\x00\x00\x00". This appears to work I may go back to trying the raw hex codes.  
+After a bit of searching I figured out how to get the TUI to print utf8 characters so I can use many fun characters if I choose, but I don't appear to have the ability to directly copy and paste them into a string and have them print correctly.  I have to create a utf lookup that takes the values over 127 and performs some bit shifts to covert them from the Unicode U+0000 format "\u0000" or 0x0000 to UTF-8 sequences "\x00\x00\x00". This appears to work I may go back to trying the raw hex codes.
+
+Accidentally painted myself into a monlithic main/UI source file corner using the header file for rogueutil.h since the implementation is in the header I was unable to share the header between modules without creating re-definition errors.  Must refactor the header implementation into a .c file. 
 
 # So What?
 These are the initial steps toward creating a fully functional roleplaying game.
