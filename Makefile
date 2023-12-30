@@ -2,7 +2,7 @@
 MAIN = main.cpp
 UI = ui-test.cpp
 SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
-SRC_UI = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp rogueutil.c
+SRC_UI = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp rogueutil.c ui_util.cpp
 
 OBJS = $(MAIN) $(SRC)
 UI_OBJ = $(UI) $(SRC_UI)

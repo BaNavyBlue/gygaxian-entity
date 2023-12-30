@@ -6,53 +6,6 @@
 //#include "rogueutil.h"
 #include "entity.h"
 
-const int VECT_MAX = 400;
-
-struct DrawRange{
-    int minX;
-    int maxX;
-    int minY;
-    int maxY;
-};
-
-struct Perimeter{
-    int uLCorner;
-    int uRCorner;
-    int bLCorner;
-    int bRCorner;
-    int topBotWall;
-    int sideWalls;
-    color_code cornerColr;
-    color_code cornerBGColr;
-    color_code wallsColr;
-    color_code wallsBGColr;
-    Perimeter(int uLSym, int uRSym, int bLSym,
-        int bRSym, int topBotSym, int sideSym,
-        color_code cornerColor, color_code cornerBGColor,
-        color_code wallsColor, color_code wallsBGColor):
-    uLCorner(uLSym),
-    uRCorner(uRSym),
-    bLCorner(bLSym),
-    bRCorner(bRSym),
-    topBotWall(topBotSym),
-    sideWalls(sideSym),
-    cornerColr(cornerColor),
-    cornerBGColr(cornerBGColor),
-    wallsColr(wallsColor),
-    wallsBGColr(wallsBGColor){}
-};
-struct ScreenVals{
-    std::vector<std::vector<int>> charMap;
-    std::vector<std::vector<color_code>> colorMap;
-    std::vector<std::vector<color_code>> bGColorMap;
-    DrawRange xyLimits;
-    ScreenVals(const int max, int setInt, color_code charColor, color_code bGColor):
-        charMap(max, std::vector<int>(max, setInt)),
-        colorMap(max, std::vector<color_code>(max, charColor)),
-        bGColorMap(max, std::vector<color_code>(max, bGColor)){}
-    
-};
-
 #define NOCOLOR -1
 
 std::size_t horz_char = 0;
@@ -60,19 +13,6 @@ std::size_t vert_char = 0;
 
 
 ScreenVals primaryScreen(VECT_MAX, ' ', GREEN, BLACK);
-
-void drawPrimary();
-void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen);
-void createPrimary();
-void createRollScreen();
-bool createRaceScreen(RACE& newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3);
-SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen);
-char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3);
-CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& classScreen);
-std::string getUTF(int inCode);
-bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen);
-void reDoStatScreen();
-void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim);
 
 int main(){
 
@@ -118,6 +58,10 @@ int main(){
     showcursor();
     return 0;
 }
+
+/************************************************************************************
+    All of these function definitions were moved to ui_util.h
+************************************************************************************/
 
 void drawPrimary()
 {
@@ -233,6 +177,7 @@ void createRollScreen()
 
     stats newStats[2];
     rollStats(newStats[0], newStats[1]);
+    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
 
     std::string choices = "Keep current roll? (y/n) (B)rute Force a Class? [esc] to go back.";
     do{
@@ -306,7 +251,7 @@ void createRollScreen()
         rollScreen.xyLimits.minY = 1;
         rollScreen.xyLimits.maxY = 10 + addRow - 2;
 
-        Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+
         
         generatePerimeter(rollScreen, rollPerim);
 
@@ -393,6 +338,18 @@ void createRollScreen()
     SEX newSex = selSexScreen(sexScreen, rollScreen);
     createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
     CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen, sexScreen, raceScreen, classScreen);
+    std::string newName;
+    
+    TextInput textBox;
+    DrawRange textCorner;
+    textCorner.minX = sexScreen.xyLimits.minX;
+    textCorner.minY = sexScreen.xyLimits.maxY + 1;
+    textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
+    
+    drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1, primaryScreen);
+    drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
+    drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, primaryScreen);
+    drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, primaryScreen);
 }
 
 bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
@@ -486,30 +443,6 @@ bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, Scree
     return true;
 }
 
-void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
-{
-    for(int i = startY; i < maxY; ++i){
-        for(int j = startX; j < maxX + 1; ++j){
-            int forPrint = inScreen.charMap[i][j];
-            //if(primaryScreen[i][j] == ' '){
-                
-                locate(j + 1, i + 1);
-                if(forPrint > 127){
-                    //std::string utfCode = std::to_string(forPrint);
-                    std::string utfChar = getUTF(forPrint);
-
-                    //printf("%s\n", utfChar.c_str());
-                    colorPrintUTF(inScreen.colorMap[i][j], inScreen.bGColorMap[i][j], utfChar.c_str());
-                } else {
-                    char singleChar[2];
-                    singleChar[0] = forPrint;
-                    singleChar[1] = '\0';
-                    colorPrint(inScreen.colorMap[i][j], inScreen.bGColorMap[i][j], singleChar);
-                }            
-        }
-    }
-}
-
 SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen)
 {
     std::vector<std::string> sexList;
@@ -590,50 +523,6 @@ SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen)
         }
     }
     return FUTA;   
-}
-
-std::string getUTF(int inCode)
-{
-    //unsigned int codePoint;
-    
-    //sscanf(unicodeEscape + 2, "%x", &codePoint);  // Skip the "\u" part and parse the hexadecimal value
-
-    // Calculate the number of bytes needed based on the Unicode code point
-    int numBytes;
-    if (inCode <= 0x7F) {
-        numBytes = 1;
-    } else if (inCode <= 0x7FF) {
-        numBytes = 2;
-    } else if (inCode <= 0xFFFF) {
-        numBytes = 3;
-    } else if (inCode <= 0x10FFFF) {
-        numBytes = 4;
-    } else {
-        fprintf(stderr, "Invalid Unicode code point: %x\n", inCode);
-        exit(EXIT_FAILURE);
-    }
-
-    // Create the UTF-8 sequence
-    switch (numBytes) {
-        char utf8Result[5];
-        case 1:
-            sprintf(utf8Result, "%c", (char)inCode);
-            utf8Result[4] = '\0';
-            return utf8Result;
-        case 2:
-            sprintf(utf8Result, "%c%c", (char)(0xC0 | (inCode >> 6)), (char)(0x80 | (inCode & 0x3F)));
-            utf8Result[4] = '\0';
-            return utf8Result ;
-        case 3:
-            sprintf(utf8Result, "%c%c%c", (char)(0xE0 | (inCode >> 12)), (char)(0x80 | ((inCode >> 6) & 0x3F)), (char)(0x80 | (inCode & 0x3F)));
-            utf8Result[4] = '\0';
-            return utf8Result;
-        case 4:
-            sprintf(utf8Result, "%c%c%c%c", (char)(0xF0 | (inCode >> 18)), (char)(0x80 | ((inCode >> 12) & 0x3F)), (char)(0x80 | ((inCode >> 6) & 0x3F)), (char)(0x80 | (inCode & 0x3F)));
-            utf8Result[4] = '\0';
-            return utf8Result;
-    }
-    return "\0";
 }
 
 bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
@@ -775,43 +664,41 @@ CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, Sc
     }
     
     drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, classScreen);
-
+    char classKey = selClass(idx, inScreen1, inScreen2, inScreen3, classScreen);
+    return cList[classKey];
     return CLERIC;
 }
 
-void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
+char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4)
 {
-    for(std::size_t i = inScreen.xyLimits.minY; i < inScreen.xyLimits.maxY + 1; ++i){
-        for(std::size_t j = inScreen.xyLimits.minX; j < inScreen.xyLimits.maxX + 1; ++j){
-            if(i == inScreen.xyLimits.minY && j == inScreen.xyLimits.minX){
-                inScreen.charMap[i][j] = inPerim.uLCorner;
-                inScreen.colorMap[i][j] = inPerim.cornerColr;
-                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
-            } else if(i == inScreen.xyLimits.minY  && j == inScreen.xyLimits.maxX){
-                inScreen.charMap[i][j] = inPerim.uRCorner;
-                inScreen.colorMap[i][j] = inPerim.cornerColr;
-                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
-            } else if((i == inScreen.xyLimits.maxY) && j == inScreen.xyLimits.minX) {
-                inScreen.charMap[i][j] = inPerim.bLCorner;
-                inScreen.colorMap[i][j] = inPerim.cornerColr;
-                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
-            } else if((i == inScreen.xyLimits.maxY) && j == inScreen.xyLimits.maxX){
-                inScreen.charMap[i][j] = inPerim.bRCorner;
-                inScreen.colorMap[i][j] = inPerim.cornerColr;
-                inScreen.bGColorMap[i][j] = inPerim.cornerBGColr;
-            } else if(i == inScreen.xyLimits.minY || (i == inScreen.xyLimits.maxY)) {
-                inScreen.charMap[i][j] = inPerim.topBotWall;
-                inScreen.colorMap[i][j] = inPerim.wallsColr;
-                inScreen.bGColorMap[i][j] = inPerim.wallsBGColr;
-            } else if ((j == inScreen.xyLimits.minX || j == inScreen.xyLimits.maxX) && (i < inScreen.xyLimits.maxY)){
-                inScreen.charMap[i][j] = inPerim.sideWalls;
-                inScreen.colorMap[i][j] = inPerim.wallsColr;
-                inScreen.bGColorMap[i][j] = inPerim.wallsBGColr;
-            } else {
-                inScreen.charMap[i][j] = ' ';
-                inScreen.colorMap[i][j] = GREEN;
-                inScreen.bGColorMap[i][j] = BLACK;               
-            }
+    //std::cout << std::endl << "Would you like to keep stats? y/n: ";
+    char choice;
+    while(true){
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if(horz_char != new_horz || vert_char != new_vert){
+            horz_char = new_horz;
+            vert_char = new_vert;
+            createPrimary();
+            drawPrimary();
+            drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1, inScreen1);
+            drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1, inScreen2);
+            drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
+            drawSmall(inScreen4.xyLimits.minX, inScreen4.xyLimits.maxX, inScreen4.xyLimits.minY, inScreen4.xyLimits.maxY + 1, inScreen4);
+        }
+        
+        if(kbhit()){
+            char k = getkey();
+            if(k >= '0' && k < maxIdx){
+                return k;
+            } 
         }
     }
+    return -1;
 }
+
+std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4)
+{
+
+}
+
