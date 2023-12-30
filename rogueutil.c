@@ -101,6 +101,8 @@ int getkey(void)
 	case 0: {
 		int kk;
 		switch (kk = getch()) {
+		case 8:
+	        return KEY_BKSP;
 		case 71:
 			return KEY_NUMPAD7;
 		case 72:
@@ -154,6 +156,8 @@ int getkey(void)
 	}
 	case 13:
 		return KEY_ENTER;
+	case 127:
+	    return KEY_NRMLDEL;
 #ifdef _WIN32
 	case 27:
 		return KEY_ESCAPE;

@@ -2,7 +2,7 @@
 
 TextInput::TextInput()
 {
-  std::cout << "woopty woo" << std::endl;    
+  //std::cout << "woopty woo" << std::endl;    
 }
 
 void TextInput::createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::string message)
@@ -19,7 +19,9 @@ void TextInput::createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::st
     _textBoxPerim = inPerim;
     generatePerimeter(*_textScreen, _textBoxPerim);
     PlacePrompt();
+    
     drawSmall(_textScreen->xyLimits.minX, _textScreen->xyLimits.maxX, _textScreen->xyLimits.minY, _textScreen->xyLimits.maxY + 1, *_textScreen);
+    getText();
 }
 
 void TextInput::PlacePrompt()
@@ -31,6 +33,49 @@ void TextInput::PlacePrompt()
         _textScreen->colorMap[promptRow][j + columnOffset] = GREEN;
         _textScreen->bGColorMap[promptRow][j + columnOffset] = BLACK;
     }
+}
+
+void TextInput::getText()
+{
+    showcursor();
+    int cursX = _textScreen->xyLimits.minX + 2;
+    int cursY = _textScreen->xyLimits.minY + 3;
+    int cursLeftLim = cursX;
+    locate(cursX, cursY);
+    bool gather = true;
+    while(gather){
+        if(kbhit()){
+            int k = getkey();
+            switch(k){
+                case KEY_NUMDEL:
+                case KEY_DELETE:
+                case KEY_BKSP:
+                case KEY_NRMLDEL:
+                    if(_receivedString.size() > 0){
+                        _receivedString.pop_back();
+                        locate(--cursX, cursY);
+                        colorPrintUTF(YELLOW, BLACK, " ");
+                        locate(cursX, cursY);
+                    }
+                    break;
+                case KEY_ENTER:
+                    if(_receivedString.size() > 0){
+                       gather = false;
+                    }
+                    break;
+                default:
+                    if(k > 31 && k < 127 || k > 127){
+                        if(_receivedString.size() < _textScreen->xyLimits.maxX - 3){
+                            _receivedString.push_back(k);
+                            colorPrintUTF(YELLOW, BLACK, getUTF(k).c_str());
+                            locate(++cursX, cursY);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+    hidecursor();
 }
 
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
@@ -57,6 +102,8 @@ void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
     }
 }
 
+
+// Unicode to UTF-8 conversion created care of CHAT GPT 3.5
 std::string getUTF(int inCode)
 {
     //unsigned int codePoint;

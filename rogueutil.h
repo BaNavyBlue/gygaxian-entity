@@ -198,6 +198,7 @@ typedef enum key_code {
 	KEY_ESCAPE  = 0,
 	KEY_ENTER   = 1,
 	KEY_SPACE   = 32,
+	KEY_BKSP    = 8,
 
 	KEY_INSERT  = 2,
 	KEY_HOME    = 3,
@@ -235,6 +236,7 @@ typedef enum key_code {
 	KEY_NUMPAD7 = 133,
 	KEY_NUMPAD8 = 134,
 	KEY_NUMPAD9 = 135,
+	KEY_NRMLDEL = 666,
 } key_code;
 
 /**
