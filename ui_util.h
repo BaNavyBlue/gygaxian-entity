@@ -22,8 +22,11 @@ std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& in
 class TextInput{
 private:
     std::string _recievedString;
+    std::string _prompt;
     std::shared_ptr<ScreenVals> _textScreen;
     Perimeter _textBoxPerim;
+    void PlacePrompt();
+    void getText();
 public:
     TextInput();
     void createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::string message);

@@ -9,19 +9,29 @@ void TextInput::createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::st
 {
 
     // const int max, int setInt, color_code charColor, color_code bGColor
+    _prompt = message;
     _textScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _textScreen->xyLimits.minX = uRandWidth.minX;
     _textScreen->xyLimits.maxX = uRandWidth.minX + 32;
     _textScreen->xyLimits.minY = uRandWidth.minY;
-    _textScreen->xyLimits.maxY = uRandWidth.minY + 4;
+    _textScreen->xyLimits.maxY = uRandWidth.minY + 3;
 
     _textBoxPerim = inPerim;
     generatePerimeter(*_textScreen, _textBoxPerim);
-
+    PlacePrompt();
     drawSmall(_textScreen->xyLimits.minX, _textScreen->xyLimits.maxX, _textScreen->xyLimits.minY, _textScreen->xyLimits.maxY + 1, *_textScreen);
 }
 
-
+void TextInput::PlacePrompt()
+{
+    int promptRow = _textScreen->xyLimits.minY + 1;
+    int columnOffset = _textScreen->xyLimits.minX + 1;
+    for(int j = 0; j < _prompt.size(); ++j){
+        _textScreen->charMap[promptRow][j + columnOffset] = _prompt[j];
+        _textScreen->colorMap[promptRow][j + columnOffset] = GREEN;
+        _textScreen->bGColorMap[promptRow][j + columnOffset] = BLACK;
+    }
+}
 
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
 {
