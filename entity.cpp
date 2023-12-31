@@ -51,35 +51,35 @@ void Entity::setRaceSkillType()
     switch(_race){
         case DWARF:
             _raceSkills = std::make_shared<Dwarf>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         case ELF:
             _raceSkills = std::make_shared<Elf>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         case GNOME:  
             _raceSkills = std::make_shared<Gnome>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         case HALF_ELF:
             _raceSkills = std::make_shared<HalfElf>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         case HALFLING:
             _raceSkills = std::make_shared<Halfling>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         case HALF_ORC:
             _raceSkills = std::make_shared<HalfOrc>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         case HUMAN:
             _raceSkills = std::make_shared<Human>(_stats);
-            _raceSkills->listRaceSkills();
+            //_raceSkills->getch_n(();
             break;
         default:
             // _raceSkills = std::make_shared<RACE_SKILLS>(_stats);
-            // _raceSkills->listRaceSkills();
+            // _raceSkills->getch_n(();
             break;
     }
 }
@@ -114,7 +114,7 @@ void Entity::setChrClassSkill(CHAR_CLASS inClass)
 
             } else {
                 _languages.push_back(THIEVES_CANT);
-                std::cout << "Thieves Cant added" << std::endl;
+                //std::cout << "Thieves Cant added" << std::endl;
             }
             break;
         case ASSASSIN:
@@ -123,7 +123,7 @@ void Entity::setChrClassSkill(CHAR_CLASS inClass)
 
             } else {
                 _languages.push_back(THIEVES_CANT);
-                std::cout << "Thieves Cant added" << std::endl;
+                //std::cout << "Thieves Cant added" << std::endl;
             }
             break;
         case MONK:
@@ -794,7 +794,7 @@ bool Entity::checkRaceStats(RACE race)
         case HUMAN:
             // Check Stat Limitation.
             if(_stats.excStren > 51 && _sex == FEMALE){
-                std::cout << "Human Female Exceptional Strength Capped at 51" << std::endl;
+                //std::cout << "Human Female Exceptional Strength Capped at 51" << std::endl;
                 _stats.excStren = _modStats.excStren = 51;
             }
             _race = race;
@@ -802,23 +802,23 @@ bool Entity::checkRaceStats(RACE race)
         case ELF:
             // Stat Limitation Check
             if(_stats.intelligence < 8){
-                std::cout << "Elf can not have intelligence bellow 8" << std::endl;
+                //std::cout << "Elf can not have intelligence bellow 8" << std::endl;
                 return false;
             }
             if(_stats.dexterity + 1 < 7){
-                std::cout << "Elf can not have dexterity bellow 7" << std::endl;
+                //std::cout << "Elf can not have dexterity bellow 7" << std::endl;
                 return false;
             }
             if(_stats.constitution - 1 < 6){
-                std::cout << "Elf can not have constitution bellow 6" << std::endl;
+                //std::cout << "Elf can not have constitution bellow 6" << std::endl;
                 return false;
             }
             if(_stats.charisma < 8){
-                std::cout << "Elf can not have charisma bellow 8" << std::endl;
+                //std::cout << "Elf can not have charisma bellow 8" << std::endl;
                 return false;
             }
             if(_sex == FEMALE && _stats.strength > 16){
-                std::cout << "Elf Female Strength Capped at 16" << std::endl;
+                //std::cout << "Elf Female Strength Capped at 16" << std::endl;
                 _stats.strength = _modStats.strength = 16;
             }
             // Apply Standard Elf Modifiers
@@ -828,42 +828,42 @@ bool Entity::checkRaceStats(RACE race)
             return true;
         case HALF_ORC:
             if(_stats.strength + 1 < 6){
-                std::cout << "Half-Orc Strength bellow 6" << std::endl;
+                //std::cout << "Half-Orc Strength bellow 6" << std::endl;
                 return false;
             }
 
             if(_stats.constitution + 1 < 13){
-                std::cout << "Half-Orc constitution bellow 13" << std::endl;
+                //std::cout << "Half-Orc constitution bellow 13" << std::endl;
                 return false;
             }
 
             if(_stats.intelligence > 17){
-                std::cout << "Half-Orc Intelligence being set to cap 17" << std::endl;
+                //std::cout << "Half-Orc Intelligence being set to cap 17" << std::endl;
                 _stats.intelligence = _modStats.intelligence = 17;
             }
 
             if(_stats.dexterity > 17){
-                std::cout << "Half-Orc Dexterity being set to cap 17" << std::endl;
+                //std::cout << "Half-Orc Dexterity being set to cap 17" << std::endl;
                 _stats.dexterity = _modStats.dexterity = 17;
             }
 
             if(_stats.wisdom > 14){
-                std::cout << "Half-Orc Wisdom being set to cap 14" << std::endl;
+                //std::cout << "Half-Orc Wisdom being set to cap 14" << std::endl;
                 _stats.wisdom = _modStats.wisdom = 14;
             }
 
             if(_stats.charisma - 2 > 12){
-                std::cout << "Half-Orc Charisma being set to cap 12" << std::endl;
+                //std::cout << "Half-Orc Charisma being set to cap 12" << std::endl;
                 _stats.charisma = _modStats.charisma = 12;
             } else if(_stats.charisma - 2 < 3) {
-                std::cout << "Half-Orc Charisma minimum being set to 3" << std::endl;
+                //std::cout << "Half-Orc Charisma minimum being set to 3" << std::endl;
                 _stats.charisma = _modStats.charisma = 3;            
             } else {
                 _stats.charisma -= 2; _modStats.charisma -=2;
             }
 
             if(_stats.strength + 1 > 18){
-                std::cout << "Half-Orc strength set to cap 18" << std::endl;
+                //std::cout << "Half-Orc strength set to cap 18" << std::endl;
                 _stats.strength = _modStats.strength = 18;
             } else {
                 _stats.strength++; _stats.strength++;
@@ -874,27 +874,27 @@ bool Entity::checkRaceStats(RACE race)
             return true;
         case DWARF:
             if(_stats.strength < 8){
-                std::cout << "Dwarf strength bellow 8" << std::endl;
+                //std::cout << "Dwarf strength bellow 8" << std::endl;
                 return false;            
             }
 
             if(_stats.constitution + 1 < 12){
-                std::cout << "Dwarf constitution bellow 12" << std::endl;
+                //std::cout << "Dwarf constitution bellow 12" << std::endl;
                 return false;            
             }
             
             if(_stats.strength > 17 && _sex == FEMALE){
-                std::cout << "Female Dwarf strength cap 17" << std::endl;
+                //std::cout << "Female Dwarf strength cap 17" << std::endl;
                 _stats.strength = _modStats.strength = 17;
             }
 
             if(_stats.dexterity > 17){
-                std::cout << "Dwarf dexterity cap 17" << std::endl;
+                //std::cout << "Dwarf dexterity cap 17" << std::endl;
                 _stats.dexterity = _modStats.dexterity = 17;            
             }
 
             if(_stats.charisma - 1 > 16){
-                std::cout << "Dwarf charisma cap 16" << std::endl;
+                //std::cout << "Dwarf charisma cap 16" << std::endl;
                 _stats.charisma = _modStats.charisma = 16;
             } else {
                 _stats.charisma--; _modStats.charisma--;
@@ -905,27 +905,27 @@ bool Entity::checkRaceStats(RACE race)
             return true;
         case HALFLING:
             if(_stats.strength - 1 < 6){
-                std::cout << "Halfling strength bellow 6" << std::endl;
+                //std::cout << "Halfling strength bellow 6" << std::endl;
                 return false;                  
             }
 
             if(_stats.intelligence < 6){
-                std::cout << "Halfling intelligence bellow 6" << std::endl;
+                //std::cout << "Halfling intelligence bellow 6" << std::endl;
                 return false;                
             }
 
             if(_stats.dexterity + 1 < 8){
-                std::cout << "Halfling dexterity bellow 8" << std::endl;
+                //std::cout << "Halfling dexterity bellow 8" << std::endl;
                 return false;
             }
 
             if(_stats.constitution < 10){
-                std::cout << "Halfling constitution bellow 10" << std::endl;
+                //std::cout << "Halfling constitution bellow 10" << std::endl;
                 return false;
             }
 
             if(_stats.strength - 1 > 14 && _sex == FEMALE){
-                std::cout << "Female Halfling strength cap 14" << std::endl;
+                //std::cout << "Female Halfling strength cap 14" << std::endl;
                 _stats.strength = _modStats.strength = 14;
                 _stats.excStren = _modStats.excStren = 0;
             } else {
@@ -933,7 +933,7 @@ bool Entity::checkRaceStats(RACE race)
             }                    
 
             if(_stats.wisdom > 17){
-                std::cout << "Halfling wisdom cap 17" << std::endl;
+                //std::cout << "Halfling wisdom cap 17" << std::endl;
                 _stats.wisdom = _modStats.wisdom = 17;
             }
 
@@ -942,27 +942,27 @@ bool Entity::checkRaceStats(RACE race)
             return true;
         case HALF_ELF:
             if(_stats.intelligence < 4){
-                std::cout << "Intelligence bellow 4" << std::endl;
+                //std::cout << "Intelligence bellow 4" << std::endl;
                 return false;
             }
 
             if(_stats.dexterity < 6){
-                std::cout << "Dexterity bellow 6" << std::endl;
+                //std::cout << "Dexterity bellow 6" << std::endl;
                 return false;
             }
 
             if(_stats.constitution < 6){
-                std::cout << "Constitution bellow 6" << std::endl;
+                //std::cout << "Constitution bellow 6" << std::endl;
                 return false;
             }
 
             if(_stats.excStren > 90){
-                std::cout << "Half-Elf exceptional strength cap 90" << std::endl;
+                //std::cout << "Half-Elf exceptional strength cap 90" << std::endl;
                 _stats.excStren = _modStats.excStren = 90;
             }
 
             if(_stats.strength > 17 && _sex == FEMALE){
-                std::cout << "Female Half-Elf strength cap 17" << std::endl;
+                //std::cout << "Female Half-Elf strength cap 17" << std::endl;
                 _stats.strength = _modStats.strength = 17;
             }
 
@@ -970,22 +970,22 @@ bool Entity::checkRaceStats(RACE race)
             return true;
         case GNOME:
             if(_stats.strength < 6){
-                std::cout << "Strength bellow 6" << std::endl;
+                //std::cout << "Strength bellow 6" << std::endl;
                 return false;
             }
 
             if(_stats.intelligence < 7){
-                std::cout << "Intelligence bellow 7" << std::endl;
+                //std::cout << "Intelligence bellow 7" << std::endl;
                 return false;
             }
 
             if(_stats.constitution < 8){
-                std::cout << "Constitution bellow 8" << std::endl;
+                //std::cout << "Constitution bellow 8" << std::endl;
                 return false;
             }
 
             if(_stats.strength > 15 && _sex == FEMALE){
-                std::cout << "Female Gnome strength cap 15" << std::endl;
+                //std::cout << "Female Gnome strength cap 15" << std::endl;
                 _stats.strength = _modStats.strength = 15;
             }            
 
@@ -1261,7 +1261,7 @@ bool Entity::saveChar()
     outTxt += "    }\r\n";
     outTxt += "}";
 
-    std::cout << outTxt << std::endl;
+    //std::cout << outTxt << std::endl;
     std::string filename = "characters/" + _name + ".json";
     std::ofstream myFile;
     myFile.open(filename);

@@ -52,7 +52,7 @@ RACE_SKILLS::RACE_SKILLS()
 
 RACE_SKILLS::~RACE_SKILLS()
 {
-   std::cout << "In RACE_SKILLS destructor" << std::endl;
+   //std::cout << "In RACE_SKILLS destructor" << std::endl;
 }
 
 Dwarf::Dwarf(stats inStats)
@@ -62,7 +62,7 @@ Dwarf::Dwarf(stats inStats)
 
 Dwarf::~Dwarf()
 {
-   std::cout << "In Dwarf destructor" << std::endl;
+   //std::cout << "In Dwarf destructor" << std::endl;
 }
 
 void Dwarf::setRaceSkills(stats inStats)
@@ -100,7 +100,7 @@ Elf::Elf(stats inStats)
 
 Elf::~Elf()
 {
-    std::cout << "Elf Destructor Called." << std::endl;
+    //std::cout << "Elf Destructor Called." << std::endl;
 }
 
 void Elf::setRaceSkills(stats inStats)
@@ -137,7 +137,7 @@ Gnome::Gnome(stats inStats)
 
 Gnome::~Gnome()
 {
-   std::cout << "In Gnome destructor" << std::endl;
+   //std::cout << "In Gnome destructor" << std::endl;
 }
 
 void Gnome::setRaceSkills(stats inStats)
@@ -172,7 +172,7 @@ HalfElf::HalfElf(stats inStats)
 
 HalfElf::~HalfElf()
 {
-    std::cout << "Half-Elf Destructor Called." << std::endl;
+    //std::cout << "Half-Elf Destructor Called." << std::endl;
 }
 
 void HalfElf::setRaceSkills(stats inStats)
@@ -203,7 +203,7 @@ Halfling::Halfling(stats inStats)
 
 Halfling::~Halfling()
 {
-    std::cout << "Halfling Destructor Called." << std::endl;
+    //std::cout << "Halfling Destructor Called." << std::endl;
 }
 
 void Halfling::setRaceSkills(stats inStats)
@@ -235,7 +235,7 @@ HalfOrc::HalfOrc(stats inStats)
 
 HalfOrc::~HalfOrc()
 {
-    std::cout << "Half-Orc Destructor Called." << std::endl;
+    //std::cout << "Half-Orc Destructor Called." << std::endl;
 }
 
 void HalfOrc::setRaceSkills(stats inStats)
@@ -255,7 +255,7 @@ Human::Human(stats inStats)
 
 Human::~Human()
 {
-    std::cout << "Human Destructor Called." << std::endl;
+    //std::cout << "Human Destructor Called." << std::endl;
 }
 
 void Human::setRaceSkills(stats inStats)

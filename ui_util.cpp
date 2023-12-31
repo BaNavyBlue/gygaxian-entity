@@ -78,6 +78,94 @@ void TextInput::getText()
     hidecursor();
 }
 
+ScreenVals& TextInput::getScreen()
+{
+    return *_textScreen;
+}
+
+std::string TextInput::getAquiredString()
+{
+    return _receivedString;
+}
+
+void OptionWindow::PlaceOptions()
+{
+    
+}
+
+OptionWindow::OptionWindow()
+{
+
+}
+
+AlignOptWindow::AlignOptWindow(CHAR_CLASS inClass)
+{
+    std::string alignList = "Select Alignment:";
+    _list.push_back(alignList);
+    _optScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    char idx = '0';
+    //int nonV = 0;
+    for(unsigned i = 0; i < alignPairs.size(); ++i){
+            if(alignClassCheck(inClass, alignPairs[i].align)){
+                _aList[idx] = alignPairs[i].align;
+                _list.push_back(alignPairs[i].alignS + ": " + idx);
+                idx++;
+            }         
+    }
+}
+
+void AlignOptWindow::createWindow(DrawRange uRandWidth, Perimeter inPerim)
+{
+    int maxLen = 0;
+    for(int i = 0; i < _list.size(); ++i){
+        if(maxLen < _list[i].size()){
+            maxLen = _list[i].size();
+        }
+    }
+    _optScreen->xyLimits.minX = uRandWidth.minX;
+    _optScreen->xyLimits.minY = uRandWidth.minY;
+    _optScreen->xyLimits.maxX = uRandWidth.minX + maxLen + 5;
+    _optScreen->xyLimits.maxY = uRandWidth.minY + _list.size() + 1;
+
+    generatePerimeter(*_optScreen, inPerim);
+    PlaceOptions();
+}
+
+void AlignOptWindow::PlaceOptions()
+{
+    for(std::size_t i = _optScreen->xyLimits.minY; i < _optScreen->xyLimits.maxY + 1; ++i){
+        for(std::size_t j = _optScreen->xyLimits.minX; j < _optScreen->xyLimits.maxX + 1; ++j){
+            if((i == _optScreen->xyLimits.minY + 1) && j == _optScreen->xyLimits.minX + 3){
+                for(int m = 0; m < _list.size(); ++m){
+                    for(int n = 0; n < _list[m].size(); ++n){
+                        _optScreen->charMap[i][j] = _list[m][n];
+                        _optScreen->colorMap[i][j] = YELLOW;
+                        _optScreen->bGColorMap[i][j++] = BLACK;
+                    }
+                    j = _optScreen->xyLimits.minX + 4; 
+                    i++;
+                }
+            }
+        }
+    }
+    drawSmall(_optScreen->xyLimits.minX, _optScreen->xyLimits.maxX, _optScreen->xyLimits.minY, _optScreen->xyLimits.maxY + 1, *_optScreen);
+}
+
+ALIGNMENT AlignOptWindow::getAlign(char inChar)
+{
+    return _aList[inChar];
+}
+
+ScreenVals& AlignOptWindow::getScreen()
+{
+    return *_optScreen;
+}
+
+int AlignOptWindow::getOptIdx()
+{
+    return _aList.size();
+}
+
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
 {
     for(int i = startY; i < maxY; ++i){

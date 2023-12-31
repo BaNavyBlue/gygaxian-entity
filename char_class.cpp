@@ -17,7 +17,7 @@ unsigned CHR_CLASS_SKILLS::rollHP()
 
 CHR_CLASS_SKILLS::~CHR_CLASS_SKILLS()
 {
-    std::cout << "In CHR_CLASS_SKILLS destructor." << std::endl;
+    //std::cout << "In CHR_CLASS_SKILLS destructor." << std::endl;
 }
 
 classTable1 CHR_CLASS_SKILLS::getClassTable1()
@@ -51,12 +51,12 @@ Cleric::Cleric(){
     _initNumWeap = 2;
     _nonProfPenalty = -3;
     _addedWeapLvlDen = 4;
-    std::cout << "This should list Cleric HitDieType" << std::endl;
-    listClassSkills();
+    //std::cout << "This should list Cleric HitDieType" << std::endl;
+    //listClassSkills();
 }
 
 Cleric::~Cleric(){
-    std::cout << "Cleric Destructor" << std::endl;
+    //std::cout << "Cleric Destructor" << std::endl;
 }
 
 unsigned Cleric::generateGold()
@@ -72,11 +72,11 @@ Druid::Druid(){
     _initNumWeap = 2;
     _nonProfPenalty = -4;
     _addedWeapLvlDen = 5;
-    listClassSkills();
+    //listClassSkills();
 }
 
 Druid::~Druid(){
-    std::cout << "Druid Destructor" << std::endl;
+    //std::cout << "Druid Destructor" << std::endl;
 }
 
 unsigned Druid::generateGold()
@@ -92,11 +92,11 @@ Fighter::Fighter(){
     _initNumWeap = 4;
     _nonProfPenalty = -2;
     _addedWeapLvlDen = 3;
-    listClassSkills();
+    //listClassSkills();
 }
 
 Fighter::~Fighter(){
-    std::cout << "Fighter Destructor" << std::endl;
+    //std::cout << "Fighter Destructor" << std::endl;
 }
 
 Paladin::Paladin(){
@@ -107,11 +107,11 @@ Paladin::Paladin(){
     _initNumWeap = 3;
     _nonProfPenalty = -2;
     _addedWeapLvlDen = 3;
-    listClassSkills();
+    //listClassSkills();
 }
 
 Paladin::~Paladin(){
-    std::cout << "Paladin Destructor" << std::endl; 
+    //std::cout << "Paladin Destructor" << std::endl; 
 }
 
 void Ranger::listClassSkills()
@@ -155,12 +155,12 @@ Ranger::Ranger(){
     _initNumWeap = 3;
     _nonProfPenalty = -2;
     _addedWeapLvlDen = 3;
-    std::cout << "Should Show Ranger variables" << std::endl;
-    listClassSkills();
+    //std::cout << "Should Show Ranger variables" << std::endl;
+    //listClassSkills();
 }
 
 Ranger::~Ranger(){
-    std::cout << "Ranger Destructor" << std::endl; 
+    //std::cout << "Ranger Destructor" << std::endl; 
 }
 
 MagicUser::MagicUser(){
@@ -171,11 +171,11 @@ MagicUser::MagicUser(){
     _initNumWeap = 1;
     _nonProfPenalty = -5;
     _addedWeapLvlDen = 6;
-    listClassSkills();
+    //listClassSkills();
 }
 
 MagicUser::~MagicUser(){
-    std::cout << "MagicUser Destructor" << std::endl; 
+    //std::cout << "MagicUser Destructor" << std::endl; 
 }
 
 unsigned MagicUser::generateGold()
@@ -191,11 +191,11 @@ Illusionist::Illusionist(){
     _initNumWeap = 1;
     _nonProfPenalty = -5;
     _addedWeapLvlDen = 6;
-    listClassSkills();
+    //listClassSkills();
 }
 
 Illusionist::~Illusionist(){
-    std::cout << "Illusionist Destructor" << std::endl; 
+    //std::cout << "Illusionist Destructor" << std::endl; 
 }
 
 unsigned Illusionist::generateGold()
@@ -217,11 +217,11 @@ Thief::Thief(RACE inRace, unsigned inLevel){
     _nonProfPenalty = -3;
     _addedWeapLvlDen = 4;
     setThiefSkills(inRace, inLevel);
-    listClassSkills();
+    //listClassSkills();
 }
 
 Thief::~Thief(){
-    std::cout << "Thief Destructor" << std::endl; 
+    //std::cout << "Thief Destructor" << std::endl; 
 }
 
 unsigned Thief::generateGold()
@@ -498,11 +498,11 @@ Assassin::Assassin(RACE inRace, unsigned inLevel)
     _nonProfPenalty = -2;
     _addedWeapLvlDen = 4;
     setThiefSkills(inRace, inLevel);
-    listClassSkills();
+    //listClassSkills();
 }
 
 Assassin::~Assassin(){
-    std::cout << "Assasin Destructor" << std::endl; 
+    //std::cout << "Assasin Destructor" << std::endl; 
 }
 
 Monk::Monk(RACE inRace, unsigned inLevel){
@@ -513,7 +513,7 @@ Monk::Monk(RACE inRace, unsigned inLevel){
     _initNumWeap = 1;
     _nonProfPenalty = -3;
     _addedWeapLvlDen = 2;
-    listClassSkills();
+    //listClassSkills();
 }
 
 unsigned Monk::generateGold()
@@ -522,5 +522,5 @@ unsigned Monk::generateGold()
 }
 
 Monk::~Monk(){
-    std::cout << "Assasin Destructor" << std::endl; 
+    //std::cout << "Assasin Destructor" << std::endl; 
 }

@@ -340,16 +340,52 @@ void createRollScreen()
     CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen, sexScreen, raceScreen, classScreen);
     std::string newName;
     
+    DrawRange alignCorner;
+    alignCorner.minX = classScreen.xyLimits.maxX + 1;
+    alignCorner.minY = classScreen.xyLimits.minY;
+
+    AlignOptWindow alignWin(newClass);
+    alignWin.createWindow(alignCorner, rollPerim);
+
+    std::vector<ScreenVals> screenVec;
+    screenVec.push_back(rollScreen);
+    screenVec.push_back(sexScreen);
+    screenVec.push_back(raceScreen);
+    screenVec.push_back(classScreen);
+    screenVec.push_back(alignWin.getScreen());
+    
+    ALIGNMENT newAlign = alignWin.getAlign(selAlign(screenVec, alignWin.getOptIdx()));
+
     TextInput textBox;
     DrawRange textCorner;
     textCorner.minX = sexScreen.xyLimits.minX;
     textCorner.minY = sexScreen.xyLimits.maxY + 1;
     textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
-    
-    drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1, primaryScreen);
-    drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
-    drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, primaryScreen);
+    newName = textBox.getAquiredString();
+
+    std::vector<CHAR_CLASS> classVect;
+    classVect.push_back(newClass);
+
+    Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
+    dude.saveChar();
+
+    drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY, textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX, alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
     drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1, primaryScreen);
+
+
+
+
+
+
 }
 
 bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
@@ -695,6 +731,35 @@ char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenV
         }
     }
     return -1;
+}
+
+char selAlign(std::vector<ScreenVals> inScreens, int idx)
+{
+    while(true){
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if(horz_char != new_horz || vert_char != new_vert){
+            horz_char = new_horz;
+            vert_char = new_vert;
+            createPrimary();
+            drawPrimary();
+            for(int i = 0; i < inScreens.size(); ++i){
+                int offSet = 1;
+                if(i < 1){
+                    offSet = -1;
+                }
+                drawSmall(inScreens[i].xyLimits.minX, inScreens[i].xyLimits.maxX, inScreens[i].xyLimits.minY, inScreens[i].xyLimits.maxY + offSet, inScreens[i]);
+            }
+        }
+        
+        if(kbhit()){
+            char k = getkey();
+            if(k >= '0' && k < idx + '0'){
+                return k;
+            } 
+        }
+    }
+    return -1;    
 }
 
 std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4)

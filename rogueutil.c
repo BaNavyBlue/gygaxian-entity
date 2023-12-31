@@ -45,7 +45,7 @@ int kbhit(void)
 	ioctl(0, FIONREAD, &cnt); /* Read count */
 	struct timeval tv;
 	tv.tv_sec  = 0;
-	tv.tv_usec = 100;
+	tv.tv_usec = 6500;
 	select(STDIN_FILENO+1, NULL, NULL, NULL, &tv); /* A small time delay */
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return cnt; /* Return number of characters */

@@ -15,6 +15,7 @@ using u8 = unsigned char;
 //#include <curses.h>
 #include <termios.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include "entity_structs_consts.h"
 #include "dice_roll.h"
 #include "simdjson.h"
