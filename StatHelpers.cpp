@@ -301,7 +301,6 @@ ALIGNMENT inputAlign(CHAR_CLASS inClass)
     //std::vector<std::string> races = {"Human: 0", "Elf: 1", "Half-Orc: 2", "Halfling: 3", "Dwarf: 4", "Half-Elf: 5", "Gnome: 6"};
     //std::vector<racePair> racePairs = {{HUMAN, "Human"}, {ELF, "Elf"}, {HALF_ORC, "Half-Orc"}, {DWARF, "Dwarf"}, {HALFLING, "Halfling"}, {HALF_ELF, "Half-Elf"}, {GNOME, "Gnome"}};
     std::string message = "\r\nSelect Alignment: \r\n";
-    std::string nonViable = "\r\nNon-Viable Races: \r\n";
     std::unordered_map<char, ALIGNMENT> aList;
     char idx = '0';
     //int nonV = 0;
@@ -401,6 +400,54 @@ void printStats(stats inStats)
     std::cout << "Charisma to ones own race: " << inStats.raceCharisma << std::endl;
     std::cout << "Dexterity: " << inStats.dexterity << std::endl;
     std::cout << "Constitution: " << inStats.constitution << std::endl;
+}
+
+std::vector<std::string> getStats(stats inStats, CHAR_CLASS inClass, RACE inRace)
+{
+    std::vector<std::string> returnVect;
+    char statVal[5]; 
+    returnVect.push_back("Stats:");
+    sprintf(statVal, "%3.d", inStats.strength);
+    returnVect.push_back("Strength: ");
+    returnVect.back() += statVal;
+
+    if(inClass == FIGHTER || inClass == PALADIN || inClass == RANGER){
+        if(inStats.strength > 17 && inStats.excStren > 0){
+            sprintf(statVal, "%3.d", inStats.excStren);
+            returnVect.push_back("Exceptional Strength: ");
+            returnVect.back() += statVal;
+        }
+    }
+
+    sprintf(statVal, "%3.d", inStats.intelligence);
+    returnVect.push_back("Intelligence: ");
+    returnVect.back() += statVal;
+
+    sprintf(statVal, "%3.d", inStats.wisdom);
+    returnVect.push_back("Wisdom: ");
+    returnVect.back() += statVal;
+
+    sprintf(statVal, "%3.d", inStats.dexterity);
+    returnVect.push_back("Dexterity: ");
+    returnVect.back() += statVal;
+
+    sprintf(statVal, "%3.d", inStats.charisma);
+    returnVect.push_back("Charisma: ");
+    returnVect.back() += statVal;
+    if(inRace == DWARF || inRace == HALF_ORC){
+        sprintf(statVal, "%3.d", inStats.raceCharisma);
+        returnVect.back() += "(*";
+        returnVect.back() += statVal;
+        returnVect.back() += ")";
+    }
+
+    sprintf(statVal, "%3.d", inStats.constitution);
+    returnVect.push_back("Constitution: ");
+    returnVect.back() += statVal;
+    
+    if(inRace == DWARF || inRace == HALF_ORC){
+        returnVect.push_back("* To one's own race");
+    }
 }
 
 void printStatsFails(stats inStats)
@@ -503,6 +550,26 @@ void printRace(RACE race){
             std::cout << "Gnome" << std::endl;
             break;
     }
+}
+
+std::string getRace(RACE inRace)
+{
+    switch(inRace){
+        case HUMAN:
+            return "Human";
+        case ELF:
+            return "Elf";
+        case HALF_ORC:
+            return "Half-Orc";
+        case DWARF:
+            return "Dwarf";
+        case HALFLING:
+            return "Halfling";
+        case HALF_ELF:
+            return "Half-Elf";
+        case GNOME:
+            return "Gnome";
+    }   
 }
 
 void printStrTbl(strengthTable strTbl)
@@ -1081,6 +1148,15 @@ void printClass(CHAR_CLASS cClass)
         cMap[classPairs[i].cClass] = classPairs[i].cS;
     }
     std::cout << "Class: " << cMap[cClass] << std::endl;   
+}
+
+std::string getClass(CHAR_CLASS inClass)
+{
+    std::unordered_map<CHAR_CLASS, std::string> cMap;
+    for(unsigned i = 0; i < classPairs.size(); ++i){
+        cMap[classPairs[i].cClass] = classPairs[i].cS;
+    }
+    return cMap[inClass];    
 }
 
 std::string strenFails(stats inStats)

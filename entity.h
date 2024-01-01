@@ -3,7 +3,7 @@
 */
 #ifndef ENTITY_H
 #define ENTITY_H
-#include "ui_util.h"
+//#include "ui_util.h"
 #include "StatHelpers.h"
 #include "skills.h"
 #include "char_class.h"
@@ -85,6 +85,7 @@ public:
     std::vector<LANGUAGE> getLanguages();
     money getMoney();
     unsigned getMaxHP();
+    unsigned getLevel();
     unsigned getCurHP();
     unsigned getWeightAllowed();
     unsigned getWeightCarried();

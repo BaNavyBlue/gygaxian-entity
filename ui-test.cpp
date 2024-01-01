@@ -4,13 +4,14 @@
 // #include <string>
 //#include "project_headers.h"
 //#include "rogueutil.h"
-#include "entity.h"
+#include "ui_util.h"
+// #include <cstddef>
 
 #define NOCOLOR -1
 
+// naughty globals
 std::size_t horz_char = 0;
 std::size_t vert_char = 0;
-
 
 ScreenVals primaryScreen(VECT_MAX, ' ', GREEN, BLACK);
 
@@ -338,7 +339,6 @@ void createRollScreen()
     SEX newSex = selSexScreen(sexScreen, rollScreen);
     createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
     CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen, sexScreen, raceScreen, classScreen);
-    std::string newName;
     
     DrawRange alignCorner;
     alignCorner.minX = classScreen.xyLimits.maxX + 1;
@@ -360,8 +360,29 @@ void createRollScreen()
     DrawRange textCorner;
     textCorner.minX = sexScreen.xyLimits.minX;
     textCorner.minY = sexScreen.xyLimits.maxY + 1;
-    textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
-    newName = textBox.getAquiredString();
+
+    std::string newName;
+    bool confirmName = false;
+
+    do{
+        confirmName = false;
+        //newName.erase(std::remove(newName.begin(), newName.end(), '0'), newName.end());
+        textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
+        newName = textBox.getAquiredString();
+        if(doesRecordExist(newName, "characters/", ".json")){
+            WarnMessage nameExists("Name already in use", "Overwrite? (y/n)");
+            confirmName = nameExists.waitForAnswer();
+            drawSmall(nameExists.getScreen().xyLimits.minX, nameExists.getScreen().xyLimits.maxX, nameExists.getScreen().xyLimits.minY, nameExists.getScreen().xyLimits.maxY + 1, primaryScreen);
+            drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX, alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, alignWin.getScreen());
+            drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, classScreen);
+            drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, raceScreen);
+            drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
+            drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1, rollScreen);           
+        }
+        if(confirmName){
+            textBox.purgeRecieved();
+        }
+    } while(confirmName);
 
     std::vector<CHAR_CLASS> classVect;
     classVect.push_back(newClass);
@@ -380,6 +401,11 @@ void createRollScreen()
     drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
     usleep(40000);
     drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1, primaryScreen);
+    
+    DrawRange infoRange;
+    infoRange.minX = 1;
+    infoRange.minY = 1;
+    PrintInfo showChar(dude, infoRange, rollPerim);
 
 
 

@@ -3,7 +3,6 @@
 #include "project_headers.h"
 
 const int VECT_MAX = 400;
-
 struct DrawRange{
     int minX;
     int maxX;

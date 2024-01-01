@@ -1114,6 +1114,11 @@ money Entity::getMoney()
     return _money;
 }
 
+unsigned Entity::getLevel()
+{
+    return _level;
+}
+
 unsigned Entity::getMaxHP()
 {
     return _hitPointsBase;

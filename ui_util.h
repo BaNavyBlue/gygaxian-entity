@@ -3,6 +3,7 @@
 #include "project_headers.h"
 #include "ui_structs.h"
 #include "StatHelpers.h"
+#include "entity.h"
 
 // Some of these prototypes defined in ui-test.cpp for now.
 void drawPrimary();
@@ -20,6 +21,7 @@ void reDoStatScreen();
 void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim);
 std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4);
 char selAlign(std::vector<ScreenVals> inScreens, int idx);
+bool doesRecordExist(std::string name, std::string path, std::string suffix);
 
 class TextInput{
 private:
@@ -34,6 +36,7 @@ public:
     void createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::string message);
     std::string getAquiredString();
     ScreenVals& getScreen();
+    void purgeRecieved();
 };
 
 class OptionWindow{
@@ -60,4 +63,24 @@ public:
     int getOptIdx();
 };
 
-#endif// UI_UTIL_H
+class PrintInfo{
+protected:
+    std::vector<std::vector<std::string>> _contents;
+    std::vector<std::shared_ptr<ScreenVals>> _infoScreen;
+    Perimeter _infoBoxPerim;
+    DrawRange _firstBox;
+    void PlaceInfo(int vectIdx);
+public:
+    PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim);
+};
+
+class WarnMessage{
+private:
+    std::shared_ptr<ScreenVals> _warnScreen;
+public:
+    WarnMessage(std::string warning, std::string question);
+    bool waitForAnswer();
+    ScreenVals& getScreen();
+};
+
+#endif //UI_UTIL_H

@@ -88,6 +88,11 @@ std::string TextInput::getAquiredString()
     return _receivedString;
 }
 
+void TextInput::purgeRecieved()
+{
+    _receivedString.clear();
+}
+
 void OptionWindow::PlaceOptions()
 {
     
@@ -166,6 +171,131 @@ int AlignOptWindow::getOptIdx()
     return _aList.size();
 }
 
+PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim)
+{
+    _infoBoxPerim = inPerim;
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+
+    std::vector<std::string> basicInfo;
+    basicInfo.push_back("Character:");
+    basicInfo.push_back("Name: ");
+    basicInfo.back() += chrctr.getName();
+    basicInfo.push_back("Class: ");
+    basicInfo.back() += getClass(chrctr.getClass()[0]);
+    if(chrctr.getClass().size() > 1){
+        for(int i = 1; i < chrctr.getClass().size(); ++i){
+             basicInfo.back() += ", " + getClass(chrctr.getClass()[i]);
+        }
+    }
+
+    basicInfo.push_back("Level: ");
+    basicInfo.back() += std::to_string(chrctr.getLevel()); 
+
+    basicInfo.push_back("Race: ");
+    basicInfo.back() += getRace(chrctr.getRace());
+
+    int maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[j].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    } 
+
+    _firstBox.minX = uRandWidth.minX;
+    _firstBox.minY = uRandWidth.minY;
+    _firstBox.maxX = _firstBox.minX + maxLen + 5;
+    _firstBox.maxY = _firstBox.minY + basicInfo.size() + 1;
+
+    _infoScreen[0]->xyLimits.minX = _firstBox.minY;
+    _infoScreen[0]->xyLimits.minY = _firstBox.minY;
+    _infoScreen[0]->xyLimits.maxX = _firstBox.maxX;
+    _infoScreen[0]->xyLimits.maxY = _firstBox.maxY;
+
+    generatePerimeter(*_infoScreen[0], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+    PlaceInfo(0);
+    drawSmall(_infoScreen[0]->xyLimits.minX, _infoScreen[0]->xyLimits.maxX, _infoScreen[0]->xyLimits.minY, _infoScreen[0]->xyLimits.maxY + 1, *_infoScreen[0]);
+    
+}
+
+void PrintInfo::PlaceInfo(int vectIdx)
+{
+    for(std::size_t i = _infoScreen[vectIdx]->xyLimits.minY; i < _infoScreen[vectIdx]->xyLimits.maxY + 1; ++i){
+        for(std::size_t j = _infoScreen[vectIdx]->xyLimits.minX; j < _infoScreen[vectIdx]->xyLimits.maxX + 1; ++j){
+            if((i == _infoScreen[vectIdx]->xyLimits.minY + 1) && j == _infoScreen[vectIdx]->xyLimits.minX + 3){
+                for(int m = 0; m < _contents[vectIdx].size(); ++m){
+                    for(int n = 0; n < _contents[vectIdx][m].size(); ++n){
+                        _infoScreen[vectIdx]->charMap[i][j] = _contents[vectIdx][m][n];
+                        _infoScreen[vectIdx]->colorMap[i][j] = YELLOW;
+                        _infoScreen[vectIdx]->bGColorMap[i][j++] = BLACK;
+                    }
+                    j = _infoScreen[vectIdx]->xyLimits.minX + 4; 
+                    i++;
+                }
+            }
+        }
+    }
+}
+
+WarnMessage::WarnMessage(std::string warning, std::string question)
+{
+    Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, RED, BLACK);
+    std::size_t horz_char = tcols();
+    std::size_t vert_char = trows();
+
+    int maxLen = warning.size();
+
+    if(maxLen < question.size()){
+        maxLen = question.size();
+    }
+    
+    _warnScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', RED, BLACK);
+    DrawRange boxCorners;
+    _warnScreen->xyLimits.minX = boxCorners.minX = horz_char / 2 - maxLen / 2 - 5;
+    _warnScreen->xyLimits.minY = boxCorners.minY = vert_char / 2 - 4;
+    _warnScreen->xyLimits.maxX = boxCorners.maxX = horz_char / 2 + maxLen / 2 + 5;
+    _warnScreen->xyLimits.maxY = boxCorners.maxY = vert_char / 2 + 4;
+
+    generatePerimeter(*_warnScreen, warnPerim);
+
+    for(int i = 0; i < warning.size(); ++i){
+        _warnScreen->charMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = warning[i];
+        _warnScreen->colorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = RED;
+        _warnScreen->bGColorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = BLACK;
+    }
+
+    for(int i = 0; i < question.size(); ++i){
+        _warnScreen->charMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = question[i];
+        _warnScreen->colorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = RED;
+        _warnScreen->bGColorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = BLACK;
+    }
+
+    drawSmall(boxCorners.minX, boxCorners.maxX, boxCorners.minY, boxCorners.maxY + 1, *_warnScreen);
+    
+}
+
+bool WarnMessage::waitForAnswer()
+{
+    while(true){        
+        if(kbhit()){
+            char k = getkey();
+            switch(tolower(k)){
+                case 'y':
+                    return false;
+                case 'n':
+                    return true;
+            }    
+        }
+    }
+}
+
+ScreenVals& WarnMessage::getScreen()
+{
+    return *_warnScreen;
+}
+
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
 {
     for(int i = startY; i < maxY; ++i){
@@ -189,7 +319,6 @@ void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
         }
     }
 }
-
 
 // Unicode to UTF-8 conversion created care of CHAT GPT 3.5
 std::string getUTF(int inCode)
@@ -271,4 +400,11 @@ void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
             }
         }
     }
+}
+
+bool doesRecordExist(std::string name, std::string path, std::string suffix)
+{
+    std::string file = path + name + suffix;
+    std::ifstream charJson(file);
+    return charJson.good(); 
 }
