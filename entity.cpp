@@ -13,6 +13,7 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     _modStats = inStats[1];
     _race = race;
     _chrClass = chrClass;
+    _experience.push_back(0);
     checkRaceStats(_race);
     setStrenTbl();
     _weightAllowedGP += _strTbl.weightAllowMod;
@@ -1142,6 +1143,16 @@ unsigned Entity::getWeightCarried()
 float Entity::getEquivalentGP()
 {
     return _money.gold + static_cast<float>(_money.copper) / 200 +  static_cast<float>(_money.silver) / 20 + static_cast<float>(_money.electrum) / 2 + _money.platinum * 5;
+}
+
+short int Entity::getArmorRating()
+{
+    return _armorRating;
+}
+
+std::vector<unsigned> Entity::getExperience()
+{
+    return _experience;
 }
 
 bool Entity::isFighter(){

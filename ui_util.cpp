@@ -215,9 +215,58 @@ PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim)
 
     generatePerimeter(*_infoScreen[0], _infoBoxPerim);
     _contents.push_back(basicInfo);
+
+    basicInfo.clear();
+    basicInfo.push_back("Health/Combat:");
+    basicInfo.push_back("Hit Points: ");
+    char varIn[5];
+    sprintf(varIn, "%3d", chrctr.getCurHP());
+    basicInfo.back() += "(";
+    basicInfo.back() += varIn;
+    basicInfo.back() += "/";
+    sprintf(varIn, "%3d", chrctr.getMaxHP());
+    basicInfo.back() += varIn;
+    basicInfo.back() += ")";
+    sprintf(varIn, "%3d", chrctr.getArmorRating());
+    basicInfo.push_back("Armor Rating: ");
+    basicInfo.back() += varIn;
+    basicInfo.push_back("Experience: ");
+    basicInfo.back() += std::to_string(chrctr.getExperience()[0]);
+
+    for(int i = 1; i < chrctr.getExperience().size(); ++i){
+        basicInfo.back() += ", " + std::to_string(chrctr.getExperience()[i]);    
+    }
+
+    basicInfo.push_back("Weight GP: (");
+    sprintf(varIn, "%d", chrctr.getWeightCarried());
+    basicInfo.back() += varIn;
+    sprintf(varIn, "%d", chrctr.getWeightAllowed());
+    basicInfo.back() += "/";
+    basicInfo.back() += varIn;
+    basicInfo.back() += ")";
+
+    maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[i].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    }
+
+    DrawRange healCom;
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    _infoScreen[1]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.maxX + 1;
+    _infoScreen[1]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.minY;
+    _infoScreen[1]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[1]->xyLimits.maxY = healCom.maxY = _infoScreen[0]->xyLimits.minY + basicInfo.size() + 1; 
+    generatePerimeter(*_infoScreen[1], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+
     PlaceInfo(0);
+    PlaceInfo(1);
     drawSmall(_infoScreen[0]->xyLimits.minX, _infoScreen[0]->xyLimits.maxX, _infoScreen[0]->xyLimits.minY, _infoScreen[0]->xyLimits.maxY + 1, *_infoScreen[0]);
-    
+    drawSmall(_infoScreen[1]->xyLimits.minX, _infoScreen[1]->xyLimits.maxX, _infoScreen[1]->xyLimits.minY, _infoScreen[1]->xyLimits.maxY + 1, *_infoScreen[1]);
 }
 
 void PrintInfo::PlaceInfo(int vectIdx)

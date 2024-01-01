@@ -37,6 +37,7 @@ protected:
     std::vector<unsigned> _experience; // initialized for each class
     unsigned _hitPointsBase;
     unsigned _curHitPoints;
+    short int _armorRating = 10; // base unarmored
     unsigned _weightAllowedGP = 350; //Weight in Gold Pieces
     unsigned _totalWeightGP = 0;
     float _meleeAttkRound = 1.0;
@@ -89,6 +90,7 @@ public:
     unsigned getCurHP();
     unsigned getWeightAllowed();
     unsigned getWeightCarried();
+    short int getArmorRating();
     float getEquivalentGP();
     void addItem(Items setItem, unsigned amount);
     std::vector<Items> getInventory();
