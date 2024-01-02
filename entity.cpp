@@ -860,7 +860,8 @@ bool Entity::checkRaceStats(RACE race)
                 //std::cout << "Half-Orc Charisma minimum being set to 3" << std::endl;
                 _stats.charisma = _modStats.charisma = 3;            
             } else {
-                _stats.charisma -= 2; _modStats.charisma -=2;
+                _stats.charisma -= 2; 
+                _modStats.charisma -=2;
             }
 
             if(_stats.strength + 1 > 18){

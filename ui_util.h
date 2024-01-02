@@ -69,6 +69,12 @@ protected:
     std::vector<std::shared_ptr<ScreenVals>> _infoScreen;
     Perimeter _infoBoxPerim;
     DrawRange _firstBox;
+    Entity* _character;
+    void MakeCharWin();
+    void MakeStatsWin();
+    void MakeCmbtWin();
+    void MakeWealthWin();
+    void MakeStrenTbl();
     void PlaceInfo(int vectIdx);
 public:
     PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim);

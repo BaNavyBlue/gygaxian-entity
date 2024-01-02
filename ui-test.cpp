@@ -655,9 +655,9 @@ CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, Sc
     std::unordered_map<char, CHAR_CLASS> cList;
     char idx = '0';
     int nonV = 0;
-    inStats = checkRaceStats(inRace, inStats); // Fix that race stat mods aren't taken into class consideration;
+    stats tempStats = checkRaceStats(inRace, inStats); // Fix that race stat mods aren't taken into class consideration;
     for(unsigned i = 0; i < classPairs.size(); ++i){
-        if(classRaceCheck(classPairs[i].cClass, inRace) && classStatCheck(classPairs[i].cClass, inStats)){
+        if(classRaceCheck(classPairs[i].cClass, inRace) && classStatCheck(classPairs[i].cClass, tempStats)){
             cList[idx] = classPairs[i].cClass;
             classList.push_back(classPairs[i].cS + ": " + idx);
             idx++;         

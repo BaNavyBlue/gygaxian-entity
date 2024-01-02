@@ -388,6 +388,21 @@ void printSex(SEX sex)
     }
 }
 
+std::string getSex(SEX sex)
+{
+    //std::cout << "Sex: ";
+    switch(sex){
+        case FUTA:
+            return "Futa";
+        case INTERSEX:
+            return "InterSex";
+        case FEMALE:
+            return "Female";
+        case MALE:
+            return "Male";
+    }
+}
+
 void printStats(stats inStats)
 {
     std::cout << std::endl << "Strength: " << inStats.strength << std::endl;
@@ -448,6 +463,8 @@ std::vector<std::string> getStats(stats inStats, CHAR_CLASS inClass, RACE inRace
     if(inRace == DWARF || inRace == HALF_ORC){
         returnVect.push_back("* To one's own race");
     }
+
+    return returnVect;
 }
 
 void printStatsFails(stats inStats)
@@ -690,6 +707,12 @@ bool raceStatCheck(stats inStats, RACE race)
             if(inStats.constitution + 1 < 13){
                 //std::cout << "Half-Orc constitution bellow 13" << std::endl;
                 return false;
+            }
+            if(inStats.charisma < 8){
+                stats tmpStats = inStats;
+                tmpStats.constitution + 1;
+                tmpStats.strength + 1;
+                return classStatCheck(ASSASSIN, inStats);
             }
             return true;
         case DWARF:
@@ -1139,6 +1162,15 @@ void printAlign(ALIGNMENT align)
         aMap[alignPairs[i].align] = alignPairs[i].alignS;
     }
     std::cout << "Alignment: " << aMap[align] << std::endl;
+}
+
+std::string getAlign(ALIGNMENT align)
+{
+    std::unordered_map<ALIGNMENT, std::string> aMap;
+    for(unsigned i = 0; i < alignPairs.size(); ++i){
+        aMap[alignPairs[i].align] = alignPairs[i].alignS;
+    }
+    return aMap[align];
 }
 
 void printClass(CHAR_CLASS cClass)

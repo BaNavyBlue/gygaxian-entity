@@ -173,100 +173,18 @@ int AlignOptWindow::getOptIdx()
 
 PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim)
 {
+    _character = &chrctr;
     _infoBoxPerim = inPerim;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
 
-    std::vector<std::string> basicInfo;
-    basicInfo.push_back("Character:");
-    basicInfo.push_back("Name: ");
-    basicInfo.back() += chrctr.getName();
-    basicInfo.push_back("Class: ");
-    basicInfo.back() += getClass(chrctr.getClass()[0]);
-    if(chrctr.getClass().size() > 1){
-        for(int i = 1; i < chrctr.getClass().size(); ++i){
-             basicInfo.back() += ", " + getClass(chrctr.getClass()[i]);
-        }
-    }
-
-    basicInfo.push_back("Level: ");
-    basicInfo.back() += std::to_string(chrctr.getLevel()); 
-
-    basicInfo.push_back("Race: ");
-    basicInfo.back() += getRace(chrctr.getRace());
-
-    int maxLen = 0;
-    for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[j].size(); ++j){
-            if(maxLen < basicInfo[i].size()){
-                maxLen = basicInfo[i].size();
-            }
-        }
-    } 
-
     _firstBox.minX = uRandWidth.minX;
     _firstBox.minY = uRandWidth.minY;
-    _firstBox.maxX = _firstBox.minX + maxLen + 5;
-    _firstBox.maxY = _firstBox.minY + basicInfo.size() + 1;
 
-    _infoScreen[0]->xyLimits.minX = _firstBox.minY;
-    _infoScreen[0]->xyLimits.minY = _firstBox.minY;
-    _infoScreen[0]->xyLimits.maxX = _firstBox.maxX;
-    _infoScreen[0]->xyLimits.maxY = _firstBox.maxY;
-
-    generatePerimeter(*_infoScreen[0], _infoBoxPerim);
-    _contents.push_back(basicInfo);
-
-    basicInfo.clear();
-    basicInfo.push_back("Health/Combat:");
-    basicInfo.push_back("Hit Points: ");
-    char varIn[5];
-    sprintf(varIn, "%3d", chrctr.getCurHP());
-    basicInfo.back() += "(";
-    basicInfo.back() += varIn;
-    basicInfo.back() += "/";
-    sprintf(varIn, "%3d", chrctr.getMaxHP());
-    basicInfo.back() += varIn;
-    basicInfo.back() += ")";
-    sprintf(varIn, "%3d", chrctr.getArmorRating());
-    basicInfo.push_back("Armor Rating: ");
-    basicInfo.back() += varIn;
-    basicInfo.push_back("Experience: ");
-    basicInfo.back() += std::to_string(chrctr.getExperience()[0]);
-
-    for(int i = 1; i < chrctr.getExperience().size(); ++i){
-        basicInfo.back() += ", " + std::to_string(chrctr.getExperience()[i]);    
-    }
-
-    basicInfo.push_back("Weight GP: (");
-    sprintf(varIn, "%d", chrctr.getWeightCarried());
-    basicInfo.back() += varIn;
-    sprintf(varIn, "%d", chrctr.getWeightAllowed());
-    basicInfo.back() += "/";
-    basicInfo.back() += varIn;
-    basicInfo.back() += ")";
-
-    maxLen = 0;
-    for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
-            if(maxLen < basicInfo[i].size()){
-                maxLen = basicInfo[i].size();
-            }
-        }
-    }
-
-    DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[1]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.maxX + 1;
-    _infoScreen[1]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.minY;
-    _infoScreen[1]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[1]->xyLimits.maxY = healCom.maxY = _infoScreen[0]->xyLimits.minY + basicInfo.size() + 1; 
-    generatePerimeter(*_infoScreen[1], _infoBoxPerim);
-    _contents.push_back(basicInfo);
-
-    PlaceInfo(0);
-    PlaceInfo(1);
-    drawSmall(_infoScreen[0]->xyLimits.minX, _infoScreen[0]->xyLimits.maxX, _infoScreen[0]->xyLimits.minY, _infoScreen[0]->xyLimits.maxY + 1, *_infoScreen[0]);
-    drawSmall(_infoScreen[1]->xyLimits.minX, _infoScreen[1]->xyLimits.maxX, _infoScreen[1]->xyLimits.minY, _infoScreen[1]->xyLimits.maxY + 1, *_infoScreen[1]);
+    MakeCharWin();
+    MakeStatsWin();
+    MakeCmbtWin();
+    MakeWealthWin();
+    MakeStrenTbl();
 }
 
 void PrintInfo::PlaceInfo(int vectIdx)
@@ -286,6 +204,227 @@ void PrintInfo::PlaceInfo(int vectIdx)
             }
         }
     }
+}
+
+void PrintInfo::MakeCharWin()
+{
+    std::vector<std::string> basicInfo;
+    basicInfo.push_back("Character:");
+    basicInfo.push_back("Name: ");
+    basicInfo.back() += _character->getName();
+    basicInfo.push_back("Sex: " + getSex(_character->getSex()));
+    basicInfo.push_back("Class: ");
+    basicInfo.back() += getClass(_character->getClass()[0]);
+    if(_character->getClass().size() > 1){
+        for(int i = 1; i < _character->getClass().size(); ++i){
+             basicInfo.back() += ", " + getClass(_character->getClass()[i]);
+        }
+    }
+
+    basicInfo.push_back("Alignment: ");
+    basicInfo.back() += getAlign(_character->getAlign());
+
+    basicInfo.push_back("Level: ");
+    basicInfo.back() += std::to_string(_character->getLevel()); 
+
+    basicInfo.push_back("Race: ");
+    basicInfo.back() += getRace(_character->getRace());
+
+    int maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[j].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    }
+
+    _firstBox.maxX = _firstBox.minX + maxLen + 5;
+    _firstBox.maxY = _firstBox.minY + basicInfo.size() + 1;
+
+    _infoScreen[0]->xyLimits.minX = _firstBox.minX;
+    _infoScreen[0]->xyLimits.minY = _firstBox.minY;
+    _infoScreen[0]->xyLimits.maxX = _firstBox.maxX;
+    _infoScreen[0]->xyLimits.maxY = _firstBox.maxY;
+
+    generatePerimeter(*_infoScreen[0], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+
+    PlaceInfo(0);
+
+    drawSmall(_infoScreen[0]->xyLimits.minX,
+                _infoScreen[0]->xyLimits.maxX,
+                _infoScreen[0]->xyLimits.minY,
+                _infoScreen[0]->xyLimits.maxY + 1,
+                *_infoScreen[0]);   
+}
+
+void PrintInfo::MakeStatsWin()
+{
+    std::vector<std::string> basicInfo;
+    basicInfo.push_back("Stats:");
+    basicInfo.push_back("Strength: " + std::to_string(_character->getStats().strength));
+    if(_character->getStats().strength > 17 && (_character->getClass()[0] == FIGHTER || _character->getClass()[0] == PALADIN || _character->getClass()[0] == RANGER)){
+        basicInfo.push_back("Exceptional Strength: " + std::to_string(_character->getStats().excStren));
+    }
+    basicInfo.push_back("Intelligence: " + std::to_string(_character->getStats().intelligence));
+    basicInfo.push_back("Wisdom: " + std::to_string(_character->getStats().wisdom));
+    basicInfo.push_back("Dexterity: " + std::to_string(_character->getStats().dexterity));
+    basicInfo.push_back("Constitution: " + std::to_string(_character->getStats().constitution));
+    basicInfo.push_back("Charisma: " + std::to_string(_character->getStats().charisma));
+    if(_character->getRace() == DWARF || _character->getRace() == HALF_ORC){
+        basicInfo.back() += "(*" + std::to_string(_character->getStats().raceCharisma) + ")";
+        basicInfo.push_back("*Race Charisma");
+    }
+
+    int maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[j].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    }
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    _infoScreen[1]->xyLimits.minX = _infoScreen[0]->xyLimits.maxX + 1;
+    _infoScreen[1]->xyLimits.minY = _infoScreen[0]->xyLimits.minY;
+    _infoScreen[1]->xyLimits.maxX = _infoScreen[0]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[1]->xyLimits.maxY = _infoScreen[0]->xyLimits.minY + basicInfo.size() + 1;
+
+    generatePerimeter(*_infoScreen[1], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+
+    PlaceInfo(1);
+
+    drawSmall(_infoScreen[1]->xyLimits.minX,
+                _infoScreen[1]->xyLimits.maxX,
+                _infoScreen[1]->xyLimits.minY,
+                _infoScreen[1]->xyLimits.maxY + 1,
+                *_infoScreen[1]); 
+}
+
+void PrintInfo::MakeCmbtWin()
+{
+    std::vector<std::string> basicInfo;
+    basicInfo.push_back("Health/Combat:");
+    basicInfo.push_back("Hit Points: ");
+    char varIn[5];
+    basicInfo.back() += "(" + std::to_string(_character->getCurHP()) + "/" + std::to_string(_character->getMaxHP()) + ")";
+    sprintf(varIn, "%3d", _character->getArmorRating());
+    basicInfo.push_back("Armor Rating: ");
+    basicInfo.back() += varIn;
+    basicInfo.push_back("Experience: ");
+    basicInfo.back() += std::to_string(_character->getExperience()[0]);
+
+    for(int i = 1; i < _character->getExperience().size(); ++i){
+        basicInfo.back() += ", " + std::to_string(_character->getExperience()[i]);    
+    }
+
+    basicInfo.push_back("Weight GP: (");
+    sprintf(varIn, "%d", _character->getWeightCarried());
+    basicInfo.back() += varIn;
+    sprintf(varIn, "%d", _character->getWeightAllowed());
+    basicInfo.back() += "/";
+    basicInfo.back() += varIn;
+    basicInfo.back() += ")";
+
+
+    int maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[i].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    }
+
+    DrawRange healCom;
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    _infoScreen[2]->xyLimits.minX = healCom.minX = _infoScreen[1]->xyLimits.maxX + 1;
+    _infoScreen[2]->xyLimits.minY = healCom.minY = _infoScreen[1]->xyLimits.minY;
+    _infoScreen[2]->xyLimits.maxX = healCom.maxX = _infoScreen[1]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[2]->xyLimits.maxY = healCom.maxY = _infoScreen[1]->xyLimits.minY + basicInfo.size() + 1; 
+    generatePerimeter(*_infoScreen[2], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+
+    PlaceInfo(2);
+    drawSmall(_infoScreen[2]->xyLimits.minX,
+              _infoScreen[2]->xyLimits.maxX,
+              _infoScreen[2]->xyLimits.minY,
+              _infoScreen[2]->xyLimits.maxY + 1,
+              *_infoScreen[2]);   
+}
+
+void PrintInfo::MakeWealthWin()
+{
+    std::vector<std::string> basicInfo;
+    basicInfo.push_back("Wealth:");
+    basicInfo.push_back("Gold: " + std::to_string(_character->getMoney().gold));
+    basicInfo.push_back("Silver: " + std::to_string(_character->getMoney().silver));
+    basicInfo.push_back("Copper: " + std::to_string(_character->getMoney().copper));
+    basicInfo.push_back("Electrum: " + std::to_string(_character->getMoney().electrum));
+    basicInfo.push_back("Platinum: " + std::to_string(_character->getMoney().platinum));
+
+    int maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[i].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    }
+
+    DrawRange healCom;
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    _infoScreen[3]->xyLimits.minX = healCom.minX = _infoScreen[2]->xyLimits.maxX + 1;
+    _infoScreen[3]->xyLimits.minY = healCom.minY = _infoScreen[2]->xyLimits.minY;
+    _infoScreen[3]->xyLimits.maxX = healCom.maxX = _infoScreen[2]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[3]->xyLimits.maxY = healCom.maxY = _infoScreen[2]->xyLimits.minY + basicInfo.size() + 1; 
+    generatePerimeter(*_infoScreen[3], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+
+    PlaceInfo(3);
+    drawSmall(_infoScreen[3]->xyLimits.minX,
+              _infoScreen[3]->xyLimits.maxX,
+              _infoScreen[3]->xyLimits.minY,
+              _infoScreen[3]->xyLimits.maxY + 1,
+              *_infoScreen[3]); 
+}
+
+void PrintInfo::MakeStrenTbl()
+{
+    std::vector<std::string> basicInfo;
+    basicInfo.push_back("Strength Table:");
+    basicInfo.push_back("Hit Probability: "  + std::to_string(_character->getStrTbl().hitProb));
+    basicInfo.push_back("Damage Adjustment: " + std::to_string(_character->getStrTbl().damageAdj));
+    basicInfo.push_back("Weight Allowance Modification: " + std::to_string(_character->getStrTbl().weightAllowMod));
+    basicInfo.push_back("Open Doors: " + std::to_string(_character->getStrTbl().openDoors));
+    basicInfo.push_back("Bend Bars / Lift Gates: " + std::to_string(_character->getStrTbl().bendBarsLiftGatesPer) + " prcnt");
+
+    int maxLen = 0;
+    for(int i = 0; i < basicInfo.size(); ++i){
+        for(int j = 0; j < basicInfo[i].size(); ++j){
+            if(maxLen < basicInfo[i].size()){
+                maxLen = basicInfo[i].size();
+            }
+        }
+    }
+
+    DrawRange healCom;
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    _infoScreen[4]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX;
+    _infoScreen[4]->xyLimits.minY = healCom.minY = _infoScreen[1]->xyLimits.maxY + 1;
+    _infoScreen[4]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
+    _infoScreen[4]->xyLimits.maxY = healCom.maxY = _infoScreen[1]->xyLimits.maxY + basicInfo.size() + 2; 
+    generatePerimeter(*_infoScreen[4], _infoBoxPerim);
+    _contents.push_back(basicInfo);
+
+    PlaceInfo(4);
+    drawSmall(_infoScreen[4]->xyLimits.minX,
+              _infoScreen[4]->xyLimits.maxX,
+              _infoScreen[4]->xyLimits.minY,
+              _infoScreen[4]->xyLimits.maxY + 1,
+              *_infoScreen[4]);    
 }
 
 WarnMessage::WarnMessage(std::string warning, std::string question)
