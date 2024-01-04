@@ -95,6 +95,7 @@ public:
     void addItem(Items setItem, unsigned amount);
     std::vector<Items> getInventory();
     //void reRollStats();
+    RACE_SKILLS& getRaceSkills();
     bool saveChar();
 };
 #endif

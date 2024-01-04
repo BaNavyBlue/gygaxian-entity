@@ -75,6 +75,13 @@ protected:
     void MakeCmbtWin();
     void MakeWealthWin();
     void MakeStrenTbl();
+    void MakeIntTbl();
+    void MakeWisTbl();
+    void MakeDexTbl();
+    void MakeCharisTbl();
+    void MakeConsTbl();
+    void MakeThiefDexTbl();
+    void MakeRaceSkills();
     void PlaceInfo(int vectIdx);
 public:
     PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim);

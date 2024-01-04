@@ -14,6 +14,7 @@ public:
     ~RACE_SKILLS();
 
     virtual void listRaceSkills() = 0;
+    virtual std::vector<std::string> getRaceSkills() = 0;
 };
 
 class Dwarf: public RACE_SKILLS{
@@ -35,6 +36,7 @@ public:
     ~Dwarf();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 
 };
 
@@ -57,6 +59,7 @@ public:
     ~Elf();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 
 };
 
@@ -78,6 +81,7 @@ public:
     ~Gnome();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 
 };
 
@@ -96,6 +100,7 @@ public:
     ~HalfElf();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 };
 
 class Halfling: public RACE_SKILLS{
@@ -114,6 +119,7 @@ public:
     ~Halfling();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 };
 
 class HalfOrc: public RACE_SKILLS{
@@ -127,6 +133,7 @@ public:
     ~HalfOrc();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 };
 
 class Human: public RACE_SKILLS{
@@ -139,5 +146,6 @@ public:
     ~Human();
 
     void listRaceSkills();
+    std::vector<std::string> getRaceSkills();
 };
 #endif // SKILLS_H

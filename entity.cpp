@@ -1033,6 +1033,7 @@ void Entity::setClass(CHAR_CLASS inClass)
     setBaseLanguages();
     setWisTbl();
     setDexTbl();
+    _armorRating += _dexTbl.defenseAdj;
     if(_chrClass[0] == THIEF || _chrClass[0] == ASSASSIN){
         setDexThief();
     }
@@ -1154,6 +1155,11 @@ short int Entity::getArmorRating()
 std::vector<unsigned> Entity::getExperience()
 {
     return _experience;
+}
+
+RACE_SKILLS& Entity::getRaceSkills()
+{
+    return *_raceSkills;
 }
 
 bool Entity::isFighter(){

@@ -689,14 +689,17 @@ bool raceStatCheck(stats inStats, RACE race)
                 //std::cout << "Elf can not have dexterity bellow 7" << std::endl;
                 return false;
             }
-            if(inStats.constitution - 1 < 6){
-                //std::cout << "Elf can not have constitution bellow 6" << std::endl;
-                return false;
-            }
+
             if(inStats.charisma < 8){
                 //std::cout << "Elf can not have charisma bellow 8" << std::endl;
                 return false;
             }
+
+            if(inStats.constitution - 1 < 6){
+                //std::cout << "Elf can not have constitution bellow 6" << std::endl;
+                return false;
+            }
+
             return true;
         case HALF_ORC:
             if(inStats.strength + 1 < 6){
@@ -710,9 +713,9 @@ bool raceStatCheck(stats inStats, RACE race)
             }
             if(inStats.charisma < 8){
                 stats tmpStats = inStats;
-                tmpStats.constitution + 1;
-                tmpStats.strength + 1;
-                return classStatCheck(ASSASSIN, inStats);
+                tmpStats.constitution += 1;
+                tmpStats.strength += 1;
+                return classStatCheck(ASSASSIN, tmpStats);
             }
             return true;
         case DWARF:
@@ -725,6 +728,14 @@ bool raceStatCheck(stats inStats, RACE race)
                 //std::cout << "Dwarf constitution bellow 12" << std::endl;
                 return false;            
             }
+
+            if(inStats.charisma - 1 < 6){
+                stats tmpStats = inStats;
+                tmpStats.constitution += 1;
+                tmpStats.charisma -= 1;
+                return classStatCheck(ASSASSIN, tmpStats);
+            }
+
             return true;
         case HALFLING:
             if(inStats.strength - 1 < 6){
