@@ -209,7 +209,7 @@ void PrintInfo::PlaceInfo(int vectIdx)
                 for(int m = 0; m < _contents[vectIdx].size(); ++m){
                     for(int n = 0; n < _contents[vectIdx][m].size(); ++n){
                         _infoScreen[vectIdx]->charMap[i][j] = _contents[vectIdx][m][n];
-                        _infoScreen[vectIdx]->colorMap[i][j] = YELLOW;
+                        //_infoScreen[vectIdx]->colorMap[i][j] = YELLOW;
                         _infoScreen[vectIdx]->bGColorMap[i][j++] = BLACK;
                     }
                     j = _infoScreen[vectIdx]->xyLimits.minX + 4; 
@@ -967,8 +967,8 @@ void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
                 inScreen.bGColorMap[i][j] = inPerim.wallsBGColr;
             } else {
                 inScreen.charMap[i][j] = ' ';
-                inScreen.colorMap[i][j] = GREEN;
-                inScreen.bGColorMap[i][j] = BLACK;               
+                //inScreen.colorMap[i][j] = GREEN;
+                //inScreen.bGColorMap[i][j] = BLACK;               
             }
         }
     }
