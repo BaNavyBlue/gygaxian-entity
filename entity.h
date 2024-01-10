@@ -27,7 +27,7 @@ protected:
     money _money;
     stats _modStats; // Stats altered by effects.
     strengthTable _strTbl;
-    inteligenceTable _intTbl;
+    intelligenceTable _intTbl;
     wisdomTable _wisTbl;
     dexterityTable _dexTbl;
     dexThieves _dexThief;
@@ -70,7 +70,7 @@ public:
     stats getStats();
     stats getModStats();
     strengthTable getStrTbl();
-    inteligenceTable getIntTbl();
+    intelligenceTable getIntTbl();
     wisdomTable getWisTbl();
     dexterityTable getDexTbl();
     dexThieves getDexTheif();
@@ -95,7 +95,8 @@ public:
     void addItem(Items setItem, unsigned amount);
     std::vector<Items> getInventory();
     //void reRollStats();
-    RACE_SKILLS& getRaceSkills();
+    std::shared_ptr<RACE_SKILLS> getRaceSkills();
+    std::vector<std::shared_ptr<CHR_CLASS_SKILLS>> getCharClassSkills();
     bool saveChar();
 };
 #endif

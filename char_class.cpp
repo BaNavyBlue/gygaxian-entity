@@ -43,6 +43,30 @@ void CHR_CLASS_SKILLS::listClassSkills()
     std::cout << "Added Proficiency in Weapons Per Level: 1/" << _addedWeapLvlDen << std::endl;
 }
 
+std::vector<std::string> CHR_CLASS_SKILLS::getClassSkills()
+{
+    std::vector<std::string> stringVect;
+    stringVect.push_back("Class Skills:");
+    stringVect.push_back("Hit Die Type d" + std::to_string((int)_classTbl.HitDieType) + " Max Hit Die: " + std::to_string(_classTbl.MaxHitDie));
+    if(_classTbl.spellAbility){
+        stringVect.push_back("Can use spells.");
+    } else {
+        stringVect.push_back("Can't use spells.");
+    }
+
+    if(_classTbl.LevelLimit > 0){
+        stringVect.push_back("Class Level Limit: " + std::to_string(_classTbl.LevelLimit));
+    } else {
+        stringVect.push_back("No class level Limit unless multiclass");
+    }
+
+    stringVect.push_back("Initial Number of Weapons: " + std::to_string(_initNumWeap));
+    stringVect.push_back("Non Proficiency Penalty: " + std::to_string(_nonProfPenalty));
+    stringVect.push_back("Added Proficiency in Weapons Per Level: 1/" + std::to_string(_addedWeapLvlDen));
+    return stringVect;
+
+}
+
 Cleric::Cleric(){
     _classTbl.HitDieType = 8;
     _classTbl.MaxHitDie = 9;
@@ -141,6 +165,40 @@ void Ranger::listClassSkills()
     std::cout << "Track outdoors each creature above 1: +" << (int)oDTrackMoreThan1Per << "\% per creature" << std::endl;
     std::cout << "Track outdoors every 24hours passed: " << oDTrack24HrPer << "\% per day" << std::endl;
     std::cout << "Track outdoors every hour of precipitaion: " << oDTrackHourPercip << "\% per hour" << std::endl;
+}
+
+std::vector<std::string> Ranger::getClassSkills()
+{
+    std::vector<std::string> stringVect;
+    stringVect.push_back("Class Skills:");
+    stringVect.push_back("Hit Die Type d" + std::to_string((int)_classTbl.HitDieType) + " Max Hit Die: " + std::to_string(_classTbl.MaxHitDie));
+    if(_classTbl.spellAbility){
+        stringVect.push_back("Can use spells.");
+    } else {
+        stringVect.push_back("Can't use spells.");
+    }
+
+    if(_classTbl.LevelLimit > 0){
+        stringVect.push_back("Class Level Limit: " + std::to_string(_classTbl.LevelLimit));
+    } else {
+        stringVect.push_back("No class level Limit unless multiclass");
+    }
+
+    stringVect.push_back("Initial Number of Weapons: " + std::to_string(_initNumWeap));
+    stringVect.push_back("Non Proficiency Penalty: " + std::to_string(_nonProfPenalty));
+    stringVect.push_back("Added Proficiency in Weapons Per Level: 1/" + std::to_string(_addedWeapLvlDen));
+    stringVect.push_back("Chance to be surprised d" + std::to_string(_chanceToBeSurprised.sidedDie) + " roll 1-" + std::to_string(_chanceToBeSurprised.maxRange));
+    stringVect.push_back("Chance to surprise d" + std::to_string(_chanceToSurprise.sidedDie) + " roll 1-" + std::to_string(_chanceToSurprise.maxRange));
+    stringVect.push_back("Track underground normal passage: " + std::to_string(uGTrackPassagePer) + "%");
+    stringVect.push_back("Track underground door or stairs: " + std::to_string(uGTrackDrStrPer) + "%");
+    stringVect.push_back("Track underground trap door: " + std::to_string(uGTrackTrpDrPer) + "%");
+    stringVect.push_back("Track underground chimney or sealed door: " + std::to_string(uGTrackChimConDrPer) + "%");
+    stringVect.push_back("Track underground secret door: " + std::to_string(uGTrackScrtDoorPer) + "%");
+    stringVect.push_back("Track outdoors general: " + std::to_string(oDTrack) + "%");
+    stringVect.push_back("Track outdoors each creature above 1: +" + std::to_string(oDTrackMoreThan1Per) + "\% per creature");
+    stringVect.push_back("Track outdoors every 24hours passed: " + std::to_string(oDTrack24HrPer) + "\% per day");
+    stringVect.push_back("Track outdoors every hour of precipitaion: " + std::to_string(oDTrackHourPercip) + "\% per hour");
+    return stringVect;
 }
 
 Ranger::Ranger(){
@@ -254,6 +312,40 @@ void Thief::listClassSkills()
     std::cout << "Hear Noise: " << (int)_thiefTbl.hearNoise << "%" << std::endl;
     std::cout << "Climb Walls: " << _thiefTbl.climbWalls << "%" << std::endl;
     std::cout << "Read Languages: " << (int)_thiefTbl.readLanguages << "%" << std::endl;        
+}
+
+std::vector<std::string> Thief::getClassSkills()
+{
+    std::vector<std::string> stringVect;
+    stringVect.push_back("Class Skills:");
+    stringVect.push_back("Hit Die Type d" + std::to_string((int)_classTbl.HitDieType) + " Max Hit Die: " + std::to_string(_classTbl.MaxHitDie));
+    if(_classTbl.spellAbility){
+        stringVect.push_back("Can use spells.");
+    } else {
+        stringVect.push_back("Can't use spells.");
+    }
+
+    if(_classTbl.LevelLimit > 0){
+        stringVect.push_back("Class Level Limit: " + std::to_string(_classTbl.LevelLimit));
+    } else {
+        stringVect.push_back("No class level Limit unless multiclass");
+    }
+
+    stringVect.push_back("Initial Number of Weapons: " + std::to_string(_initNumWeap));
+    stringVect.push_back("Non Proficiency Penalty: " + std::to_string(_nonProfPenalty));
+    stringVect.push_back("Added Proficiency in Weapons Per Level: 1/" + std::to_string(_addedWeapLvlDen));
+
+    stringVect.push_back("Bonus to hit while sneak/backstab: +" +  std::to_string(_surpriseAtk));
+    stringVect.push_back("Pick Pockets: " + std::to_string(_thiefTbl.pickPockets) + "%");
+    stringVect.push_back("Open Locks: " + std::to_string(_thiefTbl.openLocks) + "%");
+    stringVect.push_back("Find/Remove Traps: " + std::to_string(_thiefTbl.findRemoveTraps) + "%");
+    stringVect.push_back("Move silently: " + std::to_string(_thiefTbl.moveSilently) + "%");
+    stringVect.push_back("Hide in Shadows: " + std::to_string(_thiefTbl.hideInShadows) + "%");
+    stringVect.push_back("Hear Noise: " + std::to_string(_thiefTbl.hearNoise) + "%");
+    stringVect.push_back("Climb Walls: " + std::to_string(_thiefTbl.climbWalls) + "%");
+    stringVect.push_back("Read Languages: " + std::to_string(_thiefTbl.readLanguages) + "%");  
+
+    return stringVect;
 }
 
 void Thief::setRaceMod(RACE race)

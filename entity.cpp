@@ -1077,7 +1077,7 @@ strengthTable Entity::getStrTbl()
     return _strTbl;
 }
 
-inteligenceTable Entity::getIntTbl()
+intelligenceTable Entity::getIntTbl()
 {
     return _intTbl;
 }
@@ -1157,9 +1157,14 @@ std::vector<unsigned> Entity::getExperience()
     return _experience;
 }
 
-RACE_SKILLS& Entity::getRaceSkills()
+std::shared_ptr<RACE_SKILLS> Entity::getRaceSkills()
 {
-    return *_raceSkills;
+    return _raceSkills;
+}
+
+std::vector<std::shared_ptr<CHR_CLASS_SKILLS>> Entity::getCharClassSkills()
+{
+    return _chrSkills;
 }
 
 bool Entity::isFighter(){

@@ -171,8 +171,11 @@ int AlignOptWindow::getOptIdx()
     return _aList.size();
 }
 
-PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim)
+PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals* primary, int* horz, int* vert)
 {
+    _primaryScreen = primary;
+    _horz = horz;
+    _vert = vert;
     _character = &chrctr;
     _infoBoxPerim = inPerim;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
@@ -184,16 +187,18 @@ PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim)
     MakeStatsWin();
     MakeCmbtWin();
     MakeWealthWin();
-    MakeStrenTbl();
-    MakeIntTbl();
-    MakeWisTbl();
-    MakeDexTbl();
-    MakeCharisTbl();
-    MakeConsTbl();
-    MakeRaceSkills();
-    if(_character->getClass()[0] == THIEF || _character->getClass()[0] == ASSASSIN){
-        MakeThiefDexTbl();
+    MakeLangWin();
+    MakeEscTag();
+    SelectTbl();
+
+    for(int i = 0; i < _infoScreen.size(); ++i){
+        drawSmall(_infoScreen[i]->xyLimits.minX,
+                    _infoScreen[i]->xyLimits.maxX,
+                    _infoScreen[i]->xyLimits.minY,
+                    _infoScreen[i]->xyLimits.maxY + 1,
+                    *_primaryScreen);
     }
+    _infoScreen.clear();
 }
 
 void PrintInfo::PlaceInfo(int vectIdx)
@@ -215,6 +220,108 @@ void PrintInfo::PlaceInfo(int vectIdx)
     }
 }
 
+void PrintInfo::MakeGenTbl(std::vector<std::string> stringVect)
+{
+    stringVect.push_back("Push [esc] to go back.");
+    int maxLen = 0;
+    for(int i = 0; i < stringVect.size(); ++i){
+        for(int j = 0; j < stringVect[j].size(); ++j){
+            if(maxLen < stringVect[i].size()){
+                maxLen = stringVect[i].size();
+            }
+        }
+    }
+
+    int scrnIdx = _infoScreen.size();
+
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    _infoScreen[scrnIdx]->xyLimits.minX = _infoScreen[0]->xyLimits.minX + 1;
+    _infoScreen[scrnIdx]->xyLimits.minY = _infoScreen[0]->xyLimits.minY + 1;
+    _infoScreen[scrnIdx]->xyLimits.maxX = _infoScreen[scrnIdx]->xyLimits.minX + maxLen + 7;
+    _infoScreen[scrnIdx]->xyLimits.maxY = _infoScreen[scrnIdx]->xyLimits.minY + stringVect.size() + 1;
+
+    generatePerimeter(*_infoScreen[scrnIdx], _infoBoxPerim);
+    _contents.push_back(stringVect);
+
+    PlaceInfo(scrnIdx);
+
+    drawSmall(_infoScreen[scrnIdx]->xyLimits.minX,
+                _infoScreen[scrnIdx]->xyLimits.maxX,
+                _infoScreen[scrnIdx]->xyLimits.minY,
+                _infoScreen[scrnIdx]->xyLimits.maxY + 1,
+                *_infoScreen[scrnIdx]);
+    
+    bool waitEsc = true;
+
+    while(waitEsc){        
+        if(kbhit()){
+            char k = getkey();
+            if(k == KEY_ESCAPE){
+                waitEsc = false;
+            }
+        }   
+    }
+
+    drawSmall(_infoScreen[scrnIdx]->xyLimits.minX,
+                _infoScreen[scrnIdx]->xyLimits.maxX,
+                _infoScreen[scrnIdx]->xyLimits.minY,
+                _infoScreen[scrnIdx]->xyLimits.maxY + 1,
+                *_primaryScreen);
+
+    _infoScreen.pop_back();
+    _contents.pop_back();
+
+    for(int i = 0; i < _infoScreen.size(); ++i){
+        drawSmall(_infoScreen[i]->xyLimits.minX,
+                    _infoScreen[i]->xyLimits.maxX,
+                    _infoScreen[i]->xyLimits.minY,
+                    _infoScreen[i]->xyLimits.maxY + 1,
+                    *_infoScreen[i]);
+    }
+}
+
+
+void PrintInfo::SelectTbl()
+{
+    bool selectWin = true;
+    while(selectWin){        
+        if(kbhit()){
+            char k = getkey();
+            if(k == KEY_ESCAPE){
+                selectWin = false;
+            }
+            switch(tolower(k)){
+                case 'c':
+                    MakeGenTbl(_character->getCharClassSkills()[0]->getClassSkills());
+                    break;
+                case 'r':
+                    MakeGenTbl(_character->getRaceSkills()->getRaceSkills());
+                    break;
+                case 's':
+                    MakeGenTbl(getStrTbl(_character->getStrTbl()));
+                    break;
+                case 'i':
+                    MakeGenTbl(getIntTbl(_character->getIntTbl()));
+                    break;
+                case 'w':
+                    MakeGenTbl(getWisTbl(_character->getWisTbl()));
+                    break;
+                case 'd':
+                    MakeDexTbl();
+                    break;
+                case 'o':
+                    MakeGenTbl(getConsTbl(_character->getConsTbl()));
+                    break;
+                case 'h':
+                    MakeGenTbl(getCharTbl(_character->getCharTbl()));
+                    break;
+                default:
+                    break;
+            }    
+        }
+    }    
+}
+
 void PrintInfo::MakeCharWin()
 {
     std::vector<std::string> basicInfo;
@@ -222,7 +329,7 @@ void PrintInfo::MakeCharWin()
     basicInfo.push_back("Name: ");
     basicInfo.back() += _character->getName();
     basicInfo.push_back("Sex: " + getSex(_character->getSex()));
-    basicInfo.push_back("Class: ");
+    basicInfo.push_back("(C)lass: ");
     basicInfo.back() += getClass(_character->getClass()[0]);
     if(_character->getClass().size() > 1){
         for(int i = 1; i < _character->getClass().size(); ++i){
@@ -236,7 +343,7 @@ void PrintInfo::MakeCharWin()
     basicInfo.push_back("Level: ");
     basicInfo.back() += std::to_string(_character->getLevel()); 
 
-    basicInfo.push_back("Race: ");
+    basicInfo.push_back("(R)ace: ");
     basicInfo.back() += getRace(_character->getRace());
 
     int maxLen = 0;
@@ -272,15 +379,15 @@ void PrintInfo::MakeStatsWin()
 {
     std::vector<std::string> basicInfo;
     basicInfo.push_back("Stats:");
-    basicInfo.push_back("Strength: " + std::to_string(_character->getStats().strength));
+    basicInfo.push_back("(S)trength: " + std::to_string(_character->getStats().strength));
     if(_character->getStats().strength > 17 && (_character->getClass()[0] == FIGHTER || _character->getClass()[0] == PALADIN || _character->getClass()[0] == RANGER)){
         basicInfo.push_back("Exceptional Strength: " + std::to_string(_character->getStats().excStren));
     }
-    basicInfo.push_back("Intelligence: " + std::to_string(_character->getStats().intelligence));
-    basicInfo.push_back("Wisdom: " + std::to_string(_character->getStats().wisdom));
-    basicInfo.push_back("Dexterity: " + std::to_string(_character->getStats().dexterity));
-    basicInfo.push_back("Constitution: " + std::to_string(_character->getStats().constitution));
-    basicInfo.push_back("Charisma: " + std::to_string(_character->getStats().charisma));
+    basicInfo.push_back("(I)ntelligence: " + std::to_string(_character->getStats().intelligence));
+    basicInfo.push_back("(W)isdom: " + std::to_string(_character->getStats().wisdom));
+    basicInfo.push_back("(D)exterity: " + std::to_string(_character->getStats().dexterity));
+    basicInfo.push_back("C(o)nstitution: " + std::to_string(_character->getStats().constitution));
+    basicInfo.push_back("C(h)arisma: " + std::to_string(_character->getStats().charisma));
     if(_character->getRace() == DWARF || _character->getRace() == HALF_ORC){
         basicInfo.back() += "(*" + std::to_string(_character->getStats().raceCharisma) + ")";
         basicInfo.push_back("*Race Charisma");
@@ -400,15 +507,9 @@ void PrintInfo::MakeWealthWin()
               *_infoScreen[3]); 
 }
 
-void PrintInfo::MakeStrenTbl()
+void PrintInfo::MakeLangWin()
 {
-    std::vector<std::string> basicInfo;
-    basicInfo.push_back("Strength Table:");
-    basicInfo.push_back("Hit Probability: "  + std::to_string(_character->getStrTbl().hitProb));
-    basicInfo.push_back("Damage Adjustment: " + std::to_string(_character->getStrTbl().damageAdj));
-    basicInfo.push_back("Weight Allowance Modification: " + std::to_string(_character->getStrTbl().weightAllowMod));
-    basicInfo.push_back("Open Doors: " + std::to_string(_character->getStrTbl().openDoors));
-    basicInfo.push_back("Bend Bars / Lift Gates: " + std::to_string(_character->getStrTbl().bendBarsLiftGatesPer) + " prcnt");
+    std::vector<std::string> basicInfo = getLanguages(_character->getLanguages());
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
@@ -421,10 +522,10 @@ void PrintInfo::MakeStrenTbl()
 
     DrawRange healCom;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[4]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX;
-    _infoScreen[4]->xyLimits.minY = healCom.minY = _infoScreen[1]->xyLimits.maxY + 1;
-    _infoScreen[4]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
-    _infoScreen[4]->xyLimits.maxY = healCom.maxY = _infoScreen[1]->xyLimits.maxY + basicInfo.size() + 2; 
+    _infoScreen[4]->xyLimits.minX = healCom.minX = _infoScreen[3]->xyLimits.maxX + 1;
+    _infoScreen[4]->xyLimits.minY = healCom.minY = _infoScreen[3]->xyLimits.minY;
+    _infoScreen[4]->xyLimits.maxX = healCom.maxX = _infoScreen[3]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[4]->xyLimits.maxY = healCom.maxY = _infoScreen[3]->xyLimits.minY + basicInfo.size() + 1; 
     generatePerimeter(*_infoScreen[4], _infoBoxPerim);
     _contents.push_back(basicInfo);
 
@@ -433,17 +534,13 @@ void PrintInfo::MakeStrenTbl()
               _infoScreen[4]->xyLimits.maxX,
               _infoScreen[4]->xyLimits.minY,
               _infoScreen[4]->xyLimits.maxY + 1,
-              *_infoScreen[4]);    
+              *_infoScreen[4]);     
 }
 
-void PrintInfo::MakeIntTbl()
+void PrintInfo::MakeEscTag()
 {
     std::vector<std::string> basicInfo;
-    basicInfo.push_back("Intelligece Table:");
-    basicInfo.push_back("Chance to Know each Listed Spell: " + std::to_string(_character->getIntTbl().chanceToKnowPer) + " prcnt");
-    basicInfo.push_back("Minimum Number of Spells per Level: " + std::to_string(_character->getIntTbl().minumumSpellsPerLevel));
-    basicInfo.push_back("Maximum Number of Spells per Level: " + std::to_string(_character->getIntTbl().maxiumSpellsPerlevel));
-    basicInfo.push_back("Possible Number of Additional Languages: " + std::to_string(_character->getIntTbl().possibAddLang));
+    basicInfo.push_back("Press [esc] to exit");
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
@@ -455,11 +552,11 @@ void PrintInfo::MakeIntTbl()
     }
 
     DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[5]->xyLimits.minX = healCom.minX = _infoScreen[4]->xyLimits.maxX + 1;
-    _infoScreen[5]->xyLimits.minY = healCom.minY = _infoScreen[4]->xyLimits.minY;
-    _infoScreen[5]->xyLimits.maxX = healCom.maxX = _infoScreen[4]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[5]->xyLimits.maxY = healCom.maxY = _infoScreen[4]->xyLimits.minY + basicInfo.size() + 1; 
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', RED, BLACK));
+    _infoScreen[5]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX ;
+    _infoScreen[5]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.maxY + 1;
+    _infoScreen[5]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
+    _infoScreen[5]->xyLimits.maxY = healCom.maxY = _infoScreen[5]->xyLimits.minY + basicInfo.size() + 1; 
     generatePerimeter(*_infoScreen[5], _infoBoxPerim);
     _contents.push_back(basicInfo);
 
@@ -468,49 +565,13 @@ void PrintInfo::MakeIntTbl()
               _infoScreen[5]->xyLimits.maxX,
               _infoScreen[5]->xyLimits.minY,
               _infoScreen[5]->xyLimits.maxY + 1,
-              *_infoScreen[5]); 
-}
-
-void PrintInfo::MakeWisTbl()
-{
-    std::vector<std::string> basicInfo;
-    basicInfo.push_back("Wisdom Table:");
-    basicInfo.push_back("Magic Attack Adjustment: " + std::to_string(_character->getWisTbl().magicAttackAdj));
-    basicInfo.push_back("Spell bonus (1 for each level under shown level): " + std::to_string(_character->getWisTbl().spellBonus));
-    basicInfo.push_back("Chance for Spell Failure: " + std::to_string(_character->getWisTbl().spellFailPer) + " prcnt");
-
-    int maxLen = 0;
-    for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
-            if(maxLen < basicInfo[i].size()){
-                maxLen = basicInfo[i].size();
-            }
-        }
-    }
-
-    DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[6]->xyLimits.minX = healCom.minX = _infoScreen[5]->xyLimits.maxX + 1;
-    _infoScreen[6]->xyLimits.minY = healCom.minY = _infoScreen[5]->xyLimits.minY;
-    _infoScreen[6]->xyLimits.maxX = healCom.maxX = _infoScreen[5]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[6]->xyLimits.maxY = healCom.maxY = _infoScreen[5]->xyLimits.minY + basicInfo.size() + 1; 
-    generatePerimeter(*_infoScreen[6], _infoBoxPerim);
-    _contents.push_back(basicInfo);
-
-    PlaceInfo(6);
-    drawSmall(_infoScreen[6]->xyLimits.minX,
-              _infoScreen[6]->xyLimits.maxX,
-              _infoScreen[6]->xyLimits.minY,
-              _infoScreen[6]->xyLimits.maxY + 1,
-              *_infoScreen[6]); 
+              *_infoScreen[5]);      
 }
 
 void PrintInfo::MakeDexTbl()
 {
-    std::vector<std::string> basicInfo;
-    basicInfo.push_back("Dexterity Table:");
-    basicInfo.push_back("Reaction/Attacking Adjustment: " + std::to_string(_character->getDexTbl().reactAttkAdj));
-    basicInfo.push_back("Defensive Adjustment: "+ std::to_string(_character->getDexTbl().defenseAdj));
+    std::vector<std::string> basicInfo = getDexTbl(_character->getDexTbl());
+    basicInfo.push_back("Press [esc] to close.");
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
@@ -520,95 +581,101 @@ void PrintInfo::MakeDexTbl()
             }
         }
     }
+    
+    bool isThief = (_character->getClass()[0] == THIEF || _character->getClass()[0] == ASSASSIN);
 
     DrawRange healCom;
+    int screenIdx = _infoScreen.size();
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[7]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX;
-    _infoScreen[7]->xyLimits.minY = healCom.minY = _infoScreen[4]->xyLimits.maxY + 1;
-    _infoScreen[7]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
-    _infoScreen[7]->xyLimits.maxY = healCom.maxY = _infoScreen[4]->xyLimits.maxY + basicInfo.size() + 2; 
-    generatePerimeter(*_infoScreen[7], _infoBoxPerim);
+    _infoScreen[screenIdx]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX + 1;
+    _infoScreen[screenIdx]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.minY + 1;
+    _infoScreen[screenIdx]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
+    _infoScreen[screenIdx]->xyLimits.maxY = healCom.maxY = _infoScreen[0]->xyLimits.minY + basicInfo.size() + 2; 
+    generatePerimeter(*_infoScreen[screenIdx], _infoBoxPerim);
     _contents.push_back(basicInfo);
 
-    PlaceInfo(7);
-    drawSmall(_infoScreen[7]->xyLimits.minX,
-              _infoScreen[7]->xyLimits.maxX,
-              _infoScreen[7]->xyLimits.minY,
-              _infoScreen[7]->xyLimits.maxY + 1,
-              *_infoScreen[7]);     
-}
+    PlaceInfo(screenIdx);
+    drawSmall(_infoScreen[screenIdx]->xyLimits.minX,
+              _infoScreen[screenIdx]->xyLimits.maxX,
+              _infoScreen[screenIdx]->xyLimits.minY,
+              _infoScreen[screenIdx]->xyLimits.maxY + 1,
+              *_infoScreen[screenIdx]);     
 
-void PrintInfo::MakeCharisTbl()
-{
-    std::vector<std::string> basicInfo;
-    basicInfo.push_back("Charisma Table: ");
-    basicInfo.push_back("Maximum Number of Followers: " + std::to_string(_character->getCharTbl().maxHenchMen));
-    basicInfo.push_back("Loyalty Percentage: " + std::to_string(_character->getCharTbl().loyaltyBasePer) + "prcnt");
-    basicInfo.push_back("Reaction of others: " + std::to_string(_character->getCharTbl().reactAdjustPer) + "prcnt");
+    if(isThief){
 
-    int maxLen = 0;
-    for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
-            if(maxLen < basicInfo[i].size()){
-                maxLen = basicInfo[i].size();
+        basicInfo.clear();
+        basicInfo = getDexTheif(_character->getDexTheif());
+
+        maxLen = 0;
+        for(int i = 0; i < basicInfo.size(); ++i){
+            for(int j = 0; j < basicInfo[i].size(); ++j){
+                if(maxLen < basicInfo[i].size()){
+                    maxLen = basicInfo[i].size();
+                }
             }
         }
+
+        screenIdx = _infoScreen.size();
+        _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+        _infoScreen[screenIdx]->xyLimits.minX = healCom.minX = _infoScreen[screenIdx - 1]->xyLimits.maxX + 1;
+        _infoScreen[screenIdx]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.minY + 1;
+        _infoScreen[screenIdx]->xyLimits.maxX = healCom.maxX = _infoScreen[screenIdx]->xyLimits.minX + maxLen + 7;
+        _infoScreen[screenIdx]->xyLimits.maxY = healCom.maxY = _infoScreen[screenIdx]->xyLimits.minY + basicInfo.size() + 2; 
+        generatePerimeter(*_infoScreen[screenIdx], _infoBoxPerim);
+        _contents.push_back(basicInfo);
+
+        PlaceInfo(screenIdx);
+        drawSmall(_infoScreen[screenIdx]->xyLimits.minX,
+                _infoScreen[screenIdx]->xyLimits.maxX,
+                _infoScreen[screenIdx]->xyLimits.minY,
+                _infoScreen[screenIdx]->xyLimits.maxY + 1,
+                *_infoScreen[screenIdx]);         
     }
 
-    DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[8]->xyLimits.minX = healCom.minX = _infoScreen[7]->xyLimits.maxX + 1;
-    _infoScreen[8]->xyLimits.minY = healCom.minY = _infoScreen[4]->xyLimits.maxY + 1;
-    _infoScreen[8]->xyLimits.maxX = healCom.maxX = _infoScreen[7]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[8]->xyLimits.maxY = healCom.maxY = _infoScreen[4]->xyLimits.maxY + basicInfo.size() + 2; 
-    generatePerimeter(*_infoScreen[8], _infoBoxPerim);
-    _contents.push_back(basicInfo);
+    bool waitEsc = true;
 
-    PlaceInfo(8);
-    drawSmall(_infoScreen[8]->xyLimits.minX,
-              _infoScreen[8]->xyLimits.maxX,
-              _infoScreen[8]->xyLimits.minY,
-              _infoScreen[8]->xyLimits.maxY + 1,
-              *_infoScreen[8]);  
-}
-
-void PrintInfo::MakeConsTbl()
-{
-    std::vector<std::string> basicInfo;
-    basicInfo.push_back("Constitution Table:");
-    basicInfo.push_back("Hit Point Adjustment: " + std::to_string(_character->getConsTbl().hpAdj));
-    basicInfo.push_back("System Shock Survivial: " + std::to_string(_character->getConsTbl().sysShockSurPer) + "prcnt");
-    basicInfo.push_back("Resurection Survival: " + std::to_string(_character->getConsTbl().resurSurvPer) + "prcnt");
-
-    int maxLen = 0;
-    for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
-            if(maxLen < basicInfo[i].size()){
-                maxLen = basicInfo[i].size();
+    while(waitEsc){        
+        if(kbhit()){
+            char k = getkey();
+            if(k == KEY_ESCAPE){
+                waitEsc = false;
             }
-        }
+        }   
     }
 
-    DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[9]->xyLimits.minX = healCom.minX = _infoScreen[8]->xyLimits.maxX + 1;
-    _infoScreen[9]->xyLimits.minY = healCom.minY = _infoScreen[4]->xyLimits.maxY + 1;
-    _infoScreen[9]->xyLimits.maxX = healCom.maxX = _infoScreen[8]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[9]->xyLimits.maxY = healCom.maxY = _infoScreen[4]->xyLimits.maxY + basicInfo.size() + 2; 
-    generatePerimeter(*_infoScreen[9], _infoBoxPerim);
-    _contents.push_back(basicInfo);
+    drawSmall(_infoScreen[screenIdx]->xyLimits.minX,
+                _infoScreen[screenIdx]->xyLimits.maxX,
+                _infoScreen[screenIdx]->xyLimits.minY,
+                _infoScreen[screenIdx]->xyLimits.maxY + 1,
+                *_primaryScreen);
 
-    PlaceInfo(9);
-    drawSmall(_infoScreen[9]->xyLimits.minX,
-              _infoScreen[9]->xyLimits.maxX,
-              _infoScreen[9]->xyLimits.minY,
-              _infoScreen[9]->xyLimits.maxY + 1,
-              *_infoScreen[9]); 
+    _infoScreen.pop_back();
+    _contents.pop_back();
+
+    if(isThief){
+        screenIdx = _infoScreen.size() - 1;
+        drawSmall(_infoScreen[screenIdx]->xyLimits.minX,
+                    _infoScreen[screenIdx]->xyLimits.maxX,
+                    _infoScreen[screenIdx]->xyLimits.minY,
+                    _infoScreen[screenIdx]->xyLimits.maxY + 1,
+                    *_primaryScreen);
+
+        _infoScreen.pop_back();
+        _contents.pop_back();        
+    }
+
+    for(int i = 0; i < _infoScreen.size(); ++i){
+        drawSmall(_infoScreen[i]->xyLimits.minX,
+                    _infoScreen[i]->xyLimits.maxX,
+                    _infoScreen[i]->xyLimits.minY,
+                    _infoScreen[i]->xyLimits.maxY + 1,
+                    *_infoScreen[i]);
+    }
 }
 
 void PrintInfo::MakeRaceSkills()
 {
-    std::vector<std::string> basicInfo = _character->getRaceSkills().getRaceSkills();
+    std::vector<std::string> basicInfo = _character->getRaceSkills()->getRaceSkills();
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
@@ -639,6 +706,109 @@ void PrintInfo::MakeRaceSkills()
 void PrintInfo::MakeThiefDexTbl()
 {
 
+}
+
+void PrintInfo::createPrimary()
+{
+    std::string line1 = "Welcome To Gygaxian-Entity";
+    std::string line2 = "Character Creator";
+    std::string options = "(C)reate New Character";
+    std::string options2 = "Create New (P)arty";
+    int msg1L = line1.size()/2;
+    int msg2L = line2.size()/2;
+    for(std::size_t i = 0; i < *_vert; ++i){
+        for(std::size_t j = 0; j < *_horz; ++j){
+            if(i == *_vert/2 - 1 && j == *_horz/2 - msg1L){
+                for(std::size_t k = 0; k < line1.size(); ++k){
+                    _primaryScreen->charMap[i][j] = line1[k];
+                    _primaryScreen->colorMap[i][j] = GREEN;
+                    _primaryScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == *_vert/2 && j == *_horz/2 - msg2L){
+                for(std::size_t k = 0; k < line2.size(); ++k){
+                    _primaryScreen->charMap[i][j] = line2[k];
+                    _primaryScreen->colorMap[i][j] = GREEN;
+                    _primaryScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if (i == *_vert - 1 && j == 0){
+                _primaryScreen->charMap[i][j] = 0x2551;
+                _primaryScreen->colorMap[i][j] = RED;
+                _primaryScreen->bGColorMap[i][j++] = GREY;
+                for(std::size_t k = 0; k < options.size(); ++k){
+                    _primaryScreen->charMap[i][j] = options[k];
+                    _primaryScreen->colorMap[i][j] = RED;
+                    _primaryScreen->bGColorMap[i][j++] = GREY;
+                }
+                _primaryScreen->charMap[i][j] = 0x2551;
+                _primaryScreen->colorMap[i][j] = RED;
+                _primaryScreen->bGColorMap[i][j++] = GREY;
+                for(std::size_t k = 0; k < options2.size(); ++k){
+                    _primaryScreen->charMap[i][j] = options2[k];
+                    _primaryScreen->colorMap[i][j] = RED;
+                    _primaryScreen->bGColorMap[i][j++] = GREY;
+                }
+                _primaryScreen->charMap[i][j] = 0x2551;
+                _primaryScreen->colorMap[i][j] = RED;
+                _primaryScreen->bGColorMap[i][j++] = GREY;
+                //j--;
+            } else if(i == 0 && j == 0){
+                _primaryScreen->charMap[i][j] = 0x2554;
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            } else if(i == 0 && j == *_horz - 1){
+                _primaryScreen->charMap[i][j] = 0x2557;
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            } else if(i == *_vert - 2 && j == 0) {
+                _primaryScreen->charMap[i][j] = 0x255A; 
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            } else if(i == *_vert - 2 && j == *_horz - 1){
+                _primaryScreen->charMap[i][j] = 0x255D;
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            } else if(i == 0 || i == *_vert - 2) {
+                _primaryScreen->charMap[i][j] = 0x2550; 
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            } else if ((j == 0 || j == *_horz - 1) && i < *_vert - 1){
+                _primaryScreen->charMap[i][j] = 0x2551;
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            }  else {
+                _primaryScreen->charMap[i][j] = 0x0020;
+                _primaryScreen->colorMap[i][j] = GREEN;
+                _primaryScreen->bGColorMap[i][j] = BLACK;
+            }
+        }
+    }
+
+}
+
+void PrintInfo::drawPrimary()
+{
+    cls();
+    locate(1,1);
+    for(std::size_t i = 0; i < *_vert; ++i){
+        for(std::size_t j = 0; j < *_horz; ++j){
+            int forPrint = _primaryScreen->charMap[i][j];
+                
+                locate(j + 1, i + 1);
+                if(forPrint > 127){
+                    std::string utfChar = getUTF(forPrint);
+                    colorPrintUTF(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], utfChar.c_str());
+                } else {
+                    char singleChar[2];
+                    singleChar[0] = forPrint;
+                    singleChar[1] = '\0';
+                    colorPrint(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], singleChar);
+                }
+        }
+    }
+    locate(1,1);
+    fflush(stdout);
 }
 
 WarnMessage::WarnMessage(std::string warning, std::string question)

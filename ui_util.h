@@ -65,6 +65,9 @@ public:
 
 class PrintInfo{
 protected:
+    ScreenVals* _primaryScreen;
+    int* _horz;
+    int* _vert;
     std::vector<std::vector<std::string>> _contents;
     std::vector<std::shared_ptr<ScreenVals>> _infoScreen;
     Perimeter _infoBoxPerim;
@@ -74,17 +77,18 @@ protected:
     void MakeStatsWin();
     void MakeCmbtWin();
     void MakeWealthWin();
-    void MakeStrenTbl();
-    void MakeIntTbl();
-    void MakeWisTbl();
+    void MakeLangWin();
+    void MakeEscTag();
     void MakeDexTbl();
-    void MakeCharisTbl();
-    void MakeConsTbl();
     void MakeThiefDexTbl();
     void MakeRaceSkills();
+    void MakeGenTbl(std::vector<std::string> stringVect);
+    void SelectTbl();
     void PlaceInfo(int vectIdx);
+    void createPrimary();
+    void drawPrimary();
 public:
-    PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim);
+    PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals* primary, int* horz, int* vert);
 };
 
 class WarnMessage{

@@ -15,6 +15,7 @@ public:
     CHR_CLASS_SKILLS();
     ~CHR_CLASS_SKILLS();
     virtual void listClassSkills();
+    virtual std::vector<std::string> getClassSkills();
     virtual unsigned generateGold();
     virtual unsigned rollHP();
     classTable1 getClassTable1();
@@ -87,6 +88,7 @@ public:
     Ranger();
     ~Ranger();
     void listClassSkills() override;
+    std::vector<std::string> getClassSkills() override;
 };
 
 class MagicUser: public CHR_CLASS_SKILLS{
@@ -119,6 +121,7 @@ public:
     ~Thief();
     void setThiefSkills(RACE inRace, unsigned inLevel);
     void listClassSkills();
+    std::vector<std::string> getClassSkills() override;
     unsigned generateGold() override;
 };
 

@@ -180,7 +180,7 @@ struct strengthTable{ // pg. 9
     unsigned bendBarsLiftGatesPer = 1; 
 };
 
-struct inteligenceTable{ // pg. 10
+struct intelligenceTable{ // pg. 10
     unsigned chanceToKnowPer = 10;
     unsigned minumumSpellsPerLevel = 2;
     unsigned maxiumSpellsPerlevel = 3;
