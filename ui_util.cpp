@@ -95,7 +95,22 @@ void TextInput::purgeRecieved()
 
 void OptionWindow::PlaceOptions()
 {
-    
+    for(std::size_t i = _optScreen->xyLimits.minY; i < _optScreen->xyLimits.maxY + 1; ++i){
+        for(std::size_t j = _optScreen->xyLimits.minX; j < _optScreen->xyLimits.maxX + 1; ++j){
+            if((i == _optScreen->xyLimits.minY + 1) && j == _optScreen->xyLimits.minX + 3){
+                for(int m = 0; m < _list.size(); ++m){
+                    for(int n = 0; n < _list[m].size(); ++n){
+                        _optScreen->charMap[i][j] = _list[m][n];
+                        _optScreen->colorMap[i][j] = YELLOW;
+                        _optScreen->bGColorMap[i][j++] = BLACK;
+                    }
+                    j = _optScreen->xyLimits.minX + 4; 
+                    i++;
+                }
+            }
+        }
+    }
+    drawSmall(_optScreen->xyLimits.minX, _optScreen->xyLimits.maxX, _optScreen->xyLimits.minY, _optScreen->xyLimits.maxY + 1, *_optScreen);    
 }
 
 OptionWindow::OptionWindow()
@@ -136,25 +151,25 @@ void AlignOptWindow::createWindow(DrawRange uRandWidth, Perimeter inPerim)
     PlaceOptions();
 }
 
-void AlignOptWindow::PlaceOptions()
-{
-    for(std::size_t i = _optScreen->xyLimits.minY; i < _optScreen->xyLimits.maxY + 1; ++i){
-        for(std::size_t j = _optScreen->xyLimits.minX; j < _optScreen->xyLimits.maxX + 1; ++j){
-            if((i == _optScreen->xyLimits.minY + 1) && j == _optScreen->xyLimits.minX + 3){
-                for(int m = 0; m < _list.size(); ++m){
-                    for(int n = 0; n < _list[m].size(); ++n){
-                        _optScreen->charMap[i][j] = _list[m][n];
-                        _optScreen->colorMap[i][j] = YELLOW;
-                        _optScreen->bGColorMap[i][j++] = BLACK;
-                    }
-                    j = _optScreen->xyLimits.minX + 4; 
-                    i++;
-                }
-            }
-        }
-    }
-    drawSmall(_optScreen->xyLimits.minX, _optScreen->xyLimits.maxX, _optScreen->xyLimits.minY, _optScreen->xyLimits.maxY + 1, *_optScreen);
-}
+// void AlignOptWindow::PlaceOptions()
+// {
+//     for(std::size_t i = _optScreen->xyLimits.minY; i < _optScreen->xyLimits.maxY + 1; ++i){
+//         for(std::size_t j = _optScreen->xyLimits.minX; j < _optScreen->xyLimits.maxX + 1; ++j){
+//             if((i == _optScreen->xyLimits.minY + 1) && j == _optScreen->xyLimits.minX + 3){
+//                 for(int m = 0; m < _list.size(); ++m){
+//                     for(int n = 0; n < _list[m].size(); ++n){
+//                         _optScreen->charMap[i][j] = _list[m][n];
+//                         _optScreen->colorMap[i][j] = YELLOW;
+//                         _optScreen->bGColorMap[i][j++] = BLACK;
+//                     }
+//                     j = _optScreen->xyLimits.minX + 4; 
+//                     i++;
+//                 }
+//             }
+//         }
+//     }
+//     drawSmall(_optScreen->xyLimits.minX, _optScreen->xyLimits.maxX, _optScreen->xyLimits.minY, _optScreen->xyLimits.maxY + 1, *_optScreen);
+// }
 
 ALIGNMENT AlignOptWindow::getAlign(char inChar)
 {
@@ -974,9 +989,242 @@ void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
     }
 }
 
+// void ChooseOpt::PlaceOptions()
+// {
+//     for(std::size_t i = _optScreen->xyLimits.minY; i < _optScreen->xyLimits.maxY + 1; ++i){
+//         for(std::size_t j = _optScreen->xyLimits.minX; j < _optScreen->xyLimits.maxX + 1; ++j){
+//             if((i == _optScreen->xyLimits.minY + 1) && j == _optScreen->xyLimits.minX + 3){
+//                 for(int m = 0; m < _list.size(); ++m){
+//                     for(int n = 0; n < _list[m].size(); ++n){
+//                         _optScreen->charMap[i][j] = _list[m][n];
+//                         _optScreen->colorMap[i][j] = YELLOW;
+//                         _optScreen->bGColorMap[i][j++] = BLACK;
+//                     }
+//                     j = _optScreen->xyLimits.minX + 4; 
+//                     i++;
+//                 }
+//             }
+//         }
+//     }
+//     drawSmall(_optScreen->xyLimits.minX, _optScreen->xyLimits.maxX, _optScreen->xyLimits.minY, _optScreen->xyLimits.maxY + 1, *_optScreen);
+// }
+
+ChooseOpt::ChooseOpt(std::vector<std::string> inOpts)
+{
+    _list.push_back(inOpts[0]);
+    char idx = '0';
+    for(int i = 1; i < inOpts.size(); ++i){
+        _list.push_back(inOpts[i] + ": " + idx++ + ")");
+    }
+    _optScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    DrawRange strtCrn;
+    strtCrn.minX = 1;
+    strtCrn.minY = 1;
+    Perimeter inPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    createWindow(strtCrn, inPerim);
+}
+
+void ChooseOpt::createWindow(DrawRange uRandWidth, Perimeter inPerim)
+{
+    int maxLen = 0;
+    for(int i = 0; i < _list.size(); ++i){
+        if(maxLen < _list[i].size()){
+            maxLen = _list[i].size();
+        }
+    }
+    _optScreen->xyLimits.minX = uRandWidth.minX;
+    _optScreen->xyLimits.minY = uRandWidth.minY;
+    _optScreen->xyLimits.maxX = uRandWidth.minX + maxLen + 6;
+    _optScreen->xyLimits.maxY = uRandWidth.minY + _list.size() + 1;
+
+    generatePerimeter(*_optScreen, inPerim);
+    PlaceOptions();
+}
+
+ScreenVals& ChooseOpt::getScreen()
+{
+    return *_optScreen;
+}
+
+char ChooseOpt::getChoice(char optChoice)
+{
+    _choice = optChoice;
+    return _choice;
+}
+
+RollScreen::RollScreen(stats inStats, ScreenVals& primaryScreen)
+{
+    int maxLen = 0;
+    int addRow = 0;
+
+    rollScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+
+    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    std::string choices = "Keep current roll? (y/n).";
+
+    char tmp[4];
+    sprintf(tmp, "%3u", inStats.strength);
+    std::string strength = "            Strength:";
+    strength += tmp;
+    strength  += " Fails - " + strenFails(inStats);
+    sprintf(tmp, "%3u", inStats.excStren);
+    std::string exceptStr = "Exceptional Strength:";
+    exceptStr += tmp;
+    exceptStr += " Fighter, Paladin and Ranger only!";
+    sprintf(tmp, "%3u", inStats.intelligence);
+    std::string intelligence = "        Intelligence:";
+    intelligence += tmp;
+    intelligence += " Fails - " + intFails(inStats);
+    sprintf(tmp, "%3u", inStats.wisdom);
+    std::string wisdom = "              Wisdom:";
+    wisdom += tmp;
+    wisdom += " Fails - " + wisFails(inStats);
+    sprintf(tmp, "%3u", inStats.dexterity);
+    std::string dexterity = "           Dexterity:";
+    dexterity += tmp;
+    dexterity += " Fails - " + dexFails(inStats);
+    sprintf(tmp, "%3u", inStats.charisma);
+    std::string charisma = "            Charisma:";
+    charisma += tmp;
+    charisma += " Fails - " + charisFails(inStats);
+    sprintf(tmp, "%3u", inStats.constitution);
+    std::string constitution = "        Constitution:";
+    constitution += tmp;
+    constitution += " Fails - " + consFails(inStats);
+    std::string stats = "stats";
+    
+    std::vector<int> lengths;
+    lengths.push_back(strength.size());
+    lengths.push_back(intelligence.size());
+    lengths.push_back(wisdom.size());
+    lengths.push_back(dexterity.size());
+    lengths.push_back(charisma.size());
+    lengths.push_back(constitution.size());
+    lengths.push_back(exceptStr.size());
+    lengths.push_back(choices.size());
+
+    for(int i = 0; i < lengths.size(); ++i){
+        if(lengths[i] > maxLen){
+            maxLen = lengths[i];
+        }
+    }
+
+    if(inStats.strength > 17){
+        addRow = 1;   
+    } else {
+        addRow = 0;
+    }
+    
+    // if(prevMax < maxLen){
+    //     prevMax = maxLen;
+    // }
+
+    // if(prevRow < addRow){
+    //     prevRow = addRow;
+    // }
+    // drawSmall(1, prevMax + 5, 1, 10 + prevRow, primaryScreen);
+
+    rollScreen->xyLimits.minX = 1;
+    rollScreen->xyLimits.maxX = maxLen + 5;
+    rollScreen->xyLimits.minY = 1;
+    rollScreen->xyLimits.maxY = 10 + addRow - 2;
+
+
+    
+    generatePerimeter(*rollScreen, rollPerim);
+
+    rollScreen->xyLimits.maxY = 10 + addRow;
+
+    for(std::size_t i = 1; i < 10 + addRow; ++i){
+        for(std::size_t j = 1; j < maxLen + 6; ++j){
+            if(i == 2 && j == 3) {
+                for(std::size_t k = 0; k < strength.size(); ++k){
+                    rollScreen->charMap[i][j] = strength[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == 2 + addRow && j == 3 && addRow) {
+                for(std::size_t k = 0; k < exceptStr.size(); ++k){
+                    rollScreen->charMap[i][j] = exceptStr[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == 3 + addRow && j == 3) {
+                for(std::size_t k = 0; k < intelligence.size(); ++k){
+                    rollScreen->charMap[i][j] = intelligence[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == 4 + addRow && j == 3) {
+                for(std::size_t k = 0; k < wisdom.size(); ++k){
+                    rollScreen->charMap[i][j] = wisdom[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == 5 + addRow && j == 3) {
+                for(std::size_t k = 0; k < dexterity.size(); ++k){
+                    rollScreen->charMap[i][j] = dexterity[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == 6 + addRow && j == 3) {
+                for(std::size_t k = 0; k < charisma.size(); ++k){
+                    rollScreen->charMap[i][j] = charisma[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if(i == 7 + addRow && j == 3) {
+                for(std::size_t k = 0; k < constitution.size(); ++k){
+                    rollScreen->charMap[i][j] = constitution[k];
+                    rollScreen->colorMap[i][j] = YELLOW;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+        } else if(i == 9 + addRow && j == 3) {
+                rollScreen->charMap[i][j - 2] = ' ';
+                rollScreen->colorMap[i][j - 2] = RED;
+                rollScreen->bGColorMap[i][j- 2] = BLACK;
+                rollScreen->charMap[i][j - 1] = ' ';
+                rollScreen->colorMap[i][j - 1] = RED;
+                rollScreen->bGColorMap[i][j- 1] = BLACK;
+                for(std::size_t k = 0; k < choices.size(); ++k){
+                    rollScreen->charMap[i][j] = choices[k];
+                    rollScreen->colorMap[i][j] = RED;
+                    rollScreen->bGColorMap[i][j++] = BLACK;
+                }
+                int x = 0 ;
+                while(j + x < maxLen + 5){
+                    rollScreen->charMap[i][j + x] = ' ';
+                    rollScreen->colorMap[i][j + x] = RED;
+                    rollScreen->bGColorMap[i][j + x] = BLACK;
+                    ++x;
+                }
+                j--;                 
+            } 
+        }       
+    }
+    drawSmall(1, rollScreen->xyLimits.maxX, 1, rollScreen->xyLimits.maxY, *rollScreen);
+}
+
+ScreenVals& RollScreen::getScreen()
+{
+   return *rollScreen;
+}
+
 bool doesRecordExist(std::string name, std::string path, std::string suffix)
 {
     std::string file = path + name + suffix;
     std::ifstream charJson(file);
     return charJson.good(); 
+}
+
+void clearPrevScreen(std::vector<ScreenVals> screens)
+{
+    drawSmall(screens.end()->xyLimits.minX, screens.end()->xyLimits.maxX, screens.end()->xyLimits.minY, screens.end()->xyLimits.maxY + 1, screens[0]);  
 }

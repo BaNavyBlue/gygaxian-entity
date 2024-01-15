@@ -39,7 +39,23 @@ int main(){
         if(kbhit()){
             char k = getkey();
             if(std::tolower(k) == 'c') {
-                createRollScreen();
+                std::vector<std::string> charCreate;
+                charCreate.push_back("Creation Option:");
+                charCreate.push_back("Classic Creation");
+                charCreate.push_back("Brute Force Class");
+                ChooseOpt createOpt(charCreate);
+                std::vector<ScreenVals> screens;
+                screens.push_back(primaryScreen);
+                screens.push_back(createOpt.getScreen());
+                if(createOpt.getChoice(selOpt(screens, charCreate.size() - 2)) == '1'){
+                    clearPrevScreen(screens);
+                    screens.clear();
+                    createBruteForceScreen();
+                } else {
+                    clearPrevScreen(screens);
+                    screens.clear();
+                    createRollScreen();
+                }
             } 
             else if (k == KEY_LEFT){drawPrimary();}
 			else if (k == KEY_RIGHT){drawPrimary();}
@@ -62,6 +78,117 @@ int main(){
 /************************************************************************************
     All of these function definitions were moved to ui_util.h
 ************************************************************************************/
+void createBruteForceScreen()
+{
+    std::vector<std::string> classList;
+    classList.push_back("Select Class to Brute Force:");
+    std::vector<CHAR_CLASS> classEnums = classToForce();
+
+    for(int i = 0; i < classEnums.size(); ++i){
+        classList.push_back(classPairs[classEnums[i]].cS );
+    }
+
+    ChooseOpt classChoice(classList);
+    std::vector<ScreenVals> screenVect;
+    screenVect.push_back(primaryScreen);
+    screenVect.push_back(classChoice.getScreen());
+    char choice = selOpt(screenVect, classEnums.size() - 1);
+    drawSmall(screenVect.end()->xyLimits.minX, screenVect.end()->xyLimits.maxX, screenVect.end()->xyLimits.minY, screenVect.end()->xyLimits.maxY, primaryScreen);
+    CHAR_CLASS newClass = classEnums[choice - 48];
+    stats newStats[2];
+    stats dummyStats[2];
+    std::shared_ptr<ScreenVals> tempScreen;
+    do{
+        bool passRoll = false;
+        while(!passRoll){
+            rollStats(newStats[0], newStats[1]);
+            passRoll = checkClassStats(newClass, newStats[0]);
+        }
+        
+        RollScreen rollScreen(newStats[0], primaryScreen);
+        tempScreen = std::make_shared<ScreenVals>(rollScreen.getScreen());
+    }while(reRollOptions(dummyStats[0], dummyStats[1], *tempScreen));
+    drawSmall(1, tempScreen->xyLimits.maxX, tempScreen->xyLimits.maxY - 1, tempScreen->xyLimits.maxY, primaryScreen);
+
+    ScreenVals sexScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals raceScreen(VECT_MAX, ' ', YELLOW, BLACK);
+
+    RACE newRace;
+    SEX newSex = selSexScreen(sexScreen, *tempScreen);
+    createRaceScreenBF(newRace, newClass, newStats[0], *tempScreen, sexScreen, raceScreen);
+
+    DrawRange alignCorner;
+    alignCorner.minX = raceScreen.xyLimits.maxX + 1;
+    alignCorner.minY = raceScreen.xyLimits.minY;
+
+    AlignOptWindow alignWin(newClass);
+    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    alignWin.createWindow(alignCorner, rollPerim);
+
+    std::vector<ScreenVals> screenVec;
+    screenVec.push_back(*tempScreen);
+    screenVec.push_back(sexScreen);
+    screenVec.push_back(raceScreen);
+    screenVec.push_back(alignWin.getScreen());
+    
+    ALIGNMENT newAlign = alignWin.getAlign(selOpt(screenVec, alignWin.getOptIdx()));
+
+    TextInput textBox;
+    DrawRange textCorner;
+    textCorner.minX = sexScreen.xyLimits.minX;
+    textCorner.minY = sexScreen.xyLimits.maxY + 1;
+
+    std::string newName;
+    bool confirmName = false;
+
+    do{
+        confirmName = false;
+        //newName.erase(std::remove(newName.begin(), newName.end(), '0'), newName.end());
+        textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
+        newName = textBox.getAquiredString();
+        if(doesRecordExist(newName, "characters/", ".json")){
+            WarnMessage nameExists("Name already in use", "Overwrite? (y/n)");
+            confirmName = nameExists.waitForAnswer();
+            drawSmall(nameExists.getScreen().xyLimits.minX, nameExists.getScreen().xyLimits.maxX, nameExists.getScreen().xyLimits.minY, nameExists.getScreen().xyLimits.maxY + 1, primaryScreen);
+            drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX, alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, alignWin.getScreen());
+            drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, raceScreen);
+            drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
+            drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX, tempScreen->xyLimits.minY, tempScreen->xyLimits.maxY - 1, *tempScreen);           
+        }
+        if(confirmName){
+            textBox.purgeRecieved();
+        }
+    } while(confirmName);
+
+    std::vector<CHAR_CLASS> classVect;
+    classVect.push_back(newClass);
+
+    Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
+    dude.saveChar();
+
+    drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY, textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX, alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
+    usleep(40000);
+    drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX, tempScreen->xyLimits.minY, tempScreen->xyLimits.maxY - 1, primaryScreen);
+    
+    DrawRange infoRange;
+    infoRange.minX = 1;
+    infoRange.minY = 1;
+    PrintInfo showChar(dude, infoRange, rollPerim, &primaryScreen, &horz_char, &vert_char);
+    screenVec.clear();
+}
+
+std::vector<CHAR_CLASS> classToForce()
+{
+    std::vector<CHAR_CLASS> retClass = {DRUID, PALADIN, RANGER, ILLUSIONIST, ASSASSIN, MONK};
+    return retClass;
+}
+
 
 void createRollScreen()
 {
@@ -76,7 +203,7 @@ void createRollScreen()
     rollStats(newStats[0], newStats[1]);
     Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
 
-    std::string choices = "Keep current roll? (y/n) (B)rute Force a Class? [esc] to go back.";
+    std::string choices = "Keep current roll? (y/n).";
     do{
         int maxLen = 0;
         int addRow = 0;
@@ -250,7 +377,7 @@ void createRollScreen()
     screenVec.push_back(classScreen);
     screenVec.push_back(alignWin.getScreen());
     
-    ALIGNMENT newAlign = alignWin.getAlign(selAlign(screenVec, alignWin.getOptIdx()));
+    ALIGNMENT newAlign = alignWin.getAlign(selOpt(screenVec, alignWin.getOptIdx()));
 
     TextInput textBox;
     DrawRange textCorner;
@@ -302,12 +429,6 @@ void createRollScreen()
     infoRange.minX = 1;
     infoRange.minY = 1;
     PrintInfo showChar(dude, infoRange, rollPerim, &primaryScreen, &horz_char, &vert_char);
-
-
-
-
-
-
 }
 
 bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
@@ -323,6 +444,97 @@ bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, Scree
     int nonV = 0;
     for(unsigned i = 0; i < racePairs.size(); ++i){
         if(raceStatCheck(inStats, racePairs[i].race)/*&&checkRaceStats(racePairs[i].race, inStats)*/){
+            rMap[idx] = racePairs[i].race;
+            viable.push_back(racePairs[i].raceS + ": " + idx);
+            idx++;         
+        } else {
+            nonViable.push_back(racePairs[i].raceS);
+            nonV++;
+        }
+    }
+
+    int maxLen = 0;
+    int addRow = 0;
+    int totalStrings = viable.size();
+
+    for(int i = 0; i < viable.size(); ++i){
+        if(maxLen < viable[i].size()){
+            maxLen = viable[i].size();
+        }
+    }
+    
+    if(nonViable.size() > 1){
+        for(int i = 0; i < nonViable.size(); ++i){
+            if(maxLen < nonViable[i].size()){
+                maxLen = nonViable[i].size();
+            }
+        }
+        totalStrings  += nonViable.size();
+        addRow = 1;
+    }
+
+    inScreen3.xyLimits.minX = inScreen2.xyLimits.maxX + 1;
+    inScreen3.xyLimits.maxX = inScreen2.xyLimits.maxX + 1 + maxLen + 6;
+    inScreen3.xyLimits.minY = inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    inScreen3.xyLimits.maxY = inScreen.xyLimits.maxY + totalStrings + addRow;
+
+    Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(inScreen3, racePerim);
+
+    for(std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i){
+        for(std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1 ; ++j){
+            if((i == inScreen3.xyLimits.minY + 1) && j == inScreen3.xyLimits.minX + 3){
+                if(nonViable.size() > 1){
+                    for(int m = 0; m < nonViable.size(); ++m){
+                        for(int n = 0; n < nonViable[m].size(); ++n){
+                            inScreen3.charMap[i][j] = nonViable[m][n];
+                            inScreen3.colorMap[i][j] = RED;
+                            inScreen3.bGColorMap[i][j++] = BLACK;
+                        }
+                        j = inScreen3.xyLimits.minX + 4; 
+                        i++;
+                    }
+                    i++;
+                    j = inScreen3.xyLimits.minX + 3;
+                }
+                for(int m = 0; m < viable.size(); ++m){
+                    for(int n = 0; n < viable[m].size(); ++n){
+                        inScreen3.charMap[i][j] = viable[m][n];
+                        inScreen3.colorMap[i][j] = YELLOW;
+                        inScreen3.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = inScreen3.xyLimits.minX + 4; 
+                    i++;
+                }
+            }
+        }
+    }
+    
+    drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
+
+    char raceSelection = selRace(idx, inScreen, inScreen2, inScreen3);
+    if(raceSelection < 0){
+        printf("Something Unpossible happened!\r\n");
+        return false;
+    } else {
+        newRace = rMap[raceSelection];
+    }         
+    return true;
+}
+
+bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
+{
+    //ScreenVals raceScreen(VECT_MAX, ' ', GREEN, BLACK);
+    std::vector<std::string> viable;
+    std::vector<std::string> nonViable;
+
+    viable.push_back("Select Race:");
+    nonViable.push_back("Non-Viable Races:");
+    std::unordered_map<char, RACE> rMap;
+    char idx = '0';
+    int nonV = 0;
+    for(unsigned i = 0; i < racePairs.size(); ++i){
+        if(raceStatCheck(inStats, racePairs[i].race) && classRaceCheck(inClass, racePairs[i].race)){
             rMap[idx] = racePairs[i].race;
             viable.push_back(racePairs[i].raceS + ": " + idx);
             idx++;         
@@ -502,6 +714,7 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
             char k = getkey();
             if(std::tolower(k) == 'n') {
                 rollStats(stats1, stats2);
+                drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
                 return true;
             } else if(std::tolower(k) == 'y'){
                 return false;
@@ -655,7 +868,7 @@ char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenV
     return -1;
 }
 
-char selAlign(std::vector<ScreenVals> inScreens, int idx)
+char selOpt(std::vector<ScreenVals> inScreens, int idx)
 {
     while(true){
         std::size_t new_horz = tcols();
@@ -676,7 +889,7 @@ char selAlign(std::vector<ScreenVals> inScreens, int idx)
         
         if(kbhit()){
             char k = getkey();
-            if(k >= '0' && k < idx + '0'){
+            if(k >= '0' && k <= idx + '0'){
                 return k;
             } 
         }

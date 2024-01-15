@@ -22,10 +22,10 @@ enum CHAR_CLASS{
     FIGHTER,
     RANGER,
     PALADIN,
-    THIEF,
-    ASSASSIN,
     MAGIC_USER,
     ILLUSIONIST,
+    THIEF,
+    ASSASSIN,
     MONK
 };
 
@@ -263,8 +263,8 @@ struct classPair{
 const std::vector<classPair> classPairs = {{CLERIC, "Cleric"},
                                            {DRUID, "Druid"},
                                            {FIGHTER, "Fighter"},
-                                           {PALADIN, "Paladin"},
                                            {RANGER, "Ranger"},
+                                           {PALADIN, "Paladin"},
                                            {MAGIC_USER, "Magic-User"},
                                            {ILLUSIONIST, "Illusionist"},
                                            {THIEF, "Thief"},

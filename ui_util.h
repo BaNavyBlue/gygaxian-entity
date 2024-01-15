@@ -10,7 +10,10 @@ void drawPrimary();
 void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen);
 void createPrimary();
 void createRollScreen();
+void createBruteForceScreen();
+std::vector<CHAR_CLASS> classToForce();
 bool createRaceScreen(RACE& newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3);
+bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3);
 SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen);
 char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3);
 char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4);
@@ -20,8 +23,9 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen);
 void reDoStatScreen();
 void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim);
 std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4);
-char selAlign(std::vector<ScreenVals> inScreens, int idx);
+char selOpt(std::vector<ScreenVals> inScreens, int idx);
 bool doesRecordExist(std::string name, std::string path, std::string suffix);
+void clearPrevScreen(std::vector<ScreenVals> screens);
 
 class TextInput{
 private:
@@ -44,7 +48,7 @@ protected:
     std::vector<std::string> _list;
     std::shared_ptr<ScreenVals> _optScreen;
     Perimeter _optionBoxPerim;
-    virtual void PlaceOptions() = 0;
+    virtual void PlaceOptions();
 public:
     OptionWindow();
     virtual void createWindow(DrawRange uRandWidth, Perimeter inPerim) = 0;
@@ -54,13 +58,24 @@ class AlignOptWindow: public OptionWindow{
 private:
     // ALIGNMENT _align;
     std::unordered_map<char, ALIGNMENT> _aList;
-    void PlaceOptions();
+    //void PlaceOptions() override;
 public:
     AlignOptWindow(CHAR_CLASS inClass);
     void createWindow(DrawRange uRandWidth, Perimeter inPerim);
     ALIGNMENT getAlign(char inChar);
     ScreenVals& getScreen();
     int getOptIdx();
+};
+
+class ChooseOpt: public OptionWindow{
+private:
+    //void PlaceOptions() override;
+    char _choice;
+public:
+    ChooseOpt(std::vector<std::string> inOpts);
+    void createWindow(DrawRange uRandWidth, Perimeter inPerim);
+    ScreenVals& getScreen();
+    char getChoice(char optChoice);
 };
 
 class PrintInfo{
@@ -97,6 +112,14 @@ private:
 public:
     WarnMessage(std::string warning, std::string question);
     bool waitForAnswer();
+    ScreenVals& getScreen();
+};
+
+class RollScreen{
+private:
+    std::shared_ptr<ScreenVals> rollScreen;
+public:
+    RollScreen(stats inStats, ScreenVals& primaryScreen);
     ScreenVals& getScreen();
 };
 

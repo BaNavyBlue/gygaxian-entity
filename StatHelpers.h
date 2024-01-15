@@ -62,6 +62,7 @@ bool yesNoChoice();
 bool rollFailure(stats inStats, bool printMsg);  // Handle Borked Gygaxian
 stats checkRaceStats(RACE race, stats _stats);
 bool alignClassCheck(CHAR_CLASS inClass, ALIGNMENT inAlign);
+bool checkClassStats(CHAR_CLASS inClass, stats inStats);
 std::string strenFails(stats inStats);
 std::string intFails(stats inStats);
 std::string wisFails(stats inStats);

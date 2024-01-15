@@ -1126,6 +1126,82 @@ bool alignClassCheck(CHAR_CLASS inClass, ALIGNMENT inAlign)
     }
 }
 
+bool checkClassStats(CHAR_CLASS inClass, stats inStats)
+{
+    switch(inClass){
+        case DRUID:
+            if(inStats.wisdom < 12 || inStats.charisma < 15){
+                return false;
+            }
+
+            if(inStats.strength < 6 || inStats.intelligence < 6){
+                return false;
+            }
+
+            if(inStats.dexterity < 6 || inStats.constitution < 6){
+                return false;
+            }
+
+            return true;
+        case PALADIN:
+            if(inStats.charisma < 17){
+                return false;
+            }
+
+            if(inStats.strength < 12 || inStats.intelligence < 9 || inStats.wisdom < 13 || inStats.constitution < 9 || inStats.charisma < 17){
+                return false;
+            }
+
+            if(inStats.dexterity < 6){
+                return false;
+            }
+
+            return true;
+        case RANGER:
+            if(inStats.strength < 13 || inStats.intelligence < 13 || inStats.wisdom < 14 || inStats.constitution < 14){
+                return false;
+            }
+
+            if(inStats.charisma < 6 || inStats.dexterity < 6){
+                return false;
+            }
+
+            return true;
+        case ILLUSIONIST:
+            if(inStats.intelligence < 15 || inStats.dexterity < 16){
+                return false;
+            }
+
+            if(inStats.charisma < 6 || inStats.wisdom < 6){
+                return false;
+            }
+
+            return true;
+        case ASSASSIN:
+            if(inStats.strength < 12 || inStats.intelligence < 11 || inStats.dexterity <12){
+                return false;
+            }
+
+            if(inStats.constitution < 6){
+                return false;
+            }
+
+            return true;
+        case MONK:
+            if(inStats.strength < 15 || inStats.wisdom < 15 || inStats.dexterity < 15 || inStats.constitution < 11){
+                return false;
+            }
+
+            if(inStats.intelligence < 6 || inStats.charisma < 6){
+                return false;
+            }
+
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool checkExists(std::string name)
 {
     std::string file = "characters/" + name + ".json";
@@ -1299,8 +1375,8 @@ std::string intFails(stats inStats)
             failures += "Paladin Magic-User ";
         case 9:
         case 10:
-        case 11:
             failures += "Assassin ";
+        case 11:
         case 12:
         case 13:
         case 14:
