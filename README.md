@@ -16,7 +16,9 @@ I did end up creating a racial skills parent class each child race having differ
 This project has also become a bit about designing a basic Terminal User Interface (TUI).  Currently it's only key stroke driven but it is capable of rescaling the main frame and centering the text.
 
 # Current State of the Code
-Currently this code runs in the terminal and allows one to create a character using AD&D 1e calculations.
+The primary character creation methods, and character save method is complete.  Basic code for loading character works but now needs to be integrated into the TUI.
+
+TUI has a rough framework created, portions of the TUI code is fairly modular, other portions are somewhat hardcoded and should be refactored.
 
 
 # Stats:
