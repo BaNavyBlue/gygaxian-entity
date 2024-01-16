@@ -859,8 +859,7 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
         _warnScreen->bGColorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = BLACK;
     }
 
-    drawSmall(boxCorners.minX, boxCorners.maxX, boxCorners.minY, boxCorners.maxY + 1, *_warnScreen);
-    
+    drawSmall(boxCorners.minX, boxCorners.maxX, boxCorners.minY, boxCorners.maxY + 1, *_warnScreen);    
 }
 
 bool WarnMessage::waitForAnswer()

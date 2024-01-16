@@ -80,6 +80,7 @@ int main(){
 ************************************************************************************/
 void createBruteForceScreen()
 {
+    printf("CreateBF Screen\n");
     std::vector<std::string> classList;
     classList.push_back("Select Class to Brute Force:");
     std::vector<CHAR_CLASS> classEnums = classToForce();
@@ -719,10 +720,10 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
             } else if(std::tolower(k) == 'y'){
                 return false;
             }
-            else if (k == KEY_ESCAPE) {
-                drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
-                return false;
-            }
+            // else if (k == KEY_ESCAPE) {
+            //     drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
+            //     return false;
+            // }
         }
     }
     return false;
