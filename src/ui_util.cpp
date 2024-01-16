@@ -363,11 +363,9 @@ void PrintInfo::MakeCharWin()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[j].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
     }
 
     _firstBox.maxX = _firstBox.minX + maxLen + 5;
@@ -410,12 +408,13 @@ void PrintInfo::MakeStatsWin()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[j].size(); ++j){
+    //    for(int j = 0; j < basicInfo[j].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+    //    }
     }
+
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
     _infoScreen[1]->xyLimits.minX = _infoScreen[0]->xyLimits.maxX + 1;
     _infoScreen[1]->xyLimits.minY = _infoScreen[0]->xyLimits.minY;
@@ -462,11 +461,11 @@ void PrintInfo::MakeCmbtWin()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
+        //for(int j = 0; j < basicInfo[i].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+        //}
     }
 
     DrawRange healCom;
@@ -498,11 +497,11 @@ void PrintInfo::MakeWealthWin()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
+        //for(int j = 0; j < basicInfo[i].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+        //}
     }
 
     DrawRange healCom;
@@ -528,11 +527,11 @@ void PrintInfo::MakeLangWin()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
+        //for(int j = 0; j < basicInfo[i].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+        //}
     }
 
     DrawRange healCom;
@@ -559,11 +558,11 @@ void PrintInfo::MakeEscTag()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
+        //for(int j = 0; j < basicInfo[i].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+        //}
     }
 
     DrawRange healCom;
@@ -590,11 +589,11 @@ void PrintInfo::MakeDexTbl()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
+        //for(int j = 0; j < basicInfo[i].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+        //}
     }
     
     bool isThief = (_character->getClass()[0] == THIEF || _character->getClass()[0] == ASSASSIN);
@@ -623,11 +622,11 @@ void PrintInfo::MakeDexTbl()
 
         maxLen = 0;
         for(int i = 0; i < basicInfo.size(); ++i){
-            for(int j = 0; j < basicInfo[i].size(); ++j){
+            //for(int j = 0; j < basicInfo[i].size(); ++j){
                 if(maxLen < basicInfo[i].size()){
                     maxLen = basicInfo[i].size();
                 }
-            }
+            //}
         }
 
         screenIdx = _infoScreen.size();
@@ -694,11 +693,11 @@ void PrintInfo::MakeRaceSkills()
 
     int maxLen = 0;
     for(int i = 0; i < basicInfo.size(); ++i){
-        for(int j = 0; j < basicInfo[i].size(); ++j){
+        //for(int j = 0; j < basicInfo[i].size(); ++j){
             if(maxLen < basicInfo[i].size()){
                 maxLen = basicInfo[i].size();
             }
-        }
+        //}
     }
 
     DrawRange healCom;
@@ -882,11 +881,11 @@ ScreenVals& WarnMessage::getScreen()
     return *_warnScreen;
 }
 
-void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
+void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals& inScreen)
 {
     for(int i = startY; i < maxY; ++i){
         for(int j = startX; j < maxX + 1; ++j){
-            int forPrint = inScreen.charMap[i][j];
+            int forPrint = inScreen.charMap.at(i).at(j);
             //if(primaryScreen[i][j] == ' '){
                 
                 locate(j + 1, i + 1);
@@ -895,12 +894,12 @@ void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen)
                     std::string utfChar = getUTF(forPrint);
 
                     //printf("%s\n", utfChar.c_str());
-                    colorPrintUTF(inScreen.colorMap[i][j], inScreen.bGColorMap[i][j], utfChar.c_str());
+                    colorPrintUTF(inScreen.colorMap.at(i).at(j), inScreen.bGColorMap.at(i).at(j), utfChar.c_str());
                 } else {
                     char singleChar[2];
                     singleChar[0] = forPrint;
                     singleChar[1] = '\0';
-                    colorPrint(inScreen.colorMap[i][j], inScreen.bGColorMap[i][j], singleChar);
+                    colorPrint(inScreen.colorMap.at(i).at(j), inScreen.bGColorMap.at(i).at(j), singleChar);
                 }            
         }
     }
@@ -1010,7 +1009,7 @@ void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim)
 
 ChooseOpt::ChooseOpt(std::vector<std::string> inOpts)
 {
-    _list.push_back(inOpts[0]);
+    _list.push_back(inOpts.at(0));
     char idx = '0';
     for(int i = 1; i < inOpts.size(); ++i){
         _list.push_back(inOpts[i] + ": " + idx++ + ")");
@@ -1027,8 +1026,8 @@ void ChooseOpt::createWindow(DrawRange uRandWidth, Perimeter inPerim)
 {
     int maxLen = 0;
     for(int i = 0; i < _list.size(); ++i){
-        if(maxLen < _list[i].size()){
-            maxLen = _list[i].size();
+        if(maxLen < _list.at(i).size()){
+            maxLen = _list.at(i).size();
         }
     }
     _optScreen->xyLimits.minX = uRandWidth.minX;
@@ -1223,7 +1222,7 @@ bool doesRecordExist(std::string name, std::string path, std::string suffix)
     return charJson.good(); 
 }
 
-void clearPrevScreen(std::vector<ScreenVals> screens)
+void clearPrevScreen(const std::vector<ScreenVals>& screens)
 {
-    drawSmall(screens.end()->xyLimits.minX, screens.end()->xyLimits.maxX, screens.end()->xyLimits.minY, screens.end()->xyLimits.maxY + 1, screens[0]);  
+    drawSmall(screens.back().xyLimits.minX, screens.back().xyLimits.maxX, screens.back().xyLimits.minY, screens.back().xyLimits.maxY + 1, screens.front());  
 }

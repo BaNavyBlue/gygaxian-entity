@@ -26,6 +26,7 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
         setDexThief();
     }
     setConsTbl();
+    setCharTbl();
     setRaceSkillType();
     setChrClassSkill(_chrClass[0]);
     if(_chrSkills.size() < 2){

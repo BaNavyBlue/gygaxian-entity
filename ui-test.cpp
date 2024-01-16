@@ -47,7 +47,7 @@ int main(){
                 std::vector<ScreenVals> screens;
                 screens.push_back(primaryScreen);
                 screens.push_back(createOpt.getScreen());
-                if(createOpt.getChoice(selOpt(screens, charCreate.size() - 2)) == '1'){
+                if(createOpt.getChoice(selOpt(screens, charCreate.size() - 1)) == '1'){
                     clearPrevScreen(screens);
                     screens.clear();
                     createBruteForceScreen();
@@ -80,21 +80,21 @@ int main(){
 ************************************************************************************/
 void createBruteForceScreen()
 {
-    printf("CreateBF Screen\n");
+    //printf("CreateBF Screen\n");
     std::vector<std::string> classList;
     classList.push_back("Select Class to Brute Force:");
     std::vector<CHAR_CLASS> classEnums = classToForce();
 
     for(int i = 0; i < classEnums.size(); ++i){
-        classList.push_back(classPairs[classEnums[i]].cS );
+        classList.push_back(classPairs.at(classEnums.at(i)).cS );
     }
 
     ChooseOpt classChoice(classList);
     std::vector<ScreenVals> screenVect;
     screenVect.push_back(primaryScreen);
     screenVect.push_back(classChoice.getScreen());
-    char choice = selOpt(screenVect, classEnums.size() - 1);
-    drawSmall(screenVect.end()->xyLimits.minX, screenVect.end()->xyLimits.maxX, screenVect.end()->xyLimits.minY, screenVect.end()->xyLimits.maxY, primaryScreen);
+    char choice = selOpt(screenVect, classEnums.size());
+    drawSmall(screenVect.back().xyLimits.minX, screenVect.back().xyLimits.maxX, screenVect.back().xyLimits.minY, screenVect.back().xyLimits.maxY, primaryScreen);
     CHAR_CLASS newClass = classEnums[choice - 48];
     stats newStats[2];
     stats dummyStats[2];
@@ -869,7 +869,7 @@ char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenV
     return -1;
 }
 
-char selOpt(std::vector<ScreenVals> inScreens, int idx)
+char selOpt(const std::vector<ScreenVals>& inScreens, int idx)
 {
     while(true){
         std::size_t new_horz = tcols();
@@ -884,13 +884,13 @@ char selOpt(std::vector<ScreenVals> inScreens, int idx)
                 if(i < 1){
                     offSet = -1;
                 }
-                drawSmall(inScreens[i].xyLimits.minX, inScreens[i].xyLimits.maxX, inScreens[i].xyLimits.minY, inScreens[i].xyLimits.maxY + offSet, inScreens[i]);
+                drawSmall(inScreens.at(i).xyLimits.minX, inScreens.at(i).xyLimits.maxX, inScreens.at(i).xyLimits.minY, inScreens.at(i).xyLimits.maxY + offSet, inScreens.at(i));
             }
         }
         
         if(kbhit()){
             char k = getkey();
-            if(k >= '0' && k <= idx + '0'){
+            if(k >= '0' && k < idx + '0'){
                 return k;
             } 
         }

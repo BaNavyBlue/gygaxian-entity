@@ -7,7 +7,7 @@
 
 // Some of these prototypes defined in ui-test.cpp for now.
 void drawPrimary();
-void drawSmall(int startX, int maxX, int startY, int maxY, ScreenVals& inScreen);
+void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals& inScreen);
 void createPrimary();
 void createRollScreen();
 void createBruteForceScreen();
@@ -23,9 +23,9 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen);
 void reDoStatScreen();
 void generatePerimeter(ScreenVals& inScreen, Perimeter inPerim);
 std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4);
-char selOpt(std::vector<ScreenVals> inScreens, int idx);
+char selOpt(const std::vector<ScreenVals>& inScreens, int idx);
 bool doesRecordExist(std::string name, std::string path, std::string suffix);
-void clearPrevScreen(std::vector<ScreenVals> screens);
+void clearPrevScreen(const std::vector<ScreenVals>& screens);
 
 class TextInput{
 private:

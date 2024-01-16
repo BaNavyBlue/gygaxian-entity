@@ -2,18 +2,18 @@
 MAIN = main.cpp
 UI = ui-test.cpp
 SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
-SRC_UI = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp rogueutil.c ui_util.cpp
+SRC_UI = ./src/* #entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp rogueutil.c ui_util.cpp
 
 OBJS = $(MAIN) $(SRC)
 UI_OBJ = $(UI) $(SRC_UI)
-INCL =
+INCL = -I ./include
 
 #CC specifies which compiler we're using
 CC = g++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -std=c++17 -Wall
+COMPILER_FLAGS = -g -std=c++17 -Wall
 COMPUI_FLAGS = -g -O2 -Wall -Wextra
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS =
