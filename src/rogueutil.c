@@ -1,5 +1,6 @@
 /*
-    For some reason this file has a red squiggle on the first line and doesn't work properly.  WTF??
+    I moved the implementation from the original rogueutil.h here so that I could share the header file
+	and not got redefinition errors.
 */
 
 #include "rogueutil.h"
@@ -154,6 +155,7 @@ int getkey(void)
 			return kk-123+KEY_F1; /* Function keys */
 		}
 	}
+	case 10:
 	case 13:
 		return KEY_ENTER;
 	case 127:
