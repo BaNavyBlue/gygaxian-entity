@@ -123,4 +123,24 @@ public:
     ScreenVals& getScreen();
 };
 
+class ListHighlight{
+private:
+    std::vector<std::string> _list;
+    //std::vector<std::vector<FrmtChar>> _selScreen;
+    int _currPos = 0;
+    int _prevPos = 0;
+    Perimeter _perim;
+    std::vector<ScreenVals> _drawScreen;
+public:
+    ListHighlight(std::vector<std::string> inList, Perimeter inPerim, DrawRange inRange);
+};
+
+class loadCharacterList{
+private:
+    std::vector<std::string> _charList;
+public:
+    loadCharacterList();
+    std::vector<std::string> getList();
+};
+
 #endif //UI_UTIL_H

@@ -1222,6 +1222,30 @@ bool doesRecordExist(std::string name, std::string path, std::string suffix)
     return charJson.good(); 
 }
 
+ListHighlight::ListHighlight(std::vector<std::string> inList, Perimeter inPerim, DrawRange inRange)
+{
+
+}
+
+loadCharacterList::loadCharacterList()
+{
+    const std::filesystem::path characters{"characters"};
+    std::cout << characters << std::endl;
+    for (auto const& dir_entry : std::filesystem::directory_iterator{characters}) {
+        std::string fullString(dir_entry.path());
+        std::size_t period = fullString.find_first_of(".");
+        std::size_t slash = fullString.find_first_of("/");
+        fullString = fullString.substr(slash + 1, period);
+        printf("%s\r\n", fullString.c_str());
+        _charList.push_back(fullString);  
+    }
+}
+
+std::vector<std::string> loadCharacterList::getList()
+{
+
+}
+
 void clearPrevScreen(const std::vector<ScreenVals>& screens)
 {
     drawSmall(screens.back().xyLimits.minX, screens.back().xyLimits.maxX, screens.back().xyLimits.minY, screens.back().xyLimits.maxY + 1, screens.front());  

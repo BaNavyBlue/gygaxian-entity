@@ -4,6 +4,8 @@
 using u8 = unsigned char;
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdio.h>

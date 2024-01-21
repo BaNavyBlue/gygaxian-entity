@@ -3,6 +3,16 @@
 #include "project_headers.h"
 
 const int VECT_MAX = 400;
+
+// Contains the Colors and coordinates for one character
+struct FrmtChar{
+    int symbol;
+    color_code symCol;
+    color_code bkCol;
+    int xCoord;
+    int yCoord;
+};
+
 struct DrawRange{
     int minX;
     int maxX;

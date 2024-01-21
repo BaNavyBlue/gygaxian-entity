@@ -56,6 +56,10 @@ int main(){
                     screens.clear();
                     createRollScreen();
                 }
+            }
+            if(std::tolower(k) == 'p') {
+               printf("p pressed \r\n");
+               loadCharacterList charList; 
             } 
             else if (k == KEY_LEFT){drawPrimary();}
 			else if (k == KEY_RIGHT){drawPrimary();}
