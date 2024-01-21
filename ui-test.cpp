@@ -7,7 +7,7 @@
 #include "ui_util.h"
 // #include <cstddef>
 
-#define NOCOLOR -1
+//#define NOCOLOR -1
 
 // naughty globals
 int horz_char = 0;
@@ -995,15 +995,15 @@ void drawPrimary()
             int forPrint = primaryScreen.charMap[i][j];
                 
                 locate(j + 1, i + 1);
-                if(forPrint > 127){
+                // if(forPrint > 127){
                     std::string utfChar = getUTF(forPrint);
                     colorPrintUTF(primaryScreen.colorMap[i][j], primaryScreen.bGColorMap[i][j], utfChar.c_str());
-                } else {
-                    char singleChar[2];
-                    singleChar[0] = forPrint;
-                    singleChar[1] = '\0';
-                    colorPrint(primaryScreen.colorMap[i][j], primaryScreen.bGColorMap[i][j], singleChar);
-                }
+                // } else {
+                //     char singleChar[2];
+                //     singleChar[0] = forPrint;
+                //     singleChar[1] = '\0';
+                //     colorPrint(primaryScreen.colorMap[i][j], primaryScreen.bGColorMap[i][j], singleChar);
+                // }
         }
     }
     locate(1,1);

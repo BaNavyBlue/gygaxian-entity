@@ -204,44 +204,48 @@ int nb_getch(void)
  * @param c Number 0-15 corresponding to the color code
  * @see color_code
  */
-RUTIL_STRING getANSIColor(const int c)
+RUTIL_STRING getANSIColor(color_code c)
 {
-	switch (c) {
-	case BLACK       :
-		return ANSI_BLACK;
-	case BLUE        :
-		return ANSI_BLUE; /* non-ANSI */
-	case GREEN       :
-		return ANSI_GREEN;
-	case CYAN        :
-		return ANSI_CYAN; /* non-ANSI */
-	case RED         :
-		return ANSI_RED; /* non-ANSI */
-	case MAGENTA     :
-		return ANSI_MAGENTA;
-	case BROWN       :
-		return ANSI_BROWN;
-	case GREY        :
-		return ANSI_GREY;
-	case DARKGREY    :
-		return ANSI_DARKGREY;
-	case LIGHTBLUE   :
-		return ANSI_LIGHTBLUE; /* non-ANSI */
-	case LIGHTGREEN  :
-		return ANSI_LIGHTGREEN;
-	case LIGHTCYAN   :
-		return ANSI_LIGHTCYAN; /* non-ANSI; */
-	case LIGHTRED    :
-		return ANSI_LIGHTRED; /* non-ANSI; */
-	case LIGHTMAGENTA:
-		return ANSI_LIGHTMAGENTA;
-	case YELLOW      :
-		return ANSI_YELLOW; /* non-ANSI */
-	case WHITE       :
-		return ANSI_WHITE;
-	default:
-		return "";
-	}
+	char colorCode[64];
+	sprintf(colorCode, "\033[38:5:%dm",(int)c);
+	// //printf("%s %c\r\n", colorCode, c);
+	return colorCode;
+	// switch (c) {
+	// case BLACK       :
+	// 	return ANSI_BLACK;
+	// case BLUE        :
+	// 	return ANSI_BLUE; /* non-ANSI */
+	// case GREEN       :
+	// 	return ANSI_GREEN;
+	// case CYAN        :
+	// 	return ANSI_CYAN; /* non-ANSI */
+	// case RED         :
+	// 	return ANSI_RED; /* non-ANSI */
+	// case MAGENTA     :
+	// 	return ANSI_MAGENTA;
+	// case BROWN       :
+	// 	return ANSI_BROWN;
+	// case GREY        :
+	// 	return ANSI_GREY;
+	// case DARKGREY    :
+	// 	return ANSI_DARKGREY;
+	// case LIGHTBLUE   :
+	// 	return ANSI_LIGHTBLUE; /* non-ANSI */
+	// case LIGHTGREEN  :
+	// 	return ANSI_LIGHTGREEN;
+	// case LIGHTCYAN   :
+	// 	return ANSI_LIGHTCYAN; /* non-ANSI; */
+	// case LIGHTRED    :
+	// 	return ANSI_LIGHTRED; /* non-ANSI; */
+	// case LIGHTMAGENTA:
+	// 	return ANSI_LIGHTMAGENTA;
+	// case YELLOW      :
+	// 	return ANSI_YELLOW; /* non-ANSI */
+	// case WHITE       :
+	// 	return ANSI_WHITE;
+	// default:
+	// 	return "";
+	// }
 }
 
 /**
@@ -249,28 +253,32 @@ RUTIL_STRING getANSIColor(const int c)
  * @param c Number 0-15 corresponding to the color code
  * @see color_code
  */
-RUTIL_STRING getANSIBgColor(const int c)
+RUTIL_STRING getANSIBgColor(color_code c)
 {
-	switch (c) {
-	case BLACK  :
-		return ANSI_BACKGROUND_BLACK;
-	case BLUE   :
-		return ANSI_BACKGROUND_BLUE;
-	case GREEN  :
-		return ANSI_BACKGROUND_GREEN;
-	case CYAN   :
-		return ANSI_BACKGROUND_CYAN;
-	case RED    :
-		return ANSI_BACKGROUND_RED;
-	case MAGENTA:
-		return ANSI_BACKGROUND_MAGENTA;
-	case BROWN  :
-		return ANSI_BACKGROUND_YELLOW;
-	case GREY   :
-		return ANSI_BACKGROUND_WHITE;
-	default:
-		return "";
-	}
+	char colorCode[64];
+	sprintf(colorCode, "\033[48;5;%dm",(int)c);
+	//printf("%s %c\r\n", colorCode,c);
+	return colorCode;
+	// switch (c) {
+	// case BLACK  :
+	// 	return ANSI_BACKGROUND_BLACK;
+	// case BLUE   :
+	// 	return ANSI_BACKGROUND_BLUE;
+	// case GREEN  :
+	// 	return ANSI_BACKGROUND_GREEN;
+	// case CYAN   :
+	// 	return ANSI_BACKGROUND_CYAN;
+	// case RED    :
+	// 	return ANSI_BACKGROUND_RED;
+	// case MAGENTA:
+	// 	return ANSI_BACKGROUND_MAGENTA;
+	// case BROWN  :
+	// 	return ANSI_BACKGROUND_YELLOW;
+	// case GREY   :
+	// 	return ANSI_BACKGROUND_WHITE;
+	// default:
+	// 	return "";
+	// }
 }
 
 /**
@@ -279,7 +287,7 @@ RUTIL_STRING getANSIBgColor(const int c)
  * @see color_code
  */
 void
-setColor(int c)
+setColor(color_code c)
 {
 #if defined(_WIN32) && !defined(RUTIL_USE_ANSI)
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -299,7 +307,7 @@ setColor(int c)
  * @see color_code
  */
 void
-setBackgroundColor(int c)
+setBackgroundColor(color_code c)
 {
 #if defined(_WIN32) && !defined(RUTIL_USE_ANSI)
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -625,17 +633,23 @@ void setConsoleTitle(RUTIL_STRING title)
 // 	colorPrint(color, bgcolor, fmt...);
 // }
 // #else
+
+/* ENDED UP NEEDING TO BYPASS OLD METHODS AND SET 256 COLOR CODES HERE*/
 void colorPrintUTF(color_code color, color_code bgcolor, const char *fmt, ...)
 {
 	// va_list args;
 	// va_start(args, fmt);
+    char txtColor[64];
+	char bgColor[64];
+	if (color >= 0){
+	//   setColor(color);
+	    printf("\033[38:5:%dm", (int)color);
+	}
 
-	if (color >= 0)
-        	setColor(color);
-
-	if (bgcolor >= 0)
-		setBackgroundColor(bgcolor);
-
+	if (bgcolor >= 0){
+	//   setBackgroundColor(bgcolor);
+	    printf("\033[48:5:%dm", (int)bgcolor);
+	}
     printf("%s", fmt);
 	//va_end(args);
 

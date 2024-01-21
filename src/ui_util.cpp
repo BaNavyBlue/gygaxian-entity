@@ -810,15 +810,15 @@ void PrintInfo::drawPrimary()
             int forPrint = _primaryScreen->charMap[i][j];
                 
                 locate(j + 1, i + 1);
-                if(forPrint > 127){
+                // if(forPrint > 127){
                     std::string utfChar = getUTF(forPrint);
                     colorPrintUTF(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], utfChar.c_str());
-                } else {
-                    char singleChar[2];
-                    singleChar[0] = forPrint;
-                    singleChar[1] = '\0';
-                    colorPrint(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], singleChar);
-                }
+                // } else {
+                //     char singleChar[2];
+                //     singleChar[0] = forPrint;
+                //     singleChar[1] = '\0';
+                //     colorPrint(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], singleChar);
+                // }
         }
     }
     locate(1,1);
@@ -889,18 +889,18 @@ void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals& inS
             //if(primaryScreen[i][j] == ' '){
                 
                 locate(j + 1, i + 1);
-                if(forPrint > 127){
+                // if(forPrint > 127){
                     //std::string utfCode = std::to_string(forPrint);
                     std::string utfChar = getUTF(forPrint);
 
                     //printf("%s\n", utfChar.c_str());
                     colorPrintUTF(inScreen.colorMap.at(i).at(j), inScreen.bGColorMap.at(i).at(j), utfChar.c_str());
-                } else {
-                    char singleChar[2];
-                    singleChar[0] = forPrint;
-                    singleChar[1] = '\0';
-                    colorPrint(inScreen.colorMap.at(i).at(j), inScreen.bGColorMap.at(i).at(j), singleChar);
-                }            
+                // } else {
+                //     char singleChar[2];
+                //     singleChar[0] = forPrint;
+                //     singleChar[1] = '\0';
+                //     colorPrint(inScreen.colorMap.at(i).at(j), inScreen.bGColorMap.at(i).at(j), singleChar);
+                // }            
         }
     }
 }

@@ -137,24 +137,42 @@ void gotoxy(int x, int y);
 
 /**
  * @brief Provides easy color codes with similar numbers to QBasic
+ * @brief 's Changing this to ansi 256 color mode because this is dumb - Antone
+ * 
  */
 typedef enum color_code {
+	NOCOLOR = -1,
 	BLACK,
-	BLUE,
-	GREEN,
-	CYAN,
-	RED,
-	MAGENTA,
-	BROWN,
+	DARKRED,
+	DARKGREEN,
+	DARKYELLOW,
+	DARKBLUE,
+	DARKPURPLE,
+	AQUA,
+	LIGHTGREY,
 	GREY,
-	DARKGREY,
-	LIGHTBLUE,
-	LIGHTGREEN,
-	LIGHTCYAN,
-	LIGHTRED,
-	LIGHTMAGENTA,
+	RED,
+	GREEN,
 	YELLOW,
+	BLUE,
+	MAGENTA,
+	CYAN,
 	WHITE
+	// BLUE,
+	// GREEN,
+	// CYAN,
+	// RED,
+	// MAGENTA,
+	// BROWN,
+	// GREY,
+	// DARKGREY,
+	// LIGHTBLUE,
+	// LIGHTGREEN,
+	// LIGHTCYAN,
+	// LIGHTRED,
+	// LIGHTMAGENTA,
+	// YELLOW,
+	// WHITE
 } color_code;
 
 /* Constant strings for ANSI colors ans seqiences */
@@ -267,28 +285,28 @@ int nb_getch(void);
  * @param c Number 0-15 corresponding to the color code
  * @see color_code
  */
-RUTIL_STRING getANSIColor(const int c);
+RUTIL_STRING getANSIColor(color_code c);
 
 /**
  * @brief Returns the ANSI background color escape sequence
  * @param c Number 0-15 corresponding to the color code
  * @see color_code
  */
-RUTIL_STRING getANSIBgColor(const int c);
+RUTIL_STRING getANSIBgColor(color_code c);
 
 /**
  * @brief Changes color as specified by a number
  * @param c Number 0-15 corresponding to a color code
  * @see color_code
  */
-void setColor(int c);
+void setColor(color_code c);
 
 /**
  * @brief Changes the background color as specified by a number
  * @param c Number 0-15 corresponding to a color code
  * @see color_code
  */
-void setBackgroundColor(int c);
+void setBackgroundColor(color_code c);
 
 /**
  * @brief Saves the color to use in resetColor() on Windows
