@@ -16,9 +16,11 @@ I did end up creating a racial skills parent class each child race having differ
 This project has also become a bit about designing a basic Terminal User Interface (TUI).  Currently it's only key stroke driven but it is capable of rescaling the main frame and centering the text.
 
 # Current State of the Code
-The primary character creation methods, and character save method is complete.  Basic code for loading character works but now needs to be integrated into the TUI.
+The primary character creation methods, and character save method is complete.  Basic code for loading character works but now needs to be integrated into the TUI. Currently working on party build method.
 
-TUI has a rough framework created, portions of the TUI code is fairly modular, other portions are somewhat hardcoded and should be refactored.
+TUI has a rough framework created, portions of the TUI code is fairly modular, other portions are somewhat hardcoded and should be refactored. There are some issues with the way ROGUEUI works I couldn't get the methods to print % symbols and they wouldn't work
+at all with ANSI 256 color codes.  I removed some of their methods from my coloredUTF method for something more direct and it works
+fine and no problems pringing the % character.
 
 
 # Stats:

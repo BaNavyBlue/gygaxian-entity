@@ -339,20 +339,20 @@ void createRollScreen()
                     j--;
             } else if(i == 9 + addRow && j == 3) {
                     rollScreen.charMap[i][j - 2] = ' ';
-                    rollScreen.colorMap[i][j - 2] = RED;
+                    rollScreen.colorMap[i][j - 2] = DARKRED;
                     rollScreen.bGColorMap[i][j- 2] = BLACK;
                     rollScreen.charMap[i][j - 1] = ' ';
-                    rollScreen.colorMap[i][j - 1] = RED;
+                    rollScreen.colorMap[i][j - 1] = DARKRED;
                     rollScreen.bGColorMap[i][j- 1] = BLACK;
                     for(std::size_t k = 0; k < choices.size(); ++k){
                         rollScreen.charMap[i][j] = choices[k];
-                        rollScreen.colorMap[i][j] = RED;
+                        rollScreen.colorMap[i][j] = DARKRED;
                         rollScreen.bGColorMap[i][j++] = BLACK;
                     }
                     int x = 0 ;
                     while(j + x < maxLen + 5){
                         rollScreen.charMap[i][j + x] = ' ';
-                        rollScreen.colorMap[i][j + x] = RED;
+                        rollScreen.colorMap[i][j + x] = DARKRED;
                         rollScreen.bGColorMap[i][j + x] = BLACK;
                         ++x;
                     }
@@ -493,7 +493,7 @@ bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, Scree
                     for(int m = 0; m < nonViable.size(); ++m){
                         for(int n = 0; n < nonViable[m].size(); ++n){
                             inScreen3.charMap[i][j] = nonViable[m][n];
-                            inScreen3.colorMap[i][j] = RED;
+                            inScreen3.colorMap[i][j] = DARKRED;
                             inScreen3.bGColorMap[i][j++] = BLACK;
                         }
                         j = inScreen3.xyLimits.minX + 4; 
@@ -584,7 +584,7 @@ bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats& inStats, Scree
                     for(int m = 0; m < nonViable.size(); ++m){
                         for(int n = 0; n < nonViable[m].size(); ++n){
                             inScreen3.charMap[i][j] = nonViable[m][n];
-                            inScreen3.colorMap[i][j] = RED;
+                            inScreen3.colorMap[i][j] = DARKRED;
                             inScreen3.bGColorMap[i][j++] = BLACK;
                         }
                         j = inScreen3.xyLimits.minX + 4; 
@@ -817,7 +817,7 @@ CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, Sc
                     for(int m = 0; m < nonViable.size(); ++m){
                         for(int n = 0; n < nonViable[m].size(); ++n){
                             classScreen.charMap[i][j] = nonViable[m][n];
-                            classScreen.colorMap[i][j] = RED;
+                            classScreen.colorMap[i][j] = DARKRED;
                             classScreen.bGColorMap[i][j++] = BLACK;
                         }
                         j = classScreen.xyLimits.minX + 4; 
@@ -933,24 +933,24 @@ void createPrimary()
                 j--;
             } else if (i == vert_char - 1 && j == 0){
                 primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = RED;
-                primaryScreen.bGColorMap[i][j++] = GREY;
+                primaryScreen.colorMap[i][j] = DARKRED;
+                primaryScreen.bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options.size(); ++k){
                     primaryScreen.charMap[i][j] = options[k];
-                    primaryScreen.colorMap[i][j] = RED;
-                    primaryScreen.bGColorMap[i][j++] = GREY;
+                    primaryScreen.colorMap[i][j] = DARKRED;
+                    primaryScreen.bGColorMap[i][j++] = WHITE;
                 }
                 primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = RED;
-                primaryScreen.bGColorMap[i][j++] = GREY;
+                primaryScreen.colorMap[i][j] = DARKRED;
+                primaryScreen.bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options2.size(); ++k){
                     primaryScreen.charMap[i][j] = options2[k];
-                    primaryScreen.colorMap[i][j] = RED;
-                    primaryScreen.bGColorMap[i][j++] = GREY;
+                    primaryScreen.colorMap[i][j] = DARKRED;
+                    primaryScreen.bGColorMap[i][j++] = WHITE;
                 }
                 primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = RED;
-                primaryScreen.bGColorMap[i][j++] = GREY;
+                primaryScreen.colorMap[i][j] = DARKRED;
+                primaryScreen.bGColorMap[i][j++] = WHITE;
                 //j--;
             } else if(i == 0 && j == 0){
                 primaryScreen.charMap[i][j] = 0x2554;

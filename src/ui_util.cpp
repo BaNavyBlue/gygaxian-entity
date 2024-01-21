@@ -12,7 +12,7 @@ void TextInput::createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::st
     _prompt = message;
     _textScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _textScreen->xyLimits.minX = uRandWidth.minX;
-    _textScreen->xyLimits.maxX = uRandWidth.minX + 32;
+    _textScreen->xyLimits.maxX = uRandWidth.minX + 64;
     _textScreen->xyLimits.minY = uRandWidth.minY;
     _textScreen->xyLimits.maxY = uRandWidth.minY + 3;
 
@@ -566,7 +566,7 @@ void PrintInfo::MakeEscTag()
     }
 
     DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', RED, BLACK));
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', DARKRED, BLACK));
     _infoScreen[5]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX ;
     _infoScreen[5]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.maxY + 1;
     _infoScreen[5]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
@@ -748,24 +748,24 @@ void PrintInfo::createPrimary()
                 j--;
             } else if (i == *_vert - 1 && j == 0){
                 _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = RED;
-                _primaryScreen->bGColorMap[i][j++] = GREY;
+                _primaryScreen->colorMap[i][j] = DARKRED;
+                _primaryScreen->bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options.size(); ++k){
                     _primaryScreen->charMap[i][j] = options[k];
-                    _primaryScreen->colorMap[i][j] = RED;
-                    _primaryScreen->bGColorMap[i][j++] = GREY;
+                    _primaryScreen->colorMap[i][j] = DARKRED;
+                    _primaryScreen->bGColorMap[i][j++] = WHITE;
                 }
                 _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = RED;
-                _primaryScreen->bGColorMap[i][j++] = GREY;
+                _primaryScreen->colorMap[i][j] = DARKRED;
+                _primaryScreen->bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options2.size(); ++k){
                     _primaryScreen->charMap[i][j] = options2[k];
-                    _primaryScreen->colorMap[i][j] = RED;
-                    _primaryScreen->bGColorMap[i][j++] = GREY;
+                    _primaryScreen->colorMap[i][j] = DARKRED;
+                    _primaryScreen->bGColorMap[i][j++] = WHITE;
                 }
                 _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = RED;
-                _primaryScreen->bGColorMap[i][j++] = GREY;
+                _primaryScreen->colorMap[i][j] = DARKRED;
+                _primaryScreen->bGColorMap[i][j++] = WHITE;
                 //j--;
             } else if(i == 0 && j == 0){
                 _primaryScreen->charMap[i][j] = 0x2554;
@@ -827,7 +827,7 @@ void PrintInfo::drawPrimary()
 
 WarnMessage::WarnMessage(std::string warning, std::string question)
 {
-    Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, RED, BLACK);
+    Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, DARKRED, BLACK);
     std::size_t horz_char = tcols();
     std::size_t vert_char = trows();
 
@@ -837,7 +837,7 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
         maxLen = question.size();
     }
     
-    _warnScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', RED, BLACK);
+    _warnScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', DARKRED, BLACK);
     DrawRange boxCorners;
     _warnScreen->xyLimits.minX = boxCorners.minX = horz_char / 2 - maxLen / 2 - 5;
     _warnScreen->xyLimits.minY = boxCorners.minY = vert_char / 2 - 4;
@@ -848,13 +848,13 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
 
     for(int i = 0; i < warning.size(); ++i){
         _warnScreen->charMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = warning[i];
-        _warnScreen->colorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = RED;
+        _warnScreen->colorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = DARKRED;
         _warnScreen->bGColorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = BLACK;
     }
 
     for(int i = 0; i < question.size(); ++i){
         _warnScreen->charMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = question[i];
-        _warnScreen->colorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = RED;
+        _warnScreen->colorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = DARKRED;
         _warnScreen->bGColorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = BLACK;
     }
 
@@ -1186,20 +1186,20 @@ RollScreen::RollScreen(stats inStats, ScreenVals& primaryScreen)
                 j--;
         } else if(i == 9 + addRow && j == 3) {
                 rollScreen->charMap[i][j - 2] = ' ';
-                rollScreen->colorMap[i][j - 2] = RED;
+                rollScreen->colorMap[i][j - 2] = DARKRED;
                 rollScreen->bGColorMap[i][j- 2] = BLACK;
                 rollScreen->charMap[i][j - 1] = ' ';
-                rollScreen->colorMap[i][j - 1] = RED;
+                rollScreen->colorMap[i][j - 1] = DARKRED;
                 rollScreen->bGColorMap[i][j- 1] = BLACK;
                 for(std::size_t k = 0; k < choices.size(); ++k){
                     rollScreen->charMap[i][j] = choices[k];
-                    rollScreen->colorMap[i][j] = RED;
+                    rollScreen->colorMap[i][j] = DARKRED;
                     rollScreen->bGColorMap[i][j++] = BLACK;
                 }
                 int x = 0 ;
                 while(j + x < maxLen + 5){
                     rollScreen->charMap[i][j + x] = ' ';
-                    rollScreen->colorMap[i][j + x] = RED;
+                    rollScreen->colorMap[i][j + x] = DARKRED;
                     rollScreen->bGColorMap[i][j + x] = BLACK;
                     ++x;
                 }
@@ -1234,8 +1234,9 @@ loadCharacterList::loadCharacterList()
     for (auto const& dir_entry : std::filesystem::directory_iterator{characters}) {
         std::string fullString(dir_entry.path());
         std::size_t period = fullString.find_first_of(".");
+        fullString = fullString.substr(0, period);
         std::size_t slash = fullString.find_first_of("/");
-        fullString = fullString.substr(slash + 1, period);
+        fullString = fullString.substr(slash + 1, fullString.size());
         printf("%s\r\n", fullString.c_str());
         _charList.push_back(fullString);  
     }
