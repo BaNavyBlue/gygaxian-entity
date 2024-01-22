@@ -4,6 +4,27 @@
 
 const int VECT_MAX = 400;
 
+// Define some commonly used unicode characters
+const int TL_RAIL = 0x2554;
+const int TR_RAIL = 0x2557;
+const int BL_RAIL = 0x255A;
+const int BR_RAIL = 0x255D;
+const int HORZ_RAIL = 0x2550;
+const int VERT_RAIL = 0x2551;
+const int L_TEE_RAIL = 0x2560;
+const int R_TEE_RAIL = 0x2563;
+const int TOP_TEE_RAIL = 0x2556;
+const int BOT_TEE_RAIL = 0x2569;
+
+const int TL_LINE = 0x256D;
+const int TR_LINE = 0x256E;
+const int BL_LINE = 0x2570;
+const int BR_LINE = 0x256F;
+
+const int INV_PENT = 0x26E7;
+const int SHLD_CRSS = 0x26E8;
+const int RADIOACT = 0x2622;
+
 // Contains the Colors and coordinates for one character
 struct FrmtChar{
     int symbol;
@@ -27,6 +48,8 @@ struct Perimeter{
     int bRCorner;
     int topBotWall;
     int sideWalls;
+    int leftTee;
+    int rightTee;
     color_code cornerColr;
     color_code cornerBGColr;
     color_code wallsColr;

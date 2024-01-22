@@ -130,17 +130,23 @@ private:
     int _currPos = 0;
     int _prevPos = 0;
     Perimeter _perim;
-    std::vector<ScreenVals> _drawScreen;
+    DrawRange _ULCorner;
+    std::shared_ptr<ScreenVals> _listScreen;
+    void createListScreen();
+    void createListPerimeter();
 public:
-    ListHighlight(std::vector<std::string> inList, Perimeter inPerim, DrawRange inRange);
+    ListHighlight(std::vector<std::string> inList, std::string inName, Perimeter inPerim, DrawRange inRange);
+    ScreenVals& getScreen();
 };
 
 class loadCharacterList{
 private:
     std::vector<std::string> _charList;
+    std::vector<std::string> _pathList;
 public:
     loadCharacterList();
-    std::vector<std::string> getList();
+    std::vector<std::string> getCharList();
+    std::vector<std::string> getPathList();  
 };
 
 #endif //UI_UTIL_H

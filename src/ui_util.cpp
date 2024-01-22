@@ -1222,9 +1222,63 @@ bool doesRecordExist(std::string name, std::string path, std::string suffix)
     return charJson.good(); 
 }
 
-ListHighlight::ListHighlight(std::vector<std::string> inList, Perimeter inPerim, DrawRange inRange)
+ListHighlight::ListHighlight(std::vector<std::string> inList, std::string inName, Perimeter inPerim, DrawRange inRange)
+{
+    _perim = inPerim;
+    _ULCorner = inRange;
+    _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+}
+
+void ListHighlight::createListScreen()
 {
 
+}
+
+void ListHighlight::createListPerimeter()
+{
+    for(int i = _ULCorner.minY; i <= _ULCorner.maxY; ++i){
+        for(int j = _ULCorner.minX; j <= _ULCorner.maxX; ++j){
+            if(i == _ULCorner.minY && j == _ULCorner.minX){
+                _listScreen->charMap[i][j] = _perim.uLCorner;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;
+            } else if(i == _ULCorner.minY && j == _ULCorner.maxY){
+                _listScreen->charMap[i][j] = _perim.uRCorner;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;     
+            } else if(i == _ULCorner.minY){
+                _listScreen->charMap[i][j] = _perim.topBotWall;
+                _listScreen->colorMap[i][j] = _perim.cornerColr; 
+            } else if(i == _ULCorner.minY + 2 && j == _ULCorner.minX){
+                _listScreen->charMap[i][j] = _perim.leftTee;
+                _listScreen->colorMap[i][j] = _perim.cornerColr; 
+            } else if(i == _ULCorner.minY + 2 && j == _ULCorner.maxX){
+                _listScreen->charMap[i][j] = _perim.rightTee;
+                _listScreen->colorMap[i][j] = _perim.cornerColr; 
+            } else if(i == _ULCorner.minY + 2){
+                _listScreen->charMap[i][j] = _perim.topBotWall;
+                _listScreen->colorMap[i][j] = _perim.cornerColr; 
+            } else if(i == _ULCorner.maxY && j == _ULCorner.minX){
+                _listScreen->charMap[i][j] = _perim.bLCorner;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;                
+            } else if(i == _ULCorner.maxY && j == _ULCorner.maxX){
+                _listScreen->charMap[i][j] = _perim.bRCorner;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;                
+            } else if(j == _ULCorner.minX){
+                _listScreen->charMap[i][j] = _perim.sideWalls;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;                
+            } else if(j == _ULCorner.maxX){
+                _listScreen->charMap[i][j] = _perim.sideWalls;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;                
+            } else if( i == _ULCorner.maxY){
+                _listScreen->charMap[i][j] = _perim.sideWalls;
+                _listScreen->colorMap[i][j] = _perim.cornerColr;                
+            }
+        }
+    }
+}
+
+ScreenVals& ListHighlight::getScreen()
+{
+    *_listScreen;
 }
 
 loadCharacterList::loadCharacterList()
@@ -1233,19 +1287,25 @@ loadCharacterList::loadCharacterList()
     std::cout << characters << std::endl;
     for (auto const& dir_entry : std::filesystem::directory_iterator{characters}) {
         std::string fullString(dir_entry.path());
+        _pathList.push_back(fullString);
         std::size_t period = fullString.find_first_of(".");
         fullString = fullString.substr(0, period);
         std::size_t slash = fullString.find_first_of("/");
         fullString = fullString.substr(slash + 1, fullString.size());
-        printf("%s\r\n", fullString.c_str());
+        //printf("%s\r\n", fullString.c_str());
         _charList.push_back(fullString);  
     }
 }
 
-std::vector<std::string> loadCharacterList::getList()
+std::vector<std::string> loadCharacterList::getCharList()
 {
-
+    return _charList;
 }
+
+std::vector<std::string> loadCharacterList::getPathList()
+{
+    return _pathList;
+} 
 
 void clearPrevScreen(const std::vector<ScreenVals>& screens)
 {

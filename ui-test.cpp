@@ -58,8 +58,12 @@ int main(){
                 }
             }
             if(std::tolower(k) == 'p') {
-               printf("p pressed \r\n");
-               loadCharacterList charList; 
+                printf("p pressed \r\n");
+                loadCharacterList charList;
+                Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
+                         HORZ_RAIL, VERT_RAIL, DARKPURPLE, BLACK, DARKPURPLE, BLACK);
+                listPerim.leftTee = L_TEE_RAIL;
+                listPerim.rightTee = R_TEE_RAIL;
             } 
             else if (k == KEY_LEFT){drawPrimary();}
 			else if (k == KEY_RIGHT){drawPrimary();}
