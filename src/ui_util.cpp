@@ -563,8 +563,15 @@ void PrintInfo::MakeEscTag()
         //}
     }
 
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
     DrawRange healCom;
-    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', DARKRED, BLACK));
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK));
     _infoScreen[5]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX ;
     _infoScreen[5]->xyLimits.minY = healCom.minY = _infoScreen[0]->xyLimits.maxY + 1;
     _infoScreen[5]->xyLimits.maxX = healCom.maxX = _infoScreen[0]->xyLimits.minX + maxLen + 7;
@@ -722,6 +729,14 @@ void PrintInfo::MakeThiefDexTbl()
 
 void PrintInfo::createPrimary()
 {
+
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
     std::string options = "(C)reate New Character";
@@ -746,23 +761,23 @@ void PrintInfo::createPrimary()
                 j--;
             } else if (i == *_vert - 1 && j == 0){
                 _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = DARKRED;
+                _primaryScreen->colorMap[i][j] = border;
                 _primaryScreen->bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options.size(); ++k){
                     _primaryScreen->charMap[i][j] = options[k];
-                    _primaryScreen->colorMap[i][j] = DARKRED;
+                    _primaryScreen->colorMap[i][j] = border;
                     _primaryScreen->bGColorMap[i][j++] = WHITE;
                 }
                 _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = DARKRED;
+                _primaryScreen->colorMap[i][j] = border;
                 _primaryScreen->bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options2.size(); ++k){
                     _primaryScreen->charMap[i][j] = options2[k];
-                    _primaryScreen->colorMap[i][j] = DARKRED;
+                    _primaryScreen->colorMap[i][j] = border;
                     _primaryScreen->bGColorMap[i][j++] = WHITE;
                 }
                 _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = DARKRED;
+                _primaryScreen->colorMap[i][j] = border;
                 _primaryScreen->bGColorMap[i][j++] = WHITE;
                 //j--;
             } else if(i == 0 && j == 0){
@@ -825,7 +840,15 @@ void PrintInfo::drawPrimary()
 
 WarnMessage::WarnMessage(std::string warning, std::string question)
 {
-    Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, DARKRED, BLACK);
+
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
+    Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, border, BLACK);
     std::size_t horz_char = tcols();
     std::size_t vert_char = trows();
 
@@ -835,7 +858,7 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
         maxLen = question.size();
     }
     
-    _warnScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', DARKRED, BLACK);
+    _warnScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK);
     DrawRange boxCorners;
     _warnScreen->xyLimits.minX = boxCorners.minX = horz_char / 2 - maxLen / 2 - 5;
     _warnScreen->xyLimits.minY = boxCorners.minY = vert_char / 2 - 4;
@@ -846,13 +869,13 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
 
     for(int i = 0; i < warning.size(); ++i){
         _warnScreen->charMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = warning[i];
-        _warnScreen->colorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = DARKRED;
+        _warnScreen->colorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = border;
         _warnScreen->bGColorMap[boxCorners.minY + 3][boxCorners.minX + 5 + i] = BLACK;
     }
 
     for(int i = 0; i < question.size(); ++i){
         _warnScreen->charMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = question[i];
-        _warnScreen->colorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = DARKRED;
+        _warnScreen->colorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = border;
         _warnScreen->bGColorMap[boxCorners.minY + 5][boxCorners.minX + 5 + i] = BLACK;
     }
 
@@ -1131,6 +1154,13 @@ RollScreen::RollScreen(stats inStats, ScreenVals& primaryScreen)
 
     rollScreen->xyLimits.maxY = 10 + addRow;
 
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
     for(std::size_t i = 1; i < 10 + addRow; ++i){
         for(std::size_t j = 1; j < maxLen + 6; ++j){
             if(i == 2 && j == 3) {
@@ -1184,20 +1214,20 @@ RollScreen::RollScreen(stats inStats, ScreenVals& primaryScreen)
                 j--;
         } else if(i == 9 + addRow && j == 3) {
                 rollScreen->charMap[i][j - 2] = ' ';
-                rollScreen->colorMap[i][j - 2] = DARKRED;
+                rollScreen->colorMap[i][j - 2] = border;
                 rollScreen->bGColorMap[i][j- 2] = BLACK;
                 rollScreen->charMap[i][j - 1] = ' ';
-                rollScreen->colorMap[i][j - 1] = DARKRED;
+                rollScreen->colorMap[i][j - 1] = border;
                 rollScreen->bGColorMap[i][j- 1] = BLACK;
                 for(std::size_t k = 0; k < choices.size(); ++k){
                     rollScreen->charMap[i][j] = choices[k];
-                    rollScreen->colorMap[i][j] = DARKRED;
+                    rollScreen->colorMap[i][j] = border;
                     rollScreen->bGColorMap[i][j++] = BLACK;
                 }
                 int x = 0 ;
                 while(j + x < maxLen + 5){
                     rollScreen->charMap[i][j + x] = ' ';
-                    rollScreen->colorMap[i][j + x] = DARKRED;
+                    rollScreen->colorMap[i][j + x] = border;
                     rollScreen->bGColorMap[i][j + x] = BLACK;
                     ++x;
                 }

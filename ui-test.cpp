@@ -60,8 +60,14 @@ int main(){
             if(std::tolower(k) == 'p') {
                 printf("p pressed \r\n");
                 loadCharacterList charList;
+                color_code border;
+                #ifdef _WIN32
+                border = BLUE;
+                #else
+                border = DARKPURPLE;
+                #endif
                 Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
-                         HORZ_RAIL, VERT_RAIL, DARKPURPLE, BLACK, DARKPURPLE, BLACK);
+                         HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
                 listPerim.leftTee = L_TEE_RAIL;
                 listPerim.rightTee = R_TEE_RAIL;
             } 
@@ -283,7 +289,12 @@ void createRollScreen()
         rollScreen.xyLimits.maxX = maxLen + 5;
         rollScreen.xyLimits.minY = 1;
         rollScreen.xyLimits.maxY = 10 + addRow - 2;
-
+        color_code border;
+        #ifdef _WIN32
+        border = RED;
+        #else
+        border = DARKRED;
+        #endif
 
         
         generatePerimeter(rollScreen, rollPerim);
@@ -343,20 +354,20 @@ void createRollScreen()
                     j--;
             } else if(i == 9 + addRow && j == 3) {
                     rollScreen.charMap[i][j - 2] = ' ';
-                    rollScreen.colorMap[i][j - 2] = DARKRED;
+                    rollScreen.colorMap[i][j - 2] = border;
                     rollScreen.bGColorMap[i][j- 2] = BLACK;
                     rollScreen.charMap[i][j - 1] = ' ';
-                    rollScreen.colorMap[i][j - 1] = DARKRED;
+                    rollScreen.colorMap[i][j - 1] = border;
                     rollScreen.bGColorMap[i][j- 1] = BLACK;
                     for(std::size_t k = 0; k < choices.size(); ++k){
                         rollScreen.charMap[i][j] = choices[k];
-                        rollScreen.colorMap[i][j] = DARKRED;
+                        rollScreen.colorMap[i][j] = border;
                         rollScreen.bGColorMap[i][j++] = BLACK;
                     }
                     int x = 0 ;
                     while(j + x < maxLen + 5){
                         rollScreen.charMap[i][j + x] = ' ';
-                        rollScreen.colorMap[i][j + x] = DARKRED;
+                        rollScreen.colorMap[i][j + x] = border;
                         rollScreen.bGColorMap[i][j + x] = BLACK;
                         ++x;
                     }
@@ -490,6 +501,13 @@ bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, Scree
     Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
     generatePerimeter(inScreen3, racePerim);
 
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
     for(std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i){
         for(std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1 ; ++j){
             if((i == inScreen3.xyLimits.minY + 1) && j == inScreen3.xyLimits.minX + 3){
@@ -497,7 +515,7 @@ bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, Scree
                     for(int m = 0; m < nonViable.size(); ++m){
                         for(int n = 0; n < nonViable[m].size(); ++n){
                             inScreen3.charMap[i][j] = nonViable[m][n];
-                            inScreen3.colorMap[i][j] = DARKRED;
+                            inScreen3.colorMap[i][j] = border;
                             inScreen3.bGColorMap[i][j++] = BLACK;
                         }
                         j = inScreen3.xyLimits.minX + 4; 
@@ -581,6 +599,13 @@ bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats& inStats, Scree
     Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
     generatePerimeter(inScreen3, racePerim);
 
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
     for(std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i){
         for(std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1 ; ++j){
             if((i == inScreen3.xyLimits.minY + 1) && j == inScreen3.xyLimits.minX + 3){
@@ -588,7 +613,7 @@ bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats& inStats, Scree
                     for(int m = 0; m < nonViable.size(); ++m){
                         for(int n = 0; n < nonViable[m].size(); ++n){
                             inScreen3.charMap[i][j] = nonViable[m][n];
-                            inScreen3.colorMap[i][j] = DARKRED;
+                            inScreen3.colorMap[i][j] = border;
                             inScreen3.bGColorMap[i][j++] = BLACK;
                         }
                         j = inScreen3.xyLimits.minX + 4; 
@@ -814,6 +839,13 @@ CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, Sc
     generatePerimeter(classScreen, classPerim);
     drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, classScreen);
 
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
+
     for(std::size_t i = classScreen.xyLimits.minY; i < classScreen.xyLimits.maxY + 1; ++i){
         for(std::size_t j = classScreen.xyLimits.minX; j < classScreen.xyLimits.maxX + 1 ; ++j){
             if((i == classScreen.xyLimits.minY + 1) && j == classScreen.xyLimits.minX + 3){
@@ -821,7 +853,7 @@ CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, Sc
                     for(int m = 0; m < nonViable.size(); ++m){
                         for(int n = 0; n < nonViable[m].size(); ++n){
                             classScreen.charMap[i][j] = nonViable[m][n];
-                            classScreen.colorMap[i][j] = DARKRED;
+                            classScreen.colorMap[i][j] = border;
                             classScreen.bGColorMap[i][j++] = BLACK;
                         }
                         j = classScreen.xyLimits.minX + 4; 
@@ -913,6 +945,13 @@ std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& in
 
 void createPrimary()
 {
+
+    color_code border;
+    #ifdef _WIN32
+    border = RED;
+    #else
+    border = DARKRED;
+    #endif
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
     std::string options = "(C)reate New Character";
@@ -937,23 +976,23 @@ void createPrimary()
                 j--;
             } else if (i == vert_char - 1 && j == 0){
                 primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = DARKRED;
+                primaryScreen.colorMap[i][j] = border;
                 primaryScreen.bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options.size(); ++k){
                     primaryScreen.charMap[i][j] = options[k];
-                    primaryScreen.colorMap[i][j] = DARKRED;
+                    primaryScreen.colorMap[i][j] = border;
                     primaryScreen.bGColorMap[i][j++] = WHITE;
                 }
                 primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = DARKRED;
+                primaryScreen.colorMap[i][j] = border;
                 primaryScreen.bGColorMap[i][j++] = WHITE;
                 for(std::size_t k = 0; k < options2.size(); ++k){
                     primaryScreen.charMap[i][j] = options2[k];
-                    primaryScreen.colorMap[i][j] = DARKRED;
+                    primaryScreen.colorMap[i][j] = border;
                     primaryScreen.bGColorMap[i][j++] = WHITE;
                 }
                 primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = DARKRED;
+                primaryScreen.colorMap[i][j] = border;
                 primaryScreen.bGColorMap[i][j++] = WHITE;
                 //j--;
             } else if(i == 0 && j == 0){
