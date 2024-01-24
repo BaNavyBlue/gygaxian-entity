@@ -66,7 +66,7 @@
 	#include <string.h> /* for strlen() */
 	#include <stdarg.h> /* for colorPrint() */
 
-	void locate(int x, int y); /* Forward declare for C to avoid warnings */
+	//void locate(int x, int y); /* Forward declare for C to avoid warnings */
 // #endif
 
 #ifdef _WIN32

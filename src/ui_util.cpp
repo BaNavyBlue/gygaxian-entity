@@ -1278,7 +1278,7 @@ void ListHighlight::createListPerimeter()
 
 ScreenVals& ListHighlight::getScreen()
 {
-    *_listScreen;
+    return *_listScreen;
 }
 
 loadCharacterList::loadCharacterList()
@@ -1286,7 +1286,7 @@ loadCharacterList::loadCharacterList()
     const std::filesystem::path characters{"characters"};
     std::cout << characters << std::endl;
     for (auto const& dir_entry : std::filesystem::directory_iterator{characters}) {
-        std::string fullString(dir_entry.path());
+        std::string fullString(dir_entry.path().string());
         _pathList.push_back(fullString);
         std::size_t period = fullString.find_first_of(".");
         fullString = fullString.substr(0, period);

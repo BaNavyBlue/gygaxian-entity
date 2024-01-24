@@ -176,13 +176,13 @@ void createBruteForceScreen()
     dude.saveChar();
 
     drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY, textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX, alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX, tempScreen->xyLimits.minY, tempScreen->xyLimits.maxY - 1, primaryScreen);
     
     DrawRange infoRange;
@@ -423,15 +423,15 @@ void createRollScreen()
     dude.saveChar();
 
     drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY, textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX, alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, primaryScreen);
-    usleep(40000);
+    //usleep(40000);
     drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1, primaryScreen);
     
     DrawRange infoRange;
@@ -908,7 +908,7 @@ char selOpt(const std::vector<ScreenVals>& inScreens, int idx)
 
 std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& inScreen3, ScreenVals& inScreen4)
 {
-
+    return "nothing";
 }
 
 void createPrimary()

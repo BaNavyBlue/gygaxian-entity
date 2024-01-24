@@ -56,29 +56,35 @@ std::string inputName()
     std::string inputName;
     do{
         std::string message = "*****************************************************\r\nEnter Name: ";
+#ifndef _WIN32
         write(STD_OUT, message.c_str(), message.size());
+#endif 
         unsigned char inChar;
         do{
             //int bytes_read = read(STD_IN, &inChar, 1);
-            inChar = getch_n();
+            inChar = getch();
             if(inChar > 0x1f && inChar < 0x80){
                 if(inChar == 0x7f){
                     if(inputName.size() > 0){
                         // Clear deleted/backspace characters.
+#ifndef _WIN32
                         write(1, "\b \b", 4);
+#endif 
                         inputName.pop_back();
                     }
                 } else {
                     if(inChar != '\r' && inChar != '\n'){
+#ifndef _WIN32
                         write(1, &inChar, 1);
+#endif 
                         inputName += (char)inChar;
                     }
                 }
             } else {
                 if(inChar == '\33'){
 
-                inChar = getch_n();
-                inChar = getch_n();
+                inChar = getch();
+                inChar = getch();
                 inChar = 0;
                 }
             }
@@ -102,10 +108,12 @@ SEX inputSex()
 {
     // OS Level Write to standard Out
     std::string message = "Choose Sex: \r\nFuta: 0 \r\nIntersex: 1\r\nFemale: 2\r\nMale: 3";
+#ifndef _WIN32 
     write(STD_OUT, message.c_str(), message.size());
+#endif
     unsigned char inChar;
     do{
-        inChar = getch_n();
+        inChar = getch();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < '5'){
@@ -121,8 +129,10 @@ SEX inputSex()
                         return MALE;
                 }
             } else {
+#ifndef _WIN32 
                 write(STD_OUT, "Invalid Selection\r\n",20);
                 write(STD_OUT, message.c_str(), message.size());
+#endif
             }
         //} 
     }while(true);
@@ -168,6 +178,7 @@ RACE inputRace(stats inStats, std::vector<std::string>& viable, std::vector<std:
     //        // }
     //     //} 
     // }while(true);
+    return HUMAN;
 }
 
 // A Viability Hack to prevent a race that can't select a class
@@ -311,19 +322,22 @@ ALIGNMENT inputAlign(CHAR_CLASS inClass)
                 idx++;
             }         
     }
-
+#ifndef _WIN32
     write(STD_OUT, message.c_str(), message.size());
+#endif
     unsigned char inChar;
     do{
-        inChar = getch_n();
+        inChar = getch();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < idx){
                 std::cout << std::endl;
                 return aList[inChar];
             } else {
+#ifndef _WIN32
                 write(STD_OUT, "Invalid Selection\r\n",20);
                 write(STD_OUT, message.c_str(), message.size());
+#endif
             }
         //} 
     }while(true);   
@@ -349,21 +363,26 @@ CHAR_CLASS inputClass(RACE race, stats inStats)
     }
 
     if(nonV){
+#ifndef _WIN32
         write(STD_OUT, nonViable.c_str(), nonViable.size());
+#endif
     }
-
+#ifndef _WIN32
     write(STD_OUT, message.c_str(), message.size());
+#endif
     unsigned char inChar;
     do{
-        inChar = getch_n();
+        inChar = getch();
         //int bytes_read = read(STD_IN, &inChar, 1);
         //if(bytes_read > 0){
             if(inChar >= '0' && inChar < idx){
                 std::cout << std::endl;
                 return cList[inChar];
             } else {
+#ifndef _WIN32
                 write(STD_OUT, "Invalid Selection\r\n",20);
                 write(STD_OUT, message.c_str(), message.size());
+#endif
             }
         //} 
     }while(true);    
@@ -529,7 +548,7 @@ bool reRoll()
     char choice;
 
     do{
-        choice = getch_n();
+        choice = getch();
         choice = std::tolower(choice);
     }while(choice != 'y' && choice != 'n');
 
@@ -1215,7 +1234,7 @@ bool yesNoChoice()
 char choice;
 
     do{
-        choice = getch_n();
+        choice = getch();
         choice = std::tolower(choice);
     }while(choice != 'y' && choice != 'n');
 
@@ -1670,43 +1689,43 @@ std::vector<std::string> getDexTbl(dexterityTable dexTbl)
 }
 
 /* Initialize new terminal i/o settings */
-void initTermios(int echo) 
-{
-  tcgetattr(0, &old); /* grab old terminal i/o settings */
-  current = old; /* make new settings same as old settings */
-  current.c_lflag &= ~ICANON; /* disable buffered i/o */
-  if (echo) {
-      current.c_lflag |= ECHO; /* set echo mode */
-  } else {
-      current.c_lflag &= ~ECHO; /* set no echo mode */
-  }
-  tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
-}
+//void initTermios(int echo)//
+//{
+//  tcgetattr(0, &old); /* grab old terminal i/o settings */
+//  current = old; /* make new settings same as old settings */
+//  current.c_lflag &= ~ICANON; /* disable buffered i/o */
+//  if (echo) {
+//      current.c_lflag |= ECHO; /* set echo mode */
+//  } else {
+//      current.c_lflag &= ~ECHO; /* set no echo mode */
+//  }
+//  tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+//}
 
 /* Restore old terminal i/o settings */
-void resetTermios(void) 
-{
-  tcsetattr(0, TCSANOW, &old);
-}
+//void resetTermios(void) 
+//{
+//  tcsetattr(0, TCSANOW, &old);
+//}
 
 /* Read 1 character - echo defines echo mode */
-char getch_(int echo) 
-{
-  char ch;
-  initTermios(echo);
-  ch = getchar();
-  resetTermios();
-  return ch;
-}
+//char getch_(int echo) 
+//{
+//  char ch;
+//  initTermios(echo);
+//  ch = getchar();
+//  resetTermios();
+//  return ch;
+//}
 
 /* Read 1 character without echo */
-char getch_n(void) 
-{
-  return getch_(0);
-}
+//char getch_n(void) 
+//{
+//  return getch_(0);
+//}
 
 /* Read 1 character with echo */
-char getche(void) 
-{
-  return getch_(1);
-}
+//char getche(void) 
+//{
+//  return getch_(1);
+//}

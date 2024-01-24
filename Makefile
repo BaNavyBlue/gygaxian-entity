@@ -2,11 +2,11 @@
 MAIN = main.cpp
 UI = ui-test.cpp
 SRC = entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp
-SRC_UI = ./src/* #entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp rogueutil.c ui_util.cpp
+SRC_UI = src/* #entity.cpp dice_roll.cpp simdjson.cpp StatHelpers.cpp skills.cpp char_class.cpp items.cpp rogueutil.c ui_util.cpp
 
 OBJS = $(MAIN) $(SRC)
 UI_OBJ = $(UI) $(SRC_UI)
-INCL = -I ./include
+INCL = -I include
 
 #CC specifies which compiler we're using
 CC = g++
