@@ -656,11 +656,11 @@ std::vector<std::string> getDexTheif(dexThieves dexThief)
 {
     std::vector<std::string> basicList;
     basicList.push_back("Thieves Dexterity Table:");
-    basicList.push_back("Picking Pockets: " + std::to_string(dexThief.pickPocketPer) + " prcnt");
-    basicList.push_back("Opening Locks: " + std::to_string(dexThief.openLocks) + " prcnt");
-    basicList.push_back("Locating/Removing Traps: " + std::to_string(dexThief.locRemTraps) + " prcnt");
-    basicList.push_back("Moving Silently: " + std::to_string(dexThief.movSilent) + " prcnt");
-    basicList.push_back("Hiding In Shadows: " + std::to_string(dexThief.hideInShadows) + " prcnt");
+    basicList.push_back("Picking Pockets: " + std::to_string(dexThief.pickPocketPer) + '%');
+    basicList.push_back("Opening Locks: " + std::to_string(dexThief.openLocks) + '%');
+    basicList.push_back("Locating/Removing Traps: " + std::to_string(dexThief.locRemTraps) + '%');
+    basicList.push_back("Moving Silently: " + std::to_string(dexThief.movSilent) + '%');
+    basicList.push_back("Hiding In Shadows: " + std::to_string(dexThief.hideInShadows) + '%');
     return basicList;    
 }
 
@@ -677,8 +677,8 @@ std::vector<std::string> getConsTbl(constitutionTable consTbl)
     std::vector<std::string> basicInfo;
     basicInfo.push_back("Constitution Table:");
     basicInfo.push_back("Hit Point Adjustment: " + std::to_string(consTbl.hpAdj));
-    basicInfo.push_back("System Shock Survivial: " + std::to_string(consTbl.sysShockSurPer) + "prcnt");
-    basicInfo.push_back("Resurection Survival: " + std::to_string(consTbl.resurSurvPer) + "prcnt");
+    basicInfo.push_back("System Shock Survivial: " + std::to_string(consTbl.sysShockSurPer) + '%');
+    basicInfo.push_back("Resurection Survival: " + std::to_string(consTbl.resurSurvPer) + '%');
     return basicInfo;    
 }
 
@@ -687,8 +687,8 @@ std::vector<std::string> getCharTbl(charismaTable charTbl)
     std::vector<std::string> basicInfo;
     basicInfo.push_back("Charisma Table: ");
     basicInfo.push_back("Maximum Number of Followers: " + std::to_string(charTbl.maxHenchMen));
-    basicInfo.push_back("Loyalty Percentage: " + std::to_string(charTbl.loyaltyBasePer) + "prcnt");
-    basicInfo.push_back("Reaction of others: " + std::to_string(charTbl.reactAdjustPer) + "prcnt");
+    basicInfo.push_back("Loyalty Percentage: " + std::to_string(charTbl.loyaltyBasePer) + '%');
+    basicInfo.push_back("Reaction of others: " + std::to_string(charTbl.reactAdjustPer) + '%');
     return basicInfo;    
 }
 
@@ -1654,7 +1654,7 @@ std::vector<std::string> getStrTbl(strengthTable strTbl)
     basicInfo.push_back("Damage Adjustment: " + std::to_string(strTbl.damageAdj));
     basicInfo.push_back("Weight Allowance Modification: " + std::to_string(strTbl.weightAllowMod));
     basicInfo.push_back("Open Doors: " + std::to_string(strTbl.openDoors));
-    basicInfo.push_back("Bend Bars / Lift Gates: " + std::to_string(strTbl.bendBarsLiftGatesPer) + " prcnt");
+    basicInfo.push_back("Bend Bars / Lift Gates: " + std::to_string(strTbl.bendBarsLiftGatesPer) + '%');
     return basicInfo; 
 }
 
@@ -1662,7 +1662,7 @@ std::vector<std::string> getIntTbl(intelligenceTable intTbl)
 {
     std::vector<std::string> basicInfo;
     basicInfo.push_back("Intelligece Table:");
-    basicInfo.push_back("Chance to Know each Listed Spell: " + std::to_string(intTbl.chanceToKnowPer) + " prcnt");
+    basicInfo.push_back("Chance to Know each Listed Spell: " + std::to_string(intTbl.chanceToKnowPer) + '%');
     basicInfo.push_back("Minimum Number of Spells per Level: " + std::to_string(intTbl.minumumSpellsPerLevel));
     basicInfo.push_back("Maximum Number of Spells per Level: " + std::to_string(intTbl.maxiumSpellsPerlevel));
     basicInfo.push_back("Possible Number of Additional Languages: " + std::to_string(intTbl.possibAddLang));  
@@ -1675,7 +1675,7 @@ std::vector<std::string> getWisTbl(wisdomTable wisTbl)
     basicInfo.push_back("Wisdom Table:");
     basicInfo.push_back("Magic Attack Adjustment: " + std::to_string(wisTbl.magicAttackAdj));
     basicInfo.push_back("Spell bonus (1 for each level under shown level): " + std::to_string(wisTbl.spellBonus));
-    basicInfo.push_back("Chance for Spell Failure: " + std::to_string(wisTbl.spellFailPer) + " prcnt");
+    basicInfo.push_back("Chance for Spell Failure: " + std::to_string(wisTbl.spellFailPer) + '%');
     return basicInfo;  
 }
 
