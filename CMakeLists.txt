@@ -9,7 +9,7 @@ project(gygaxian-entity VERSION 1.0)
 #         and the variable CMAKE_CXX_STANDARD_REQUIRED to True
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-#set(CMAKE_CXX_FLAGS "-g" "-Wall")
+set(CMAKE_CXX_FLAGS "-g")
 #set(WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
 
 # TODO 8: Use configure_file to configure and copy TutorialConfig.h.in to
@@ -23,4 +23,4 @@ add_executable(ui-test ui-test.cpp "src/rogueutil.c" src/char_class.cpp src/dice
 # TODO 9: Use target_include_directories to include ${PROJECT_BINARY_DIR}
 #
 #add_library(WindowsHeaders IMPORTED INTERFACE)
-#target_include_directories(WindowsHeaders INTERFACE $ENV{WindowsSdkDir}/Include/…)
+#target_include_directories(WindowsHeaders INTERFACE $ENV{WindowsSdkDir}/Include/ï¿½)

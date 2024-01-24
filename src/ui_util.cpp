@@ -240,10 +240,8 @@ void PrintInfo::MakeGenTbl(std::vector<std::string> stringVect)
     stringVect.push_back("Push [esc] to go back.");
     int maxLen = 0;
     for(int i = 0; i < stringVect.size(); ++i){
-        for(int j = 0; j < stringVect[j].size(); ++j){
-            if(maxLen < stringVect[i].size()){
-                maxLen = stringVect[i].size();
-            }
+        if(maxLen < stringVect[i].size()){
+            maxLen = stringVect[i].size();
         }
     }
 
