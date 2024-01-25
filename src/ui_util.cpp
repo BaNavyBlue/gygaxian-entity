@@ -1250,55 +1250,111 @@ bool doesRecordExist(std::string name, std::string path, std::string suffix)
     return charJson.good(); 
 }
 
-ListHighlight::ListHighlight(std::vector<std::string> inList, std::string inName, Perimeter inPerim, DrawRange inRange)
+ListHighlight::ListHighlight(std::vector<std::string> inList, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange)
 {
     _perim = inPerim;
-    _ULCorner = inRange;
+    _list = inList;
+    _title = inName;
+    _options = inOptions;
+    _cornerDims = inRange;
     _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    _listScreen->xyLimits.minX = _cornerDims.minX = inRange.minX;
+    _listScreen->xyLimits.minY = _cornerDims.minY = inRange.minY;
+    _listScreen->xyLimits.maxX = _cornerDims.maxX = inRange.maxX;
+    _listScreen->xyLimits.maxY = _cornerDims.maxY = inRange.maxY;
+    createListPerimeter();
+    createListScreen();
+    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
 }
 
 void ListHighlight::createListScreen()
 {
+    color_code textCol;
+    color_code bgCol;
+    #ifdef _WIN32
+        textCol = BLUE;
+        bgCol = LIGHTGREY;
+    #else
+        textCol = DARKBLUE;
+        bgCol = WHITE;
+    #endif
 
+
+    int titlePos = (_cornerDims.maxX - _cornerDims.minX) / 2 - _title.size() / 2;
+    // Print Title
+    for(int i = 0; i < _title.size(); ++i){
+        _listScreen->charMap[_cornerDims.minY + 1][i + titlePos] = _title[i];
+    }
+
+    for(int i = _cornerDims.minY + 3; i < _cornerDims.maxY - 1; ++i){
+        int strdx = i - (_cornerDims.minY + 3);
+        for(int j = 0; j < _list[strdx].size(); ++j){
+            if(strdx == 0){
+                _listScreen->charMap[i][j + _cornerDims.minX + 1] = _list[strdx][j];
+                _listScreen->colorMap[i][j + _cornerDims.minX + 1] = textCol;
+                _listScreen->bGColorMap[i][j + _cornerDims.minX + 1] = bgCol;
+            } else {
+                _listScreen->charMap[i][j + _cornerDims.minX + 1] = _list[strdx][j];
+            }
+        }
+    }
 }
 
 void ListHighlight::createListPerimeter()
 {
-    for(int i = _ULCorner.minY; i <= _ULCorner.maxY; ++i){
-        for(int j = _ULCorner.minX; j <= _ULCorner.maxX; ++j){
-            if(i == _ULCorner.minY && j == _ULCorner.minX){
+    //printf("ListPerimeter\r\n");
+    color_code optionClr;
+    #ifdef _WIN32
+    optionClr = RED;
+    #else
+    optionClr = DARKRED;
+    #endif
+
+    for(int i = _cornerDims.minY; i <= _cornerDims.maxY; ++i){
+        for(int j = _cornerDims.minX; j <= _cornerDims.maxX; ++j){
+            if(i == _cornerDims.minY && j == _cornerDims.minX){
                 _listScreen->charMap[i][j] = _perim.uLCorner;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;
-            } else if(i == _ULCorner.minY && j == _ULCorner.maxY){
+            } else if(i == _cornerDims.minY && j == _cornerDims.maxX){
                 _listScreen->charMap[i][j] = _perim.uRCorner;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;     
-            } else if(i == _ULCorner.minY){
+            } else if(i == _cornerDims.minY){
                 _listScreen->charMap[i][j] = _perim.topBotWall;
                 _listScreen->colorMap[i][j] = _perim.cornerColr; 
-            } else if(i == _ULCorner.minY + 2 && j == _ULCorner.minX){
+            } else if(i == _cornerDims.minY + 2 && j == _cornerDims.minX){
                 _listScreen->charMap[i][j] = _perim.leftTee;
                 _listScreen->colorMap[i][j] = _perim.cornerColr; 
-            } else if(i == _ULCorner.minY + 2 && j == _ULCorner.maxX){
+            } else if(i == _cornerDims.minY + 2 && j == _cornerDims.maxX){
                 _listScreen->charMap[i][j] = _perim.rightTee;
                 _listScreen->colorMap[i][j] = _perim.cornerColr; 
-            } else if(i == _ULCorner.minY + 2){
+            } else if(i == _cornerDims.minY + 2){
                 _listScreen->charMap[i][j] = _perim.topBotWall;
                 _listScreen->colorMap[i][j] = _perim.cornerColr; 
-            } else if(i == _ULCorner.maxY && j == _ULCorner.minX){
+            } else if(i == (_cornerDims.maxY - 1) && j == _cornerDims.minX){
                 _listScreen->charMap[i][j] = _perim.bLCorner;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;                
-            } else if(i == _ULCorner.maxY && j == _ULCorner.maxX){
+            } else if(i == (_cornerDims.maxY - 1) && j == _cornerDims.maxX){
                 _listScreen->charMap[i][j] = _perim.bRCorner;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;                
-            } else if(j == _ULCorner.minX){
+            } else if(j == _cornerDims.minX && i < _cornerDims.maxY - 1){
                 _listScreen->charMap[i][j] = _perim.sideWalls;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;                
-            } else if(j == _ULCorner.maxX){
+            } else if(j == _cornerDims.maxX && i < _cornerDims.maxY - 1){
                 _listScreen->charMap[i][j] = _perim.sideWalls;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;                
-            } else if( i == _ULCorner.maxY){
-                _listScreen->charMap[i][j] = _perim.sideWalls;
+            } else if( i == _cornerDims.maxY - 1){
+                _listScreen->charMap[i][j] = _perim.topBotWall;
                 _listScreen->colorMap[i][j] = _perim.cornerColr;                
+            } else if(i == _cornerDims.maxY){
+                int stridx = j - _cornerDims.minX;
+                if(stridx < _options.size()){
+                    _listScreen->charMap[i][j] = _options[stridx];
+                    _listScreen->colorMap[i][j] = optionClr;
+                    //printf("poopy ");
+                }
+                // _listScreen->charMap[i][j] = '%';
+                // _listScreen->charMap[i][j] = optionClr;
+
             }
         }
     }
@@ -1312,7 +1368,7 @@ ScreenVals& ListHighlight::getScreen()
 loadCharacterList::loadCharacterList()
 {
     const std::filesystem::path characters{"characters"};
-    std::cout << characters << std::endl;
+    // std::cout << characters << std::endl;
     for (auto const& dir_entry : std::filesystem::directory_iterator{characters}) {
         std::string fullString(dir_entry.path().string());
         _pathList.push_back(fullString);

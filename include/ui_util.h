@@ -126,16 +126,18 @@ public:
 class ListHighlight{
 private:
     std::vector<std::string> _list;
+    std::string _title;
+    std::vector<int> _options;
     //std::vector<std::vector<FrmtChar>> _selScreen;
     int _currPos = 0;
     int _prevPos = 0;
     Perimeter _perim;
-    DrawRange _ULCorner;
+    DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
     void createListScreen();
     void createListPerimeter();
 public:
-    ListHighlight(std::vector<std::string> inList, std::string inName, Perimeter inPerim, DrawRange inRange);
+    ListHighlight(std::vector<std::string> inList, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getScreen();
 };
 

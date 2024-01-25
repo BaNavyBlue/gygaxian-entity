@@ -58,7 +58,7 @@ int main(){
                 }
             }
             if(std::tolower(k) == 'p') {
-                printf("p pressed \r\n");
+                //printf("p pressed \r\n");
                 loadCharacterList charList;
                 color_code border;
                 #ifdef _WIN32
@@ -70,6 +70,27 @@ int main(){
                          HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
                 listPerim.leftTee = L_TEE_RAIL;
                 listPerim.rightTee = R_TEE_RAIL;
+                DrawRange listDims;
+                listDims.minX = primaryScreen.xyLimits.minX + 1;
+                listDims.minY = primaryScreen.xyLimits.minY + 1;
+                listDims.maxX = tcols() / 3;
+                listDims.maxY = trows() - 3;
+                std::vector<int> options;
+                std::string opts("(A)dd (V)iew ");
+                
+                // Encode Option Code message as ints for utf8 characters.
+                for(int i = 0; i < opts.size(); ++i){
+                    options.push_back(opts[i]);
+                }
+                options.push_back(UP_ARROW);
+                options.push_back(DOWN_ARROW);\
+                for(int i = 0; i < 5; ++i){
+                    options.push_back(' ');
+                }
+                options.push_back(RIGHT_ARROW);
+
+                ListHighlight partyBuildList(charList.getCharList(), "Select Party Member", options, listPerim, listDims);
+                //printf("%s\r\n", options.c_str());
             } 
             else if (k == KEY_LEFT){drawPrimary();}
 			else if (k == KEY_RIGHT){drawPrimary();}
@@ -289,13 +310,13 @@ void createRollScreen()
         rollScreen.xyLimits.maxX = maxLen + 5;
         rollScreen.xyLimits.minY = 1;
         rollScreen.xyLimits.maxY = 10 + addRow - 2;
+
         color_code border;
         #ifdef _WIN32
         border = RED;
         #else
         border = DARKRED;
         #endif
-
         
         generatePerimeter(rollScreen, rollPerim);
 

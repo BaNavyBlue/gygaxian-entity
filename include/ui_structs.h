@@ -25,6 +25,11 @@ const int INV_PENT = 0x26E7;
 const int SHLD_CRSS = 0x26E8;
 const int RADIOACT = 0x2622;
 
+const int UP_ARROW = 0x2191;
+const int DOWN_ARROW = 0x2193;
+const int RIGHT_ARROW = 0x2192;
+const int LEFT_ARROW = 0x2190;
+
 // Contains the Colors and coordinates for one character
 struct FrmtChar{
     int symbol;
