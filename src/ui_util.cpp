@@ -564,11 +564,11 @@ void PrintInfo::MakeEscTag()
     }
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
 
     DrawRange healCom;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK));
