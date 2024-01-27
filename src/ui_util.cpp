@@ -731,11 +731,11 @@ void PrintInfo::createPrimary()
 {
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
 
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
@@ -842,11 +842,11 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
 {
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
 
     Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, border, BLACK);
     std::size_t horz_char = tcols();
@@ -1155,11 +1155,11 @@ RollScreen::RollScreen(stats inStats, ScreenVals& primaryScreen)
     rollScreen->xyLimits.maxY = 10 + addRow;
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
 
     for(std::size_t i = 1; i < 10 + addRow; ++i){
         for(std::size_t j = 1; j < maxLen + 6; ++j){
@@ -1271,13 +1271,13 @@ void ListHighlight::createListScreen()
 {
     color_code textCol;
     color_code bgCol;
-    #ifdef _WIN32
-        textCol = BLUE;
-        bgCol = LIGHTGREY;
-    #else
+    // #ifdef _WIN32
+    //     textCol = BLUE;
+    //     bgCol = LIGHTGREY;
+    // #else
         textCol = DARKBLUE;
         bgCol = WHITE;
-    #endif
+    // #endif
 
 
     int titlePos = (_cornerDims.maxX - _cornerDims.minX) / 2 - _title.size() / 2;
@@ -1304,11 +1304,11 @@ void ListHighlight::createListPerimeter()
 {
     //printf("ListPerimeter\r\n");
     color_code optionClr;
-    #ifdef _WIN32
-    optionClr = RED;
-    #else
+    // #ifdef _WIN32
+    // optionClr = RED;
+    // #else
     optionClr = DARKRED;
-    #endif
+    // #endif
 
     for(int i = _cornerDims.minY; i <= _cornerDims.maxY; ++i){
         for(int j = _cornerDims.minX; j <= _cornerDims.maxX; ++j){

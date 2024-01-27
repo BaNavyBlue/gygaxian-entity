@@ -67,11 +67,11 @@ int main(){
                 //printf("p pressed \r\n");
                 loadCharacterList charList;
                 color_code border;
-                #ifdef _WIN32
-                border = BLUE;
-                #else
+                // #ifdef _WIN32
+                // border = BLUE;
+                // #else
                 border = DARKPURPLE;
-                #endif
+                // #endif
                 Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
                          HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
                 listPerim.leftTee = L_TEE_RAIL;
@@ -318,11 +318,11 @@ void createRollScreen()
         rollScreen.xyLimits.maxY = 10 + addRow - 2;
 
         color_code border;
-        #ifdef _WIN32
-        border = RED;
-        #else
+        // #ifdef _WIN32
+        // border = RED;
+        // #else
         border = DARKRED;
-        #endif
+        //#endif
         
         generatePerimeter(rollScreen, rollPerim);
 
@@ -529,11 +529,11 @@ bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, Scree
     generatePerimeter(inScreen3, racePerim);
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
 
     for(std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i){
         for(std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1 ; ++j){
@@ -627,11 +627,11 @@ bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats& inStats, Scree
     generatePerimeter(inScreen3, racePerim);
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    //#endif
 
     for(std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i){
         for(std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1 ; ++j){
@@ -867,11 +867,11 @@ CHAR_CLASS selClassScreen(stats& inStats, RACE inRace, ScreenVals& inScreen1, Sc
     drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1, classScreen);
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
 
     for(std::size_t i = classScreen.xyLimits.minY; i < classScreen.xyLimits.maxY + 1; ++i){
         for(std::size_t j = classScreen.xyLimits.minX; j < classScreen.xyLimits.maxX + 1 ; ++j){
@@ -974,11 +974,11 @@ void createPrimary()
 {
 
     color_code border;
-    #ifdef _WIN32
-    border = RED;
-    #else
+    // #ifdef _WIN32
+    // border = RED;
+    // #else
     border = DARKRED;
-    #endif
+    // #endif
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
     std::string options = "(C)reate New Character";
