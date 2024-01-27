@@ -823,15 +823,8 @@ void PrintInfo::drawPrimary()
             int forPrint = _primaryScreen->charMap[i][j];
                 
                 locate(j + 1, i + 1);
-                // if(forPrint > 127){
                     std::string utfChar = getUTF(forPrint);
                     colorPrintUTF(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], utfChar.c_str());
-                // } else {
-                //     char singleChar[2];
-                //     singleChar[0] = forPrint;
-                //     singleChar[1] = '\0';
-                //     colorPrint(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], singleChar);
-                // }
         }
     }
     locate(1,1);
@@ -848,7 +841,7 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
     border = DARKRED;
     // #endif
 
-    Perimeter warnPerim(0x2622, 0x2622, 0x2622, 0x2622, 0x26E7, 0x26E7, YELLOW, BLACK, border, BLACK);
+    Perimeter warnPerim(RADIOACT, RADIOACT, RADIOACT, RADIOACT, INV_PENT, INV_PENT, YELLOW, BLACK, border, BLACK);
     std::size_t horz_char = tcols();
     std::size_t vert_char = trows();
 
@@ -1352,9 +1345,6 @@ void ListHighlight::createListPerimeter()
                     _listScreen->colorMap[i][j] = optionClr;
                     //printf("poopy ");
                 }
-                // _listScreen->charMap[i][j] = '%';
-                // _listScreen->charMap[i][j] = optionClr;
-
             }
         }
     }
