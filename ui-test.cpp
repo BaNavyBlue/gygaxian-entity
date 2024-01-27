@@ -26,6 +26,12 @@ int main(){
     setConsoleTitle("Gygaxian-Entity");
     createPrimary();
     drawPrimary();
+    //printf("\u26e7\r\n");
+    // std::string test("\u26e7");
+    // printf("%s\r\n", test.c_str());
+    // for(int i = 0; i < test.size(); ++i){
+    //     printf("%c %d\r\n", test.c_str()[i], test.c_str()[i]);
+    // }
     
     while(true){
         std::size_t new_horz = tcols();
