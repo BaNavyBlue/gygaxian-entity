@@ -1041,7 +1041,7 @@ void Entity::setClass(CHAR_CLASS inClass)
     setConsTbl();
     setRaceSkillType();
     setChrClassSkill(inClass);
-    std::cout << "_chrSkills.size(): " << _chrSkills.size() << std::endl;
+    //std::cout << "_chrSkills.size(): " << _chrSkills.size() << std::endl;
     if(_chrSkills.size() < 2){
         _money.gold = _chrSkills[0]->generateGold();
     }
@@ -1306,7 +1306,7 @@ bool Entity::saveChar()
 
 void Entity::loadEntity(std::string file)
 {
-    std::cout << "loading: " << file << std::endl;
+    //std::cout << "loading: " << file << std::endl;
     sj::ondemand::parser parser;
     sj::padded_string json = sj::padded_string::load(file.c_str());
     sj::ondemand::document charData = parser.iterate(json);
@@ -1390,34 +1390,34 @@ void Entity::loadEntity(std::string file)
         _languages.push_back((LANGUAGE)(uint64_t(charData["data"]["languages"]["index"][idx])));
     }
     setRaceSkillType();
-    std::cout << "\r\nPrinting Loaded Character .json" << std::endl;
-    std::cout << "Name: " << _name << std::endl;
-    printAlign(_alignment);
-    printSex(_sex);
-    printRace(_race);
-    printClass(_chrClass[0]);
-    std::cout << "Level: " << (int)_level << std::endl;
-    std::cout << "\r\nStats: ";
-    printStats(_stats);
-    std::cout << "\r\nMax HP: " << getMaxHP() << std::endl;
-    std::cout << "\r\nCurrent HP: " << getCurHP() << std::endl;
-    std::cout << "\r\nWeight Allowed in gold pieces (gp): " << getWeightAllowed() << std::endl;
-    std::cout << "\r\nTotal Weight gp: " << getWeightCarried() << std::endl;
-    printMoney(_money);
-    std::cout << "\r\nMod Stats: ";
-    printStats(_modStats);
-    printStrTbl(_strTbl);
-    printIntTbl(_intTbl);
-    printWisTbl(_wisTbl);
-    printDexTbl(_dexTbl);
-    printDexThief(_dexThief);
-    printConsTbl(_consTbl);
-    printCharTbl(_charTbl);
-    printLanguages(_languages);
+    // std::cout << "\r\nPrinting Loaded Character .json" << std::endl;
+    // std::cout << "Name: " << _name << std::endl;
+    // printAlign(_alignment);
+    // printSex(_sex);
+    // printRace(_race);
+    // printClass(_chrClass[0]);
+    // std::cout << "Level: " << (int)_level << std::endl;
+    // std::cout << "\r\nStats: ";
+    // printStats(_stats);
+    // std::cout << "\r\nMax HP: " << getMaxHP() << std::endl;
+    // std::cout << "\r\nCurrent HP: " << getCurHP() << std::endl;
+    // std::cout << "\r\nWeight Allowed in gold pieces (gp): " << getWeightAllowed() << std::endl;
+    // std::cout << "\r\nTotal Weight gp: " << getWeightCarried() << std::endl;
+    // printMoney(_money);
+    // std::cout << "\r\nMod Stats: ";
+    // printStats(_modStats);
+    // printStrTbl(_strTbl);
+    // printIntTbl(_intTbl);
+    // printWisTbl(_wisTbl);
+    // printDexTbl(_dexTbl);
+    // printDexThief(_dexThief);
+    // printConsTbl(_consTbl);
+    // printCharTbl(_charTbl);
+    // printLanguages(_languages);
 
     //setRaceSkillType();
     setChrClassSkill(_chrClass[0]);
-    std::cout << "finished loading character" << std::endl;
+    //std::cout << "finished loading character" << std::endl;
 }
 
 Entity::Entity(const char* filename)

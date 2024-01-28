@@ -124,7 +124,7 @@ public:
 };
 
 class ListHighlight{
-private:
+protected:
     std::vector<std::string> _list;
     std::string _title;
     std::vector<int> _options;
@@ -134,17 +134,32 @@ private:
     Perimeter _perim;
     DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
-    void createListScreen();
-    void createListPerimeter();
+    void createListScreen(ScreenVals& inScreen, std::vector<std::string> inList, std::string inTitle);
+    void createListPerimeter(ScreenVals& inScreen, std::vector<int> inOpts);
 public:
+    ListHighlight();
     ListHighlight(std::vector<std::string> inList, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getScreen();
+};
+
+class ListHighlightPair:public ListHighlight{
+private:
+    std::vector<std::string> _destList;
+    std::string _destTitle;
+    std::shared_ptr<ScreenVals> _destListScreen;
+    std::vector<int> _destOptions;
+    int _destCurrPos = 0;
+    int _destPrevPos = 0;
+public:
+    ListHighlightPair(std::vector<std::string> inList, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
+    ScreenVals& getDestScreen();
 };
 
 class loadCharacterList{
 private:
     std::vector<std::string> _charList;
     std::vector<std::string> _pathList;
+    std::vector<Entity> _players;
 public:
     loadCharacterList();
     std::vector<std::string> getCharList();

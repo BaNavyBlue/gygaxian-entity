@@ -644,9 +644,6 @@ void colorPrintUTF(color_code color, color_code bgcolor, const char *fmt, ...)
 	if (color >= 0){
 //#ifdef _WIN32
 //	    setColor(color);
-// #ifdef __APPLE__
-	    // printf("\e[38:5:%dm", (int)color);
-// #else
 	    printf("\033[38;5;%dm", (int)color);
 // #endif
 	}
@@ -654,9 +651,6 @@ void colorPrintUTF(color_code color, color_code bgcolor, const char *fmt, ...)
 	if (bgcolor >= 0){
 //#ifdef _WIN32
 //	   setBackgroundColor(bgcolor);
-// #ifdef __APPLE__
-// 	   printf("\e[48:5:%dm", (int)bgcolor);
-// #else
 	   printf("\033[48;5;%dm", (int)bgcolor);
 // #endif
 	}

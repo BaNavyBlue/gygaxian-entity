@@ -95,13 +95,27 @@ int main(){
                 }
                 options.push_back(RIGHT_ARROW);
 
-                ListHighlight partyBuildList(charList.getCharList(), "Select Party Member", options, listPerim, listDims);
+                std::vector<int> destOptions;
+                std::string destOpts("  (R)emove (V)iew   ");
+                destOptions.push_back(LEFT_ARROW);
+                // Encode Option Code message as ints for utf8 characters.
+                for(int i = 0; i < destOpts.size(); ++i){
+                    destOptions.push_back(destOpts[i]);
+                }
+                destOptions.push_back(UP_ARROW);
+                destOptions.push_back(DOWN_ARROW);\
+                for(int i = 0; i < 5; ++i){
+                    destOptions.push_back(' ');
+                }
+                
+
+                ListHighlightPair partyBuildList(charList.getCharList(), "Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
                 //printf("%s\r\n", options.c_str());
             } 
-            else if (k == KEY_LEFT){drawPrimary();}
-			else if (k == KEY_RIGHT){drawPrimary();}
-			else if (k == KEY_UP){drawPrimary();}
-			else if (k == KEY_DOWN){drawPrimary();}
+            // else if (k == KEY_LEFT){drawPrimary();}
+			// else if (k == KEY_RIGHT){drawPrimary();}
+			// else if (k == KEY_UP){drawPrimary();}
+			// else if (k == KEY_DOWN){drawPrimary();}
             else if (k == KEY_ESCAPE) {
 				break;
 			} else {
