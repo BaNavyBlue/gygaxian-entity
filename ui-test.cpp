@@ -24,8 +24,8 @@ int main(){
 
     hidecursor();
     setConsoleTitle("Gygaxian-Entity");
-    createPrimary();
-    drawPrimary();
+    createPrimary(primaryScreen);
+    drawPrimary(primaryScreen);
     //printf("\u26e7\r\n");
     // std::string test("\u26e7");
     // printf("%s\r\n", test.c_str());
@@ -39,8 +39,8 @@ int main(){
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary();
-            drawPrimary();
+            createPrimary(primaryScreen);
+            drawPrimary(primaryScreen);
         }
         if(kbhit()){
             char k = getkey();
@@ -82,7 +82,7 @@ int main(){
                 listDims.maxX = tcols() / 3;
                 listDims.maxY = trows() - 3;
                 std::vector<int> options;
-                std::string opts("(A)dd (V)iew ");
+                std::string opts("  (A)dd (V)iew ");
                 
                 // Encode Option Code message as ints for utf8 characters.
                 for(int i = 0; i < opts.size(); ++i){
@@ -96,6 +96,7 @@ int main(){
                 options.push_back(RIGHT_ARROW);
 
                 std::vector<int> destOptions;
+                destOptions.push_back(' ');
                 std::string destOpts("  (R)emove (V)iew   ");
                 destOptions.push_back(LEFT_ARROW);
                 // Encode Option Code message as ints for utf8 characters.
@@ -109,7 +110,7 @@ int main(){
                 }
                 
 
-                ListHighlightPair partyBuildList(charList.getCharList(), "Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
+                ListHighlightPair partyBuildList(charList.getCharList(), primaryScreen, "Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
                 //printf("%s\r\n", options.c_str());
             } 
             // else if (k == KEY_LEFT){drawPrimary();}
@@ -119,7 +120,7 @@ int main(){
             else if (k == KEY_ESCAPE) {
 				break;
 			} else {
-                createPrimary();
+                createPrimary(primaryScreen);
             }
         }
     }
@@ -745,8 +746,8 @@ SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen)
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary();
-            drawPrimary();
+            createPrimary(primaryScreen);
+            drawPrimary(primaryScreen);
             drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY - 1, inScreen);
             drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
         }
@@ -780,8 +781,8 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary();
-            drawPrimary();
+            createPrimary(primaryScreen);
+            drawPrimary(primaryScreen);
             drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, inScreen);
         }
         
@@ -813,8 +814,8 @@ char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVa
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary();
-            drawPrimary();
+            createPrimary(primaryScreen);
+            drawPrimary(primaryScreen);
             drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1, inScreen1);
             drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1, inScreen2);
             drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
@@ -932,8 +933,8 @@ char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenV
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary();
-            drawPrimary();
+            createPrimary(primaryScreen);
+            drawPrimary(primaryScreen);
             drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1, inScreen1);
             drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1, inScreen2);
             drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
@@ -958,8 +959,8 @@ char selOpt(const std::vector<ScreenVals>& inScreens, int idx)
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary();
-            drawPrimary();
+            createPrimary(primaryScreen);
+            drawPrimary(primaryScreen);
             for(int i = 0; i < inScreens.size(); ++i){
                 int offSet = 1;
                 if(i < 1){
@@ -984,9 +985,8 @@ std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& in
     return "nothing";
 }
 
-void createPrimary()
+void createPrimary(ScreenVals& primaryScreen)
 {
-
     color_code border;
     // #ifdef _WIN32
     // border = RED;
@@ -999,23 +999,23 @@ void createPrimary()
     std::string options2 = "Create New (P)arty";
     int msg1L = line1.size()/2;
     int msg2L = line2.size()/2;
-    for(std::size_t i = 0; i < vert_char; ++i){
-        for(std::size_t j = 0; j < horz_char; ++j){
-            if(i == vert_char/2 - 1 && j == horz_char/2 - msg1L){
+    for(std::size_t i = 0; i < trows(); ++i){
+        for(std::size_t j = 0; j < tcols(); ++j){
+            if(i == trows()/2 - 1 && j == tcols()/2 - msg1L){
                 for(std::size_t k = 0; k < line1.size(); ++k){
                     primaryScreen.charMap[i][j] = line1[k];
                     primaryScreen.colorMap[i][j] = GREEN;
                     primaryScreen.bGColorMap[i][j++] = BLACK;
                 }
                 j--;
-            } else if(i == vert_char/2 && j == horz_char/2 - msg2L){
+            } else if(i == trows()/2 && j == tcols()/2 - msg2L){
                 for(std::size_t k = 0; k < line2.size(); ++k){
                     primaryScreen.charMap[i][j] = line2[k];
                     primaryScreen.colorMap[i][j] = GREEN;
                     primaryScreen.bGColorMap[i][j++] = BLACK;
                 }
                 j--;
-            } else if (i == vert_char - 1 && j == 0){
+            } else if (i == trows() - 1 && j == 0){
                 primaryScreen.charMap[i][j] = 0x2551;
                 primaryScreen.colorMap[i][j] = border;
                 primaryScreen.bGColorMap[i][j++] = WHITE;
@@ -1044,19 +1044,19 @@ void createPrimary()
                 primaryScreen.charMap[i][j] = 0x2557;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if(i == vert_char - 2 && j == 0) {
+            } else if(i == trows() - 2 && j == 0) {
                 primaryScreen.charMap[i][j] = 0x255A; 
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if(i == vert_char - 2 && j == horz_char - 1){
+            } else if(i == trows() - 2 && j == tcols() - 1){
                 primaryScreen.charMap[i][j] = 0x255D;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if(i == 0 || i == vert_char - 2) {
+            } else if(i == 0 || i == trows() - 2) {
                 primaryScreen.charMap[i][j] = 0x2550; 
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if ((j == 0 || j == horz_char - 1) && i < vert_char - 1){
+            } else if ((j == 0 || j == tcols() - 1) && i < trows() - 1){
                 primaryScreen.charMap[i][j] = 0x2551;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
@@ -1070,24 +1070,16 @@ void createPrimary()
 
 }
 
-void drawPrimary()
+void drawPrimary(ScreenVals& primaryScreen)
 {
     cls();
     locate(1,1);
-    for(std::size_t i = 0; i < vert_char; ++i){
-        for(std::size_t j = 0; j < horz_char; ++j){
+    for(std::size_t i = 0; i < trows(); ++i){
+        for(std::size_t j = 0; j < tcols(); ++j){
             int forPrint = primaryScreen.charMap[i][j];
-                
                 locate(j + 1, i + 1);
-                // if(forPrint > 127){
                     std::string utfChar = getUTF(forPrint);
                     colorPrintUTF(primaryScreen.colorMap[i][j], primaryScreen.bGColorMap[i][j], utfChar.c_str());
-                // } else {
-                //     char singleChar[2];
-                //     singleChar[0] = forPrint;
-                //     singleChar[1] = '\0';
-                //     colorPrint(primaryScreen.colorMap[i][j], primaryScreen.bGColorMap[i][j], singleChar);
-                // }
         }
     }
     locate(1,1);

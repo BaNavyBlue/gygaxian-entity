@@ -6,9 +6,9 @@
 #include "entity.h"
 
 // Some of these prototypes defined in ui-test.cpp for now.
-void drawPrimary();
+void drawPrimary(ScreenVals& primaryScreen);
 void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals& inScreen);
-void createPrimary();
+void createPrimary(ScreenVals& primaryScreen);
 void createRollScreen();
 void createBruteForceScreen();
 std::vector<CHAR_CLASS> classToForce();
@@ -134,11 +134,14 @@ protected:
     Perimeter _perim;
     DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
+    std::shared_ptr<ScreenVals> _primaryScreen;
     void createListScreen(ScreenVals& inScreen, std::vector<std::string> inList, std::string inTitle);
     void createListPerimeter(ScreenVals& inScreen, std::vector<int> inOpts);
+    virtual void navigateSelection();
+    virtual void listNavigate();
 public:
     ListHighlight();
-    ListHighlight(std::vector<std::string> inList, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
+    ListHighlight(std::vector<std::string> inList, ScreenVals& primaryScreen, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getScreen();
 };
 
@@ -150,8 +153,10 @@ private:
     std::vector<int> _destOptions;
     int _destCurrPos = 0;
     int _destPrevPos = 0;
+    void navigateSelection() override;
+    void listNavigate() override;
 public:
-    ListHighlightPair(std::vector<std::string> inList, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
+    ListHighlightPair(std::vector<std::string> inList, ScreenVals& primaryScreen, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getDestScreen();
 };
 
