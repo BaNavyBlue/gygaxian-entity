@@ -1278,7 +1278,7 @@ void ListHighlight::createListScreen(ScreenVals& inScreen, std::vector<std::stri
     color_code bgCol;
     #ifdef _WIN32
         textCol = BLUE;
-        bgCol = LIGHTGREY;
+        bgCol = GREY;
     #else
         textCol = DARKBLUE;
         bgCol = WHITE;
@@ -1475,8 +1475,13 @@ void ListHighlightPair::listNavigate()
 {
     color_code textCol;
     color_code bgCol;
-    textCol = DARKBLUE;
-    bgCol = WHITE;
+    #ifdef _WIN32
+        textCol = BLUE;
+        bgCol = GREY;
+    #else
+        textCol = DARKBLUE;
+        bgCol = WHITE;
+    #endif
     
     createListPerimeter(*_listScreen, _options);
 
