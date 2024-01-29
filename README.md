@@ -22,21 +22,26 @@ TUI has a rough framework created, portions of the TUI code is fairly modular, o
 at all with ANSI 256 color codes.  I removed some of their methods from my coloredUTF method for something more direct and it works
 fine and no problems pringing the % character.
 
-
 # Stats:
 Stat rolls are first and follows the "Best 3 out of 4" approach.  Stat Rolls show which Class and Race requirements are failed. User has the Option to keep or re-roll. The stat roll also auto rerolls upon what I'm calling cursed rolls (i.e.) when the constitution is so low the only playable class is illusionist and the other stats disqualify character from being an illusionist.
+
 # Sex:
-Next user can choose 1 of 5 sex's.  (AD&D 1e only has 2).
+Next user can choose 1 of 4 sex's.  (AD&D 1e only has 2).
+
 # Race:
 Race is selected next since race choice can modify stats. Only viable races based on stats will be availble. Modified Stats will also check for edge case stat/class thresholds.  Because some races are not allowed to play certain classes, these races will be pruned from the list of options if they introduce a stat condition that forces them to be a forbiden class, resulting in no class option.
+
 # Class:
 Class is limited by Race and Stats. Like race, only viable classes based on race and stats will be shown.
+
 # Alignment:
 Following the Player Handbook order alignment is the next choice. Only alignments compatible with chosen class will be available.
+
 # Name:
 Moved name until after the primary stats, sex, race, classes and Alignment is specified. User can enter a name based on whatever criteria.  If name already exists one can choose to over-write existing file or not.
 
 Thinking of implementing an auto name generation scheme based on sex, race, classes and alignment, as an option.
+
 # Stat Tables:
 Stat Tables are generated and printed.
 
