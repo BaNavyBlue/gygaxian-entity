@@ -1257,10 +1257,6 @@ ListHighlight::ListHighlight(std::vector<std::string> inList, ScreenVals &primar
     _cornerDims = inRange;
     _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _primaryScreen = std::make_shared<ScreenVals>(primaryScreen);
-    _listScreen->xyLimits.minX = _cornerDims.minX = inRange.minX;
-    _listScreen->xyLimits.minY = _cornerDims.minY = inRange.minY;
-    _listScreen->xyLimits.maxX = _cornerDims.maxX = inRange.maxX;
-    _listScreen->xyLimits.maxY = _cornerDims.maxY = inRange.maxY;
     createListPerimeter(*_listScreen, _options);
     createListScreen(*_listScreen, _list, _title);
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
@@ -1293,18 +1289,26 @@ void ListHighlight::createListScreen(ScreenVals& inScreen, std::vector<std::stri
     // Print Title
     for(int i = 0; i < inTitle.size(); ++i){
         inScreen.charMap[inScreen.xyLimits.minY + 1][i + titlePos] = inTitle[i];
+        inScreen.colorMap[inScreen.xyLimits.minY + 1][i + titlePos] = YELLOW;
     }
 
     for(int i = inScreen.xyLimits.minY + 3; i < inScreen.xyLimits.maxY - 1; ++i){
         int strdx = i - (inScreen.xyLimits.minY + 3);
         if (strdx < inList.size()){
-            for(int j = 0; j < inList[strdx].size(); ++j){
+            int limit = inList[strdx].size();
+
+            if(limit > inScreen.xyLimits.maxX - 2){
+                limit = inScreen.xyLimits.maxX - 2;
+            }
+
+            for(int j = 0; j < limit; ++j){
                 if(strdx == 0){
                     inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
                     inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = textCol;
                     inScreen.bGColorMap[i][j + inScreen.xyLimits.minX + 1] = bgCol;
                 } else {
                     inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
+                    inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = YELLOW;
                 }
             }
         }
@@ -1356,13 +1360,16 @@ void ListHighlight::createListPerimeter(ScreenVals& inScreen, std::vector<int> i
             } else if( i == inScreen.xyLimits.maxY - 1){
                 inScreen.charMap[i][j] = _perim.topBotWall;
                 inScreen.colorMap[i][j] = _perim.cornerColr;                
-            } else if(i == inScreen.xyLimits.maxY){
+            } else if(i == inScreen.xyLimits.maxY && j - inScreen.xyLimits.minX < inOpts.size()){
                 int stridx = j - inScreen.xyLimits.minX;
                 if(stridx < inOpts.size()){
                     inScreen.charMap[i][j] = inOpts[stridx];
                     inScreen.colorMap[i][j] = optionClr;
                     //printf("poopy ");
                 }
+            } else {
+                inScreen.charMap[i][j] = ' ';
+                inScreen.bGColorMap[i][j] = BLACK;
             }
         }
     }
@@ -1417,6 +1424,17 @@ void ListHighlightPair::navigateSelection()
             vert_char = new_vert;
             createPrimary(*_primaryScreen);
             drawPrimary(*_primaryScreen);
+
+            _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
+            _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
+            _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
+            _listScreen->xyLimits.maxY = _cornerDims.maxY = vert_char - 3;
+
+            _destListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
+            _destListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
+            _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
+            _destListScreen->xyLimits.maxY = vert_char - 3;
+
             createListPerimeter(*_listScreen, _options);
             createListScreen(*_listScreen, _list, _title);
             createListPerimeter(*_destListScreen, _destOptions);
@@ -1432,11 +1450,13 @@ void ListHighlightPair::navigateSelection()
                 printf("v pressed:");
             } else if(k == KEY_UP){
                 if(_currPos > 0){
+                    _prevPos = _currPos;
                     _currPos--;
                     listNavigate();
                 }
             } else if(k == KEY_DOWN){
                 if(_currPos < _list.size() - 1){
+                    _prevPos = _currPos;
                     _currPos++;
                     listNavigate();
                 }
@@ -1457,9 +1477,26 @@ void ListHighlightPair::listNavigate()
     color_code bgCol;
     textCol = DARKBLUE;
     bgCol = WHITE;
+    
+    createListPerimeter(*_listScreen, _options);
+
+    int titlePos = _listScreen->xyLimits.maxX - (_listScreen->xyLimits.maxX - _listScreen->xyLimits.minX) / 2 - _title.size() / 2 - 1;
+
+    for(int i = 0; i < _title.size(); ++i){
+        _listScreen->charMap[_listScreen->xyLimits.minY + 1][i + titlePos] = _title[i];
+        _listScreen->colorMap[_listScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
+    }
 
     for(int i = _listScreen->xyLimits.minY + 3; i < _listScreen->xyLimits.maxY - 1; ++i){
-        int strdx = i - (_listScreen->xyLimits.minY + 3);
+        int idxOffset = _currPos - _listScreen->xyLimits.maxY + 6;
+        
+        if(_currPos > _listScreen->xyLimits.maxY - 6 + _listStartIdx){
+            _listStartIdx++;
+        } else if(_currPos < _listStartIdx){
+            _listStartIdx = _currPos;
+        }
+        int strdx = i - (_listScreen->xyLimits.minY + 3) + _listStartIdx;
+        
         if (strdx < _list.size()){
             for(int j = 0; j < _list[strdx].size(); ++j){
                 if(strdx == _currPos){

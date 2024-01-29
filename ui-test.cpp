@@ -999,6 +999,10 @@ void createPrimary(ScreenVals& primaryScreen)
     std::string options2 = "Create New (P)arty";
     int msg1L = line1.size()/2;
     int msg2L = line2.size()/2;
+    primaryScreen.xyLimits.maxX = tcols();
+    primaryScreen.xyLimits.maxY = trows();
+
+
     for(std::size_t i = 0; i < trows(); ++i){
         for(std::size_t j = 0; j < tcols(); ++j){
             if(i == trows()/2 - 1 && j == tcols()/2 - msg1L){

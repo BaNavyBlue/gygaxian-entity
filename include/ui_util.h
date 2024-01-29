@@ -131,6 +131,7 @@ protected:
     //std::vector<std::vector<FrmtChar>> _selScreen;
     int _currPos = 0;
     int _prevPos = 0;
+    int _listStartIdx;
     Perimeter _perim;
     DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
@@ -153,6 +154,7 @@ private:
     std::vector<int> _destOptions;
     int _destCurrPos = 0;
     int _destPrevPos = 0;
+    int _destStartIdx = 0;
     void navigateSelection() override;
     void listNavigate() override;
 public:
