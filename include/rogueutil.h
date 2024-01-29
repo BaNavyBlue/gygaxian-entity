@@ -141,8 +141,8 @@ void gotoxy(int x, int y);
  * 
  */
 typedef enum color_code {
-//#ifndef _WIN32
-	NOCOLOR = -1,
+    NOCOLOR = -1,
+#ifndef _WIN32
 	BLACK,
 	DARKRED,
 	DARKGREEN,
@@ -159,24 +159,24 @@ typedef enum color_code {
 	MAGENTA,
 	CYAN,
 	WHITE
-// #else
-//     BLACK,	
-// 	BLUE,
-// 	GREEN,
-// 	CYAN,
-// 	RED,
-// 	MAGENTA,
-// 	BROWN,
-// 	GREY,
-// 	DARKGREY,
-// 	LIGHTBLUE,
-// 	LIGHTGREEN,
-// 	LIGHTCYAN,
-// 	LIGHTRED,
-// 	LIGHTMAGENTA,
-// 	YELLOW,
-// 	WHITE
-// #endif
+ #else
+    BLACK,	
+	BLUE,
+	GREEN,
+	CYAN,
+	RED,
+	MAGENTA,
+	BROWN,
+	GREY,
+	DARKGREY,
+	LIGHTBLUE,
+	LIGHTGREEN,
+	LIGHTCYAN,
+	LIGHTRED,
+	LIGHTMAGENTA,
+	YELLOW,
+	WHITE
+#endif
 } color_code;
 
 /* Constant strings for ANSI colors ans seqiences */

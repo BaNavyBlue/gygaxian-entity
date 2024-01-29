@@ -642,17 +642,19 @@ void colorPrintUTF(color_code color, color_code bgcolor, const char *fmt, ...)
     char txtColor[64];
 	char bgColor[64];
 	if (color >= 0){
-//#ifdef _WIN32
-//	    setColor(color);
+#ifdef _WIN32
+	    setColor(color);
+#else
 	    printf("\033[38;5;%dm", (int)color);
-// #endif
+#endif
 	}
 
 	if (bgcolor >= 0){
-//#ifdef _WIN32
-//	   setBackgroundColor(bgcolor);
+#ifdef _WIN32
+	   setBackgroundColor(bgcolor);
+#else
 	   printf("\033[48;5;%dm", (int)bgcolor);
-// #endif
+#endif
 	}
     printf("%s", fmt);
 	//va_end(args);

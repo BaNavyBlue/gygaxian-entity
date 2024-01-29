@@ -564,11 +564,11 @@ void PrintInfo::MakeEscTag()
     }
 
     color_code border;
-    // #ifdef _WIN32
-    // border = RED;
-    // #else
+    #ifdef _WIN32
+    border = RED;
+    #else
     border = DARKRED;
-    // #endif
+    #endif
 
     DrawRange healCom;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK));
@@ -731,11 +731,11 @@ void PrintInfo::createPrimary()
 {
 
     color_code border;
-    // #ifdef _WIN32
-    // border = RED;
-    // #else
+    #ifdef _WIN32
+    border = RED;
+    #else
     border = DARKRED;
-    // #endif
+    #endif
 
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
@@ -835,11 +835,11 @@ WarnMessage::WarnMessage(std::string warning, std::string question)
 {
 
     color_code border;
-    // #ifdef _WIN32
-    // border = RED;
-    // #else
+    #ifdef _WIN32
+    border = RED;
+    #else
     border = DARKRED;
-    // #endif
+    #endif
 
     Perimeter warnPerim(RADIOACT, RADIOACT, RADIOACT, RADIOACT, INV_PENT, INV_PENT, YELLOW, BLACK, border, BLACK);
     std::size_t horz_char = tcols();
@@ -1148,11 +1148,11 @@ RollScreen::RollScreen(stats inStats, ScreenVals& primaryScreen)
     rollScreen->xyLimits.maxY = 10 + addRow;
 
     color_code border;
-    // #ifdef _WIN32
-    // border = RED;
-    // #else
+    #ifdef _WIN32
+    border = RED;
+    #else
     border = DARKRED;
-    // #endif
+    #endif
 
     for(std::size_t i = 1; i < 10 + addRow; ++i){
         for(std::size_t j = 1; j < maxLen + 6; ++j){
@@ -1276,13 +1276,13 @@ void ListHighlight::createListScreen(ScreenVals& inScreen, std::vector<std::stri
 {
     color_code textCol;
     color_code bgCol;
-    // #ifdef _WIN32
-    //     textCol = BLUE;
-    //     bgCol = LIGHTGREY;
-    // #else
+    #ifdef _WIN32
+        textCol = BLUE;
+        bgCol = LIGHTGREY;
+    #else
         textCol = DARKBLUE;
         bgCol = WHITE;
-    // #endif
+    #endif
 
 
     int titlePos = inScreen.xyLimits.maxX - (inScreen.xyLimits.maxX - inScreen.xyLimits.minX) / 2 - inTitle.size() / 2 - 1;
@@ -1319,11 +1319,11 @@ void ListHighlight::createListPerimeter(ScreenVals& inScreen, std::vector<int> i
 {
     //printf("ListPerimeter\r\n");
     color_code optionClr;
-    // #ifdef _WIN32
-    // optionClr = RED;
-    // #else
+    #ifdef _WIN32
+    optionClr = RED;
+    #else
     optionClr = DARKRED;
-    // #endif
+    #endif
 
     for(int i = inScreen.xyLimits.minY; i <= inScreen.xyLimits.maxY; ++i){
         for(int j = inScreen.xyLimits.minX; j <= inScreen.xyLimits.maxX; ++j){
