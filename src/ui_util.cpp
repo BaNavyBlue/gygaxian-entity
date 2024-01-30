@@ -186,9 +186,9 @@ int AlignOptWindow::getOptIdx()
     return _aList.size();
 }
 
-PrintInfo::PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals* primary, int* horz, int* vert)
+PrintInfo::PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals& primary, int horz, int vert)
 {
-    _primaryScreen = primary;
+    _primaryScreen = std::make_shared<ScreenVals>(primary);
     _horz = horz;
     _vert = vert;
     _character = &chrctr;
@@ -743,23 +743,23 @@ void PrintInfo::createPrimary()
     std::string options2 = "Create New (P)arty";
     int msg1L = line1.size()/2;
     int msg2L = line2.size()/2;
-    for(std::size_t i = 0; i < *_vert; ++i){
-        for(std::size_t j = 0; j < *_horz; ++j){
-            if(i == *_vert/2 - 1 && j == *_horz/2 - msg1L){
+    for(std::size_t i = 0; i < _vert; ++i){
+        for(std::size_t j = 0; j < _horz; ++j){
+            if(i == _vert/2 - 1 && j == _horz/2 - msg1L){
                 for(std::size_t k = 0; k < line1.size(); ++k){
                     _primaryScreen->charMap[i][j] = line1[k];
                     _primaryScreen->colorMap[i][j] = GREEN;
                     _primaryScreen->bGColorMap[i][j++] = BLACK;
                 }
                 j--;
-            } else if(i == *_vert/2 && j == *_horz/2 - msg2L){
+            } else if(i == _vert/2 && j == _horz/2 - msg2L){
                 for(std::size_t k = 0; k < line2.size(); ++k){
                     _primaryScreen->charMap[i][j] = line2[k];
                     _primaryScreen->colorMap[i][j] = GREEN;
                     _primaryScreen->bGColorMap[i][j++] = BLACK;
                 }
                 j--;
-            } else if (i == *_vert - 1 && j == 0){
+            } else if (i == _vert - 1 && j == 0){
                 _primaryScreen->charMap[i][j] = 0x2551;
                 _primaryScreen->colorMap[i][j] = border;
                 _primaryScreen->bGColorMap[i][j++] = WHITE;
@@ -784,23 +784,23 @@ void PrintInfo::createPrimary()
                 _primaryScreen->charMap[i][j] = 0x2554;
                 _primaryScreen->colorMap[i][j] = GREEN;
                 _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if(i == 0 && j == *_horz - 1){
+            } else if(i == 0 && j == _horz - 1){
                 _primaryScreen->charMap[i][j] = 0x2557;
                 _primaryScreen->colorMap[i][j] = GREEN;
                 _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if(i == *_vert - 2 && j == 0) {
+            } else if(i == _vert - 2 && j == 0) {
                 _primaryScreen->charMap[i][j] = 0x255A; 
                 _primaryScreen->colorMap[i][j] = GREEN;
                 _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if(i == *_vert - 2 && j == *_horz - 1){
+            } else if(i == _vert - 2 && j == _horz - 1){
                 _primaryScreen->charMap[i][j] = 0x255D;
                 _primaryScreen->colorMap[i][j] = GREEN;
                 _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if(i == 0 || i == *_vert - 2) {
+            } else if(i == 0 || i == _vert - 2) {
                 _primaryScreen->charMap[i][j] = 0x2550; 
                 _primaryScreen->colorMap[i][j] = GREEN;
                 _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if ((j == 0 || j == *_horz - 1) && i < *_vert - 1){
+            } else if ((j == 0 || j == _horz - 1) && i < _vert - 1){
                 _primaryScreen->charMap[i][j] = 0x2551;
                 _primaryScreen->colorMap[i][j] = GREEN;
                 _primaryScreen->bGColorMap[i][j] = BLACK;
@@ -818,8 +818,8 @@ void PrintInfo::drawPrimary()
 {
     cls();
     locate(1,1);
-    for(std::size_t i = 0; i < *_vert; ++i){
-        for(std::size_t j = 0; j < *_horz; ++j){
+    for(std::size_t i = 0; i < _vert; ++i){
+        for(std::size_t j = 0; j < _horz; ++j){
             int forPrint = _primaryScreen->charMap[i][j];
                 
                 locate(j + 1, i + 1);
@@ -1380,10 +1380,11 @@ ScreenVals& ListHighlight::getScreen()
     return *_listScreen;
 }
 
-ListHighlightPair::ListHighlightPair(std::vector<std::string> inList, ScreenVals &primaryScreen, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange)
+ListHighlightPair::ListHighlightPair(std::vector<std::string>& inList, std::vector<Entity>& inPlayers, ScreenVals &primaryScreen, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange)
 {
     _perim = inPerim;
     _list = inList;
+    _players = inPlayers;
     _title = inName;
     _destTitle = destTitle;
     _options = inOptions;
@@ -1435,19 +1436,32 @@ void ListHighlightPair::navigateSelection()
             _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
             _destListScreen->xyLimits.maxY = vert_char - 3;
 
-            createListPerimeter(*_listScreen, _options);
-            createListScreen(*_listScreen, _list, _title);
+            //createListPerimeter(*_listScreen, _options);
+            //createListScreen(*_listScreen, _list, _title);
+            listNavigate();
             createListPerimeter(*_destListScreen, _destOptions);
             createListScreen(*_destListScreen, _destList, _destTitle);
             drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
-            drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);        }
+            drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);
+        }
         
         if(kbhit()){
             char k = getkey();
             if(std::tolower(k) == 'a') {
                 printf("a pressed:");
             } else if(std::tolower(k) == 'v'){
-                printf("v pressed:");
+            DrawRange infoRange;
+                if(_players.size() > 0){
+                    infoRange.minX = 1;
+                    infoRange.minY = 1;
+                    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+                    PrintInfo showChar(_players.at(_currPos), infoRange, rollPerim, *_primaryScreen, tcols(), trows());
+                    listNavigate();
+                    createListPerimeter(*_destListScreen, _destOptions);
+                    createListScreen(*_destListScreen, _destList, _destTitle);
+                    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                    drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);
+                }
             } else if(k == KEY_UP){
                 if(_currPos > 0){
                     _prevPos = _currPos;
@@ -1493,7 +1507,7 @@ void ListHighlightPair::listNavigate()
     }
 
     for(int i = _listScreen->xyLimits.minY + 3; i < _listScreen->xyLimits.maxY - 1; ++i){
-        int idxOffset = _currPos - _listScreen->xyLimits.maxY + 6;
+        //int idxOffset = _currPos - _listScreen->xyLimits.maxY + 6;
         
         if(_currPos > _listScreen->xyLimits.maxY - 6 + _listStartIdx){
             _listStartIdx++;
@@ -1520,9 +1534,19 @@ void ListHighlightPair::listNavigate()
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);     
 }
 
+void ListHighlightPair::destNavigate()
+{
+
+}
+
 ScreenVals& ListHighlightPair::getDestScreen()
 {
     return *_destListScreen;
+}
+
+std::vector<Entity>& ListHighlightPair::getEntityList()
+{
+    return _players;
 }
 
 loadCharacterList::loadCharacterList()
@@ -1546,7 +1570,7 @@ loadCharacterList::loadCharacterList()
     }
 }
 
-std::vector<std::string> loadCharacterList::getCharList()
+std::vector<std::string>& loadCharacterList::getCharList()
 {
     return _charList;
 }
@@ -1555,6 +1579,11 @@ std::vector<std::string> loadCharacterList::getPathList()
 {
     return _pathList;
 } 
+
+std::vector<Entity>& loadCharacterList::getEntityList()
+{
+    return _players;
+}
 
 void clearPrevScreen(const std::vector<ScreenVals>& screens)
 {

@@ -2,73 +2,75 @@
     "data":{
         "name":"test",
         "alignment":0,
-        "sex":0,
-        "race":2,
+        "sex":3,
+        "race":3,
         "level":1,
-        "maxHP":6,
-        "curHP":6,
-        "weightAllow":200,
-        "totalWeight":86,
-        "class":0,
+        "maxHP":5,
+        "curHP":5,
+        "weightAllow":350,
+        "totalWeight":40,
+        "armorRating":10,
+        "class":{
+            "count":1,
+            "index":{
+                "0":7
+            }
+        },
+        "experience":{
+            "count":1,
+            "index":{
+                "0":0
+            }
+        },
         "money":{
-            "gold":80,
+            "gold":40,
             "silver":0,
             "copper":0,
             "electrum":0,
             "platinum":0
         },
         "inventory":{
-            "count":2,
+            "count":0,
             "index":{
-                "0":{
-                    "itemID":0,
-                    "type":2,
-                    "count":2
-                },
-                "1":{
-                    "itemID":1,
-                    "type":2,
-                    "count":1
-                }
             }
         },
         "stats":{
-            "strength":9,
+            "strength":11,
             "excStrength":0,
-            "intelligence":17,
-            "wisdom":10,
-            "dexterity":8,
-            "constitution":15,
-            "charisma":8,
-            "raceCharisma":10
+            "intelligence":15,
+            "wisdom":11,
+            "dexterity":14,
+            "constitution":10,
+            "charisma":17,
+            "raceCharisma":17
         },
         "modStats":{
-            "strength":9,
+            "strength":11,
             "excStrength":0,
-            "intelligence":17,
-            "wisdom":10,
-            "dexterity":8,
-            "constitution":15,
-            "charisma":8,
-            "raceCharisma":10
+            "intelligence":15,
+            "wisdom":11,
+            "dexterity":14,
+            "constitution":10,
+            "charisma":17,
+            "raceCharisma":17
         },
         "strengthTable":{
-            "hitProb":-1,
+            "hitProb":0,
             "damageAdj":0,
-            "weightAllowMod":-150,
-            "openDoors":1,
-            "bendBarsLiftGatesPer":0
+            "weightAllowMod":0,
+            "openDoors":2,
+            "bendBarsLiftGatesPer":2
         },
         "wisTable":{
             "magicAttackAdj":0,
             "spellBonus":0,
-            "spellFailPer":15
+            "spellFailPer":10
         },
         "intTable":{
-            "chanceToKnowPer":75,
-            "minimumSpellsPer":8,
-            "maximumSpellsPer":14,
-            "possibleAddLang":6
+            "chanceToKnowPer":65,
+            "minimumSpellsPer":7,
+            "maximumSpellsPer":11,
+            "possibleAddLang":4
         },
         "dexTable":{
             "reactAttkAdj":0,
@@ -82,20 +84,26 @@
             "hideInShadows":0
         },
         "consTbl":{
-            "hpAdj":1,
-            "sysShockSurPer":91,
-            "resurSurvPer":94
+            "hpAdj":0,
+            "sysShockSurPer":70,
+            "resurSurvPer":75
         },
         "charTbl":{
-            "maxHenchMen":4,
-            "loyaltyBasePer":0,
-            "reactAdjustPer":0
+            "maxHenchMen":10,
+            "loyaltyBasePer":30,
+            "reactAdjustPer":30
         },
         "languages":{
-            "count":2,
+            "count":8,
             "index":{
                 "0":10,
-                "1":6
+                "1":3,
+                "2":2,
+                "3":0,
+                "4":1,
+                "5":4,
+                "6":6,
+                "7":11
             }
         }
     }

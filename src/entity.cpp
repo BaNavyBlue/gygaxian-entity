@@ -1191,7 +1191,29 @@ bool Entity::saveChar()
     outTxt += "        \"curHP\":" + std::to_string(_curHitPoints) + ",\r\n";
     outTxt += "        \"weightAllow\":" + std::to_string(_weightAllowedGP) + ",\r\n";
     outTxt += "        \"totalWeight\":" + std::to_string(_totalWeightGP) + ",\r\n";
-    outTxt += "        \"class\":" + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
+    outTxt += "        \"armorRating\":" + std::to_string(_armorRating) + ",\r\n";
+    outTxt += "        \"class\":{\r\n";// + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
+    outTxt += "            \"count\":" + std::to_string(_chrClass.size()) + ",\r\n";
+    outTxt += "            \"index\":{\r\n";
+    for(std::size_t i = 0; i < _chrClass.size(); ++i){
+        outTxt += "                \"" + std::to_string(i) + "\":" + std::to_string(_chrClass[i]);
+        if(i < _chrClass.size() - 1){
+            outTxt += ",\r\n";
+        } else {
+            outTxt += "\r\n            }\r\n        },\r\n";
+        }
+    }
+    outTxt += "        \"experience\":{\r\n";// + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
+    outTxt += "            \"count\":" + std::to_string(_experience.size()) + ",\r\n";
+    outTxt += "            \"index\":{\r\n";
+    for(std::size_t i = 0; i < _experience.size(); ++i){
+        outTxt += "                \"" + std::to_string(i) + "\":" + std::to_string(_experience[i]);
+        if(i < _experience.size() - 1){
+            outTxt += ",\r\n";
+        } else {
+            outTxt += "\r\n            }\r\n        },\r\n";
+        }
+    }
     outTxt += "        \"money\":{\r\n";
     outTxt += "            \"gold\":" + std::to_string(_money.gold) + ",\r\n";
     outTxt += "            \"silver\":" + std::to_string(_money.silver) + ",\r\n";
@@ -1324,8 +1346,7 @@ void Entity::loadEntity(std::string file)
     _alignment = (ALIGNMENT)uint64_t(charData["data"]["alignment"]);
     _sex = (SEX)uint64_t(charData["data"]["sex"]);
     _race = (RACE)uint64_t(charData["data"]["race"]);
-    // _chrClass is a vector of CHAR_CLASS ENUMS
-    _chrClass.push_back((CHAR_CLASS)uint64_t(charData["data"]["class"]));
+
     _level = uint64_t(charData["data"]["level"]);
     _hitPointsBase = uint64_t(charData["data"]["maxHP"]);
     _curHitPoints = uint64_t(charData["data"]["curHP"]);
@@ -1338,6 +1359,7 @@ void Entity::loadEntity(std::string file)
     _stats.raceCharisma = uint64_t(charData["data"]["stats"]["raceCharisma"]);
     _weightAllowedGP = uint64_t(charData["data"]["weightAllow"]);
     _totalWeightGP = uint64_t(charData["data"]["totalWeight"]);
+    _armorRating = uint64_t(charData["data"]["armorRating"]);
 
     _money.gold = uint64_t(charData["data"]["money"]["gold"]);
     _money.silver = uint64_t(charData["data"]["money"]["silver"]);
@@ -1389,6 +1411,20 @@ void Entity::loadEntity(std::string file)
         std::string idx = std::to_string(i);
         _languages.push_back((LANGUAGE)(uint64_t(charData["data"]["languages"]["index"][idx])));
     }
+
+    // _chrClass is a vector of CHAR_CLASS ENUMS
+    //_chrClass.push_back((CHAR_CLASS)uint64_t(charData["data"]["class"]));
+    for(int i = 0; i < int64_t(charData["data"]["class"]["count"]); ++i){
+        std::string idx = std::to_string(i);
+        _chrClass.push_back((CHAR_CLASS)(uint64_t(charData["data"]["class"]["index"][idx])));
+    }
+
+    //_chrClass.push_back((CHAR_CLASS)uint64_t(charData["data"]["class"]));
+    for(int i = 0; i < int64_t(charData["data"]["experience"]["count"]); ++i){
+        std::string idx = std::to_string(i);
+        _experience.push_back((uint64_t(charData["data"]["experience"]["index"][idx])));
+    }
+
     setRaceSkillType();
     // std::cout << "\r\nPrinting Loaded Character .json" << std::endl;
     // std::cout << "Name: " << _name << std::endl;

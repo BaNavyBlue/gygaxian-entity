@@ -80,9 +80,9 @@ public:
 
 class PrintInfo{
 protected:
-    ScreenVals* _primaryScreen;
-    int* _horz;
-    int* _vert;
+    std::shared_ptr<ScreenVals> _primaryScreen;
+    int _horz;
+    int _vert;
     std::vector<std::vector<std::string>> _contents;
     std::vector<std::shared_ptr<ScreenVals>> _infoScreen;
     Perimeter _infoBoxPerim;
@@ -103,7 +103,7 @@ protected:
     void createPrimary();
     void drawPrimary();
 public:
-    PrintInfo(Entity& chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals* primary, int* horz, int* vert);
+    PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals& primary, int horz, int vert);
 };
 
 class WarnMessage{
@@ -152,14 +152,17 @@ private:
     std::string _destTitle;
     std::shared_ptr<ScreenVals> _destListScreen;
     std::vector<int> _destOptions;
+    std::vector<Entity> _players;
     int _destCurrPos = 0;
     int _destPrevPos = 0;
     int _destStartIdx = 0;
     void navigateSelection() override;
     void listNavigate() override;
+    void destNavigate();
 public:
-    ListHighlightPair(std::vector<std::string> inList, ScreenVals& primaryScreen, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
+    ListHighlightPair(std::vector<std::string>& inList, std::vector<Entity>& inPlayers, ScreenVals& primaryScreen, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getDestScreen();
+    std::vector<Entity>& getEntityList();
 };
 
 class loadCharacterList{
@@ -169,8 +172,9 @@ private:
     std::vector<Entity> _players;
 public:
     loadCharacterList();
-    std::vector<std::string> getCharList();
-    std::vector<std::string> getPathList();  
+    std::vector<std::string>& getCharList();
+    std::vector<std::string> getPathList();
+    std::vector<Entity>& getEntityList();  
 };
 
 #endif //UI_UTIL_H

@@ -110,7 +110,7 @@ int main(){
                 }
                 
 
-                ListHighlightPair partyBuildList(charList.getCharList(), primaryScreen, "Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
+                ListHighlightPair partyBuildList(charList.getCharList(), charList.getEntityList(), primaryScreen,"Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
                 //printf("%s\r\n", options.c_str());
             } 
             // else if (k == KEY_LEFT){drawPrimary();}
@@ -236,7 +236,7 @@ void createBruteForceScreen()
     DrawRange infoRange;
     infoRange.minX = 1;
     infoRange.minY = 1;
-    PrintInfo showChar(dude, infoRange, rollPerim, &primaryScreen, &horz_char, &vert_char);
+    PrintInfo showChar(dude, infoRange, rollPerim, primaryScreen, horz_char, vert_char);
     screenVec.clear();
 }
 
@@ -490,7 +490,7 @@ void createRollScreen()
     DrawRange infoRange;
     infoRange.minX = 1;
     infoRange.minY = 1;
-    PrintInfo showChar(dude, infoRange, rollPerim, &primaryScreen, &horz_char, &vert_char);
+    PrintInfo showChar(dude, infoRange, rollPerim, primaryScreen, horz_char, vert_char);
 }
 
 bool createRaceScreen(RACE &newRace, stats& inStats, ScreenVals& inScreen, ScreenVals& inScreen2, ScreenVals& inScreen3)
