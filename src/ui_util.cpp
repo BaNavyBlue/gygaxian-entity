@@ -1448,7 +1448,19 @@ void ListHighlightPair::navigateSelection()
         if(kbhit()){
             char k = getkey();
             if(std::tolower(k) == 'a') {
-                printf("a pressed:");
+                bool idx_found = false;
+                for(int i = 0; i < _destIdx.size(); ++i){
+                    if(_currPos == _destIdx[i]){
+                        idx_found = true;
+                    }
+                }
+                if(!idx_found){
+                    _destIdx.push_back(_currPos);
+                    _destList.push_back(_list[_currPos]);
+                    createListPerimeter(*_destListScreen, _destOptions);
+                    createListScreen(*_destListScreen, _destList, _destTitle);
+                    drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);
+                }
             } else if(std::tolower(k) == 'v'){
             DrawRange infoRange;
                 if(_players.size() > 0){
@@ -1475,7 +1487,80 @@ void ListHighlightPair::navigateSelection()
                     listNavigate();
                 }
             } else if (k == KEY_RIGHT){
+                navigateDestination();
+            }
+            // else if (k == KEY_ESCAPE) {
+            //     drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
+            //     return false;
+            // }
+        }
+    }
+}
 
+void ListHighlightPair::navigateDestination()
+{
+    char choice;
+    std::size_t horz_char = tcols();
+    std::size_t vert_char = trows();
+    while(true){
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if(horz_char != new_horz || vert_char != new_vert){
+            horz_char = new_horz;
+            vert_char = new_vert;
+            createPrimary(*_primaryScreen);
+            drawPrimary(*_primaryScreen);
+
+            _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
+            _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
+            _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
+            _listScreen->xyLimits.maxY = _cornerDims.maxY = vert_char - 3;
+
+            _destListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
+            _destListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
+            _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
+            _destListScreen->xyLimits.maxY = vert_char - 3;
+
+            //createListPerimeter(*_listScreen, _options);
+            //createListScreen(*_listScreen, _list, _title);
+            listNavigate();
+            createListPerimeter(*_destListScreen, _destOptions);
+            createListScreen(*_destListScreen, _destList, _destTitle);
+            drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+            drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);
+        }
+        
+        if(kbhit()){
+            char k = getkey();
+            if(std::tolower(k) == 'r') {
+
+            } else if(std::tolower(k) == 'v'){
+                DrawRange infoRange;
+                if(_players.size() > 0){
+                    infoRange.minX = 1;
+                    infoRange.minY = 1;
+                    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+                    PrintInfo showChar(_players.at(_currPos), infoRange, rollPerim, *_primaryScreen, tcols(), trows());
+                    listNavigate();
+                    createListPerimeter(*_destListScreen, _destOptions);
+                    createListScreen(*_destListScreen, _destList, _destTitle);
+                    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                    drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);
+                }
+            } else if(k == KEY_UP){
+                if(_destCurrPos > 0){
+                    _destPrevPos = _destCurrPos;
+                    _destCurrPos--;
+                    destNavigate();
+                }
+            } else if(k == KEY_DOWN){
+                if(_destCurrPos < _destList.size() - 1){
+                    _destPrevPos = _destCurrPos;
+                    _destCurrPos++;
+                    destNavigate();
+                }
+            } else if (k == KEY_LEFT){
+                break;
             }
             // else if (k == KEY_ESCAPE) {
             //     drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
@@ -1514,6 +1599,7 @@ void ListHighlightPair::listNavigate()
         } else if(_currPos < _listStartIdx){
             _listStartIdx = _currPos;
         }
+
         int strdx = i - (_listScreen->xyLimits.minY + 3) + _listStartIdx;
         
         if (strdx < _list.size()){
@@ -1536,8 +1622,58 @@ void ListHighlightPair::listNavigate()
 
 void ListHighlightPair::destNavigate()
 {
+    color_code textCol;
+    color_code bgCol;
+    #ifdef _WIN32
+        textCol = BLUE;
+        bgCol = GREY;
+    #else
+        textCol = DARKBLUE;
+        bgCol = WHITE;
+    #endif
+    
+    createListPerimeter(*_destListScreen, _destOptions);
 
+    int titlePos = _destListScreen->xyLimits.maxX - (_destListScreen->xyLimits.maxX - _destListScreen->xyLimits.minX) / 2 - _destTitle.size() / 2 - 1;
+
+    for(int i = 0; i < _title.size(); ++i){
+        _destListScreen->charMap[_destListScreen->xyLimits.minY + 1][i + titlePos] = _destTitle[i];
+        _destListScreen->colorMap[_destListScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
+    }
+
+    for(int i = _destListScreen->xyLimits.minY + 3; i < _destListScreen->xyLimits.maxY - 1; ++i){
+        //int idxOffset = _currPos - _destListScreen->xyLimits.maxY + 6;
+        
+        if(_destCurrPos > _destListScreen->xyLimits.maxY - 6 + _destStartIdx){
+            _destStartIdx++;
+        } else if(_destCurrPos < _destStartIdx){
+            _destStartIdx = _destCurrPos;
+        }
+
+        int strdx = i - (_destListScreen->xyLimits.minY + 3) + _destStartIdx;
+        
+        if (strdx < _destList.size()){
+            for(int j = 0; j < _destList[strdx].size(); ++j){
+                if(strdx == _destCurrPos){
+                    _destPrevPos = _destCurrPos;
+                    _destListScreen->charMap[i][j + _destListScreen->xyLimits.minX + 1] = _destList[strdx][j];
+                    _destListScreen->colorMap[i][j + _destListScreen->xyLimits.minX + 1] = textCol;
+                    _destListScreen->bGColorMap[i][j + _destListScreen->xyLimits.minX + 1] = bgCol;
+                } else {
+                    _destListScreen->charMap[i][j + _destListScreen->xyLimits.minX + 1] = _destList[strdx][j];
+                    _destListScreen->colorMap[i][j + _destListScreen->xyLimits.minX + 1] = YELLOW;
+                    _destListScreen->bGColorMap[i][j + _destListScreen->xyLimits.minX + 1] = BLACK;
+                }
+            }
+        }
+    }   
+    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_destListScreen);     
 }
+
+// void ListHighlightPair::destNavigate()
+// {
+
+// }
 
 ScreenVals& ListHighlightPair::getDestScreen()
 {

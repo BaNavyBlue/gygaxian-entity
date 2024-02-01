@@ -131,7 +131,7 @@ protected:
     //std::vector<std::vector<FrmtChar>> _selScreen;
     int _currPos = 0;
     int _prevPos = 0;
-    int _listStartIdx;
+    int _listStartIdx = 0;
     Perimeter _perim;
     DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
@@ -149,6 +149,7 @@ public:
 class ListHighlightPair:public ListHighlight{
 private:
     std::vector<std::string> _destList;
+    std::vector<int> _destIdx;
     std::string _destTitle;
     std::shared_ptr<ScreenVals> _destListScreen;
     std::vector<int> _destOptions;
@@ -157,6 +158,7 @@ private:
     int _destPrevPos = 0;
     int _destStartIdx = 0;
     void navigateSelection() override;
+    void navigateDestination();
     void listNavigate() override;
     void destNavigate();
 public:
