@@ -132,11 +132,12 @@ protected:
     int _currPos = 0;
     int _prevPos = 0;
     int _listStartIdx = 0;
+    bool _highlightList = true;
     Perimeter _perim;
     DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
     std::shared_ptr<ScreenVals> _primaryScreen;
-    void createListScreen(ScreenVals& inScreen, std::vector<std::string> inList, std::string inTitle);
+    void createListScreen(ScreenVals& inScreen, std::vector<std::string> inList, std::string inTitle, bool highlight);
     void createListPerimeter(ScreenVals& inScreen, std::vector<int> inOpts);
     virtual void navigateSelection();
     virtual void listNavigate();
@@ -157,8 +158,9 @@ private:
     int _destCurrPos = 0;
     int _destPrevPos = 0;
     int _destStartIdx = 0;
+    bool _highlightDest = false;
     void navigateSelection() override;
-    void navigateDestination();
+    char navigateDestination();
     void listNavigate() override;
     void destNavigate();
 public:
