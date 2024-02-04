@@ -19,7 +19,7 @@ set(CMAKE_CXX_FLAGS "-g")
 # Hint: Be sure to specify the source file as tutorial.cxx
 include_directories(./include)
 
-add_executable(ui-test ui-test.cpp "src/rogueutil.c" src/char_class.cpp src/dice_roll.cpp src/entity.cpp src/items.cpp src/simdjson.cpp src/skills.cpp src/StatHelpers.cpp src/ui_util.cpp)
+add_executable(ui-test ui-test.cpp "src/rogueutil.c" src/char_class.cpp src/dice_roll.cpp src/entity.cpp src/items.cpp src/simdjson.cpp src/skills.cpp src/StatHelpers.cpp src/ui_util.cpp src/party.cpp)
 # TODO 9: Use target_include_directories to include ${PROJECT_BINARY_DIR}
 #
 #add_library(WindowsHeaders IMPORTED INTERFACE)
