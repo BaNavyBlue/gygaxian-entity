@@ -1,0 +1,10 @@
+{
+    "data":{
+        "members":{
+            "count":1,
+            "index":{
+                "0":"characters/test.json"
+            }
+        }
+    }
+}

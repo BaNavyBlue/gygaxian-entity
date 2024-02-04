@@ -110,7 +110,8 @@ int main(){
                 }
                 
 
-                ListHighlightPair partyBuildList(charList.getCharList(), charList.getEntityList(), primaryScreen,"Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
+                ListHighlightPair partyBuildList(charList.getCharList(), charList.getEntityList(), charList.getPathList(),
+                                                 primaryScreen,"Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
                 //printf("%s\r\n", options.c_str());
             } 
             // else if (k == KEY_LEFT){drawPrimary();}

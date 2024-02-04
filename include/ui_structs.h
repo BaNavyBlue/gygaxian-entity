@@ -20,6 +20,8 @@ const int TL_LINE = 0x256D;
 const int TR_LINE = 0x256E;
 const int BL_LINE = 0x2570;
 const int BR_LINE = 0x256F;
+const int HORZ_LINE = 0x2500;
+const int VERT_LINE = 0x2502;
 
 const int INV_PENT = 0x26E7;
 const int SHLD_CRSS = 0x26E8;

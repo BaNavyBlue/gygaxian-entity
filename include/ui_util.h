@@ -4,6 +4,7 @@
 #include "ui_structs.h"
 #include "StatHelpers.h"
 #include "entity.h"
+#include "party.h"
 
 // Some of these prototypes defined in ui-test.cpp for now.
 void drawPrimary(ScreenVals& primaryScreen);
@@ -127,6 +128,7 @@ class ListHighlight{
 protected:
     std::vector<std::string> _list;
     std::string _title;
+    std::vector<std::string> _pathList;
     std::vector<int> _options;
     //std::vector<std::vector<FrmtChar>> _selScreen;
     int _currPos = 0;
@@ -164,7 +166,10 @@ private:
     void listNavigate() override;
     void destNavigate();
 public:
-    ListHighlightPair(std::vector<std::string>& inList, std::vector<Entity>& inPlayers, ScreenVals& primaryScreen, std::string inName, std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
+    ListHighlightPair(std::vector<std::string>& inList, std::vector<Entity>& inPlayers,
+                      std::vector<std::string>& inPaths, ScreenVals& primaryScreen,
+                      std::string inName, std::string destTitle, std::vector<int> inOptions,
+                      std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getDestScreen();
     std::vector<Entity>& getEntityList();
 };
@@ -177,7 +182,7 @@ private:
 public:
     loadCharacterList();
     std::vector<std::string>& getCharList();
-    std::vector<std::string> getPathList();
+    std::vector<std::string>& getPathList();
     std::vector<Entity>& getEntityList();  
 };
 
