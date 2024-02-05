@@ -41,6 +41,11 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
         _hitPointsBase = _curHitPoints = _chrSkills[0]->rollHP() + _consTbl.hpAdj;
     }
     //unsigned str_mod = 0;
+
+    // Armor Mod;
+    if(_chrClass[0] != MONK){
+        _armorRating += _dexTbl.defenseAdj;
+    }
 }
 
 Entity::~Entity()
