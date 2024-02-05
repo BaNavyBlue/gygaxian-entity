@@ -24,9 +24,6 @@ int main(){
 
     hidecursor();
     setConsoleTitle("Gygaxian-Entity");
-    std::vector<std::string> options;
-    options.push_back("(C)reate New Character");
-    options.push_back("Create New (P)arty");
     createPrimary(primaryScreen, options);
     drawPrimary(primaryScreen);
     //printf("\u26e7\r\n");
@@ -84,19 +81,19 @@ int main(){
                 listDims.minY = primaryScreen.xyLimits.minY + 1;
                 listDims.maxX = tcols() / 3;
                 listDims.maxY = trows() - 3;
-                std::vector<int> options;
+                std::vector<int> listOptions;
                 std::string opts("  (A)dd (V)iew ");
                 
                 // Encode Option Code message as ints for utf8 characters.
                 for(int i = 0; i < opts.size(); ++i){
-                    options.push_back(opts[i]);
+                    listOptions.push_back(opts[i]);
                 }
-                options.push_back(UP_ARROW);
-                options.push_back(DOWN_ARROW);\
+                listOptions.push_back(UP_ARROW);
+                listOptions.push_back(DOWN_ARROW);\
                 for(int i = 0; i < 5; ++i){
-                    options.push_back(' ');
+                    listOptions.push_back(' ');
                 }
-                options.push_back(RIGHT_ARROW);
+                listOptions.push_back(RIGHT_ARROW);
 
                 std::vector<int> destOptions;
                 destOptions.push_back(' ');
@@ -114,7 +111,7 @@ int main(){
                 
 
                 ListHighlightPair partyBuildList(charList.getCharList(), charList.getEntityList(), charList.getPathList(),
-                                                 primaryScreen,"Select Party Member", "Party Members", options, destOptions,listPerim, listDims);
+                                                 primaryScreen,"Select Party Member", "Party Members", listOptions, destOptions,listPerim, listDims);
                 //printf("%s\r\n", options.c_str());
             } 
             // else if (k == KEY_LEFT){drawPrimary();}

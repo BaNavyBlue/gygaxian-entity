@@ -822,6 +822,11 @@ bool raceStatCheck(stats inStats, RACE race)
                 //std::cout << "Halfling constitution bellow 10" << std::endl;
                 return false;
             }
+
+            if(inStats.charisma < 6){ // Halfling cannot be assasin
+                return false;
+            }
+
             return true;
         case HALF_ELF:
            if(inStats.intelligence < 4){

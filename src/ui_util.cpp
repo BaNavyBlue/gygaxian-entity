@@ -1584,6 +1584,8 @@ void ListHighlightPair::navigateSelection()
                     break;
                 }
             } else if (k == KEY_ESCAPE) {
+                createPrimary(*_primaryScreen, options);
+                drawPrimary(*_primaryScreen);
                 drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
                 drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
                         _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,

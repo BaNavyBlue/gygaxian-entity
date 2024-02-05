@@ -32,6 +32,9 @@ const int DOWN_ARROW = 0x2193;
 const int RIGHT_ARROW = 0x2192;
 const int LEFT_ARROW = 0x2190;
 
+// Main Options
+const std::vector<std::string> options = {"(C)reate New Character", "Create New (P)arty"};
+
 // Contains the Colors and coordinates for one character
 struct FrmtChar{
     int symbol;
