@@ -9,7 +9,7 @@
 // Some of these prototypes defined in ui-test.cpp for now.
 void drawPrimary(ScreenVals& primaryScreen);
 void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals& inScreen);
-void createPrimary(ScreenVals& primaryScreen);
+void createPrimary(ScreenVals& primaryScreen, std::vector<std::string> inOpts);
 void createRollScreen();
 void createBruteForceScreen();
 std::vector<CHAR_CLASS> classToForce();
@@ -157,6 +157,7 @@ private:
     std::shared_ptr<ScreenVals> _destListScreen;
     std::vector<int> _destOptions;
     std::vector<Entity> _players;
+    const std::vector<std::string> _optMain = {"[ESC] Back", "(S)ave Party"};
     int _destCurrPos = 0;
     int _destPrevPos = 0;
     int _destStartIdx = 0;

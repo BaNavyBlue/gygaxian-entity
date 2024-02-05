@@ -1407,10 +1407,12 @@ ListHighlightPair::ListHighlightPair(std::vector<std::string>& inList, std::vect
     _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
     _destListScreen->xyLimits.maxY = inRange.maxY;
     
+    createPrimary(*_primaryScreen, _optMain);
     createListPerimeter(*_listScreen, _options);
     createListScreen(*_listScreen, _list, _title, _highlightList);
     createListPerimeter(*_destListScreen, _destOptions);
     createListScreen(*_destListScreen, _destList, _destTitle, _highlightDest);
+    drawPrimary(*_primaryScreen);
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
               _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,
@@ -1429,7 +1431,7 @@ void ListHighlightPair::navigateSelection()
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(*_primaryScreen);
+            createPrimary(*_primaryScreen, _optMain);
             drawPrimary(*_primaryScreen);
 
             _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
@@ -1611,7 +1613,7 @@ char ListHighlightPair::navigateDestination()
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(*_primaryScreen);
+            createPrimary(*_primaryScreen, _optMain);
             drawPrimary(*_primaryScreen);
 
             _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
@@ -1642,7 +1644,10 @@ char ListHighlightPair::navigateDestination()
                 if(_destList.size() > 0){
                     _destList.erase(_destList.begin() + _destCurrPos);
                     _destIdx.erase(_destIdx.begin() + _destCurrPos);
-                    _destCurrPos = 0;
+                    if(_destCurrPos > _destList.size() - 1){
+                        _destCurrPos--;
+                    }
+                    
                     listNavigate();
                     destNavigate();
                     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);

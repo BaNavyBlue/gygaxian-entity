@@ -24,7 +24,10 @@ int main(){
 
     hidecursor();
     setConsoleTitle("Gygaxian-Entity");
-    createPrimary(primaryScreen);
+    std::vector<std::string> options;
+    options.push_back("(C)reate New Character");
+    options.push_back("Create New (P)arty");
+    createPrimary(primaryScreen, options);
     drawPrimary(primaryScreen);
     //printf("\u26e7\r\n");
     // std::string test("\u26e7");
@@ -39,7 +42,7 @@ int main(){
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(primaryScreen);
+            createPrimary(primaryScreen, options);
             drawPrimary(primaryScreen);
         }
         if(kbhit()){
@@ -121,7 +124,7 @@ int main(){
             else if (k == KEY_ESCAPE) {
 				break;
 			} else {
-                createPrimary(primaryScreen);
+                createPrimary(primaryScreen, options);
             }
         }
     }
@@ -747,7 +750,8 @@ SEX selSexScreen(ScreenVals& sexScreen, ScreenVals& inScreen)
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(primaryScreen);
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
             drawPrimary(primaryScreen);
             drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY - 1, inScreen);
             drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
@@ -782,7 +786,8 @@ bool reRollOptions(stats& stats1, stats& stats2, ScreenVals& inScreen)
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(primaryScreen);
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
             drawPrimary(primaryScreen);
             drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, inScreen);
         }
@@ -815,7 +820,8 @@ char selRace(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVa
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(primaryScreen);
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
             drawPrimary(primaryScreen);
             drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1, inScreen1);
             drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1, inScreen2);
@@ -934,7 +940,8 @@ char selClass(char maxIdx, ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenV
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(primaryScreen);
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
             drawPrimary(primaryScreen);
             drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1, inScreen1);
             drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1, inScreen2);
@@ -960,7 +967,8 @@ char selOpt(const std::vector<ScreenVals>& inScreens, int idx)
         if(horz_char != new_horz || vert_char != new_vert){
             horz_char = new_horz;
             vert_char = new_vert;
-            createPrimary(primaryScreen);
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
             drawPrimary(primaryScreen);
             for(int i = 0; i < inScreens.size(); ++i){
                 int offSet = 1;
@@ -986,7 +994,7 @@ std::string getName(ScreenVals& inScreen1, ScreenVals& inScreen2, ScreenVals& in
     return "nothing";
 }
 
-void createPrimary(ScreenVals& primaryScreen)
+void createPrimary(ScreenVals& primaryScreen, std::vector<std::string> inOpts)
 {
     color_code border;
     #ifdef _WIN32
@@ -996,8 +1004,8 @@ void createPrimary(ScreenVals& primaryScreen)
     #endif
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
-    std::string options = "(C)reate New Character";
-    std::string options2 = "Create New (P)arty";
+    //std::string options = "(C)reate New Character";
+    //std::string options2 = "Create New (P)arty";
     int msg1L = line1.size()/2;
     int msg2L = line2.size()/2;
     primaryScreen.xyLimits.maxX = tcols();
@@ -1024,23 +1032,28 @@ void createPrimary(ScreenVals& primaryScreen)
                 primaryScreen.charMap[i][j] = 0x2551;
                 primaryScreen.colorMap[i][j] = border;
                 primaryScreen.bGColorMap[i][j++] = WHITE;
-                for(std::size_t k = 0; k < options.size(); ++k){
-                    primaryScreen.charMap[i][j] = options[k];
+                for(std::size_t opt = 0; opt < inOpts.size(); ++opt){
+                    for(std::size_t k = 0; k < inOpts[opt].size(); ++k){
+                        primaryScreen.charMap[i][j] = inOpts[opt][k];
+                        primaryScreen.colorMap[i][j] = border;
+                        primaryScreen.bGColorMap[i][j++] = WHITE;
+                    }
+                    primaryScreen.charMap[i][j] = 0x2551;
                     primaryScreen.colorMap[i][j] = border;
                     primaryScreen.bGColorMap[i][j++] = WHITE;
                 }
-                primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = border;
-                primaryScreen.bGColorMap[i][j++] = WHITE;
-                for(std::size_t k = 0; k < options2.size(); ++k){
-                    primaryScreen.charMap[i][j] = options2[k];
-                    primaryScreen.colorMap[i][j] = border;
-                    primaryScreen.bGColorMap[i][j++] = WHITE;
-                }
-                primaryScreen.charMap[i][j] = 0x2551;
-                primaryScreen.colorMap[i][j] = border;
-                primaryScreen.bGColorMap[i][j++] = WHITE;
-                //j--;
+                // primaryScreen.charMap[i][j] = 0x2551;
+                // primaryScreen.colorMap[i][j] = border;
+                // primaryScreen.bGColorMap[i][j++] = WHITE;
+                // for(std::size_t k = 0; k < options2.size(); ++k){
+                //     primaryScreen.charMap[i][j] = options2[k];
+                //     primaryScreen.colorMap[i][j] = border;
+                //     primaryScreen.bGColorMap[i][j++] = WHITE;
+                // }
+                // primaryScreen.charMap[i][j] = 0x2551;
+                // primaryScreen.colorMap[i][j] = border;
+                // primaryScreen.bGColorMap[i][j++] = WHITE;
+                j--;
             } else if(i == 0 && j == 0){
                 primaryScreen.charMap[i][j] = 0x2554;
                 primaryScreen.colorMap[i][j] = GREEN;
