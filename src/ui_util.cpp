@@ -1639,7 +1639,16 @@ char ListHighlightPair::navigateDestination()
         if(kbhit()){
             char k = getkey();
             if(std::tolower(k) == 'r') {
-
+                if(_destList.size() > 0){
+                    _destList.erase(_destList.begin() + _destCurrPos);
+                    _destIdx.erase(_destIdx.begin() + _destCurrPos);
+                    _destCurrPos = 0;
+                    listNavigate();
+                    destNavigate();
+                    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                    drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
+                              _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1, *_destListScreen);                
+                }
             } else if(std::tolower(k) == 'v'){
                 DrawRange infoRange;
                 if(_destList.size() > 0){
