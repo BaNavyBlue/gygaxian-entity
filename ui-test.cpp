@@ -62,8 +62,7 @@ int main(){
                     screens.clear();
                     createRollScreen();
                 }
-            }
-            if(std::tolower(k) == 'p') {
+            } else if(std::tolower(k) == 'p') {
                 //printf("p pressed \r\n");
                 loadCharacterList charList;
                 color_code border;
@@ -113,12 +112,34 @@ int main(){
                 ListHighlightPair partyBuildList(charList.getCharList(), charList.getEntityList(), charList.getPathList(),
                                                  primaryScreen,"Select Party Member", "Party Members", listOptions, destOptions,listPerim, listDims);
                 //printf("%s\r\n", options.c_str());
-            } 
-            // else if (k == KEY_LEFT){drawPrimary();}
-			// else if (k == KEY_RIGHT){drawPrimary();}
-			// else if (k == KEY_UP){drawPrimary();}
-			// else if (k == KEY_DOWN){drawPrimary();}
-            else if (k == KEY_ESCAPE) {
+            } else if(std::tolower(k) == 'l'){
+                //printf("p pressed \r\n");
+                //loadCharacterList charList;
+                color_code border;
+                #ifdef _WIN32
+                border = BLUE;
+                #else
+                border = DARKPURPLE;
+                #endif
+                Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
+                         HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
+                listPerim.leftTee = L_TEE_RAIL;
+                listPerim.rightTee = R_TEE_RAIL;
+                DrawRange listDims;
+                listDims.minX = primaryScreen.xyLimits.minX + 1;
+                listDims.minY = primaryScreen.xyLimits.minY + 1;
+                listDims.maxX = tcols() / 3;
+                listDims.maxY = trows() - 3;
+                std::vector<int> listOptions;
+                std::string opts("  (S)elect Party ");
+                
+                // Encode Option Code message as ints for utf8 characters.
+                for(int i = 0; i < opts.size(); ++i){
+                    listOptions.push_back(opts[i]);
+                }
+                listOptions.push_back(UP_ARROW);
+                listOptions.push_back(DOWN_ARROW);
+            } else if (k == KEY_ESCAPE) {
 				break;
 			} else {
                 createPrimary(primaryScreen, options);
@@ -1001,8 +1022,7 @@ void createPrimary(ScreenVals& primaryScreen, std::vector<std::string> inOpts)
     #endif
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
-    //std::string options = "(C)reate New Character";
-    //std::string options2 = "Create New (P)arty";
+
     int msg1L = line1.size()/2;
     int msg2L = line2.size()/2;
     primaryScreen.xyLimits.maxX = tcols();
@@ -1039,17 +1059,6 @@ void createPrimary(ScreenVals& primaryScreen, std::vector<std::string> inOpts)
                     primaryScreen.colorMap[i][j] = border;
                     primaryScreen.bGColorMap[i][j++] = WHITE;
                 }
-                // primaryScreen.charMap[i][j] = 0x2551;
-                // primaryScreen.colorMap[i][j] = border;
-                // primaryScreen.bGColorMap[i][j++] = WHITE;
-                // for(std::size_t k = 0; k < options2.size(); ++k){
-                //     primaryScreen.charMap[i][j] = options2[k];
-                //     primaryScreen.colorMap[i][j] = border;
-                //     primaryScreen.bGColorMap[i][j++] = WHITE;
-                // }
-                // primaryScreen.charMap[i][j] = 0x2551;
-                // primaryScreen.colorMap[i][j] = border;
-                // primaryScreen.bGColorMap[i][j++] = WHITE;
                 j--;
             } else if(i == 0 && j == 0){
                 primaryScreen.charMap[i][j] = 0x2554;

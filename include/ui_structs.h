@@ -33,7 +33,7 @@ const int RIGHT_ARROW = 0x2192;
 const int LEFT_ARROW = 0x2190;
 
 // Main Options
-const std::vector<std::string> options = {"(C)reate New Character", "Create New (P)arty"};
+const std::vector<std::string> options = {"(C)reate New Character", "Create New (P)arty", "(L)oad Party"};
 
 // Contains the Colors and coordinates for one character
 struct FrmtChar{
