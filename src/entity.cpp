@@ -1351,6 +1351,7 @@ void Entity::loadEntity(std::string file)
     _hitPointsBase = uint64_t(charData["data"]["maxHP"]);
     _curHitPoints = uint64_t(charData["data"]["curHP"]);
     _stats.strength = uint64_t(charData["data"]["stats"]["strength"]);
+    _stats.excStren = uint64_t(charData["data"]["stats"]["excStrength"]);
     _stats.intelligence = uint64_t(charData["data"]["stats"]["intelligence"]);
     _stats.wisdom = uint64_t(charData["data"]["stats"]["wisdom"]);
     _stats.dexterity = uint64_t(charData["data"]["stats"]["dexterity"]);
