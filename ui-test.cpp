@@ -64,7 +64,7 @@ int main(){
                 }
             } else if(std::tolower(k) == 'p') {
                 //printf("p pressed \r\n");
-                loadCharacterList charList;
+                LoadCharList charList("characters");
                 color_code border;
                 #ifdef _WIN32
                 border = BLUE;
@@ -109,12 +109,14 @@ int main(){
                 }
                 
 
-                ListHighlightPair partyBuildList(charList.getCharList(), charList.getEntityList(), charList.getPathList(),
+                ListHighlightPair partyBuildList(charList.getFileList(), charList.getEntityList(), charList.getPathList(),
                                                  primaryScreen,"Select Party Member", "Party Members", listOptions, destOptions,listPerim, listDims);
+                createPrimary(primaryScreen, options);
+                drawPrimary(primaryScreen);
                 //printf("%s\r\n", options.c_str());
             } else if(std::tolower(k) == 'l'){
                 //printf("p pressed \r\n");
-                //loadCharacterList charList;
+                LoadPartyList parties("parties");
                 color_code border;
                 #ifdef _WIN32
                 border = BLUE;
@@ -139,6 +141,10 @@ int main(){
                 }
                 listOptions.push_back(UP_ARROW);
                 listOptions.push_back(DOWN_ARROW);
+
+                ListHighlightPartySelect partyList(std::vector<std::string> inList, ScreenVals &primaryScreen, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
+                createPrimary(primaryScreen, options);
+                drawPrimary(primaryScreen);
             } else if (k == KEY_ESCAPE) {
 				break;
 			} else {

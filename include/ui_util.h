@@ -175,16 +175,43 @@ public:
     std::vector<Entity>& getEntityList();
 };
 
-class loadCharacterList{
+class ListHighlightPartySelect: public ListHighlight{
 private:
-    std::vector<std::string> _charList;
+
+public:
+    //ListHighlightPartySelect();
+    ListHighlightPartySelect(std::vector<std::string>& inList, std::vector<Entity>& inPlayers,
+                                     std::vector<std::string>& inPaths, ScreenVals &primaryScreen,
+                                     std::string inName, std::string destTitle, std::vector<int> inOptions,
+                                     std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
+};
+
+class LoadFileList{
+protected:
+    std::vector<std::string> _fileList;
     std::vector<std::string> _pathList;
+public:
+    LoadFileList();
+    LoadFileList(std::string directory);
+    std::vector<std::string>& getFileList();
+    std::vector<std::string>& getPathList(); 
+};
+
+class LoadCharList:public LoadFileList{
+private:
     std::vector<Entity> _players;
 public:
-    loadCharacterList();
-    std::vector<std::string>& getCharList();
-    std::vector<std::string>& getPathList();
-    std::vector<Entity>& getEntityList();  
+    LoadCharList(std::string directory);
+    std::vector<Entity>& getEntityList(); 
 };
+
+class LoadPartyList:public LoadFileList{
+private:
+    std::vector<std::vector<Entity>> _parties;
+public:
+    LoadPartyList(std::string directory); 
+};
+
+
 
 #endif //UI_UTIL_H

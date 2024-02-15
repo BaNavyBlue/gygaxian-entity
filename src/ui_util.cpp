@@ -1541,10 +1541,10 @@ void ListHighlightPair::navigateSelection()
                             break;
                         }
                     } else if(k == KEY_ESCAPE){
-                        drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
-                        drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
-                                _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,
-                                *_primaryScreen);
+                        // drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
+                        // drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
+                        //         _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,
+                        //         *_primaryScreen);
                         break;
                     }
                 }
@@ -1584,12 +1584,12 @@ void ListHighlightPair::navigateSelection()
                     break;
                 }
             } else if (k == KEY_ESCAPE) {
-                createPrimary(*_primaryScreen, options);
-                drawPrimary(*_primaryScreen);
-                drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
-                drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
-                        _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,
-                        *_primaryScreen);
+                // createPrimary(*_primaryScreen, options);
+                // drawPrimary(*_primaryScreen);
+                // drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
+                // drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
+                //         _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,
+                //         *_primaryScreen);
                 break;
             }
         }
@@ -1830,13 +1830,71 @@ std::vector<Entity>& ListHighlightPair::getEntityList()
     return _players;
 }
 
-loadCharacterList::loadCharacterList()
+ListHighlightPartySelect::ListHighlightPartySelect(std::vector<std::string>& inList, std::vector<Entity>& inPlayers,
+                                     std::vector<std::string>& inPaths, ScreenVals &primaryScreen,
+                                     std::string inName, std::string destTitle, std::vector<int> inOptions,
+                                     std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange)
 {
-    const std::filesystem::path characters{"characters"};
+    _perim = inPerim;
+    _list = inList;
+    _pathList = inPaths;
+    //_players = inPlayers;
+    _title = inName;
+    _options = inOptions;
+    _cornerDims = inRange;
+    _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    _primaryScreen = std::make_shared<ScreenVals>(primaryScreen);
+    _listScreen->xyLimits.minX = _cornerDims.minX = inRange.minX;
+    _listScreen->xyLimits.minY = _cornerDims.minY = inRange.minY;
+    _listScreen->xyLimits.maxX = _cornerDims.maxX = inRange.maxX;
+    _listScreen->xyLimits.maxY = _cornerDims.maxY = inRange.maxY;
+    createListPerimeter(*_listScreen, _options);
+    createListScreen(*_listScreen, _list, _title, _highlightList);
+    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+}
+
+LoadFileList::LoadFileList()
+{
+
+}
+
+LoadFileList::LoadFileList(std::string directory)
+{
+    const std::filesystem::path files{directory};
     // std::cout << characters << std::endl;
-    if(std::filesystem::exists(characters)){
+    if(std::filesystem::exists(files)){
         std::vector<std::string> dir;
-        for (auto const& dir_entry : std::filesystem::directory_iterator{characters}) {
+        for (auto const& dir_entry : std::filesystem::directory_iterator{files}) {
+            _pathList.push_back(dir_entry.path().string());
+            std::string fullString(dir_entry.path().string());
+            Entity newEntity(fullString.c_str());
+            std::size_t period = fullString.find_first_of(".");
+            fullString = fullString.substr(0, period);
+            std::size_t slash = fullString.find_first_of("/");
+            fullString = fullString.substr(slash + 1, fullString.size());
+            //printf("%s\r\n", fullString.c_str());
+            _fileList.push_back(fullString); 
+        } 
+    }
+}
+
+std::vector<std::string>& LoadFileList::getFileList()
+{
+    return _fileList;
+}
+
+std::vector<std::string>& LoadFileList::getPathList()
+{
+    return _pathList;
+}
+
+LoadCharList::LoadCharList(std::string directory)
+{
+    const std::filesystem::path files{directory};
+    // std::cout << characters << std::endl;
+    if(std::filesystem::exists(files)){
+        std::vector<std::string> dir;
+        for (auto const& dir_entry : std::filesystem::directory_iterator{files}) {
             _pathList.push_back(dir_entry.path().string());
             std::string fullString(dir_entry.path().string());
             Entity newEntity(fullString.c_str());
@@ -1846,22 +1904,33 @@ loadCharacterList::loadCharacterList()
             std::size_t slash = fullString.find_first_of("/");
             fullString = fullString.substr(slash + 1, fullString.size());
             //printf("%s\r\n", fullString.c_str());
-            _charList.push_back(fullString); 
+            _fileList.push_back(fullString); 
         } 
     }
 }
 
-std::vector<std::string>& loadCharacterList::getCharList()
+LoadPartyList::LoadPartyList(std::string directory)
 {
-    return _charList;
+    const std::filesystem::path files{directory};
+    std::cout << files << std::endl;
+    if(std::filesystem::exists(files)){
+        std::vector<std::string> dir;
+        for (auto const& dir_entry : std::filesystem::directory_iterator{files}) {
+            _pathList.push_back(dir_entry.path().string());
+            std::string fullString(dir_entry.path().string());
+            //Entity newEntity(fullString.c_str());
+            //_players.push_back(newEntity);
+            std::size_t period = fullString.find_first_of(".");
+            fullString = fullString.substr(0, period);
+            std::size_t slash = fullString.find_first_of("/");
+            fullString = fullString.substr(slash + 1, fullString.size());
+            //printf("%s\r\n", fullString.c_str());
+            _fileList.push_back(fullString); 
+        } 
+    }
 }
 
-std::vector<std::string>& loadCharacterList::getPathList()
-{
-    return _pathList;
-} 
-
-std::vector<Entity>& loadCharacterList::getEntityList()
+std::vector<Entity>& LoadCharList::getEntityList()
 {
     return _players;
 }
