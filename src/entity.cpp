@@ -1391,37 +1391,47 @@ void Entity::loadEntity(std::string file)
     _level = uint64_t(charData["data"]["level"]);
     _hitPointsBase = uint64_t(charData["data"]["maxHP"]);
     _curHitPoints = uint64_t(charData["data"]["curHP"]);
-    _stats.strength = uint64_t(charData["data"]["stats"]["strength"]);
-    _stats.excStren = uint64_t(charData["data"]["stats"]["excStrength"]);
-    _stats.intelligence = uint64_t(charData["data"]["stats"]["intelligence"]);
-    _stats.wisdom = uint64_t(charData["data"]["stats"]["wisdom"]);
-    _stats.dexterity = uint64_t(charData["data"]["stats"]["dexterity"]);
-    _stats.constitution = uint64_t(charData["data"]["stats"]["constitution"]);
-    _stats.charisma = uint64_t(charData["data"]["stats"]["charisma"]);
-    _stats.raceCharisma = uint64_t(charData["data"]["stats"]["raceCharisma"]);
+
+    auto stats = charData["data"]["stats"];
+
+    _stats.strength = uint64_t(stats["strength"]);
+    _stats.excStren = uint64_t(stats["excStrength"]);
+    _stats.intelligence = uint64_t(stats["intelligence"]);
+    _stats.wisdom = uint64_t(stats["wisdom"]);
+    _stats.dexterity = uint64_t(stats["dexterity"]);
+    _stats.constitution = uint64_t(stats["constitution"]);
+    _stats.charisma = uint64_t(stats["charisma"]);
+    _stats.raceCharisma = uint64_t(stats["raceCharisma"]);
+
     _weightAllowedGP = uint64_t(charData["data"]["weightAllow"]);
     _totalWeightGP = uint64_t(charData["data"]["totalWeight"]);
     _armorRating = uint64_t(charData["data"]["armorRating"]);
 
-    _money.gold = uint64_t(charData["data"]["money"]["gold"]);
-    _money.silver = uint64_t(charData["data"]["money"]["silver"]);
-    _money.copper = uint64_t(charData["data"]["money"]["copper"]);
-    _money.electrum = uint64_t(charData["data"]["money"]["electrum"]);
-    _money.platinum = uint64_t(charData["data"]["money"]["platinum"]);
+    auto money = charData["data"]["money"];
 
-    _modStats.strength = uint64_t(charData["data"]["modStats"]["strength"]);
-    _modStats.intelligence = uint64_t(charData["data"]["modStats"]["intelligence"]);
-    _modStats.wisdom = uint64_t(charData["data"]["modStats"]["wisdom"]);
-    _modStats.dexterity = uint64_t(charData["data"]["modStats"]["dexterity"]);
-    _modStats.constitution = uint64_t(charData["data"]["modStats"]["constitution"]);
-    _modStats.charisma = uint64_t(charData["data"]["modStats"]["charisma"]);
-    _modStats.raceCharisma = uint64_t(charData["data"]["modStats"]["raceCharisma"]);
+    _money.gold = uint64_t(money["gold"]);
+    _money.silver = uint64_t(money["silver"]);
+    _money.copper = uint64_t(money["copper"]);
+    _money.electrum = uint64_t(money["electrum"]);
+    _money.platinum = uint64_t(money["platinum"]);
 
-    _strTbl.hitProb = int64_t(charData["data"]["strengthTable"]["hitProb"]);
-    _strTbl.damageAdj = int64_t(charData["data"]["strengthTable"]["damageAdj"]);
-    _strTbl.weightAllowMod = int64_t(charData["data"]["strengthTable"]["weightAllowMod"]);
-    _strTbl.openDoors = uint64_t(charData["data"]["strengthTable"]["openDoors"]);
-    _strTbl.bendBarsLiftGatesPer = uint64_t(charData["data"]["strengthTable"]["bendBarsLiftGatesPer"]);
+    auto modStats = charData["data"]["modStats"];
+
+    _modStats.strength = uint64_t(modStats["strength"]);
+    _modStats.intelligence = uint64_t(modStats["intelligence"]);
+    _modStats.wisdom = uint64_t(modStats["wisdom"]);
+    _modStats.dexterity = uint64_t(modStats["dexterity"]);
+    _modStats.constitution = uint64_t(modStats["constitution"]);
+    _modStats.charisma = uint64_t(modStats["charisma"]);
+    _modStats.raceCharisma = uint64_t(modStats["raceCharisma"]);
+
+    auto strengthTable = charData["data"]["strengthTable"];
+
+    _strTbl.hitProb = int64_t(strengthTable["hitProb"]);
+    _strTbl.damageAdj = int64_t(strengthTable["damageAdj"]);
+    _strTbl.weightAllowMod = int64_t(strengthTable["weightAllowMod"]);
+    _strTbl.openDoors = uint64_t(strengthTable["openDoors"]);
+    _strTbl.bendBarsLiftGatesPer = uint64_t(strengthTable["bendBarsLiftGatesPer"]);
 
     _intTbl.chanceToKnowPer = uint64_t(charData["data"]["intTable"]["chanceToKnowPer"]);
     _intTbl.minumumSpellsPerLevel = uint64_t(charData["data"]["intTable"]["minimumSpellsPer"]);
