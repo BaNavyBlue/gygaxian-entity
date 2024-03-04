@@ -54,7 +54,8 @@ protected:
     void setDexThief();
     void setConsTbl();
     void setCharTbl();
-    void setBaseLanguages(); 
+    void setBaseLanguages();
+    void setAlignLanguages();
     void setRaceSkillType();
     void setChrClassSkill(CHAR_CLASS inClass);
     void setMeleeAttkRnd(CHAR_CLASS inClass);

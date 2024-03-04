@@ -71,7 +71,16 @@ enum LANGUAGE{
     KOBOLD,
     BURROWING_ANIMALS,
     COMMON_L, 
-    THIEVES_CANT
+    THIEVES_CANT,
+    CHAO_EV_LANG,
+    CHAO_GD_LANG,
+    CHAO_NU_LANG,
+    LAW_EV_LANG,
+    LAW_GD_LANG,
+    LAW_NU_LANG,
+    NU_EV_LANG,
+    NU_GD_LANG,
+    TRU_NU_LANG
 };
 
 enum EQUIP_TYPE{
@@ -151,7 +160,16 @@ const std::vector<langPair> langPairs = {{ELVISH, "Elvish"},
                                                    {BURROWING_ANIMALS, "Burrowing Animals"},
                                                    {COMMON_L, "Common"},
                                                    {GNOLL, "Gnoll"},
-                                                   {THIEVES_CANT,"Thieves' Cant"}};
+                                                   {THIEVES_CANT,"Thieves' Cant"},
+                                                   {CHAO_EV_LANG, "Chaotic Evil"},
+                                                   {CHAO_GD_LANG, "Chaotic Good"},
+                                                   {CHAO_NU_LANG, "Chaotic Neutral"},
+                                                   {LAW_EV_LANG, "Lawful Evil"},
+                                                   {LAW_GD_LANG, "Lawful Good"},
+                                                   {LAW_NU_LANG, "Lawful Neutral"},
+                                                   {NU_EV_LANG, "Neutral Evil"},
+                                                   {NU_GD_LANG, "Neutral Good"},
+                                                   {TRU_NU_LANG, "True Neutral"}};
 
 struct stats{
     unsigned strength;

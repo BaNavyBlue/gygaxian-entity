@@ -20,6 +20,7 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     setIntTbl();
     setPossLang();
     setBaseLanguages();
+    setAlignLanguages();
     setWisTbl();
     setDexTbl();
     if(_chrClass[0] == THIEF || _chrClass[0] == ASSASSIN){
@@ -1076,6 +1077,41 @@ void Entity::setBaseLanguages(){
             _languages.insert(_languages.end(), {COMMON_L, DWARVISH, GNOMISH, GOBLIN_L, KOBOLD, ORCISH});
             break;
     } 
+}
+
+void Entity::setAlignLanguages()
+{
+    switch(_alignment){
+        case CHAOTIC_EVIL:
+            _languages.push_back(CHAO_EV_LANG);
+            break;
+        case CHAOTIC_GOOD:
+            _languages.push_back(CHAO_GD_LANG);
+            break;
+        case CHAOTIC_NEUTRAL:
+            _languages.push_back(CHAO_NU_LANG);
+            break;
+        case LAWFUL_EVIL:
+            _languages.push_back(LAW_EV_LANG);
+            break;
+        case LAWFUL_GOOD:
+            _languages.push_back(LAW_GD_LANG);
+            break;
+        case LAWFUL_NEUTRAL:
+            _languages.push_back(LAW_NU_LANG);
+            break;
+        case NEUTRAL_EVIL:
+            _languages.push_back(NU_EV_LANG);
+            break;
+        case NEUTRAL_GOOD:
+            _languages.push_back(NU_GD_LANG);
+            break;
+        case TRUE_NEUTRAL:
+            _languages.push_back(TRU_NU_LANG);
+            break;
+        default:
+            break;
+    }
 }
 
 strengthTable Entity::getStrTbl()

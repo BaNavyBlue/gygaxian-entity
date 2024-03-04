@@ -177,10 +177,11 @@ public:
 
 class ListHighlightPartySelect: public ListHighlight{
 private:
-
+    std::vector<std::vector<Entity>> _parties;
+    void navigateSelection() override;
 public:
     //ListHighlightPartySelect();
-    ListHighlightPartySelect(std::vector<std::string>& inList, std::vector<Entity>& inPlayers,
+    ListHighlightPartySelect(std::vector<std::string>& inList, std::vector<std::vector<Entity>>& inParties,
                                      std::vector<std::string>& inPaths, ScreenVals &primaryScreen,
                                      std::string inName, std::string destTitle, std::vector<int> inOptions,
                                      std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
