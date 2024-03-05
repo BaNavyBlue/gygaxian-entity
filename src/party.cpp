@@ -35,3 +35,46 @@ void SaveParty::writePartyJSON()
     }
 }
 
+LoadParty::LoadParty(std::string partyName)
+{
+    _partyName = partyName;
+    getPaths();
+    loadMembers();
+}
+
+void LoadParty::getPaths()
+{
+    std::string path = "parties/" + _partyName + ".json";
+    sj::ondemand::parser parser;
+    sj::padded_string json = sj::padded_string::load(path.c_str());
+    sj::ondemand::document partyData = parser.iterate(json);
+
+    int count = uint64_t(partyData["data"]["members"]["count"]);
+    auto memberPath = partyData["data"]["members"]["index"];
+    
+    for(int i = 0; i < count; ++i){
+        std::stringstream recv;
+        recv << ((memberPath[std::to_string(i)]));
+        //recv >> _name;
+        std::string path = recv.str();
+        // Remove all double-quote characters
+        path.erase(
+            std::remove( path.begin(), path.end(), '\"' ),
+            path.end()
+        );
+        _memberPaths.push_back(path);
+    }   
+}
+
+void LoadParty::loadMembers()
+{
+    for(int i = 0; i < _memberPaths.size(); ++i){
+        Entity newMember(_memberPaths[i].c_str());
+        _party.push_back(newMember);
+    }
+}
+
+std::vector<Entity> LoadParty::getParty()
+{
+    return _party;
+}

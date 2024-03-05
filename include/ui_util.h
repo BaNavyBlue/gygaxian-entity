@@ -178,13 +178,22 @@ public:
 class ListHighlightPartySelect: public ListHighlight{
 private:
     std::vector<std::vector<Entity>> _parties;
+    std::string _partyTitle;
+    //std::vector<std::string> _memberList;
+    std::vector<int> _partyOptions;
+    std::shared_ptr<ScreenVals> _partyListScreen;
+    const std::vector<std::string> _optMain = {"[ESC] Back", "(S)elect Party"};
+    std::vector<std::string> _party;
+    void formatSelectedParty();
     void navigateSelection() override;
+    void listNavigate() override;
+    void populatePartyList();
 public:
     //ListHighlightPartySelect();
     ListHighlightPartySelect(std::vector<std::string>& inList, std::vector<std::vector<Entity>>& inParties,
-                                     std::vector<std::string>& inPaths, ScreenVals &primaryScreen,
-                                     std::string inName, std::string destTitle, std::vector<int> inOptions,
-                                     std::vector<int> destOptions, Perimeter inPerim, DrawRange inRange);
+                                     std::vector<std::string>& inPaths, ScreenVals& primaryScreen,
+                                     std::string inName, std::vector<int> inOptions,
+                                     Perimeter inPerim, DrawRange inRange);
 };
 
 class LoadFileList{
@@ -210,7 +219,8 @@ class LoadPartyList:public LoadFileList{
 private:
     std::vector<std::vector<Entity>> _parties;
 public:
-    LoadPartyList(std::string directory); 
+    LoadPartyList(std::string directory);
+    std::vector<std::vector<Entity>>& getParties();
 };
 
 

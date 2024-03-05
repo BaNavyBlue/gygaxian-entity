@@ -88,7 +88,7 @@ int main(){
                     listOptions.push_back(opts[i]);
                 }
                 listOptions.push_back(UP_ARROW);
-                listOptions.push_back(DOWN_ARROW);\
+                listOptions.push_back(DOWN_ARROW);
                 for(int i = 0; i < 5; ++i){
                     listOptions.push_back(' ');
                 }
@@ -141,8 +141,7 @@ int main(){
                 }
                 listOptions.push_back(UP_ARROW);
                 listOptions.push_back(DOWN_ARROW);
-
-                ListHighlightPartySelect partyList(std::vector<std::string> inList, ScreenVals &primaryScreen, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
+                ListHighlightPartySelect partyList(parties.getFileList(), parties.getParties(), parties.getPathList(), primaryScreen, "Parties", listOptions, listPerim, listDims);
                 createPrimary(primaryScreen, options);
                 drawPrimary(primaryScreen);
             } else if (k == KEY_ESCAPE) {
