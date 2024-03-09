@@ -184,16 +184,19 @@ private:
     std::shared_ptr<ScreenVals> _partyListScreen;
     const std::vector<std::string> _optMain = {"[ESC] Back", "(S)elect Party"};
     std::vector<std::string> _party;
+    int _selIdx = 0;
     void formatSelectedParty();
     void navigateSelection() override;
     void listNavigate() override;
     void populatePartyList();
 public:
+    bool partySelected = false;
     //ListHighlightPartySelect();
     ListHighlightPartySelect(std::vector<std::string>& inList, std::vector<std::vector<Entity>>& inParties,
                                      std::vector<std::string>& inPaths, ScreenVals& primaryScreen,
                                      std::string inName, std::vector<int> inOptions,
                                      Perimeter inPerim, DrawRange inRange);
+    std::vector<Entity> returnParty();
 };
 
 class LoadFileList{

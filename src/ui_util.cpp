@@ -2107,7 +2107,10 @@ void ListHighlightPartySelect::navigateSelection()
                             *_primaryScreen);
                     TextInput partyName;
                     Perimeter textPerim(TL_LINE, TR_LINE, BL_LINE, BR_LINE, HORZ_LINE, VERT_LINE, MAGENTA, BLACK, BLUE, BLACK);
-                    
+                    _selIdx = _currPos;
+                    partySelected = true;
+                    break;
+                } else {
                     break;
                 }
             } else if (k == KEY_ESCAPE) {
@@ -2224,6 +2227,11 @@ void ListHighlightPartySelect::formatSelectedParty()
         member += ", Class: " + getClass(curMem.getClass()[0]) + " Align: " + getAlign(curMem.getAlign());
         _party.push_back(member);
     }
+}
+
+std::vector<Entity> ListHighlightPartySelect::returnParty()
+{
+    return _parties[_selIdx];
 }
 
 LoadFileList::LoadFileList()

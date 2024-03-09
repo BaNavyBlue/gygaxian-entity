@@ -26,6 +26,9 @@ int main(){
     setConsoleTitle("Gygaxian-Entity");
     createPrimary(primaryScreen, options);
     drawPrimary(primaryScreen);
+
+    std::vector<Entity> partyVect;
+    bool partyMode = false;
     //printf("\u26e7\r\n");
     // std::string test("\u26e7");
     // printf("%s\r\n", test.c_str());
@@ -142,6 +145,13 @@ int main(){
                 listOptions.push_back(UP_ARROW);
                 listOptions.push_back(DOWN_ARROW);
                 ListHighlightPartySelect partyList(parties.getFileList(), parties.getParties(), parties.getPathList(), primaryScreen, "Parties", listOptions, listPerim, listDims);
+                if(partyList.partySelected){
+                    partyMode = true;
+                    partyVect = partyList.returnParty();
+                    createPrimary(primaryScreen, options);
+                    drawPrimary(primaryScreen);
+                    break;
+                }
                 createPrimary(primaryScreen, options);
                 drawPrimary(primaryScreen);
             } else if (k == KEY_ESCAPE) {
@@ -152,6 +162,9 @@ int main(){
         }
     }
 
+    if(partyMode){
+        std::cout << "Party Pants Activate!" << std::endl;
+    }
 
     cls();
     showcursor();
