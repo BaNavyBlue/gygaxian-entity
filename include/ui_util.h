@@ -148,7 +148,6 @@ public:
     ListHighlight(std::vector<std::string> inList, ScreenVals& primaryScreen, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getScreen();
 };
-
 class ListHighlightPair:public ListHighlight{
 private:
     std::vector<std::string> _destList;
@@ -197,6 +196,7 @@ public:
                                      std::string inName, std::vector<int> inOptions,
                                      Perimeter inPerim, DrawRange inRange);
     std::vector<Entity> returnParty();
+    int getPartyIdx();
 };
 
 class LoadFileList{
@@ -226,6 +226,12 @@ public:
     std::vector<std::vector<Entity>>& getParties();
 };
 
-
+class StartUpInventory{
+private:
+    std::vector<Arms> _arms;
+    std::vector<Armor> _armor;  
+public:
+    StartUpInventory(Entity inChar);
+};
 
 #endif //UI_UTIL_H

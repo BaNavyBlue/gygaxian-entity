@@ -739,7 +739,8 @@ void PrintInfo::createPrimary()
 
     std::string line1 = "Welcome To Gygaxian-Entity";
     std::string line2 = "Character Creator";
-    std::string options = "(C)reate New Character";
+    std::string options = "[ESC] to Quit";
+    std::string options1 = "(C)reate New Character";
     std::string options2 = "Create New (P)arty";
     int msg1L = line1.size()/2;
     int msg2L = line2.size()/2;
@@ -2232,6 +2233,11 @@ void ListHighlightPartySelect::formatSelectedParty()
 std::vector<Entity> ListHighlightPartySelect::returnParty()
 {
     return _parties[_selIdx];
+}
+
+int ListHighlightPartySelect::getPartyIdx()
+{
+    return _selIdx;
 }
 
 LoadFileList::LoadFileList()

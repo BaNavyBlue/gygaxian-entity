@@ -64,10 +64,12 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
 {
     std::stringstream recv;
     _itemID = idx;
-    _itemCount = uint64_t(itemData["data"]["index"][std::to_string(idx)]["count"]);
-    _type = (EQUIP_TYPE)uint64_t(itemData["data"]["index"][std::to_string(idx)]["type"]);
-    _wType = (WEAPON_TYPE)uint64_t(itemData["data"]["index"][std::to_string(idx)]["wType"]);
-    recv << ((itemData["data"]["index"][std::to_string(idx)]["name"]));
+    
+    auto itemRef = itemData["data"]["index"][std::to_string(idx)];
+    _itemCount = uint64_t(itemRef["count"]);
+    _type = (EQUIP_TYPE)uint64_t(itemRef["type"]);
+    _wType = (WEAPON_TYPE)uint64_t(itemRef["wType"]);
+    recv << ((itemRef["name"]));
     _name = recv.str();
 
     _name.erase(
@@ -76,7 +78,7 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
 
     recv.str("");
 
-    recv << ((itemData["data"]["index"][std::to_string(idx)]["descrip"]));
+    recv << ((itemRef["descrip"]));
     _description = recv.str();
 
     _description.erase(
@@ -84,32 +86,46 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
                 _description.end());
 
     std::cout << "[" << _name << "] description: " << _description << std::endl;
-    _value.gold = uint64_t(itemData["data"]["index"][std::to_string(idx)]["money"]["gold"]);
-    _value.silver = uint64_t(itemData["data"]["index"][std::to_string(idx)]["money"]["silver"]);
-    _value.copper = uint64_t(itemData["data"]["index"][std::to_string(idx)]["money"]["copper"]);
-    _value.electrum = uint64_t(itemData["data"]["index"][std::to_string(idx)]["money"]["electrum"]);
-    _value.platinum = uint64_t(itemData["data"]["index"][std::to_string(idx)]["money"]["platinum"]);
-    _weightGP = uint64_t(itemData["data"]["index"][std::to_string(idx)]["weight"]);
-    _smallMedDMG.sidedDie = uint64_t(itemData["data"]["index"][std::to_string(idx)]["smallMedDMG"]["sides"]);
-    _smallMedDMG.maxRange = uint64_t(itemData["data"]["index"][std::to_string(idx)]["smallMedDMG"]["rolls"]);
-    _lrgDMG.sidedDie = uint64_t(itemData["data"]["index"][std::to_string(idx)]["largeDMG"]["sides"]);
-    _lrgDMG.maxRange = uint64_t(itemData["data"]["index"][std::to_string(idx)]["largeDMG"]["rolls"]);
-    _lengthInches = uint64_t(itemData["data"]["index"][std::to_string(idx)]["lengthInch"]);
-    _spaceReqInch = uint64_t(itemData["data"]["index"][std::to_string(idx)]["spaceReq"]);
-    _speedFactor = uint64_t(itemData["data"]["index"][std::to_string(idx)]["speedFactor"]);
-    _fireRAte = uint64_t(itemData["data"]["index"][std::to_string(idx)]["fireRate"]);
-    _rangeInch.shortRange = uint64_t(itemData["data"]["index"][std::to_string(idx)]["range"]["short"]);
-    _rangeInch.medRange = uint64_t(itemData["data"]["index"][std::to_string(idx)]["range"]["medium"]);
-    _rangeInch.longRange = uint64_t(itemData["data"]["index"][std::to_string(idx)]["range"]["long"]);
-    _defAdj.a2 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a2"]);
-    _defAdj.a3 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a3"]);
-    _defAdj.a4 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a4"]);
-    _defAdj.a5 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a5"]);
-    _defAdj.a6 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a6"]);
-    _defAdj.a7 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a7"]);
-    _defAdj.a8 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a8"]);
-    _defAdj.a9 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a9"]);
-    _defAdj.a10 = int64_t(itemData["data"]["index"][std::to_string(idx)]["defenseAdj"]["a10"]);
+    auto money = itemRef["money"];
+    _value.gold = uint64_t(money["gold"]);
+    _value.silver = uint64_t(money["silver"]);
+    _value.copper = uint64_t(money["copper"]);
+    _value.electrum = uint64_t(money["electrum"]);
+    _value.platinum = uint64_t(money["platinum"]);
+    _weightGP = uint64_t(itemRef["weight"]);
+    _smallMedDMG.sidedDie = uint64_t(itemRef["smallMedDMG"]["sides"]);
+    _smallMedDMG.maxRange = uint64_t(itemRef["smallMedDMG"]["rolls"]);
+    _lrgDMG.sidedDie = uint64_t(itemRef["largeDMG"]["sides"]);
+    _lrgDMG.maxRange = uint64_t(itemRef["largeDMG"]["rolls"]);
+    _lengthInches = uint64_t(itemRef["lengthInch"]);
+    _spaceReqInch = uint64_t(itemRef["spaceReq"]);
+    _speedFactor = uint64_t(itemRef["speedFactor"]);
+    _fireRAte = uint64_t(itemRef["fireRate"]);
+    _rangeBase.shortRange = uint64_t(itemRef["range"]["short"]);
+    _rangeBase.medRange = uint64_t(itemRef["range"]["medium"]);
+    _rangeBase.longRange = uint64_t(itemRef["range"]["long"]);
+
+    auto defenseAdj = itemRef["defenseAdj"];
+    _defAdj.a2 = int64_t(defenseAdj["a2"]);
+    _defAdj.a3 = int64_t(defenseAdj["a3"]);
+    _defAdj.a4 = int64_t(defenseAdj["a4"]);
+    _defAdj.a5 = int64_t(defenseAdj["a5"]);
+    _defAdj.a6 = int64_t(defenseAdj["a6"]);
+    _defAdj.a7 = int64_t(defenseAdj["a7"]);
+    _defAdj.a8 = int64_t(defenseAdj["a8"]);
+    _defAdj.a9 = int64_t(defenseAdj["a9"]);
+    _defAdj.a10 = int64_t(defenseAdj["a10"]);
+
+    auto projDefenseAdj = itemRef["projDefenseAdj"];
+    _projDefAdj.a2 = int64_t(projDefenseAdj["a2"]);
+    _projDefAdj.a3 = int64_t(projDefenseAdj["a3"]);
+    _projDefAdj.a4 = int64_t(projDefenseAdj["a4"]);
+    _projDefAdj.a5 = int64_t(projDefenseAdj["a5"]);
+    _projDefAdj.a6 = int64_t(projDefenseAdj["a6"]);
+    _projDefAdj.a7 = int64_t(projDefenseAdj["a7"]);
+    _projDefAdj.a8 = int64_t(projDefenseAdj["a8"]);
+    _projDefAdj.a9 = int64_t(projDefenseAdj["a9"]);
+    _projDefAdj.a10 = int64_t(projDefenseAdj["a10"]);
 }
 
 Arms::~Arms()
@@ -150,4 +166,14 @@ unsigned Arms::getFireRate()
 DefenseAdj Arms::getDefenseAdj()
 {
     return _defAdj;
+}
+
+DefenseAdj Arms::getProjDefenseAdj()
+{
+    return _projDefAdj;
+}
+
+Armor::Armor()
+{
+
 }

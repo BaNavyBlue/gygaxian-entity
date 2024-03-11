@@ -12,6 +12,9 @@
 // naughty globals
 int horz_char = 0;
 int vert_char = 0;
+int start_horz;
+int start_vert;
+
 ScreenVals primaryScreen(VECT_MAX, ' ', GREEN, BLACK);
 
 int main(){
@@ -19,153 +22,176 @@ int main(){
     setlocale(LC_ALL,"");
     srand((unsigned int) time(NULL));
 
-    horz_char = tcols();
-    vert_char = trows();
+    char reset_screen[64];
+
+    sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
+
+    start_horz = horz_char = tcols();
+    start_vert = vert_char = trows();
+
+    sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
+
+    // Console Command to set terminal dimensions
+    std::cout << "\e[8;50;200t";
 
     hidecursor();
     setConsoleTitle("Gygaxian-Entity");
-    createPrimary(primaryScreen, options);
-    drawPrimary(primaryScreen);
 
-    std::vector<Entity> partyVect;
-    bool partyMode = false;
-    //printf("\u26e7\r\n");
-    // std::string test("\u26e7");
-    // printf("%s\r\n", test.c_str());
-    // for(int i = 0; i < test.size(); ++i){
-    //     printf("%c %d\r\n", test.c_str()[i], test.c_str()[i]);
-    // }
-    
-    while(true){
-        std::size_t new_horz = tcols();
-        std::size_t new_vert = trows();
-        if(horz_char != new_horz || vert_char != new_vert){
-            horz_char = new_horz;
-            vert_char = new_vert;
-            createPrimary(primaryScreen, options);
-            drawPrimary(primaryScreen);
-        }
-        if(kbhit()){
-            char k = getkey();
-            if(std::tolower(k) == 'c') {
-                std::vector<std::string> charCreate;
-                charCreate.push_back("Creation Option:");
-                charCreate.push_back("Classic Creation");
-                charCreate.push_back("Brute Force Class");
-                ChooseOpt createOpt(charCreate);
-                std::vector<ScreenVals> screens;
-                screens.push_back(primaryScreen);
-                screens.push_back(createOpt.getScreen());
-                if(createOpt.getChoice(selOpt(screens, charCreate.size() - 1)) == '1'){
-                    clearPrevScreen(screens);
-                    screens.clear();
-                    createBruteForceScreen();
-                } else {
-                    clearPrevScreen(screens);
-                    screens.clear();
-                    createRollScreen();
-                }
-            } else if(std::tolower(k) == 'p') {
-                //printf("p pressed \r\n");
-                LoadCharList charList("characters");
-                color_code border;
-                #ifdef _WIN32
-                border = BLUE;
-                #else
-                border = DARKPURPLE;
-                #endif
-                Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
-                         HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
-                listPerim.leftTee = L_TEE_RAIL;
-                listPerim.rightTee = R_TEE_RAIL;
-                DrawRange listDims;
-                listDims.minX = primaryScreen.xyLimits.minX + 1;
-                listDims.minY = primaryScreen.xyLimits.minY + 1;
-                listDims.maxX = tcols() / 3;
-                listDims.maxY = trows() - 3;
-                std::vector<int> listOptions;
-                std::string opts("  (A)dd (V)iew ");
-                
-                // Encode Option Code message as ints for utf8 characters.
-                for(int i = 0; i < opts.size(); ++i){
-                    listOptions.push_back(opts[i]);
-                }
-                listOptions.push_back(UP_ARROW);
-                listOptions.push_back(DOWN_ARROW);
-                for(int i = 0; i < 5; ++i){
-                    listOptions.push_back(' ');
-                }
-                listOptions.push_back(RIGHT_ARROW);
+    bool quitMain = false;
 
-                std::vector<int> destOptions;
-                destOptions.push_back(' ');
-                std::string destOpts("  (R)emove (V)iew   ");
-                destOptions.push_back(LEFT_ARROW);
-                // Encode Option Code message as ints for utf8 characters.
-                for(int i = 0; i < destOpts.size(); ++i){
-                    destOptions.push_back(destOpts[i]);
-                }
-                destOptions.push_back(UP_ARROW);
-                destOptions.push_back(DOWN_ARROW);\
-                for(int i = 0; i < 5; ++i){
-                    destOptions.push_back(' ');
-                }
-                
+    while(!quitMain){
+        createPrimary(primaryScreen, options);
+        drawPrimary(primaryScreen);
 
-                ListHighlightPair partyBuildList(charList.getFileList(), charList.getEntityList(), charList.getPathList(),
-                                                 primaryScreen,"Select Party Member", "Party Members", listOptions, destOptions,listPerim, listDims);
+        std::vector<Entity> partyVect;
+        std::string partyName;
+        bool partyMode = false;
+        //printf("\u26e7\r\n");
+        // std::string test("\u26e7");
+        // printf("%s\r\n", test.c_str());
+        // for(int i = 0; i < test.size(); ++i){
+        //     printf("%c %d\r\n", test.c_str()[i], test.c_str()[i]);
+        // }
+        
+        while(true){
+            std::size_t new_horz = tcols();
+            std::size_t new_vert = trows();
+            if(horz_char != new_horz || vert_char != new_vert){
+                horz_char = new_horz;
+                vert_char = new_vert;
                 createPrimary(primaryScreen, options);
                 drawPrimary(primaryScreen);
-                //printf("%s\r\n", options.c_str());
-            } else if(std::tolower(k) == 'l'){
-                //printf("p pressed \r\n");
-                LoadPartyList parties("parties");
-                color_code border;
-                #ifdef _WIN32
-                border = BLUE;
-                #else
-                border = DARKPURPLE;
-                #endif
-                Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
-                         HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
-                listPerim.leftTee = L_TEE_RAIL;
-                listPerim.rightTee = R_TEE_RAIL;
-                DrawRange listDims;
-                listDims.minX = primaryScreen.xyLimits.minX + 1;
-                listDims.minY = primaryScreen.xyLimits.minY + 1;
-                listDims.maxX = tcols() / 3;
-                listDims.maxY = trows() - 3;
-                std::vector<int> listOptions;
-                std::string opts("  (S)elect Party ");
-                
-                // Encode Option Code message as ints for utf8 characters.
-                for(int i = 0; i < opts.size(); ++i){
-                    listOptions.push_back(opts[i]);
-                }
-                listOptions.push_back(UP_ARROW);
-                listOptions.push_back(DOWN_ARROW);
-                ListHighlightPartySelect partyList(parties.getFileList(), parties.getParties(), parties.getPathList(), primaryScreen, "Parties", listOptions, listPerim, listDims);
-                if(partyList.partySelected){
-                    partyMode = true;
-                    partyVect = partyList.returnParty();
+            }
+            if(kbhit()){
+                char k = getkey();
+                if(std::tolower(k) == 'c') {
+                    std::vector<std::string> charCreate;
+                    charCreate.push_back("Creation Option:");
+                    charCreate.push_back("Classic Creation");
+                    charCreate.push_back("Brute Force Class");
+                    ChooseOpt createOpt(charCreate);
+                    std::vector<ScreenVals> screens;
+                    screens.push_back(primaryScreen);
+                    screens.push_back(createOpt.getScreen());
+                    if(createOpt.getChoice(selOpt(screens, charCreate.size() - 1)) == '1'){
+                        clearPrevScreen(screens);
+                        screens.clear();
+                        createBruteForceScreen();
+                    } else {
+                        clearPrevScreen(screens);
+                        screens.clear();
+                        createRollScreen();
+                    }
+                } else if(std::tolower(k) == 'p') {
+                    //printf("p pressed \r\n");
+                    LoadCharList charList("characters");
+                    color_code border;
+                    #ifdef _WIN32
+                    border = BLUE;
+                    #else
+                    border = DARKPURPLE;
+                    #endif
+                    Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
+                            HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
+                    listPerim.leftTee = L_TEE_RAIL;
+                    listPerim.rightTee = R_TEE_RAIL;
+                    DrawRange listDims;
+                    listDims.minX = primaryScreen.xyLimits.minX + 1;
+                    listDims.minY = primaryScreen.xyLimits.minY + 1;
+                    listDims.maxX = tcols() / 3;
+                    listDims.maxY = trows() - 3;
+                    std::vector<int> listOptions;
+                    std::string opts("  (A)dd (V)iew ");
+                    
+                    // Encode Option Code message as ints for utf8 characters.
+                    for(int i = 0; i < opts.size(); ++i){
+                        listOptions.push_back(opts[i]);
+                    }
+                    listOptions.push_back(UP_ARROW);
+                    listOptions.push_back(DOWN_ARROW);
+                    for(int i = 0; i < 5; ++i){
+                        listOptions.push_back(' ');
+                    }
+                    listOptions.push_back(RIGHT_ARROW);
+
+                    std::vector<int> destOptions;
+                    destOptions.push_back(' ');
+                    std::string destOpts("  (R)emove (V)iew   ");
+                    destOptions.push_back(LEFT_ARROW);
+                    // Encode Option Code message as ints for utf8 characters.
+                    for(int i = 0; i < destOpts.size(); ++i){
+                        destOptions.push_back(destOpts[i]);
+                    }
+                    destOptions.push_back(UP_ARROW);
+                    destOptions.push_back(DOWN_ARROW);\
+                    for(int i = 0; i < 5; ++i){
+                        destOptions.push_back(' ');
+                    }
+                    
+
+                    ListHighlightPair partyBuildList(charList.getFileList(), charList.getEntityList(), charList.getPathList(),
+                                                    primaryScreen,"Select Party Member", "Party Members", listOptions, destOptions,listPerim, listDims);
                     createPrimary(primaryScreen, options);
                     drawPrimary(primaryScreen);
+                    //printf("%s\r\n", options.c_str());
+                } else if(std::tolower(k) == 'l'){
+                    //printf("p pressed \r\n");
+                    LoadPartyList parties("parties");
+                    color_code border;
+                    #ifdef _WIN32
+                    border = BLUE;
+                    #else
+                    border = DARKPURPLE;
+                    #endif
+                    Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL,
+                            HORZ_RAIL, VERT_RAIL, border, BLACK, border, BLACK);
+                    listPerim.leftTee = L_TEE_RAIL;
+                    listPerim.rightTee = R_TEE_RAIL;
+                    DrawRange listDims;
+                    listDims.minX = primaryScreen.xyLimits.minX + 1;
+                    listDims.minY = primaryScreen.xyLimits.minY + 1;
+                    listDims.maxX = tcols() / 3;
+                    listDims.maxY = trows() - 3;
+                    std::vector<int> listOptions;
+                    std::string opts("  (S)elect Party ");
+                    
+                    // Encode Option Code message as ints for utf8 characters.
+                    for(int i = 0; i < opts.size(); ++i){
+                        listOptions.push_back(opts[i]);
+                    }
+                    listOptions.push_back(UP_ARROW);
+                    listOptions.push_back(DOWN_ARROW);
+                    ListHighlightPartySelect partyList(parties.getFileList(), parties.getParties(), parties.getPathList(), primaryScreen, "Parties", listOptions, listPerim, listDims);
+                    if(partyList.partySelected){
+                        partyMode = true;
+                        partyVect = partyList.returnParty();
+                        partyName = parties.getFileList()[partyList.getPartyIdx()];
+                        createPrimary(primaryScreen, options);
+                        drawPrimary(primaryScreen);
+                        break;
+                    }
+                    createPrimary(primaryScreen, options);
+                    drawPrimary(primaryScreen);
+                } else if (k == KEY_ESCAPE) {
+                    quitMain = true;
                     break;
+                } else {
+                    createPrimary(primaryScreen, options);
                 }
-                createPrimary(primaryScreen, options);
-                drawPrimary(primaryScreen);
-            } else if (k == KEY_ESCAPE) {
-				break;
-			} else {
-                createPrimary(primaryScreen, options);
             }
+        }
+
+        if(partyMode){
+            std::cout << "Party Pants Activate!" << std::endl;
+            std::cout << "Party Path: " << partyName << std::endl;
+            for(int i = 0; i < partyVect.size(); ++i){
+                std::cout << partyVect[i].getName() << std::endl;
+            }
+            sleep(1);
         }
     }
 
-    if(partyMode){
-        std::cout << "Party Pants Activate!" << std::endl;
-    }
-
+    std::cout << reset_screen;
     cls();
     showcursor();
     return 0;

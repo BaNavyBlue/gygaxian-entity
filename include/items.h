@@ -40,7 +40,8 @@ private:
     unsigned _speedFactor;
     unsigned _fireRAte;
     DefenseAdj _defAdj;
-    Range _rangeInch;
+    DefenseAdj _projDefAdj;
+    Range _rangeBase; // Rules state for oldschool figure maps relate to 1" on maps outoors mult by 10 yards indoors 10'
 public:
     Arms();
     Arms(sj::ondemand::document& itemData, int idx);
@@ -52,6 +53,7 @@ public:
     unsigned getSpeedFactor();
     unsigned getFireRate();
     DefenseAdj getDefenseAdj();
+    DefenseAdj getProjDefenseAdj();
 };
 
 class Armor : public Items
@@ -63,5 +65,78 @@ public:
     ~Armor();
     int getArmorRating();
 };
+
+class Clothing : public Items
+{
+private:
+    //int armorMod;
+public:
+    Clothing();
+    ~Clothing();
+};
+
+class Herbs : public Items
+{
+private:
+    //int armorMod;
+public:
+    Herbs();
+    ~Herbs();
+};
+
+class Livestock : public Items
+{
+private:
+    //int armorMod;
+public:
+    Livestock();
+    ~Livestock();
+};
+
+class MiscItems : public Items
+{
+private:
+    //int armorMod;
+public:
+    MiscItems();
+    ~MiscItems();
+};
+
+class Provisions : public Items
+{
+private:
+    //int armorMod;
+public:
+    Provisions();
+    ~Provisions();
+};
+
+class Religious : public Items
+{
+private:
+    //int armorMod;
+public:
+    Religious();
+    ~Religious();
+};
+
+class TackHarness : public Items
+{
+private:
+    //int armorMod;
+public:
+    TackHarness();
+    ~TackHarness();
+};
+class Transport : public Items
+{
+private:
+    //int armorMod;
+public:
+    Transport();
+    ~Transport();
+};
+
+
 
 #endif // ITEMS_H

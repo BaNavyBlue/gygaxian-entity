@@ -1,6 +1,6 @@
 {
     "data":{
-        "count": 9,
+        "count": 15,
         "index":{
             "0":{
                 "name": "Arrow, normal",
@@ -158,9 +158,9 @@
                 "speedFactor": 4,
                 "fireRate": 1,
                 "range":{
-                    "short": 12,
-                    "medium": 24,
-                    "long": 36
+                    "short": 1,
+                    "medium": 2,
+                    "long": 3
                 },
                 "defenseAdj":{
                     "a2": -3,
@@ -171,6 +171,17 @@
                     "a7": 0,
                     "a8": 1,
                     "a9": 1,
+                    "a10": 1
+                },
+                "projDefenseAdj":{
+                    "a2": -4,
+                    "a3": -3,
+                    "a4": -2,
+                    "a5": -1,
+                    "a6": -1,
+                    "a7": -0,
+                    "a8": 0,
+                    "a9": 0,
                     "a10": 1
                 }
             },
@@ -316,7 +327,7 @@
                     "electrum": 0,
                     "platinum": 0
                 },
-                "weight": 15,
+                "weight": 50,
                 "smallMedDMG":{
                     "sides": 0,
                     "rolls": 0
@@ -330,11 +341,22 @@
                 "speedFactor": 0,
                 "fireRate": 2,
                 "range":{
-                    "short": 60,
-                    "medium": 120,
-                    "long": 216
+                    "short": 5,
+                    "medium": 10,
+                    "long": 18
                 },
                 "defenseAdj":{
+                    "a2": -3,
+                    "a3": -3,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 2,
+                    "a8": 2,
+                    "a9": 2,
+                    "a10": 3
+                },
+                "projDefenseAdj":{
                     "a2": -3,
                     "a3": -3,
                     "a4": -1,
@@ -359,7 +381,7 @@
                     "electrum": 0,
                     "platinum": 0
                 },
-                "weight": 20,
+                "weight": 80,
                 "smallMedDMG":{
                     "sides": 0,
                     "rolls": 0
@@ -373,9 +395,9 @@
                 "speedFactor": 0,
                 "fireRate": 2,
                 "range":{
-                    "short": 72,
-                    "medium": 144,
-                    "long": 252
+                    "short": 6,
+                    "medium": 12,
+                    "long": 21
                 },
                 "defenseAdj":{
                     "a2": -2,
@@ -387,6 +409,438 @@
                     "a8": 2,
                     "a9": 3,
                     "a10": 3
+                },
+                "projDefenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 2,
+                    "a8": 2,
+                    "a9": 3,
+                    "a10": 3
+                }
+            },
+            "9":{
+                "name": "Bow, Long",
+                "count": 1,
+                "type" : 3,
+                "wType": 5,
+                "descrip": "A finely crafted long bow made from multiple natural materials.",
+                "money":{
+                    "gold": 60,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 2,
+                "range":{
+                    "short": 7,
+                    "medium": 14,
+                    "long": 21
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 1,
+                    "a6": 2,
+                    "a7": 3,
+                    "a8": 3,
+                    "a9": 3,
+                    "a10": 3
+                },
+                "projDefenseAdj":{
+                    "a2": -1,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 1,
+                    "a6": 2,
+                    "a7": 3,
+                    "a8": 3,
+                    "a9": 3,
+                    "a10": 3
+                }
+            },
+            "10":{
+                "name": "Bow, Short",
+                "count": 1,
+                "type" : 3,
+                "wType": 5,
+                "descrip": "A finely crafted short bow made from multiple natural materials.",
+                "money":{
+                    "gold": 15,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 2,
+                "range":{
+                    "short": 5,
+                    "medium": 10,
+                    "long": 15
+                },
+                "defenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 1,
+                    "a8": 2,
+                    "a9": 2,
+                    "a10": 2
+                },
+                "projDefenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 1,
+                    "a8": 2,
+                    "a9": 2,
+                    "a10": 2
+                }
+            },
+            "11":{
+                "name": "Club",
+                "count": 1,
+                "type" : 3,
+                "wType": 6,
+                "descrip": "A manacing hunk of wood used for bludgeoning or throwing.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 3,
+                    "rolls": 1
+                },
+                "lengthInch": 36,
+                "spaceReq": 15,
+                "speedFactor": 4,
+                "fireRate": 1,
+                "range":{
+                    "short": 1,
+                    "medium": 2,
+                    "long": 3
+                },
+                "defenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -3,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": -1,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 1
+                },
+                "projDefenseAdj":{
+                    "a2": -7,
+                    "a3": -5,
+                    "a4": -3,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": -1,
+                    "a8": -1,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "12":{
+                "name": "Crossbow, Heavy",
+                "count": 1,
+                "type" : 3,
+                "wType": 6,
+                "descrip": "A deadly wood and iron Heavy Crossbow for launching deadly projectiles.",
+                "money":{
+                    "gold": 20,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 80,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 1,
+                "range":{
+                    "short": 8,
+                    "medium": 16,
+                    "long": 24
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": 0,
+                    "a4": 1,
+                    "a5": 2,
+                    "a6": 3,
+                    "a7": 3,
+                    "a8": 4,
+                    "a9": 4,
+                    "a10": 4
+                },
+                "projDefenseAdj":{
+                    "a2": -1,
+                    "a3": 0,
+                    "a4": 1,
+                    "a5": 2,
+                    "a6": 3,
+                    "a7": 3,
+                    "a8": 4,
+                    "a9": 4,
+                    "a10": 4
+                }
+            },
+            "13":{
+                "name": "Crossbow, Light",
+                "count": 1,
+                "type" : 3,
+                "wType": 6,
+                "descrip": "A menacing wood and iron Light Crossbow for launching deadly projectiles.",
+                "money":{
+                    "gold": 12,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 1,
+                "range":{
+                    "short": 6,
+                    "medium": 12,
+                    "long": 18
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 2,
+                    "a8": 3,
+                    "a9": 3,
+                    "a10": 3
+                },
+                "projDefenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 1,
+                    "a7": 2,
+                    "a8": 3,
+                    "a9": 3,
+                    "a10": 3
+                }
+            },
+            "14":{
+                "name": "Dagger and Scabbard",
+                "count": 1,
+                "type" : 3,
+                "wType": 6,
+                "descrip": "A vicious double edged blade with leather scabbard.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 10,
+                "smallMedDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 3,
+                    "rolls": 1
+                },
+                "lengthInch": 15,
+                "spaceReq": 12,
+                "speedFactor": 2,
+                "fireRate": 2,
+                "range":{
+                    "short": 1,
+                    "medium": 2,
+                    "long": 3
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -3,
+                    "a4": -2,
+                    "a5": -2,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 3
+                },
+                "projDefenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -3,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": -1,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "15":{
+                "name": "Dart",
+                "count": 1,
+                "type" : 3,
+                "wType": 6,
+                "descrip": "A large lead weighted hand projectile.",
+                "money":{
+                    "gold": 0,
+                    "silver": 5,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5,
+                "smallMedDMG":{
+                    "sides": 3,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 2,
+                    "rolls": 1
+                },
+                "lengthInch": 6,
+                "spaceReq": 0,
+                "speedFactor": 2,
+                "fireRate": 3,
+                "range":{
+                    "short": 2,
+                    "medium": 3,
+                    "long": 5
+                },
+                "defenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -3,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 1
+                },
+                "projDefenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -3,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "16":{
+                "name": "Fauchard",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a curved blade.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 96,
+                "spaceReq": 24,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": -1,
+                    "a10": -1
                 }
             }
         }
