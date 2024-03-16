@@ -64,7 +64,7 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
 {
     std::stringstream recv;
     _itemID = idx;
-    
+
     auto itemRef = itemData["data"]["index"][std::to_string(idx)];
     _itemCount = uint64_t(itemRef["count"]);
     _type = (EQUIP_TYPE)uint64_t(itemRef["type"]);
@@ -116,16 +116,18 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
     _defAdj.a9 = int64_t(defenseAdj["a9"]);
     _defAdj.a10 = int64_t(defenseAdj["a10"]);
 
-    auto projDefenseAdj = itemRef["projDefenseAdj"];
-    _projDefAdj.a2 = int64_t(projDefenseAdj["a2"]);
-    _projDefAdj.a3 = int64_t(projDefenseAdj["a3"]);
-    _projDefAdj.a4 = int64_t(projDefenseAdj["a4"]);
-    _projDefAdj.a5 = int64_t(projDefenseAdj["a5"]);
-    _projDefAdj.a6 = int64_t(projDefenseAdj["a6"]);
-    _projDefAdj.a7 = int64_t(projDefenseAdj["a7"]);
-    _projDefAdj.a8 = int64_t(projDefenseAdj["a8"]);
-    _projDefAdj.a9 = int64_t(projDefenseAdj["a9"]);
-    _projDefAdj.a10 = int64_t(projDefenseAdj["a10"]);
+    if(_type == PROJECTILE){
+        auto projDefenseAdj = itemRef["projDefenseAdj"];
+        _projDefAdj.a2 = int64_t(projDefenseAdj["a2"]);
+        _projDefAdj.a3 = int64_t(projDefenseAdj["a3"]);
+        _projDefAdj.a4 = int64_t(projDefenseAdj["a4"]);
+        _projDefAdj.a5 = int64_t(projDefenseAdj["a5"]);
+        _projDefAdj.a6 = int64_t(projDefenseAdj["a6"]);
+        _projDefAdj.a7 = int64_t(projDefenseAdj["a7"]);
+        _projDefAdj.a8 = int64_t(projDefenseAdj["a8"]);
+        _projDefAdj.a9 = int64_t(projDefenseAdj["a9"]);
+        _projDefAdj.a10 = int64_t(projDefenseAdj["a10"]);
+    }
 }
 
 Arms::~Arms()

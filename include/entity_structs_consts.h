@@ -119,7 +119,9 @@ enum WEAPON_TYPE{
     CROSSBOW, // 6
     ARROW,    // 7
     BOLT,     // 8
-    DART      // 9
+    DART,     // 9
+    BLUNT,    // 10
+    SPEAR     // 11
 };
 
 struct ULPair{

@@ -39,6 +39,21 @@ int main(){
 
     bool quitMain = false;
 
+    // std::cout << "loading: " << "items/Arms.json" << std::endl;
+    // sj::ondemand::parser parser;
+    // sj::padded_string json = sj::padded_string::load("items/Arms.json");
+    // sj::ondemand::document itemsData = parser.iterate(json);
+
+    // std::vector<std::shared_ptr<Items>> armsList;
+
+    // unsigned itemCount = uint64_t(itemsData["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     armsList.push_back(std::make_shared<Arms>(itemsData, i));
+    // }
+
+    // sleep(10);
+
     while(!quitMain){
         createPrimary(primaryScreen, options);
         drawPrimary(primaryScreen);

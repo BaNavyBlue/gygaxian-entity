@@ -1,6 +1,6 @@
 {
     "data":{
-        "count": 15,
+        "count": 57,
         "index":{
             "0":{
                 "name": "Arrow, normal",
@@ -190,7 +190,7 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
-                "descrip": "This polearm has a large wicked curved blade at the end perfect for thrust and slash attacks.",
+                "descrip": "This pole arm has a large wicked curved blade at the end perfect for thrust and slash attacks.",
                 "money":{
                     "gold": 7,
                     "silver": 0,
@@ -276,7 +276,7 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
-                "descrip": "This polearm has applications in agriculture as well as combat with it's curved blades for hooking and flat blade for slashing and spearing.",
+                "descrip": "This pole arm has applications in agriculture as well as combat with it's curved blades for hooking and flat blade for slashing and spearing.",
                 "money":{
                     "gold": 6,
                     "silver": 0,
@@ -534,8 +534,8 @@
                 "name": "Club",
                 "count": 1,
                 "type" : 3,
-                "wType": 6,
-                "descrip": "A manacing hunk of wood used for bludgeoning or throwing.",
+                "wType": 10,
+                "descrip": "A menacing hunk of wood used for bludgeoning or throwing.",
                 "money":{
                     "gold": 0,
                     "silver": 0,
@@ -696,7 +696,7 @@
                 "name": "Dagger and Scabbard",
                 "count": 1,
                 "type" : 3,
-                "wType": 6,
+                "wType": 1,
                 "descrip": "A vicious double edged blade with leather scabbard.",
                 "money":{
                     "gold": 2,
@@ -750,7 +750,7 @@
                 "name": "Dart",
                 "count": 1,
                 "type" : 3,
-                "wType": 6,
+                "wType": 9,
                 "descrip": "A large lead weighted hand projectile.",
                 "money":{
                     "gold": 0,
@@ -842,7 +842,1794 @@
                     "a9": -1,
                     "a10": -1
                 }
+            },
+            "17":{
+                "name": "Fauchard Fork",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a cured blade and a forked tine for catching other pole arms.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 80,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 10,
+                    "rolls": 1
+                },
+                "lengthInch": 96,
+                "spaceReq": 24,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": -1,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "18":{
+                "name": "Flail, footman's",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A modified farm flail with a metal link atchated to an iron cylinder.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 150,
+                "smallMedDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "lengthInch": 48,
+                "spaceReq": 72,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 2,
+                    "a3": 2,
+                    "a4": 1,
+                    "a5": 2,
+                    "a6": 1,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": -1
+                }
+            },
+            "19":{
+                "name": "Flail, Horseman's",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A one handed wooedn Shaft with a spiked steel ball attached to a chain.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 35,
+                "smallMedDMG":{
+                    "sides": 5,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 5,
+                    "rolls": 2
+                },
+                "lengthInch": 24,
+                "spaceReq": 48,
+                "speedFactor": 6,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": -1
+                }
+            },
+            "20":{
+                "name": "Fork, Military",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with dual symmetric blades with a gap to catch weapons and hooks to snare enemy weapons.",
+                "money":{
+                    "gold": 4,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 75,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "lengthInch": 84,
+                "spaceReq": 12,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "21":{
+                "name": "Glaive",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a large curved blade at the end for slashing.",
+                "money":{
+                    "gold": 6,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 75,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 10,
+                    "rolls": 2
+                },
+                "lengthInch": 96,
+                "spaceReq": 12,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "22":{
+                "name": "Glaive-Guisarme",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a large curved blade with hooked blades oposite the primary blade. For slashing and hooking.",
+                "money":{
+                    "gold": 10,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 2
+                },
+                "lengthInch": 96,
+                "spaceReq": 12,
+                "speedFactor": 9,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "23":{
+                "name": "Guisarme",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A hooked farming blade with a long spike atached to a long pole",
+                "money":{
+                    "gold": 5,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 80,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 72,
+                "spaceReq": 24,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": -1,
+                    "a10": -1
+                }
+            },
+            "24":{
+                "name": "Guisarme-Voulge",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a large curved Axe blade with hooked barb oposite the axe head. For hacking and hooking.",
+                "money":{
+                    "gold": 7,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 150,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "lengthInch": 84,
+                "spaceReq": 24,
+                "speedFactor": 10,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 1,
+                    "a6": 1,
+                    "a7": 1,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "25":{
+                "name": "Halberd",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a large curved blade with hooked blades oposite the primary blade. For slashing and hooking.",
+                "money":{
+                    "gold": 9,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 175,
+                "smallMedDMG":{
+                    "sides": 10,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 2
+                },
+                "lengthInch": 60,
+                "spaceReq": 60,
+                "speedFactor": 9,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 1,
+                    "a3": 1,
+                    "a4": 1,
+                    "a5": 2,
+                    "a6": 2,
+                    "a7": 2,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 0
+                }
+            },
+            "26":{
+                "name": "Hammer, Lucerne",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A two handed hammer like weapon, with  3 edges on the head and a spike on the bottom of the handle.",
+                "money":{
+                    "gold": 7,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 150,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 60,
+                "spaceReq": 60,
+                "speedFactor": 9,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 1,
+                    "a3": 1,
+                    "a4": 2,
+                    "a5": 2,
+                    "a6": 2,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "27":{
+                "name": "Hammer",
+                "count": 1,
+                "type" : 3,
+                "wType": 10,
+                "descrip": "A standard tool for building, bludgeoning and throwing at exposed body parts.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 5,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 18,
+                "spaceReq": 24,
+                "speedFactor": 4,
+                "fireRate": 1,
+                "range":{
+                    "short": 1,
+                    "medium": 2,
+                    "long": 3
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 1,
+                    "a4": 0,
+                    "a5": 1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                },
+                "projDefenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "28":{
+                "name": "Javalin",
+                "count": 1,
+                "type" : 3,
+                "wType": 4,
+                "descrip": "A hand hurdled projectile about the size of a short spear.",
+                "money":{
+                    "gold": 0,
+                    "silver": 10,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 1,
+                "range":{
+                    "short": 2,
+                    "medium": 4,
+                    "long": 6
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                },
+                "projDefenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -3,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "29":{
+                "name": "Jo Stick",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A hard wood pole which can be hidden in plain sight as a personal walking aid.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 40,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 36,
+                "spaceReq": 24,
+                "speedFactor": 2,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -8,
+                    "a3": -6,
+                    "a4": -4,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 2
+                }
+            },
+            "30":{
+                "name": "Lance (Medium Horse)",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A long conical pole arm will deliver twice rated damage when used from horseback.",
+                "money":{
+                    "gold": 6,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100,
+                "smallMedDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 2
+                },
+                "lengthInch": 144,
+                "spaceReq": 12,
+                "speedFactor": 6,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 1,
+                    "a4": 1,
+                    "a5": 1,
+                    "a6": 1,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "31":{
+                "name": "Lance (Light Horse)",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A long conical pole arm will deliver twice rated damage when used from horseback.",
+                "money":{
+                    "gold": 6,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 120,
+                "spaceReq": 12,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "32":{
+                "name": "Lance (Heavy Horse)",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A long conical pole arm will deliver twice rated damage when used from horseback.",
+                "money":{
+                    "gold": 6,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 150,
+                "smallMedDMG":{
+                    "sides": 9,
+                    "rolls": 3
+                },
+                "largeDMG":{
+                    "sides": 18,
+                    "rolls": 3
+                },
+                "lengthInch": 168,
+                "spaceReq": 12,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 3,
+                    "a3": 3,
+                    "a4": 2,
+                    "a5": 2,
+                    "a6": 2,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "33":{
+                "name": "Mace, footman's",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A wooden rod with a large iron head for bludgeoning opponents.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100,
+                "smallMedDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 30,
+                "spaceReq": 48,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 1,
+                    "a3": 1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 1,
+                    "a10": -1
+                }
+            },
+            "34":{
+                "name": "Mace, horseman's",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A small iron capped shaft for bludgeoning ground opponents while on horseback.",
+                "money":{
+                    "gold": 4,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 18,
+                "spaceReq": 24,
+                "speedFactor": 6,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 1,
+                    "a3": 1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "35":{
+                "name": "Morning Star",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A hand held bludgeon with a spiked iron ball on one end.",
+                "money":{
+                    "gold": 5,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 125,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "lengthInch": 48,
+                "spaceReq": 60,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 1,
+                    "a4": 1,
+                    "a5": 1,
+                    "a6": 1,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 2,
+                    "a10": 2
+                }
+            },
+            "36":{
+                "name": "Partisan",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A long spear like pole arm typacally used to fend off calvary charges. Has curved symmetric segments for catching swords.",
+                "money":{
+                    "gold": 10,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 80,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "lengthInch": 84,
+                "spaceReq": 36,
+                "speedFactor": 9,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "37":{
+                "name": "Pick, Military, footman's",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A versitile rugged tool and weapon useful for excavation and combat.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60,
+                "smallMedDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "lengthInch": 48,
+                "spaceReq": 48,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 2,
+                    "a3": 2,
+                    "a4": 1,
+                    "a5": 1,
+                    "a6": 0,
+                    "a7": -1,
+                    "a8": -1,
+                    "a9": -1,
+                    "a10": -2
+                }
+            },
+            "38":{
+                "name": "Pick, Military, horseman's",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A shortened pick axe used for puncturing or crushing helms and armor from horseback.",
+                "money":{
+                    "gold": 5,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 40,
+                "smallMedDMG":{
+                    "sides": 5,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 24,
+                "spaceReq": 24,
+                "speedFactor": 5,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 1,
+                    "a3": 1,
+                    "a4": 1,
+                    "a5": 1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": -1,
+                    "a9": -1,
+                    "a10": -1
+                }
+            },
+            "39":{
+                "name": "Pike, awl",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A long pointed pole arm with a small circular guard.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 80,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 1
+                },
+                "lengthInch": 216,
+                "spaceReq": 12,
+                "speedFactor": 13,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": -1,
+                    "a10": -2
+                }
+            },
+            "40":{
+                "name": "Quarrel/Bolt, light, single",
+                "count": 1,
+                "type" : 2,
+                "wType": 8,
+                "descrip": "Ammo for light crossbows.",
+                "money":{
+                    "gold": 0,
+                    "silver": 1,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1,
+                "smallMedDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 216,
+                "spaceReq": 12,
+                "speedFactor": 13,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "41":{
+                "name": "Quarrel/Bolt, heavy, score",
+                "count": 20,
+                "type" : 2,
+                "wType": 8,
+                "descrip": "Ammo for heavy Crossbows.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 2,
+                "smallMedDMG":{
+                    "sides": 5,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "42":{
+                "name": "Ranseur",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a central long point and a crescent blade catch for sword parrying.",
+                "money":{
+                    "gold": 4,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "lengthInch": 96,
+                "spaceReq": 12,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "43":{
+                "name": "Scimitar",
+                "count": 1,
+                "type" : 1,
+                "wType": 2,
+                "descrip": "A curved single edged sword.",
+                "money":{
+                    "gold": 15,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 40,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 36,
+                "spaceReq": 24,
+                "speedFactor": 4,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -2,
+                    "a4": -2,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 3
+                }
+            },
+            "44":{
+                "name": "Sling",
+                "count": 1,
+                "type" : 3,
+                "wType": 5,
+                "descrip": "A fine leather sling.",
+                "money":{
+                    "gold": 0,
+                    "silver": 10,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1,
+                "smallMedDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "largeDMG":{
+                    "sides": 0,
+                    "rolls": 0
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                },
+                "projDefenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "45":{
+                "name": "Sling Bullet",
+                "count": 1,
+                "type" : 2,
+                "wType": 10,
+                "descrip": "Small iron ball for a sling.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 5,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 2,
+                "smallMedDMG":{
+                    "sides": 5,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 1,
+                "range":{
+                    "short": 5,
+                    "medium": 10,
+                    "long": 20
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                },
+                "projDefenseAdj":{
+                    "a2": -2,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 2,
+                    "a9": 1,
+                    "a10": 3
+                }
+            },
+            "46":{
+                "name": "Sling Stone",
+                "count": 1,
+                "type" : 2,
+                "wType": 10,
+                "descrip": "Ordinary Projectile Sized Stone.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1,
+                "smallMedDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 4,
+                    "rolls": 1
+                },
+                "lengthInch": 0,
+                "spaceReq": 0,
+                "speedFactor": 0,
+                "fireRate": 1,
+                "range":{
+                    "short": 4,
+                    "medium": 8,
+                    "long": 16
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                },
+                "projDefenseAdj":{
+                    "a2": -5,
+                    "a3": -4,
+                    "a4": -2,
+                    "a5": 1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 2,
+                    "a9": 1,
+                    "a10": 3
+                }
+            },
+            "47":{
+                "name": "Spear",
+                "count": 1,
+                "type" : 3,
+                "wType": 11,
+                "descrip": "A weapon which can be used in combat or thrown, double damage recieving charging opponents momentum.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 108,
+                "spaceReq": 12,
+                "speedFactor": 7,
+                "fireRate": 1,
+                "range":{
+                    "short": 1,
+                    "medium": 2,
+                    "long": 3
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": -1,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                },
+                "projDefenseAdj":{
+                    "a2": -3,
+                    "a3": -3,
+                    "a4": -2,
+                    "a5": -2,
+                    "a6": -1,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
+            },
+            "48":{
+                "name": "Spetum",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a long central blade and a crescent lower blade for catching weapons and shields.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 2
+                },
+                "lengthInch": 96,
+                "spaceReq": 12,
+                "speedFactor": 8,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 1,
+                    "a10": 2
+                }
+            },
+            "49":{
+                "name": "Staff, quarter",
+                "count": 1,
+                "type" : 1,
+                "wType": 10,
+                "descrip": "A dense wood combative staff.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "lengthInch": 84,
+                "spaceReq": 36,
+                "speedFactor": 4,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -7,
+                    "a3": -5,
+                    "a4": -3,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 1
+                }
+            },
+            "50":{
+                "name": "Sword, bastard, & scabbard",
+                "count": 1,
+                "type" : 1,
+                "wType": 2,
+                "descrip": "A large blade with a hand and a half hilt.",
+                "money":{
+                    "gold": 25,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 16,
+                    "rolls": 2
+                },
+                "lengthInch": 54,
+                "spaceReq": 48,
+                "speedFactor": 6,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 0,
+                    "a3": 0,
+                    "a4": 1,
+                    "a5": 1,
+                    "a6": 1,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 0
+                }
+            },
+            "51":{
+                "name": "Sword, broad, & scabbard",
+                "count": 1,
+                "type" : 1,
+                "wType": 2,
+                "descrip": "A double sided blade with a rounded point.",
+                "money":{
+                    "gold": 10,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 75,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "lengthInch": 42,
+                "spaceReq": 48,
+                "speedFactor": 5,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 1,
+                    "a8": 1,
+                    "a9": 1,
+                    "a10": 2
+                }
+            },
+            "52":{
+                "name": "Sword, long, & scabbard",
+                "count": 1,
+                "type" : 1,
+                "wType": 2,
+                "descrip": "A double sided blade designed for two handed wielding.",
+                "money":{
+                    "gold": 15,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 2
+                },
+                "lengthInch": 42,
+                "spaceReq": 36,
+                "speedFactor": 5,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -2,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 0,
+                    "a9": 1,
+                    "a10": 2
+                }
+            },
+            "53":{
+                "name": "Sword, short, & scabbard",
+                "count": 1,
+                "type" : 1,
+                "wType": 2,
+                "descrip": "A double sided blade for single handed wielding.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 35,
+                "smallMedDMG":{
+                    "sides": 6,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 1
+                },
+                "lengthInch": 24,
+                "spaceReq": 12,
+                "speedFactor": 3,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": 0,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 2
+                }
+            },
+            "54":{
+                "name": "Sword, Two Handed",
+                "count": 1,
+                "type" : 1,
+                "wType": 2,
+                "descrip": "A massive double sided blade for heavy combat.",
+                "money":{
+                    "gold": 30,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 250,
+                "smallMedDMG":{
+                    "sides": 10,
+                    "rolls": 1
+                },
+                "largeDMG":{
+                    "sides": 18,
+                    "rolls": 3
+                },
+                "lengthInch": 72,
+                "spaceReq": 72,
+                "speedFactor": 10,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": 2,
+                    "a3": 2,
+                    "a4": 2,
+                    "a5": 2,
+                    "a6": 3,
+                    "a7": 3,
+                    "a8": 3,
+                    "a9": 1,
+                    "a10": 0
+                }
+            },
+            "55":{
+                "name": "Trident",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with 3 spear points.",
+                "money":{
+                    "gold": 4,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50,
+                "smallMedDMG":{
+                    "sides": 7,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 12,
+                    "rolls": 3
+                },
+                "lengthInch": 72,
+                "spaceReq": 24,
+                "speedFactor": 7,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -3,
+                    "a3": -2,
+                    "a4": -1,
+                    "a5": -1,
+                    "a6": 0,
+                    "a7": 0,
+                    "a8": 1,
+                    "a9": 0,
+                    "a10": 1
+                }
+            },
+            "56":{
+                "name": "Volgue",
+                "count": 1,
+                "type" : 1,
+                "wType": 4,
+                "descrip": "A pole arm with a large single edged blade attached to it.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 125,
+                "smallMedDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "largeDMG":{
+                    "sides": 8,
+                    "rolls": 2
+                },
+                "lengthInch": 96,
+                "spaceReq": 24,
+                "speedFactor": 10,
+                "fireRate": 0,
+                "range":{
+                    "short": 0,
+                    "medium": 0,
+                    "long": 0
+                },
+                "defenseAdj":{
+                    "a2": -1,
+                    "a3": -1,
+                    "a4": 0,
+                    "a5": 1,
+                    "a6": 1,
+                    "a7": 1,
+                    "a8": 0,
+                    "a9": 0,
+                    "a10": 0
+                }
             }
         }
     }
+
 }
