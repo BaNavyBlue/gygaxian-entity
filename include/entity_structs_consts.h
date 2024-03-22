@@ -94,7 +94,8 @@ enum EQUIP_TYPE{
     PROVISIONS,
     RELIGIOUS,
     TACK_HARNESS,
-    TRANSPORT
+    TRANSPORT,
+    HELMETS
 };
 
 enum ARMOR_TYPE
@@ -106,7 +107,9 @@ enum ARMOR_TYPE
     SCALE,
     BANDED,
     SPLINT,
-    PLATE
+    PLATE,
+    RING,
+    SHIELD
 };
 
 enum WEAPON_TYPE{
@@ -124,6 +127,11 @@ enum WEAPON_TYPE{
     SPEAR     // 11
 };
 
+enum BULK{
+    NON,
+    FAIRLY,
+    BULKY
+};
 struct ULPair{
     unsigned lower;
     unsigned upper;

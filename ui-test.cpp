@@ -39,20 +39,34 @@ int main(){
 
     bool quitMain = false;
 
-    // std::cout << "loading: " << "items/Arms.json" << std::endl;
-    // sj::ondemand::parser parser;
-    // sj::padded_string json = sj::padded_string::load("items/Arms.json");
-    // sj::ondemand::document itemsData = parser.iterate(json);
+    std::cout << "loading: " << "items/Arms.json" << std::endl;
+    sj::ondemand::parser parser;
+    sj::padded_string json = sj::padded_string::load("items/Arms.json");
+    sj::ondemand::document itemsData = parser.iterate(json);
 
-    // std::vector<std::shared_ptr<Items>> armsList;
+    std::vector<std::shared_ptr<Items>> armsList;
+    std::vector<std::shared_ptr<Items>> armorList;
 
-    // unsigned itemCount = uint64_t(itemsData["data"]["count"]);
-    // std::cout << "itemCount: " << itemCount << std::endl;
-    // for(unsigned i = 0; i < itemCount; ++i){
-    //     armsList.push_back(std::make_shared<Arms>(itemsData, i));
-    // }
+    unsigned itemCount = uint64_t(itemsData["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        armsList.push_back(std::make_shared<Arms>(itemsData, i));
+    }
 
-    // sleep(10);
+    sleep(5);
+
+    std::cout << "loading: " << "items/Armor.json" << std::endl;
+    sj::ondemand::parser parser2;
+    sj::padded_string json2 = sj::padded_string::load("items/Armor.json");
+    sj::ondemand::document itemsData2 = parser.iterate(json2);
+
+    itemCount = uint64_t(itemsData2["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        armorList.push_back(std::make_shared<Armor>(itemsData2, i));
+    }
+
+    sleep(5);
 
     while(!quitMain){
         createPrimary(primaryScreen, options);

@@ -59,9 +59,14 @@ public:
 class Armor : public Items
 {
 private:
-    int armorMod;
+    int _armorMod;
+    int _moveInch;
+    BULK _bulk;
+    ARMOR_TYPE _aType;
+    
 public:
     Armor();
+    Armor(sj::ondemand::document& itemData, int idx);
     ~Armor();
     int getArmorRating();
 };

@@ -1,0 +1,295 @@
+{
+    "data":{
+        "count": 16,
+        "index":{
+            "0":{
+              "name": "Banded Armor",
+              "count": 1,
+              "type": 0,
+              "aType": 5,
+              "descrip": "A historically ambiguous armor type.",
+              "armorMod": 6,
+              "money":{
+                  "gold": 90,
+                  "silver": 0,
+                  "copper": 0,
+                  "electrum": 0,
+                  "platinum": 0
+              },
+              "bulk": 2,
+              "weight": 35,
+              "bMoveInch": 9    
+            },
+            "1":{
+                "name": "Chain Armor",
+                "count": 1,
+                "type": 0,
+                "aType": 3,
+                "descrip": "Armor made with linked iron chain.",
+                "armorMod": 5,
+                "money":{
+                    "gold": 75,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "bulk": 1,
+                "weight": 30,
+                "bMoveInch": 9    
+              },
+              "2":{
+                  "name": "Chain Armor, Elfin",
+                  "count": 1,
+                  "type": 0,
+                  "aType": 3,
+                  "descrip": "Utra light Elfin chain mail not sold to outsiders.",
+                  "armorMod": 5,
+                  "money":{
+                      "gold": 9999999,
+                      "silver": 0,
+                      "copper": 0,
+                      "electrum": 0,
+                      "platinum": 0
+                  },
+                  "bulk": 0,
+                  "weight": 15,
+                  "bMoveInch": 12    
+                },
+                "3":{
+                    "name": "Leather Armor",
+                    "count": 1,
+                    "type": 0,
+                    "aType": 0,
+                    "descrip": "Armor made from stained processed animal hide.",
+                    "armorMod": 2,
+                    "money":{
+                        "gold": 5,
+                        "silver": 0,
+                        "copper": 0,
+                        "electrum": 0,
+                        "platinum": 0
+                    },
+                    "bulk": 0,
+                    "weight": 15,
+                    "bMoveInch": 12    
+                },
+                "4":{
+                    "name": "Helm, Great",
+                    "count": 1,
+                    "type": 11,
+                    "aType": 7,
+                    "descrip": "Traditional iron helm with a flat top and eye slits.",
+                    "armorMod": 7,
+                    "money":{
+                        "gold": 15,
+                        "silver": 0,
+                        "copper": 0,
+                        "electrum": 0,
+                        "platinum": 0
+                    },
+                    "bulk": 2,
+                    "weight": 8,
+                    "bMoveInch": 999    
+                },
+                "5":{
+                    "name": "Helm, Small",
+                    "count": 1,
+                    "type": 11,
+                    "aType": 7,
+                    "descrip": "A Poorly described iron helmet.",
+                    "armorMod": 5,
+                    "money":{
+                        "gold": 10,
+                        "silver": 0,
+                        "copper": 0,
+                        "electrum": 0,
+                        "platinum": 0
+                    },
+                    "bulk": 1,
+                    "weight": 4,
+                    "bMoveInch": 999    
+                },
+                "6":{
+                      "name": "Leather Armor",
+                      "count": 1,
+                      "type": 0,
+                      "aType": 0,
+                      "descrip": "Armor made from stained processed animal hide.",
+                      "armorMod": 2,
+                      "money":{
+                          "gold": 5,
+                          "silver": 0,
+                          "copper": 0,
+                          "electrum": 0,
+                          "platinum": 0
+                      },
+                      "bulk": 0,
+                      "weight": 15,
+                      "bMoveInch": 12    
+                    },
+                    "7":{
+                        "name": "Padded Armor",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 1,
+                        "descrip": "Quilted thick cloth for reducing slash and blunt damage.",
+                        "armorMod": 2,
+                        "money":{
+                            "gold": 4,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 1,
+                        "weight": 10,
+                        "bMoveInch": 9    
+                    },
+                    "8":{
+                        "name": "Plate Armor",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 7,
+                        "descrip": "Full Heavy Iron Plate Armor.",
+                        "armorMod": 7,
+                        "money":{
+                            "gold": 400,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 2,
+                        "weight": 45,
+                        "bMoveInch": 6    
+                    },
+                    "9":{
+                        "name": "Ring Armor",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 7,
+                        "descrip": "Fine fantasy cosplay armor.",
+                        "armorMod": 3,
+                        "money":{
+                            "gold": 30,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 1,
+                        "weight": 25,
+                        "bMoveInch": 9    
+                    },
+                    "10":{
+                        "name": "Scale Armor",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 4,
+                        "descrip": "A suit of overlapping metal segments sewn into cloth and leather.",
+                        "armorMod": 4,
+                        "money":{
+                            "gold": 45,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 1,
+                        "weight": 40,
+                        "bMoveInch": 6    
+                    },
+                    "11":{
+                        "name": "Shield, Large",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 9,
+                        "descrip": "A large metal and wood shield sufficient for protecting torso to bellow the knees.",
+                        "armorMod": 1,
+                        "money":{
+                            "gold": 15,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 2,
+                        "weight": 10,
+                        "bMoveInch": 999    
+                    },
+                    "12":{
+                        "name": "Shield, small",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 9,
+                        "descrip": "A small metal and wood shield sufficient to cover torso.",
+                        "armorMod": 1,
+                        "money":{
+                            "gold": 10,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 0,
+                        "weight": 5,
+                        "bMoveInch": 999    
+                    },
+                    "13":{
+                        "name": "Shield, small wooden",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 9,
+                        "descrip": "A small cheap wood shield sufficient to cover torso.",
+                        "armorMod": 1,
+                        "money":{
+                            "gold": 1,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 0,
+                        "weight": 3,
+                        "bMoveInch": 999    
+                    },
+                    "14":{
+                        "name": "Splinted Armor",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 6,
+                        "descrip": "Leather and cloth armor with metal strips attached.",
+                        "armorMod": 6,
+                        "money":{
+                            "gold": 80,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 2,
+                        "weight": 40,
+                        "bMoveInch": 6    
+                    },
+                    "15":{
+                        "name": "Studded Leather",
+                        "count": 1,
+                        "type": 0,
+                        "aType": 2,
+                        "descrip": "A woderful thing to wear at a cosplay convention.",
+                        "armorMod": 3,
+                        "money":{
+                            "gold": 15,
+                            "silver": 0,
+                            "copper": 0,
+                            "electrum": 0,
+                            "platinum": 0
+                        },
+                        "bulk": 1,
+                        "weight": 20,
+                        "bMoveInch": 9    
+                    }
+        }
+    }
+}
