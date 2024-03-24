@@ -127,6 +127,16 @@ enum WEAPON_TYPE{
     SPEAR     // 11
 };
 
+enum CLOTHING_TYPE{
+    BELT,
+    BOOTS,
+    CAP,
+    CLOAK,
+    GIRDLE,
+    HAT,
+    ROBE
+};
+
 enum BULK{
     NON,
     FAIRLY,

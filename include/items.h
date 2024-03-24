@@ -62,22 +62,24 @@ private:
     int _armorMod;
     int _moveInch;
     BULK _bulk;
-    ARMOR_TYPE _aType;
-    
+    ARMOR_TYPE _aType;   
 public:
     Armor();
     Armor(sj::ondemand::document& itemData, int idx);
     ~Armor();
     int getArmorRating();
+    BULK getArmorBulk();
+    ARMOR_TYPE getArmorType();
+    int getArmorMobility();
 };
 
 class Clothing : public Items
 {
 private:
     //int armorMod;
+    CLOTHING_TYPE _cType;
 public:
-    Clothing();
-    ~Clothing();
+    Clothing(sj::ondemand::document& itemData, int idx);
 };
 
 class Herbs : public Items

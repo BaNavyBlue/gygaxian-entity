@@ -1,0 +1,172 @@
+{
+    "data":{
+        "count": 11,
+        "index":{
+            "0":{
+                "name": "Belt",
+                "count": 1,
+                "type": 4,
+                "cType": 0,
+                "descrip": "A simple leather strap for sinching clothing.",
+                "money":{
+                    "gold": 0,
+                    "silver": 3,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 3
+            },
+            "1":{
+                "name": "Boots, high, hard",
+                "count": 1,
+                "type": 4,
+                "cType": 1,
+                "descrip": "A rugged firm pair of high boots.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60
+            },
+            "2":{
+                "name": "Boots, high, soft",
+                "count": 1,
+                "type": 4,
+                "cType": 1,
+                "descrip": "A supple pair of high boots.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30
+            },
+            "3":{
+                "name": "Boots, low, hard",
+                "count": 1,
+                "type": 4,
+                "cType": 1,
+                "descrip": "A rugged firm pair of low cut boots.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60
+            },
+            "4":{
+                "name": "Boots, low, soft",
+                "count": 1,
+                "type": 4,
+                "cType": 1,
+                "descrip": "A supple pair of low cut boots.",
+                "money":{
+                    "gold": 0,
+                    "silver": 8,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30
+            },
+            "5":{
+                "name": "Cap",
+                "count": 1,
+                "type": 4,
+                "cType": 2,
+                "descrip": "A small round cap.",
+                "money":{
+                    "gold": 0,
+                    "silver": 1,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1
+            },
+            "6":{
+                "name": "Cloak",
+                "count": 1,
+                "type": 4,
+                "cType": 3,
+                "descrip": "A thick linnen cloak.",
+                "money":{
+                    "gold": 0,
+                    "silver": 5,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 25
+            },
+            "7":{
+                "name": "Girdle, broad",
+                "count": 1,
+                "type": 4,
+                "cType": 4,
+                "descrip": "A broad sash like waist covering.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 6
+            },
+            "8":{
+                "name": "Girdle, normal",
+                "count": 1,
+                "type": 4,
+                "cType": 1,
+                "descrip": "A medium waist covering.",
+                "money":{
+                    "gold": 0,
+                    "silver": 10,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 3
+            },
+            "9":{
+                "name": "Hat",
+                "count": 1,
+                "type": 4,
+                "cType": 5,
+                "descrip": "A handsome pointy cap.",
+                "money":{
+                    "gold": 0,
+                    "silver": 7,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 6
+            },
+            "10":{
+                "name": "Robe",
+                "count": 1,
+                "type": 4,
+                "cType": 6,
+                "descrip": "Millions of monks, clerics and Magic Users can't be wrong.",
+                "money":{
+                    "gold": 0,
+                    "silver": 6,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 25
+            }
+        }
+    }
+}

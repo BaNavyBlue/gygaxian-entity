@@ -46,6 +46,7 @@ int main(){
 
     std::vector<std::shared_ptr<Items>> armsList;
     std::vector<std::shared_ptr<Items>> armorList;
+    std::vector<std::shared_ptr<Items>> clothingList;
 
     unsigned itemCount = uint64_t(itemsData["data"]["count"]);
     std::cout << "itemCount: " << itemCount << std::endl;
@@ -64,6 +65,19 @@ int main(){
     std::cout << "itemCount: " << itemCount << std::endl;
     for(unsigned i = 0; i < itemCount; ++i){
         armorList.push_back(std::make_shared<Armor>(itemsData2, i));
+    }
+
+    sleep(5);
+
+    std::cout << "loading: " << "items/Clothing.json" << std::endl;
+    sj::ondemand::parser parser3;
+    sj::padded_string json3 = sj::padded_string::load("items/Clothing.json");
+    sj::ondemand::document itemsData3 = parser3.iterate(json3);
+
+    itemCount = uint64_t(itemsData3["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        clothingList.push_back(std::make_shared<Clothing>(itemsData3, i));
     }
 
     sleep(5);
