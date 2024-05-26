@@ -88,6 +88,7 @@ private:
     //int armorMod;
 public:
     Herbs();
+    Herbs(sj::ondemand::document& itemData, int idx);
     ~Herbs();
 };
 
@@ -96,7 +97,7 @@ class Livestock : public Items
 private:
     //int armorMod;
 public:
-    Livestock();
+    Livestock(sj::ondemand::document& itemData, int idx);
     ~Livestock();
 };
 
@@ -105,7 +106,7 @@ class MiscItems : public Items
 private:
     //int armorMod;
 public:
-    MiscItems();
+    MiscItems(sj::ondemand::document& itemData, int idx);
     ~MiscItems();
 };
 

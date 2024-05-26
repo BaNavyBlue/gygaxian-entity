@@ -255,3 +255,83 @@ Clothing::Clothing(sj::ondemand::document& itemData, int idx)
     _value.platinum = uint64_t(money["platinum"]);
     _weightGP = uint64_t(itemRef["weight"]);    
 }
+
+Herbs::Herbs(sj::ondemand::document& itemData, int idx)
+{
+    std::stringstream recv;
+    _itemID = idx;
+    auto itemRef = itemData["data"]["index"][std::to_string(idx)];
+    _itemCount = uint64_t(itemRef["count"]);
+    _type = (EQUIP_TYPE)uint64_t(itemRef["type"]);
+
+    recv << ((itemRef["name"]));
+
+    _name = recv.str();
+
+    _name.erase(
+         std::remove( _name.begin(), _name.end(), '\"' ),
+         _name.end());
+
+    recv.str("");
+
+    recv << ((itemRef["descrip"]));
+    _description = recv.str();
+
+    _description.erase(
+                std::remove( _description.begin(), _description.end(), '\"' ),
+                _description.end());
+
+    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    auto money = itemRef["money"];
+    _value.gold = uint64_t(money["gold"]);
+    _value.silver = uint64_t(money["silver"]);
+    _value.copper = uint64_t(money["copper"]);
+    _value.electrum = uint64_t(money["electrum"]);
+    _value.platinum = uint64_t(money["platinum"]);
+    _weightGP = uint64_t(itemRef["weight"]);  
+}
+
+Herbs::~Herbs()
+{
+
+}
+
+Livestock::Livestock(sj::ondemand::document& itemData, int idx)
+{
+    std::stringstream recv;
+    _itemID = idx;
+    auto itemRef = itemData["data"]["index"][std::to_string(idx)];
+    _itemCount = uint64_t(itemRef["count"]);
+    _type = (EQUIP_TYPE)uint64_t(itemRef["type"]);
+
+    recv << ((itemRef["name"]));
+
+    _name = recv.str();
+
+    _name.erase(
+         std::remove( _name.begin(), _name.end(), '\"' ),
+         _name.end());
+
+    recv.str("");
+
+    recv << ((itemRef["descrip"]));
+    _description = recv.str();
+
+    _description.erase(
+                std::remove( _description.begin(), _description.end(), '\"' ),
+                _description.end());
+
+    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    auto money = itemRef["money"];
+    _value.gold = uint64_t(money["gold"]);
+    _value.silver = uint64_t(money["silver"]);
+    _value.copper = uint64_t(money["copper"]);
+    _value.electrum = uint64_t(money["electrum"]);
+    _value.platinum = uint64_t(money["platinum"]);
+    _weightGP = uint64_t(itemRef["weight"]);  
+}
+
+Livestock::~Livestock()
+{
+
+}

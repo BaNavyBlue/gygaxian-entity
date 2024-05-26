@@ -47,6 +47,8 @@ int main(){
     std::vector<std::shared_ptr<Items>> armsList;
     std::vector<std::shared_ptr<Items>> armorList;
     std::vector<std::shared_ptr<Items>> clothingList;
+    std::vector<std::shared_ptr<Items>> herbList;
+    std::vector<std::shared_ptr<Items>> liveStockList;
 
     unsigned itemCount = uint64_t(itemsData["data"]["count"]);
     std::cout << "itemCount: " << itemCount << std::endl;
@@ -78,6 +80,32 @@ int main(){
     std::cout << "itemCount: " << itemCount << std::endl;
     for(unsigned i = 0; i < itemCount; ++i){
         clothingList.push_back(std::make_shared<Clothing>(itemsData3, i));
+    }
+
+    sleep(5);
+
+    std::cout << "loading: " << "items/Herbs.json" << std::endl;
+    sj::ondemand::parser parser4;
+    sj::padded_string json4 = sj::padded_string::load("items/Herbs.json");
+    sj::ondemand::document itemsData4 = parser4.iterate(json4);
+
+    itemCount = uint64_t(itemsData4["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        herbList.push_back(std::make_shared<Herbs>(itemsData4, i));
+    }
+
+    sleep(5);
+
+    std::cout << "loading: " << "items/Livestock.json" << std::endl;
+    sj::ondemand::parser parser5;
+    sj::padded_string json5 = sj::padded_string::load("items/Livestock.json");
+    sj::ondemand::document itemsData5 = parser5.iterate(json5);
+
+    itemCount = uint64_t(itemsData5["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        liveStockList.push_back(std::make_shared<Livestock>(itemsData5, i));
     }
 
     sleep(5);

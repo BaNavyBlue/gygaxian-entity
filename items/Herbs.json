@@ -1,9 +1,48 @@
 {
     "data":{
-        "count": 0,
-        "item":{
+        "count": 3,
+        "index":{
             "0":{
-                
+                "name": "Belladona, sprig",
+                "count": 1,
+                "type": 7,
+                "descrip": "Aka Deadly Nightshade.",
+                "money":{
+                    "gold": 0,
+                    "silver": 4,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1                
+            },
+            "1":{
+                "name": "Garlic, bud",
+                "count": 1,
+                "type": 7,
+                "descrip": "Delecious medicinal aromatic herb.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 5,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1                
+            },
+            "2":{
+                "name": "Wolbesbane, sprig",
+                "count": 1,
+                "type": 7,
+                "descrip": "A lovely toxic flowering plant.",
+                "money":{
+                    "gold": 0,
+                    "silver": 10,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1                
             }
         }
     }

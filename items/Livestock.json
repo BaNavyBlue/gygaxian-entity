@@ -1,0 +1,301 @@
+{
+    "data":{
+        "count": 21,
+        "index":{
+            "0":{
+                "name": "Chicken",
+                "count": 1,
+                "type": 5,
+                "descrip": "A domesticated flightless bird.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 3,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100                
+            },
+            "1":{
+                "name": "Cow",
+                "count": 1,
+                "type": 5,
+                "descrip": "A hearty dairy cow.",
+                "money":{
+                    "gold": 10,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 7500                
+            },
+            "2":{
+                "name": "Dog, guard",
+                "count": 1,
+                "type": 5,
+                "descrip": "A nasty noisey k9 and a best friend.",
+                "money":{
+                    "gold": 25,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 800                
+            },
+            "3":{
+                "name": "Dog, hunting",
+                "count": 1,
+                "type": 5,
+                "descrip": "A dog skilled in tracking small game.",
+                "money":{
+                    "gold": 17,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 650                
+            },
+            "4":{
+                "name": "Donkey",
+                "count": 1,
+                "type": 5,
+                "descrip": "Sturdy stuborn pack animal.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 8000                
+            },
+            "5":{
+                "name": "Goat",
+                "count": 1,
+                "type": 5,
+                "descrip": "A stubborn horned animal for dairy production and meat.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1500                
+            },
+            "6":{
+                "name": "Hawk, Large",
+                "count": 1,
+                "type": 5,
+                "descrip": "A large raptor bird, can be trained to attack good for tracking and message delivery.",
+                "money":{
+                    "gold": 40,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30                
+            },
+            "7":{
+                "name": "Hawk, Small",
+                "count": 1,
+                "type": 5,
+                "descrip": "A small raptor bird, can be trained to attack good for tracking and message delivery.",
+                "money":{
+                    "gold": 8,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 15                
+            },
+            "8":{
+                "name": "Horse, Draft",
+                "count": 1,
+                "type": 5,
+                "descrip": "A large powerful horse bred for heavy labor.",
+                "money":{
+                    "gold": 30,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 16000               
+            },
+            "9":{
+                "name": "Horse, heavy war",
+                "count": 1,
+                "type": 5,
+                "descrip": "An enourmous powerful horse trained to be ridden in combat.",
+                "money":{
+                    "gold": 300,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 16000               
+            },
+            "10":{
+                "name": "Horse, light war",
+                "count": 1,
+                "type": 5,
+                "descrip": "A small nimble horse trained to be ridden in combat.",
+                "money":{
+                    "gold": 150,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 9000               
+            },
+            "11":{
+                "name": "Horse, medium war",
+                "count": 1,
+                "type": 5,
+                "descrip": "A large powerful horse trained to be ridden in combat.",
+                "money":{
+                    "gold": 225,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 11000               
+            },
+            "12":{
+                "name": "Horse, riding (light)",
+                "count": 1,
+                "type": 5,
+                "descrip": "A small horse trained to be ridden.",
+                "money":{
+                    "gold": 25,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 9000               
+            },
+            "13":{
+                "name": "Mule",
+                "count": 1,
+                "type": 5,
+                "descrip": "A hybrid mix of from a male donkey and female horse. A good pack animal",
+                "money":{
+                    "gold": 20,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 4000               
+            },
+            "14":{
+                "name": "Ox",
+                "count": 1,
+                "type": 5,
+                "descrip": "A large powerful draft animal bred for farm labor and hauling.",
+                "money":{
+                    "gold": 15,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 17000               
+            },
+            "15":{
+                "name": "Pigeon",
+                "count": 1,
+                "type": 5,
+                "descrip": "A small domesticated bird, good for sending messages or meager meals.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 2,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 11              
+            },
+            "16":{
+                "name": "Piglet",
+                "count": 1,
+                "type": 5,
+                "descrip": "A tiny baby pig.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 25              
+            },
+            "17":{
+                "name": "Pig",
+                "count": 1,
+                "type": 5,
+                "descrip": "A cute fat source of bacon.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5000               
+            },
+            "18":{
+                "name": "Pony",
+                "count": 1,
+                "type": 5,
+                "descrip": "An adorable small equine animal suitable for small riders.",
+                "money":{
+                    "gold": 15,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 6000               
+            },
+            "19":{
+                "name": "Sheep",
+                "count": 1,
+                "type": 5,
+                "descrip": "A domesticted animal good for wool and meat.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1700               
+            },
+            "20":{
+                "name": "Songbird",
+                "count": 1,
+                "type": 5,
+                "descrip": "A pretty caged singing bird.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 4,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 3               
+            }
+        }
+    }
+}
