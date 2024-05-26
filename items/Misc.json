@@ -1,0 +1,427 @@
+{
+    "data":{
+        "count": 29,
+        "index":{
+            "0":{
+                "name": "Backpack, leather",
+                "count": 1,
+                "type": 6,
+                "descrip": "A handy pack for carying small equipment and rations.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20                
+            },
+            "1":{
+                "name": "Box, iron, large",
+                "count": 1,
+                "type": 6,
+                "descrip": "A large heavy chest for securely transporting goods.",
+                "money":{
+                    "gold": 28,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 4500               
+            },
+            "2":{
+                "name": "Box, iron, small",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small heavy iron box for securely storing items.",
+                "money":{
+                    "gold": 9,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 400              
+            },
+            "3":{
+                "name": "Candle, tallow",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small candle made from rendered animal fat.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 1,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1              
+            },
+            "4":{
+                "name": "Candle, wax",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small candle made from bee or plant based wax.",
+                "money":{
+                    "gold": 0,
+                    "silver": 2,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1              
+            },
+            "5":{
+                "name": "Case, bone, map or scroll",
+                "count": 1,
+                "type": 6,
+                "descrip": "A hollow bone tube made for holding rolled up maps or scrolls.",
+                "money":{
+                    "gold": 5,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20              
+            },
+            "6":{
+                "name": "Case, leather, map or scroll",
+                "count": 1,
+                "type": 6,
+                "descrip": "A hollow leather tube made for holding rolled up maps or scrolls..",
+                "money":{
+                    "gold": 0,
+                    "silver": 15,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20              
+            },
+            "7":{
+                "name": "Chest, wooden large",
+                "count": 1,
+                "type": 6,
+                "descrip": "A large wooden chest for transporting goods and cargo.",
+                "money":{
+                    "gold": 0,
+                    "silver": 17,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 800              
+            },
+            "8":{
+                "name": "Chest, wooden small",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small wooden chest for transporting goods and cargo.",
+                "money":{
+                    "gold": 0,
+                    "silver": 8,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 175              
+            },
+            "9":{
+                "name": "Lantern, bullseye",
+                "count": 1,
+                "type": 6,
+                "descrip": "An oil lantern with an aperture on one side surrounded by reflective panels to allow a horizontal 60degree angle beam.",
+                "money":{
+                    "gold": 12,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60             
+            },
+            "10":{
+                "name": "Lantern, hooded",
+                "count": 1,
+                "type": 6,
+                "descrip": "An oil lantern which radiates light on all sides.",
+                "money":{
+                    "gold": 7,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60              
+            },
+            "11":{
+                "name": "Mirror, large metal",
+                "count": 1,
+                "type": 6,
+                "descrip": "A large polished metal sheet for vanity, and reflecting light.",
+                "money":{
+                    "gold": 10,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50              
+            },
+            "12":{
+                "name": "Mirror, small silver",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small polished silver mirror perfect for grooming or reflecting light.",
+                "money":{
+                    "gold": 20,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5              
+            },
+            "13":{
+                "name": "Oil, flask of",
+                "count": 1,
+                "type": 6,
+                "descrip": "An oil flask sufficient for fueling a lantern for 6 hours.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20              
+            },
+            "14":{
+                "name": "Pole, 10'",
+                "count": 1,
+                "type": 6,
+                "descrip": "A device for poking things one doesn't want to touch and other utilitarian applications.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 3,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100             
+            },
+            "15":{
+                "name": "Pouch, belt large",
+                "count": 1,
+                "type": 6,
+                "descrip": "A large belt mounted pouch for holding small supplies.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 10              
+            },
+            "16":{
+                "name": "Pouch, belt small",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small belt mounted pouch for holding small supplies.",
+                "money":{
+                    "gold": 0,
+                    "silver": 15,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5              
+            },
+            "17":{
+                "name": "Pouch, belt small",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small belt mounted pouch for holding small supplies.",
+                "money":{
+                    "gold": 0,
+                    "silver": 15,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5              
+            },
+            "18":{
+                "name": "Quiver, 1 dozen arrows capped",
+                "count": 1,
+                "type": 6,
+                "descrip": "A shoulder slung covered leather quiver for holding 12 arrows.",
+                "money":{
+                    "gold": 0,
+                    "silver": 8,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30              
+            },
+            "19":{
+                "name": "Quiver, score arrows capped",
+                "count": 1,
+                "type": 6,
+                "descrip": "A shoulder slung covered leather quiver for holding 20 arrows.",
+                "money":{
+                    "gold": 0,
+                    "silver": 12,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30              
+            },
+            "20":{
+                "name": "Quiver, score bolts capped",
+                "count": 1,
+                "type": 6,
+                "descrip": "A shoulder slung covered leather quiver for holding 20 bolts.",
+                "money":{
+                    "gold": 0,
+                    "silver": 15,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30              
+            },
+            "21":{
+                "name": "Quiver, 2 score bolts capped",
+                "count": 1,
+                "type": 6,
+                "descrip": "A shoulder slung covered leather quiver for holding 40 bolts.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30              
+            },
+            "22":{
+                "name": "Rope, 50'",
+                "count": 1,
+                "type": 6,
+                "descrip": "A heafty 50' hemp rope.",
+                "money":{
+                    "gold": 0,
+                    "silver": 2,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 75              
+            },
+            "23":{
+                "name": "Sack, large",
+                "count": 1,
+                "type": 6,
+                "descrip": "A large burlap sack for carying items.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 16,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20              
+            },
+            "24":{
+                "name": "Sack, small",
+                "count": 1,
+                "type": 6,
+                "descrip": "A small cloth sack for carying items.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 10,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5              
+            },
+            "25":{
+                "name": "Skin for water or wine",
+                "count": 1,
+                "type": 6,
+                "descrip": "A water tight animal skin sack for carrying liquids.",
+                "money":{
+                    "gold": 0,
+                    "silver": 15,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5              
+            },
+            "26":{
+                "name": "Spike, iron, large",
+                "count": 1,
+                "type": 6,
+                "descrip": "A large spike used for hammering into the ground for fastening or teathering objects.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 1,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 10              
+            },
+            "27":{
+                "name": "Thieves pick and tools",
+                "count": 1,
+                "type": 6,
+                "descrip": "The tools of the trade!.",
+                "money":{
+                    "gold": 30,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 2              
+            },
+            "28":{
+                "name": "Tinder box with flint and steel",
+                "count": 1,
+                "type": 6,
+                "descrip": "Essential fire starting kit.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 2              
+            },
+            "29":{
+                "name": "Torch",
+                "count": 1,
+                "type": 6,
+                "descrip": "An aproximately 2' long shaft of wood wrapped with tar or oil soaked cloth at one end.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 1,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 25              
+            }
+        }
+    }
+}
