@@ -1,0 +1,91 @@
+{
+    "data":{
+        "count": 6,
+        "index":{
+            "0":{
+                "name": "Beads, prayer",
+                "count": 1,
+                "type": 9,
+                "descrip": "Some beads to clutch and fondle whilist petitioning ones diety.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 10                
+            },
+            "1":{
+                "name": "Incense, stick",
+                "count": 1,
+                "type": 9,
+                "descrip": "Natural aromatic stick. Light to effect the ambiance of the room whilist contemplating ones navel or jamming to the latest lute scrolls.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5                
+            },
+            "2":{
+                "name": "Symbol, holy or unholy, iron",
+                "count": 1,
+                "type": 9,
+                "descrip": "Perfect for pretnetious teenagers typically not a symbol associated with the faith of their fathers.",
+                "money":{
+                    "gold": 2,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20                
+            },
+            "3":{
+                "name": "Symbol, holy or unholy, silver",
+                "count": 1,
+                "type": 9,
+                "descrip": "A finely polished religious totem.",
+                "money":{
+                    "gold": 50,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20                
+            },
+            "4":{
+                "name": "Symbol, holy or unholy, wooden",
+                "count": 1,
+                "type": 9,
+                "descrip": "A humble wood crafted symbol of ones faith.",
+                "money":{
+                    "gold": 0,
+                    "silver": 7,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 10                
+            },
+            "5":{
+                "name": "Water, holy or un holy vial",
+                "count": 1,
+                "type": 9,
+                "descrip": "A vial of water blessed and or cursed by a practitioner of a given faith.",
+                "money":{
+                    "gold": 25,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 25                
+            }
+        }
+    }
+}

@@ -51,6 +51,7 @@ int main(){
     std::vector<std::shared_ptr<Items>> liveStockList;
     std::vector<std::shared_ptr<Items>> miscList;
     std::vector<std::shared_ptr<Items>> provisionList;
+    std::vector<std::shared_ptr<Items>> ReligiousList;
 
 
     unsigned itemCount = uint64_t(itemsData["data"]["count"]);
@@ -135,6 +136,19 @@ int main(){
     std::cout << "itemCount: " << itemCount << std::endl;
     for(unsigned i = 0; i < itemCount; ++i){
         miscList.push_back(std::make_shared<Provisions>(itemsData7, i));
+    }
+
+    sleep(5);
+
+    std::cout << "loading: " << "items/Religious.json" << std::endl;
+    sj::ondemand::parser parser8;
+    sj::padded_string json8 = sj::padded_string::load("items/Religious.json");
+    sj::ondemand::document itemsData8 = parser8.iterate(json8);
+
+    itemCount = uint64_t(itemsData8["data"]["count"]);
+    std::cout << "itemCount: " << itemCount << std::endl;
+    for(unsigned i = 0; i < itemCount; ++i){
+        miscList.push_back(std::make_shared<Religious>(itemsData8, i));
     }
 
     sleep(5);

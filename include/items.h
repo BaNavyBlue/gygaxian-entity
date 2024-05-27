@@ -124,7 +124,7 @@ class Religious : public Items
 private:
     //int armorMod;
 public:
-    Religious();
+    Religious(sj::ondemand::document& itemData, int idx);
     ~Religious();
 };
 
