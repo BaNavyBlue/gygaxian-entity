@@ -1,0 +1,147 @@
+{
+    "data":{
+        "count": 10,
+        "index":{
+            "0":{
+                "name": "Ale, pint",
+                "count": 1,
+                "type": 8,
+                "descrip": "A refreshing strong alcoholic beverage that is safer to drink than local water.",
+                "money":{
+                    "gold": 0,
+                    "silver": 1,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60                
+            },
+            "1":{
+                "name": "Beer, small pint",
+                "count": 1,
+                "type": 8,
+                "descrip": "A light crisp alcoholic beverage that is safer to drink than local water.",
+                "money":{
+                    "gold": 0,
+                    "silver": 0,
+                    "copper": 5,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60                
+            },
+            "2":{
+                "name": "Food, merchant's meal",
+                "count": 1,
+                "type": 8,
+                "descrip": "Fruits, grains and vegetables.",
+                "money":{
+                    "gold": 0,
+                    "silver": 1,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 10                
+            },
+            "3":{
+                "name": "Food, rich meal",
+                "count": 1,
+                "type": 8,
+                "descrip": "A large savory meal consisting of fatty meats, desert and all the fixins.",
+                "money":{
+                    "gold": 1,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20                
+            },
+            "4":{
+                "name": "Grain, horse meal, 1 day",
+                "count": 1,
+                "type": 8,
+                "descrip": "Fruits, grains and vegetables.",
+                "money":{
+                    "gold": 0,
+                    "silver": 1,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50                
+            },
+            "5":{
+                "name": "Rations, Iron, 1 week",
+                "count": 7,
+                "type": 8,
+                "descrip": "Meager portions of energy dense food for long journeys and reduced weight.",
+                "money":{
+                    "gold": 5,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 75                
+            },
+            "6":{
+                "name": "Rations, standard, 1 week",
+                "count": 7,
+                "type": 8,
+                "descrip": "Fruits, grains and vegetables.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 200                
+            },
+            "7":{
+                "name": "Rations, standard, 1 week",
+                "count": 7,
+                "type": 8,
+                "descrip": "Inexpensive filling meals to keep your tummy full.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 200                
+            },
+            "8":{
+                "name": "Wine, pint, good",
+                "count": 1,
+                "type": 8,
+                "descrip": "A delightful refreshing fermented grape beverage, safer than local water to drink.",
+                "money":{
+                    "gold": 0,
+                    "silver": 10,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60                
+            },
+            "9":{
+                "name": "Wine, pint, watered",
+                "count": 1,
+                "type": 8,
+                "descrip": "A diluted yet refreshing fermented grape beverage, safer than local water to drink.",
+                "money":{
+                    "gold": 0,
+                    "silver": 5,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60                
+            }
+        }
+    }
+}

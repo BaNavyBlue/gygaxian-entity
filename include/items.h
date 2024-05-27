@@ -115,7 +115,7 @@ class Provisions : public Items
 private:
     //int armorMod;
 public:
-    Provisions();
+    Provisions(sj::ondemand::document& itemData, int idx);
     ~Provisions();
 };
 
