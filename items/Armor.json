@@ -77,7 +77,7 @@
                 "4":{
                     "name": "Helm, Great",
                     "count": 1,
-                    "type": 11,
+                    "type": 12,
                     "aType": 7,
                     "descrip": "Traditional iron helm with a flat top and eye slits.",
                     "armorMod": 7,
@@ -95,7 +95,7 @@
                 "5":{
                     "name": "Helm, Small",
                     "count": 1,
-                    "type": 11,
+                    "type": 12,
                     "aType": 7,
                     "descrip": "A Poorly described iron helmet.",
                     "armorMod": 5,

@@ -133,7 +133,7 @@ class TackHarness : public Items
 private:
     //int armorMod;
 public:
-    TackHarness();
+    TackHarness(sj::ondemand::document& itemData, int idx);
     ~TackHarness();
 };
 class Transport : public Items
@@ -141,7 +141,7 @@ class Transport : public Items
 private:
     //int armorMod;
 public:
-    Transport();
+    Transport(sj::ondemand::document& itemData, int idx);
     ~Transport();
 };
 

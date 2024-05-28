@@ -1,0 +1,133 @@
+{
+    "data":{
+        "count": 9,
+        "index":{
+            "0":{
+                "name": "Barding, chain",
+                "count": 1,
+                "type": 10,
+                "descrip": "Chain mail protective tack for a horse.",
+                "money":{
+                    "gold": 250,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 3500                
+            },
+            "1":{
+                "name": "Barding, leather",
+                "count": 1,
+                "type": 10,
+                "descrip": "Leather mail protective tack for a horse.",
+                "money":{
+                    "gold": 100,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1600                
+            },
+            "2":{
+                "name": "Barding, plate",
+                "count": 1,
+                "type": 10,
+                "descrip": "Plate protective tack for a horse.",
+                "money":{
+                    "gold": 500,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 5000                
+            },
+            "3":{
+                "name": "Bit and Bridle",
+                "count": 1,
+                "type": 10,
+                "descrip": "Standard head gear for horses.",
+                "money":{
+                    "gold": 0,
+                    "silver": 15,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30                
+            },
+            "4":{
+                "name": "Harness",
+                "count": 1,
+                "type": 10,
+                "descrip": "A series of leather straps used for connecting horses and beasts of burden to carts, wagons and pulled tools.",
+                "money":{
+                    "gold": 0,
+                    "silver": 12,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 100                
+            },
+            "5":{
+                "name": "Saddle",
+                "count": 1,
+                "type": 10,
+                "descrip": "A standard seat for equestrian passengers.",
+                "money":{
+                    "gold": 10,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 375                
+            },
+            "6":{
+                "name": "Saddle bags, large",
+                "count": 1,
+                "type": 10,
+                "descrip": "An oversized set of saddle bags.",
+                "money":{
+                    "gold": 4,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 150                
+            },
+            "7":{
+                "name": "Saddle bags, small",
+                "count": 1,
+                "type": 10,
+                "descrip": "Small saddle bags for storing items.",
+                "money":{
+                    "gold": 3,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 50                
+            },
+            "8":{
+                "name": "Saddle blanket",
+                "count": 1,
+                "type": 10,
+                "descrip": "A blanket for reducing chafing and irritation on horse caused by saddle friction.",
+                "money":{
+                    "gold": 0,
+                    "silver": 3,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20                
+            }
+        }
+    }
+}

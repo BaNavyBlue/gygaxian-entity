@@ -1,0 +1,147 @@
+{
+    "data":{
+        "count": 10,
+        "index":{
+            "0":{
+                "name": "Barge (or) raft, small",
+                "count": 1,
+                "type": 11,
+                "descrip": "A small flat floating platform for transporting small amounts of passengers and frieght.",
+                "money":{
+                    "gold": 50,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1000                
+            },
+            "1":{
+                "name": "Boat, small",
+                "count": 1,
+                "type": 11,
+                "descrip": "A small aquatic craft.",
+                "money":{
+                    "gold": 75,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1000                
+            },
+            "2":{
+                "name": "Boat, long",
+                "count": 1,
+                "type": 11,
+                "descrip": "A large aquatic craft.",
+                "money":{
+                    "gold": 150,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 1600                
+            },
+            "3":{
+                "name": "Cart",
+                "count": 1,
+                "type": 11,
+                "descrip": "A simple two handled wooden cart with wheels for transporting goods and cargo.",
+                "money":{
+                    "gold": 50,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 6000                
+            },
+            "4":{
+                "name": "Galley, large",
+                "count": 1,
+                "type": 11,
+                "descrip": "A large flat ship used for warfare and trading.",
+                "money":{
+                    "gold": 25000,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 40000                
+            },
+            "5":{
+                "name": "Galley, small",
+                "count": 1,
+                "type": 11,
+                "descrip": "A large oar and sail powered aquatic craft.",
+                "money":{
+                    "gold": 10000,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 20000                
+            },
+            "6":{
+                "name": "Ship, merchant, large",
+                "count": 1,
+                "type": 11,
+                "descrip": "A large oar driven trading vessel.",
+                "money":{
+                    "gold": 15000,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 30000                
+            },
+            "7":{
+                "name": "Ship, merchant, small",
+                "count": 1,
+                "type": 11,
+                "descrip": "A medium sized trading vessel.",
+                "money":{
+                    "gold": 10000,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 15000                
+            },
+            "8":{
+                "name": "Ship, war",
+                "count": 1,
+                "type": 11,
+                "descrip": "A heavy flat oar ship with defensive araignments.",
+                "money":{
+                    "gold": 20000,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 80000                
+            },
+            "9":{
+                "name": "Wagon",
+                "count": 1,
+                "type": 11,
+                "descrip": "A 4 wheeled passenger and cargo transport platform designed to be pulled by beasts of burden.",
+                "money":{
+                    "gold": 150,
+                    "silver": 0,
+                    "copper": 0,
+                    "electrum": 0,
+                    "platinum": 0
+                },
+                "weight": 60000               
+            }
+        }
+    }
+}

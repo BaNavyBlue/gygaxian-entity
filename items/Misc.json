@@ -241,20 +241,6 @@
                 "weight": 5              
             },
             "17":{
-                "name": "Pouch, belt small",
-                "count": 1,
-                "type": 6,
-                "descrip": "A small belt mounted pouch for holding small supplies.",
-                "money":{
-                    "gold": 0,
-                    "silver": 15,
-                    "copper": 0,
-                    "electrum": 0,
-                    "platinum": 0
-                },
-                "weight": 5              
-            },
-            "18":{
                 "name": "Quiver, 1 dozen arrows capped",
                 "count": 1,
                 "type": 6,
@@ -268,7 +254,7 @@
                 },
                 "weight": 30              
             },
-            "19":{
+            "18":{
                 "name": "Quiver, score arrows capped",
                 "count": 1,
                 "type": 6,
@@ -282,7 +268,7 @@
                 },
                 "weight": 30              
             },
-            "20":{
+            "19":{
                 "name": "Quiver, score bolts capped",
                 "count": 1,
                 "type": 6,
@@ -296,7 +282,7 @@
                 },
                 "weight": 30              
             },
-            "21":{
+            "20":{
                 "name": "Quiver, 2 score bolts capped",
                 "count": 1,
                 "type": 6,
@@ -310,7 +296,7 @@
                 },
                 "weight": 30              
             },
-            "22":{
+            "21":{
                 "name": "Rope, 50'",
                 "count": 1,
                 "type": 6,
@@ -324,7 +310,7 @@
                 },
                 "weight": 75              
             },
-            "23":{
+            "22":{
                 "name": "Sack, large",
                 "count": 1,
                 "type": 6,
@@ -338,7 +324,7 @@
                 },
                 "weight": 20              
             },
-            "24":{
+            "23":{
                 "name": "Sack, small",
                 "count": 1,
                 "type": 6,
@@ -352,7 +338,7 @@
                 },
                 "weight": 5              
             },
-            "25":{
+            "24":{
                 "name": "Skin for water or wine",
                 "count": 1,
                 "type": 6,
@@ -366,7 +352,7 @@
                 },
                 "weight": 5              
             },
-            "26":{
+            "25":{
                 "name": "Spike, iron, large",
                 "count": 1,
                 "type": 6,
@@ -380,7 +366,7 @@
                 },
                 "weight": 10              
             },
-            "27":{
+            "26":{
                 "name": "Thieves pick and tools",
                 "count": 1,
                 "type": 6,
@@ -394,7 +380,7 @@
                 },
                 "weight": 2              
             },
-            "28":{
+            "27":{
                 "name": "Tinder box with flint and steel",
                 "count": 1,
                 "type": 6,
@@ -408,7 +394,7 @@
                 },
                 "weight": 2              
             },
-            "29":{
+            "28":{
                 "name": "Torch",
                 "count": 1,
                 "type": 6,
