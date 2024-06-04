@@ -226,12 +226,30 @@ public:
     std::vector<std::vector<Entity>>& getParties();
 };
 
-class StartUpInventory{
+class AccessInventory{
 private:
-    std::vector<Arms> _arms;
-    std::vector<Armor> _armor;  
+    // std::vector<Arms> _arms;
+    // std::vector<Armor> _armor;
+    std::vector<std::shared_ptr<Items>> _armsList;
+    std::vector<std::shared_ptr<Items>> _armorList;
+    std::vector<std::shared_ptr<Items>> _clothingList;
+    std::vector<std::shared_ptr<Items>> _herbList;
+    std::vector<std::shared_ptr<Items>> _liveStockList;
+    std::vector<std::shared_ptr<Items>> _miscList;
+    std::vector<std::shared_ptr<Items>> _provisionList;
+    std::vector<std::shared_ptr<Items>> _religiousList;
+    std::vector<std::shared_ptr<Items>> _tackHarnessList;
+    std::vector<std::shared_ptr<Items>> _transportList;
+
+    sj::ondemand::parser _parser;
+    sj::padded_string _json;
+    sj::ondemand::document _itemsData;
+
+    unsigned _itemCount = 0;
+
 public:
-    StartUpInventory(Entity inChar);
+    AccessInventory();
+    AccessInventory(Entity* inChar);
 };
 
 #endif //UI_UTIL_H

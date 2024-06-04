@@ -14,14 +14,14 @@
  */
 int getch(void)
 {
-	struct termios oldt, newt;
+	//struct termios oldt, newt;
 	int ch;
-	tcgetattr(STDIN_FILENO, &oldt);
-	newt = oldt;
-	newt.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+	//tcgetattr(STDIN_FILENO, &oldt);
+	//newt = oldt;
+	//newt.c_lflag &= ~(ICANON | ECHO);
+	//tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 	ch = getchar();
-	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+	//tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return ch;
 }
 
@@ -37,7 +37,7 @@ int kbhit(void)
 	int cnt = 0;
 	tcgetattr(STDIN_FILENO, &oldt);
 	newt = oldt;
-	newt.c_lflag    &= ~(ICANON | ECHO);
+	//newt.c_lflag    &= ~(ICANON | ECHO);
 	newt.c_iflag     = 0; /* input mode */
 	newt.c_oflag     = 0; /* output mode */
 	newt.c_cc[VMIN]  = 1; /* minimum time to wait */
@@ -46,7 +46,7 @@ int kbhit(void)
 	ioctl(0, FIONREAD, &cnt); /* Read count */
 	struct timeval tv;
 	tv.tv_sec  = 0;
-	tv.tv_usec = 6500;
+	tv.tv_usec = 500;
 	select(STDIN_FILENO+1, NULL, NULL, NULL, &tv); /* A small time delay */
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return cnt; /* Return number of characters */
