@@ -2334,98 +2334,161 @@ void clearPrevScreen(const std::vector<ScreenVals>& screens)
     drawSmall(screens.back().xyLimits.minX, screens.back().xyLimits.maxX, screens.back().xyLimits.minY, screens.back().xyLimits.maxY + 1, screens.front());  
 }
 
-AccessInventory::AccessInventory(Entity* inChar)
+AccessInventory::AccessInventory(std::vector<std::string>& inList, std::vector<Entity> &inEntity,
+                                     ScreenVals& primaryScreen,
+                                     std::string inName, std::vector<int> inOptions,
+                                     Perimeter inPerim, DrawRange inRange)
 {
+
+    _perim = inPerim;
+    _list = inList;
+    _players = inEntity;
+    _title = inName;
+    _options = inOptions;
+    _cornerDims = inRange;
+    _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    _entityListScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    _primaryScreen = std::make_shared<ScreenVals>(primaryScreen);
 
     _json = sj::padded_string::load("items/Arms.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
-
+    std::vector<std::shared_ptr<Items>> armsList;
     for(unsigned i = 0; i < _itemCount; ++i){
-        _armsList.push_back(std::make_shared<Arms>(_itemsData, i));
+        armsList.push_back(std::make_shared<Arms>(_itemsData, i));
     }
+
+    _inventoryList.push_back(armsList);
 
     _json = sj::padded_string::load("items/Armor.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> armorList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _armorList.push_back(std::make_shared<Armor>(_itemsData, i));
+        armorList.push_back(std::make_shared<Armor>(_itemsData, i));
     }
+
+    _inventoryList.push_back(armorList);
 
     _json = sj::padded_string::load("items/Clothing.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> clothingList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _clothingList.push_back(std::make_shared<Clothing>(_itemsData, i));
+        clothingList.push_back(std::make_shared<Clothing>(_itemsData, i));
     }
+
+    _inventoryList.push_back(clothingList);
 
     _json = sj::padded_string::load("items/Herbs.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> herbList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _herbList.push_back(std::make_shared<Herbs>(_itemsData, i));
+        herbList.push_back(std::make_shared<Herbs>(_itemsData, i));
     }
+
+    _inventoryList.push_back(herbList);
 
     _json = sj::padded_string::load("items/Livestock.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> liveStockList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _liveStockList.push_back(std::make_shared<Livestock>(_itemsData, i));
+        liveStockList.push_back(std::make_shared<Livestock>(_itemsData, i));
     }
+
+    _inventoryList.push_back(liveStockList);
 
     _json = sj::padded_string::load("items/Misc.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> miscList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _miscList.push_back(std::make_shared<MiscItems>(_itemsData, i));
+        miscList.push_back(std::make_shared<MiscItems>(_itemsData, i));
     }
+
+    _inventoryList.push_back(miscList);
 
     _json = sj::padded_string::load("items/Provisions.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> provisionList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _provisionList.push_back(std::make_shared<Provisions>(_itemsData, i));
+        provisionList.push_back(std::make_shared<Provisions>(_itemsData, i));
     }
+
+    _inventoryList.push_back(provisionList);
 
     _json = sj::padded_string::load("items/Religious.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> religiousList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _religiousList.push_back(std::make_shared<Religious>(_itemsData, i));
+        religiousList.push_back(std::make_shared<Religious>(_itemsData, i));
     }
+
+    _inventoryList.push_back(religiousList);
 
     _json = sj::padded_string::load("items/TackHarness.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> tackHarnessList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _tackHarnessList.push_back(std::make_shared<TackHarness>(_itemsData, i));
+        tackHarnessList.push_back(std::make_shared<TackHarness>(_itemsData, i));
     }
+
+    _inventoryList.push_back(tackHarnessList);
 
     _json = sj::padded_string::load("items/Transport.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> transportList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _transportList.push_back(std::make_shared<Transport>(_itemsData, i));
+        transportList.push_back(std::make_shared<Transport>(_itemsData, i));
     }
+
+    _inventoryList.push_back(transportList);
+
+    _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
+    _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
+    _listScreen->xyLimits.maxX = _cornerDims.maxX = tcols() / 2;
+    _listScreen->xyLimits.maxY = _cornerDims.maxY = trows() - 3;
+
+    _entityListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
+    _entityListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
+    _entityListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 - 3;
+    _entityListScreen->xyLimits.maxY = trows() - 3;
+
+    createPrimary(*_primaryScreen, _optMain);
 }
 
 AccessInventory::AccessInventory()
@@ -2436,90 +2499,131 @@ AccessInventory::AccessInventory()
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> armsList;
     for(unsigned i = 0; i < _itemCount; ++i){
-        _armsList.push_back(std::make_shared<Arms>(_itemsData, i));
+        armsList.push_back(std::make_shared<Arms>(_itemsData, i));
     }
+
+    _inventoryList.push_back(armsList);
 
     _json = sj::padded_string::load("items/Armor.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> armorList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _armorList.push_back(std::make_shared<Armor>(_itemsData, i));
+        armorList.push_back(std::make_shared<Armor>(_itemsData, i));
     }
+
+    _inventoryList.push_back(armorList);
 
     _json = sj::padded_string::load("items/Clothing.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> clothingList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _clothingList.push_back(std::make_shared<Clothing>(_itemsData, i));
+        clothingList.push_back(std::make_shared<Clothing>(_itemsData, i));
     }
+
+    _inventoryList.push_back(clothingList);
 
     _json = sj::padded_string::load("items/Herbs.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> herbList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _herbList.push_back(std::make_shared<Herbs>(_itemsData, i));
+        herbList.push_back(std::make_shared<Herbs>(_itemsData, i));
     }
+
+    _inventoryList.push_back(herbList);
 
     _json = sj::padded_string::load("items/Livestock.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> liveStockList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _liveStockList.push_back(std::make_shared<Livestock>(_itemsData, i));
+        liveStockList.push_back(std::make_shared<Livestock>(_itemsData, i));
     }
+
+    _inventoryList.push_back(liveStockList);
 
     _json = sj::padded_string::load("items/Misc.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> miscList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _miscList.push_back(std::make_shared<MiscItems>(_itemsData, i));
+        miscList.push_back(std::make_shared<MiscItems>(_itemsData, i));
     }
+
+    _inventoryList.push_back(miscList);
 
     _json = sj::padded_string::load("items/Provisions.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> provisionList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _provisionList.push_back(std::make_shared<Provisions>(_itemsData, i));
+        provisionList.push_back(std::make_shared<Provisions>(_itemsData, i));
     }
+
+    _inventoryList.push_back(provisionList);
 
     _json = sj::padded_string::load("items/Religious.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> religiousList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _religiousList.push_back(std::make_shared<Religious>(_itemsData, i));
+        religiousList.push_back(std::make_shared<Religious>(_itemsData, i));
     }
+
+    _inventoryList.push_back(religiousList);
 
     _json = sj::padded_string::load("items/TackHarness.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> tackHarnessList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _tackHarnessList.push_back(std::make_shared<TackHarness>(_itemsData, i));
+        tackHarnessList.push_back(std::make_shared<TackHarness>(_itemsData, i));
     }
+
+    _inventoryList.push_back(tackHarnessList);
 
     _json = sj::padded_string::load("items/Transport.json");
     _itemsData = _parser.iterate(_json);
 
     _itemCount = uint64_t(_itemsData["data"]["count"]);
 
+    std::vector<std::shared_ptr<Items>> transportList;
+
     for(unsigned i = 0; i < _itemCount; ++i){
-        _transportList.push_back(std::make_shared<Transport>(_itemsData, i));
+        transportList.push_back(std::make_shared<Transport>(_itemsData, i));
     }
 
-    //sleep(10);    
+    _inventoryList.push_back(transportList);
+
+    std::cout << "Size of Inventory Vector:" << _inventoryList.size() << std::endl;
+
+    sleep(10);    
 }

@@ -139,8 +139,8 @@ protected:
     DrawRange _cornerDims;
     std::shared_ptr<ScreenVals> _listScreen;
     std::shared_ptr<ScreenVals> _primaryScreen;
-    void createListScreen(ScreenVals& inScreen, std::vector<std::string> inList, std::string inTitle, bool highlight);
-    void createListPerimeter(ScreenVals& inScreen, std::vector<int> inOpts);
+    virtual void createListScreen(ScreenVals& inScreen, std::vector<std::string> inList, std::string inTitle, bool highlight);
+    virtual void createListPerimeter(ScreenVals& inScreen, std::vector<int> inOpts);
     virtual void navigateSelection();
     virtual void listNavigate();
 public:
@@ -226,20 +226,25 @@ public:
     std::vector<std::vector<Entity>>& getParties();
 };
 
-class AccessInventory{
+class AccessInventory: public ListHighlight{
 private:
     // std::vector<Arms> _arms;
     // std::vector<Armor> _armor;
-    std::vector<std::shared_ptr<Items>> _armsList;
-    std::vector<std::shared_ptr<Items>> _armorList;
-    std::vector<std::shared_ptr<Items>> _clothingList;
-    std::vector<std::shared_ptr<Items>> _herbList;
-    std::vector<std::shared_ptr<Items>> _liveStockList;
-    std::vector<std::shared_ptr<Items>> _miscList;
-    std::vector<std::shared_ptr<Items>> _provisionList;
-    std::vector<std::shared_ptr<Items>> _religiousList;
-    std::vector<std::shared_ptr<Items>> _tackHarnessList;
-    std::vector<std::shared_ptr<Items>> _transportList;
+    std::vector<std::vector<std::shared_ptr<Items>>> _inventoryList;
+    // std::vector<std::shared_ptr<Items>> _armorList;
+    // std::vector<std::shared_ptr<Items>> _clothingList;
+    // std::vector<std::shared_ptr<Items>> _herbList;
+    // std::vector<std::shared_ptr<Items>> _liveStockList;
+    // std::vector<std::shared_ptr<Items>> _miscList;
+    // std::vector<std::shared_ptr<Items>> _provisionList;
+    // std::vector<std::shared_ptr<Items>> _religiousList;
+    // std::vector<std::shared_ptr<Items>> _tackHarnessList;
+    // std::vector<std::shared_ptr<Items>> _transportList;
+
+    std::vector<Entity> _players;
+    std::shared_ptr<ScreenVals> _entityListScreen;
+    std::shared_ptr<ScreenVals> _descriptionScreen;
+    std::shared_ptr<ScreenVals> _moneyEncumbScreen;
 
     sj::ondemand::parser _parser;
     sj::padded_string _json;
@@ -247,9 +252,16 @@ private:
 
     unsigned _itemCount = 0;
 
+    const std::vector<std::string> _optMain = {"(F)inish Purchasing Inventory"};
+
+    //CreateInventoryScreen();
+
 public:
     AccessInventory();
-    AccessInventory(Entity* inChar);
+    AccessInventory(std::vector<std::string>& inList, std::vector<Entity> &inParties,
+                                     ScreenVals& primaryScreen,
+                                     std::string inName, std::vector<int> inOptions,
+                                     Perimeter inPerim, DrawRange inRange);
 };
 
 #endif //UI_UTIL_H
