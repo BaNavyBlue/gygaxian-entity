@@ -38,8 +38,8 @@ protected:
     unsigned _hitPointsBase;
     unsigned _curHitPoints;
     short int _armorRating = 10; // base unarmored
-    unsigned _weightAllowedGP = 350; //Weight in Gold Pieces
-    unsigned _totalWeightGP = 0;
+    double _weightAllowedGP = 350.0f; //Weight in Gold Pieces
+    double _totalWeightGP = 0.0f;
     float _meleeAttkRound = 1.0;
     std::vector<CHAR_CLASS> _chrClass; // for multiclass
     std::vector<LANGUAGE> _languages;
@@ -89,8 +89,8 @@ public:
     unsigned getMaxHP();
     unsigned getLevel();
     unsigned getCurHP();
-    unsigned getWeightAllowed();
-    unsigned getWeightCarried();
+    double getWeightAllowed();
+    double getWeightCarried();
     short int getArmorRating();
     float getEquivalentGP();
     void addItem(Items setItem, unsigned amount);

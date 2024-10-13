@@ -85,7 +85,7 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -207,7 +207,7 @@ Armor::Armor(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -246,7 +246,7 @@ Clothing::Clothing(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -281,7 +281,7 @@ Herbs::Herbs(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -321,7 +321,7 @@ Livestock::Livestock(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -361,7 +361,7 @@ MiscItems::MiscItems(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -401,7 +401,7 @@ Provisions::Provisions(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -441,7 +441,7 @@ Religious::Religious(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -481,7 +481,7 @@ TackHarness::TackHarness(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);
@@ -521,7 +521,7 @@ Transport::Transport(sj::ondemand::document& itemData, int idx)
                 std::remove( _description.begin(), _description.end(), '\"' ),
                 _description.end());
 
-    std::cout << "[" << _name << "] description: " << _description << std::endl;
+    //std::cout << "[" << _name << "] description: " << _description << std::endl;
     auto money = itemRef["money"];
     _value.gold = uint64_t(money["gold"]);
     _value.silver = uint64_t(money["silver"]);

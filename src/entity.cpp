@@ -1174,12 +1174,12 @@ unsigned Entity::getCurHP()
     return _curHitPoints;
 }
 
-unsigned Entity::getWeightAllowed()
+double Entity::getWeightAllowed()
 {
     return _weightAllowedGP;
 }
 
-unsigned Entity::getWeightCarried()
+double Entity::getWeightCarried()
 {
     return _totalWeightGP;
 }
@@ -1403,8 +1403,8 @@ void Entity::loadEntity(std::string file)
     _stats.charisma = uint64_t(stats["charisma"]);
     _stats.raceCharisma = uint64_t(stats["raceCharisma"]);
 
-    _weightAllowedGP = uint64_t(charData["data"]["weightAllow"]);
-    _totalWeightGP = uint64_t(charData["data"]["totalWeight"]);
+    _weightAllowedGP = double(charData["data"]["weightAllow"]);
+    _totalWeightGP = double(charData["data"]["totalWeight"]);
     _armorRating = uint64_t(charData["data"]["armorRating"]);
 
     auto money = charData["data"]["money"];

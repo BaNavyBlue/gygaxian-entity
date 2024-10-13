@@ -189,7 +189,7 @@ int main(){
 
     // sleep(2);
 
-    AccessInventory* inventory = new AccessInventory();
+    // AccessInventory* inventory = new AccessInventory();
 
     while(!quitMain){
         createPrimary(primaryScreen, options);
@@ -692,6 +692,16 @@ void createRollScreen()
     classVect.push_back(newClass);
 
     Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
+    
+    // std::vector<std::string> emptyString;
+    // emptyString.push_back("One Thing");
+    // std::vector<int> emptyOptions;
+    // emptyOptions.push_back(UP_ARROW);
+    // emptyOptions.push_back(HORZ_RAIL);
+    // emptyOptions.push_back(DOWN_ARROW);
+    // emptyOptions.push_back(INV_PENT);
+    // AccessInventory dudesInventory(emptyString, dude, primaryScreen, "Inventory", emptyOptions, rollPerim, textCorner);
+
     dude.saveChar();
 
     drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY, textBox.getScreen().xyLimits.maxY + 1, primaryScreen);

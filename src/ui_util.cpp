@@ -436,7 +436,7 @@ void PrintInfo::MakeCmbtWin()
     std::vector<std::string> basicInfo;
     basicInfo.push_back("Health/Combat:");
     basicInfo.push_back("Hit Points: ");
-    char varIn[5];
+    char varIn[32];
     basicInfo.back() += "(" + std::to_string(_character->getCurHP()) + "/" + std::to_string(_character->getMaxHP()) + ")";
     sprintf(varIn, "%3d", _character->getArmorRating());
     basicInfo.push_back("Armor Rating: ");
@@ -449,9 +449,9 @@ void PrintInfo::MakeCmbtWin()
     }
 
     basicInfo.push_back("Weight GP: (");
-    sprintf(varIn, "%d", _character->getWeightCarried());
+    sprintf(varIn, "%.2f", _character->getWeightCarried());
     basicInfo.back() += varIn;
-    sprintf(varIn, "%d", _character->getWeightAllowed());
+    sprintf(varIn, "%.2f", _character->getWeightAllowed());
     basicInfo.back() += "/";
     basicInfo.back() += varIn;
     basicInfo.back() += ")";
@@ -2334,21 +2334,34 @@ void clearPrevScreen(const std::vector<ScreenVals>& screens)
     drawSmall(screens.back().xyLimits.minX, screens.back().xyLimits.maxX, screens.back().xyLimits.minY, screens.back().xyLimits.maxY + 1, screens.front());  
 }
 
-AccessInventory::AccessInventory(std::vector<std::string>& inList, std::vector<Entity> &inEntity,
+AccessInventory::AccessInventory(std::vector<std::string>& inList, Entity& inEntity,
                                      ScreenVals& primaryScreen,
                                      std::string inName, std::vector<int> inOptions,
                                      Perimeter inPerim, DrawRange inRange)
 {
 
-    _perim = inPerim;
+    _perim.bLCorner = BL_RAIL;
+    _perim.bRCorner = BR_RAIL;
+    _perim.topBotWall = HORZ_RAIL;
+    _perim.uLCorner = TL_RAIL;
+    _perim.uRCorner = TR_RAIL;
+    _perim.sideWalls = VERT_RAIL;
+    _perim.leftTee = L_TEE_RAIL;
+    _perim.rightTee = R_TEE_RAIL;
+    _perim.wallsColr = MAGENTA;
+    _perim.wallsBGColr = BLACK;
+    _perim.cornerColr = MAGENTA;
+    _perim.cornerBGColr = BLACK;
     _list = inList;
-    _players = inEntity;
+    _player = std::make_shared<Entity>(inEntity);
     _title = inName;
     _options = inOptions;
     _cornerDims = inRange;
     _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _entityListScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _primaryScreen = std::make_shared<ScreenVals>(primaryScreen);
+    _descriptionScreen = std::make_shared<ScreenVals>(VECT_MAX,' ',YELLOW, BLACK);
+    _moneyEncumbScreen = std::make_shared<ScreenVals>(VECT_MAX,' ',YELLOW, BLACK);
 
     _json = sj::padded_string::load("items/Arms.json");
     _itemsData = _parser.iterate(_json);
@@ -2478,17 +2491,67 @@ AccessInventory::AccessInventory(std::vector<std::string>& inList, std::vector<E
 
     _inventoryList.push_back(transportList);
 
+    std::cout << "before set screen limits" << std::endl;
+
     _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
     _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
     _listScreen->xyLimits.maxX = _cornerDims.maxX = tcols() / 2;
-    _listScreen->xyLimits.maxY = _cornerDims.maxY = trows() - 3;
+    _listScreen->xyLimits.maxY = _cornerDims.maxY = trows() - 10;
 
+std::cout << "after listScreen" << std::endl;
+    
     _entityListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
     _entityListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
-    _entityListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 - 3;
-    _entityListScreen->xyLimits.maxY = trows() - 3;
+    _entityListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 - 2;
+    _entityListScreen->xyLimits.maxY = trows() - 10;
+
+    std::cout << "after entityScreen" << std::endl;
+
+    _descriptionScreen->xyLimits.minX = _primaryScreen->xyLimits.minX + 1;
+    _descriptionScreen->xyLimits.minY = _listScreen->xyLimits.maxY + 1;
+    _descriptionScreen->xyLimits.maxX = _listScreen->xyLimits.maxX;
+    _descriptionScreen->xyLimits.maxY = trows() - 3;
+
+    std::cout << "after descriptionScreen" << std::endl;
+
+    _moneyEncumbScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
+    _moneyEncumbScreen->xyLimits.minY = _listScreen->xyLimits.maxY + 1;
+    _moneyEncumbScreen->xyLimits.maxX = _entityListScreen->xyLimits.maxX;
+    _moneyEncumbScreen->xyLimits.maxY = trows() - 3;
+
+    std::cout << "after set screen limits" << std::endl;
+
+    std::vector<int> _entityOptions;
+    std::string opts("  (W)hat (V)oid ");
+    
+    // Encode Option Code message as ints for utf8 characters.
+    for(int i = 0; i < opts.size(); ++i){
+        _entityOptions.push_back(opts[i]);
+    }
+    _entityOptions.push_back(UP_ARROW);
+    _entityOptions.push_back(DOWN_ARROW);
+    for(int i = 0; i < 5; ++i){
+        _entityOptions.push_back(' ');
+    }
+
+    _entityOptions.push_back(RIGHT_ARROW);
+
+    std::cout << "before createScreens" << std::endl;
 
     createPrimary(*_primaryScreen, _optMain);
+    createListPerimeter(*_listScreen, _options);
+    createListScreen(*_listScreen, _list, _title, _highlightList);
+    //createPrimary(*_primaryScreen, _optMain);
+    drawPrimary(*_primaryScreen);
+    drawSmall(_listScreen->xyLimits.minX, _listScreen->xyLimits.maxX, _listScreen->xyLimits.minY, _listScreen->xyLimits.maxY + 1, *_listScreen);
+    createListPerimeter(*_entityListScreen, _entityOptions);
+    createListScreen(*_entityListScreen, _entityInv, _player.get()->getName(), false);
+    //drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+    drawSmall(_entityListScreen->xyLimits.minX, _entityListScreen->xyLimits.maxX,
+                _entityListScreen->xyLimits.minY, _entityListScreen->xyLimits.maxY + 1,
+                *_entityListScreen);
+
+    sleep(10);
 }
 
 AccessInventory::AccessInventory()
