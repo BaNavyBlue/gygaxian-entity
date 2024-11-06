@@ -693,14 +693,14 @@ void createRollScreen()
 
     Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
     
-    // std::vector<std::string> emptyString;
-    // emptyString.push_back("One Thing");
-    // std::vector<int> emptyOptions;
-    // emptyOptions.push_back(UP_ARROW);
-    // emptyOptions.push_back(HORZ_RAIL);
-    // emptyOptions.push_back(DOWN_ARROW);
-    // emptyOptions.push_back(INV_PENT);
-    // AccessInventory dudesInventory(emptyString, dude, primaryScreen, "Inventory", emptyOptions, rollPerim, textCorner);
+    std::vector<std::string> emptyString;
+    emptyString.push_back("One Thing");
+    std::vector<int> emptyOptions;
+    emptyOptions.push_back(UP_ARROW);
+    emptyOptions.push_back(HORZ_RAIL);
+    emptyOptions.push_back(DOWN_ARROW);
+    emptyOptions.push_back(INV_PENT);
+    AccessInventory dudesInventory(emptyString, dude, primaryScreen, "Inventory", emptyOptions, rollPerim, textCorner);
 
     dude.saveChar();
 

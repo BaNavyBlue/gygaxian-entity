@@ -2491,7 +2491,7 @@ AccessInventory::AccessInventory(std::vector<std::string>& inList, Entity& inEnt
 
     _inventoryList.push_back(transportList);
 
-    std::cout << "before set screen limits" << std::endl;
+    //std::cout << "before set screen limits" << std::endl;
 
     _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
     _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
@@ -2537,6 +2537,9 @@ std::cout << "after listScreen" << std::endl;
     _entityOptions.push_back(RIGHT_ARROW);
 
     std::cout << "before createScreens" << std::endl;
+
+
+    createInventoryList();
 
     createPrimary(*_primaryScreen, _optMain);
     createListPerimeter(*_listScreen, _options);
@@ -2688,5 +2691,23 @@ AccessInventory::AccessInventory()
 
     std::cout << "Size of Inventory Vector:" << _inventoryList.size() << std::endl;
 
+
     sleep(10);    
+}
+
+void AccessInventory::createInventoryList()
+{
+    if(_indexItems.size() > 0) _indexItems.clear();
+
+    for(int i = 0; i < _inventoryList.size(); ++i){
+        for(int j = 0; j < _inventoryList.at(i).size(); ++j){
+            indexItemList item;
+            item.typeIndex = i;
+            item.itemIndex = j;
+            _indexItems.push_back(item);
+            _list.push_back(_inventoryList.at(i).at(j)->getName());
+            //printf("%s %u\n", _inventoryList.at(i).at(j)->getName().c_str(), _inventoryList.at(i).at(j)->getValue().gold);
+        }
+        
+    }
 }

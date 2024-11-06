@@ -330,5 +330,10 @@ struct rollPair{
     u8 maxRange;
 };
 
+struct indexItemList{
+    uint32_t typeIndex;
+    uint32_t itemIndex;
+};
+
 
 #endif

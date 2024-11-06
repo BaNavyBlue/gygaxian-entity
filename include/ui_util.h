@@ -240,6 +240,11 @@ private:
     sj::ondemand::document _itemsData;
 
     std::vector<std::string> _entityInv;
+    std::vector<indexItemList> _indexItems;
+
+
+    void createInventoryList();
+    
 
     unsigned _itemCount = 0;
 
