@@ -7,6 +7,7 @@
                 "count": 1,
                 "type" : 2,
                 "wType": 7,
+                "prof": 0,
                 "descrip": "A fletched wodden arrow.",
                 "money":{
                     "gold": 0,
@@ -50,6 +51,7 @@
                 "count": 1,
                 "type" : 2,
                 "wType": 7,
+                "prof": 0,
                 "descrip": "A gleaming silver arrow.",
                 "money":{
                     "gold": 1,
@@ -93,6 +95,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 3,
+                "prof": 1,
+                "profType": 0,
                 "descrip": "A massive battle axe made for cleaving bodies in two.",
                 "money":{
                     "gold": 5,
@@ -136,6 +140,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 3,
+                "prof": 1,
+                "profType": 1,
                 "descrip": "A handy axe for wood and limb chopping, can be thrown.",
                 "money":{
                     "gold": 1,
@@ -190,6 +196,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 2,
                 "descrip": "This pole arm has a large wicked curved blade at the end perfect for thrust and slash attacks.",
                 "money":{
                     "gold": 7,
@@ -233,6 +241,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 3,
                 "descrip": "This polearm has two nasty spikes and a striking surface good for piercing armor and crushing helms.",
                 "money":{
                     "gold": 6,
@@ -276,6 +286,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 4,
                 "descrip": "This pole arm has applications in agriculture as well as combat with it's curved blades for hooking and flat blade for slashing and spearing.",
                 "money":{
                     "gold": 6,
@@ -319,6 +331,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 5,
+                "prof": 1,
+                "profType": 7,
                 "descrip": "A finely crafted bow made from multiple natural materials.",
                 "money":{
                     "gold": 75,
@@ -373,6 +387,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 5,
+                "prof": 1,
+                "profType": 6,
                 "descrip": "A finely crafted long bow made from multiple natural materials.",
                 "money":{
                     "gold": 100,
@@ -427,6 +443,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 5,
+                "prof": 1,
+                "profType": 8,
                 "descrip": "A finely crafted long bow made from multiple natural materials.",
                 "money":{
                     "gold": 60,
@@ -481,6 +499,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 5,
+                "prof": 1,
+                "profType": 9,
                 "descrip": "A finely crafted short bow made from multiple natural materials.",
                 "money":{
                     "gold": 15,
@@ -535,6 +555,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 10,
+                "prof": 1,
+                "profType": 10,
                 "descrip": "A menacing hunk of wood used for bludgeoning or throwing.",
                 "money":{
                     "gold": 0,
@@ -589,6 +611,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 6,
+                "prof": 1,
+                "profType": 11,
                 "descrip": "A deadly wood and iron Heavy Crossbow for launching deadly projectiles.",
                 "money":{
                     "gold": 20,
@@ -643,6 +667,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 6,
+                "prof": 1,
+                "profType": 12,
                 "descrip": "A menacing wood and iron Light Crossbow for launching deadly projectiles.",
                 "money":{
                     "gold": 12,
@@ -697,6 +723,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 1,
+                "prof": 1,
+                "profType": 13,
                 "descrip": "A vicious double edged blade with leather scabbard.",
                 "money":{
                     "gold": 2,
@@ -751,6 +779,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 9,
+                "prof": 1,
+                "profType": 14,
                 "descrip": "A large lead weighted hand projectile.",
                 "money":{
                     "gold": 0,
@@ -805,6 +835,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 15,
                 "descrip": "A pole arm with a curved blade.",
                 "money":{
                     "gold": 3,
@@ -848,6 +880,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 16,
                 "descrip": "A pole arm with a cured blade and a forked tine for catching other pole arms.",
                 "money":{
                     "gold": 8,
@@ -891,6 +925,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 17,
                 "descrip": "A modified farm flail with a metal link atchated to an iron cylinder.",
                 "money":{
                     "gold": 3,
@@ -934,6 +970,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 18,
                 "descrip": "A one handed wooedn Shaft with a spiked steel ball attached to a chain.",
                 "money":{
                     "gold": 8,
@@ -977,6 +1015,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 19,
                 "descrip": "A pole arm with dual symmetric blades with a gap to catch weapons and hooks to snare enemy weapons.",
                 "money":{
                     "gold": 4,
@@ -1020,6 +1060,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 20,
                 "descrip": "A pole arm with a large curved blade at the end for slashing.",
                 "money":{
                     "gold": 6,
@@ -1063,6 +1105,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 21,
                 "descrip": "A pole arm with a large curved blade with hooked blades oposite the primary blade. For slashing and hooking.",
                 "money":{
                     "gold": 10,
@@ -1106,6 +1150,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 22,
                 "descrip": "A hooked farming blade with a long spike atached to a long pole",
                 "money":{
                     "gold": 5,
@@ -1149,6 +1195,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 23,
                 "descrip": "A pole arm with a large curved Axe blade with hooked barb oposite the axe head. For hacking and hooking.",
                 "money":{
                     "gold": 7,
@@ -1192,6 +1240,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 24,
                 "descrip": "A pole arm with a large curved blade with hooked blades oposite the primary blade. For slashing and hooking.",
                 "money":{
                     "gold": 9,
@@ -1235,6 +1285,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 25,
                 "descrip": "A two handed hammer like weapon, with  3 edges on the head and a spike on the bottom of the handle.",
                 "money":{
                     "gold": 7,
@@ -1278,6 +1330,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 10,
+                "prof": 1,
+                "profType": 26,
                 "descrip": "A standard tool for building, bludgeoning and throwing at exposed body parts.",
                 "money":{
                     "gold": 1,
@@ -1332,6 +1386,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 4,
+                "prof": 1,
+                "profType": 27,
                 "descrip": "A hand hurdled projectile about the size of a short spear.",
                 "money":{
                     "gold": 0,
@@ -1386,6 +1442,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 28,
                 "descrip": "A hard wood pole which can be hidden in plain sight as a personal walking aid.",
                 "money":{
                     "gold": 0,
@@ -1429,6 +1487,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 30,
                 "descrip": "A long conical pole arm will deliver twice rated damage when used from horseback.",
                 "money":{
                     "gold": 6,
@@ -1472,6 +1532,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 29,
                 "descrip": "A long conical pole arm will deliver twice rated damage when used from horseback.",
                 "money":{
                     "gold": 6,
@@ -1515,6 +1577,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 31,
                 "descrip": "A long conical pole arm will deliver twice rated damage when used from horseback.",
                 "money":{
                     "gold": 6,
@@ -1558,6 +1622,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 32,
                 "descrip": "A wooden rod with a large iron head for bludgeoning opponents.",
                 "money":{
                     "gold": 8,
@@ -1601,6 +1667,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 33,
                 "descrip": "A small iron capped shaft for bludgeoning ground opponents while on horseback.",
                 "money":{
                     "gold": 4,
@@ -1644,6 +1712,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 34,
                 "descrip": "A hand held bludgeon with a spiked iron ball on one end.",
                 "money":{
                     "gold": 5,
@@ -1687,6 +1757,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 35,
                 "descrip": "A long spear like pole arm typacally used to fend off calvary charges. Has curved symmetric segments for catching swords.",
                 "money":{
                     "gold": 10,
@@ -1730,6 +1802,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 36,
                 "descrip": "A versitile rugged tool and weapon useful for excavation and combat.",
                 "money":{
                     "gold": 8,
@@ -1773,6 +1847,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 37,
                 "descrip": "A shortened pick axe used for puncturing or crushing helms and armor from horseback.",
                 "money":{
                     "gold": 5,
@@ -1816,6 +1892,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 38,
                 "descrip": "A long pointed pole arm with a small circular guard.",
                 "money":{
                     "gold": 3,
@@ -1859,6 +1937,7 @@
                 "count": 1,
                 "type" : 2,
                 "wType": 8,
+                "prof": 0,
                 "descrip": "Ammo for light crossbows.",
                 "money":{
                     "gold": 0,
@@ -1902,6 +1981,7 @@
                 "count": 20,
                 "type" : 2,
                 "wType": 8,
+                "prof": 0,
                 "descrip": "Ammo for heavy Crossbows.",
                 "money":{
                     "gold": 2,
@@ -1945,6 +2025,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 39,
                 "descrip": "A pole arm with a central long point and a crescent blade catch for sword parrying.",
                 "money":{
                     "gold": 4,
@@ -1988,6 +2070,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 2,
+                "prof": 1,
+                "profType": 40,
                 "descrip": "A curved single edged sword.",
                 "money":{
                     "gold": 15,
@@ -2031,6 +2115,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 5,
+                "prof": 1,
+                "profType": 41,
                 "descrip": "A fine leather sling.",
                 "money":{
                     "gold": 0,
@@ -2085,6 +2171,7 @@
                 "count": 1,
                 "type" : 2,
                 "wType": 10,
+                "prof": 0,
                 "descrip": "Small iron ball for a sling.",
                 "money":{
                     "gold": 0,
@@ -2139,6 +2226,7 @@
                 "count": 1,
                 "type" : 2,
                 "wType": 10,
+                "prof": 0,
                 "descrip": "Ordinary Projectile Sized Stone.",
                 "money":{
                     "gold": 0,
@@ -2193,6 +2281,8 @@
                 "count": 1,
                 "type" : 3,
                 "wType": 11,
+                "prof": 1,
+                "profType": 42,
                 "descrip": "A weapon which can be used in combat or thrown, double damage recieving charging opponents momentum.",
                 "money":{
                     "gold": 1,
@@ -2247,6 +2337,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 43,
                 "descrip": "A pole arm with a long central blade and a crescent lower blade for catching weapons and shields.",
                 "money":{
                     "gold": 3,
@@ -2290,6 +2382,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 10,
+                "prof": 1,
+                "profType": 44,
                 "descrip": "A dense wood combative staff.",
                 "money":{
                     "gold": 0,
@@ -2333,6 +2427,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 2,
+                "prof": 1,
+                "profType": 45,
                 "descrip": "A large blade with a hand and a half hilt.",
                 "money":{
                     "gold": 25,
@@ -2376,6 +2472,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 2,
+                "prof": 1,
+                "profType": 46,
                 "descrip": "A double sided blade with a rounded point.",
                 "money":{
                     "gold": 10,
@@ -2419,6 +2517,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 2,
+                "prof": 1,
+                "profType": 47,
                 "descrip": "A double sided blade designed for two handed wielding.",
                 "money":{
                     "gold": 15,
@@ -2462,6 +2562,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 2,
+                "prof": 1,
+                "profType": 48,
                 "descrip": "A double sided blade for single handed wielding.",
                 "money":{
                     "gold": 8,
@@ -2505,6 +2607,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 2,
+                "prof": 1,
+                "profType": 49,
                 "descrip": "A massive double sided blade for heavy combat.",
                 "money":{
                     "gold": 30,
@@ -2548,6 +2652,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 50,
                 "descrip": "A pole arm with 3 spear points.",
                 "money":{
                     "gold": 4,
@@ -2591,6 +2697,8 @@
                 "count": 1,
                 "type" : 1,
                 "wType": 4,
+                "prof": 1,
+                "profType": 51,
                 "descrip": "A pole arm with a large single edged blade attached to it.",
                 "money":{
                     "gold": 2,

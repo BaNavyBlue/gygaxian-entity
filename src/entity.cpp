@@ -1244,6 +1244,23 @@ bool Entity::saveChar()
             outTxt += "\r\n            }\r\n        },\r\n";
         }
     }
+
+    outTxt += "        \"weapProf\":{\r\n";// + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
+    outTxt += "            \"count\":" + std::to_string(_weaponProf.size());
+    if(_weaponProf.size() > 0){
+        outTxt += ",\r\n            \"index\":{\r\n";
+        for(std::size_t i = 0; i < _weaponProf.size(); ++i){
+            outTxt += "                \"" + std::to_string(i) + "\":" + std::to_string(_weaponProf[i]);
+            if(i < _chrClass.size() - 1){
+                outTxt += ",\r\n";
+            } else {
+                outTxt += "\r\n            }\r\n        },\r\n";
+            }
+        }
+    } else {
+        outTxt += "\r\n        },\r\n";
+    }
+
     outTxt += "        \"experience\":{\r\n";// + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
     outTxt += "            \"count\":" + std::to_string(_experience.size()) + ",\r\n";
     outTxt += "            \"index\":{\r\n";
@@ -1469,6 +1486,13 @@ void Entity::loadEntity(std::string file)
     for(int i = 0; i < int64_t(charData["data"]["class"]["count"]); ++i){
         std::string idx = std::to_string(i);
         _chrClass.push_back((CHAR_CLASS)(uint64_t(charData["data"]["class"]["index"][idx])));
+    }
+
+    if(uint64_t(charData["data"]["weapProf"]["count"]) > 0){
+        for(int i = 0; i < uint64_t(charData["data"]["weapProf"]["count"]); ++i){
+            std::string idx = std::to_string(i);
+            _weaponProf.push_back((WEAPON_PROF)(uint64_t(charData["data"]["weapProf"]["index"][idx])));            
+        }
     }
 
     //_chrClass.push_back((CHAR_CLASS)uint64_t(charData["data"]["class"]));

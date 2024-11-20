@@ -69,6 +69,10 @@ Arms::Arms(sj::ondemand::document& itemData, int idx)
     _itemCount = uint64_t(itemRef["count"]);
     _type = (EQUIP_TYPE)uint64_t(itemRef["type"]);
     _wType = (WEAPON_TYPE)uint64_t(itemRef["wType"]);
+    _hasProf = (bool)uint64_t(itemRef["prof"]);
+    if(_hasProf){
+        _profType = (WEAPON_PROF)uint64_t(itemRef["profType"]);
+    }
     recv << ((itemRef["name"]));
     _name = recv.str();
 
@@ -173,6 +177,16 @@ DefenseAdj Arms::getDefenseAdj()
 DefenseAdj Arms::getProjDefenseAdj()
 {
     return _projDefAdj;
+}
+
+bool Arms::getHasProf()
+{
+    return _hasProf;
+}
+
+WEAPON_PROF Arms::getWeaponProf()
+{
+    return _profType;
 }
 
 Armor::Armor()

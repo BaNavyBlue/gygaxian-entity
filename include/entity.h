@@ -43,6 +43,7 @@ protected:
     float _meleeAttkRound = 1.0;
     std::vector<CHAR_CLASS> _chrClass; // for multiclass
     std::vector<LANGUAGE> _languages;
+    std::vector<WEAPON_PROF> _weaponProf;
     RACE _race;
     SEX _sex;
     ALIGNMENT _alignment;

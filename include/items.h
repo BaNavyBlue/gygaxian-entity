@@ -42,6 +42,8 @@ private:
     DefenseAdj _defAdj;
     DefenseAdj _projDefAdj;
     Range _rangeBase; // Rules state for oldschool figure maps relate to 1" on maps outoors mult by 10 yards indoors 10'
+    bool _hasProf;
+    WEAPON_PROF _profType;
 public:
     Arms();
     Arms(sj::ondemand::document& itemData, int idx);
@@ -54,6 +56,8 @@ public:
     unsigned getFireRate();
     DefenseAdj getDefenseAdj();
     DefenseAdj getProjDefenseAdj();
+    bool getHasProf();
+    WEAPON_PROF getWeaponProf();
 };
 
 class Armor : public Items
