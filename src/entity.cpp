@@ -1559,6 +1559,16 @@ void Entity::addItem(Items setItem, unsigned amount)
     }
 }
 
+std::vector<WEAPON_PROF> Entity::getWeapProf()
+{
+    return _weaponProf;
+}
+    
+void Entity::setWeaponProf(WEAPON_PROF newProf)
+{
+    _weaponProf.push_back(newProf);
+}
+
 std::vector<Items> Entity::getInventory()
 {
     return _inventory;

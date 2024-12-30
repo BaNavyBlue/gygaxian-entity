@@ -100,6 +100,8 @@ public:
     //void reRollStats();
     std::shared_ptr<RACE_SKILLS> getRaceSkills();
     std::vector<std::shared_ptr<CHR_CLASS_SKILLS>> getCharClassSkills();
+    std::vector<WEAPON_PROF> getWeapProf();
+    void setWeaponProf(WEAPON_PROF newProf);
     bool saveChar();
 };
 #endif

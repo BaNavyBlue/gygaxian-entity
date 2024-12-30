@@ -2272,7 +2272,7 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
     drawPrimary(*_primaryScreen);
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     createListPerimeter(*_playerDestScreen, _playerOpts);
-    createListScreen(*_playerDestScreen, _list, _player->getName(), false);
+    createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
                 _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
@@ -2414,6 +2414,11 @@ void ListHighlightProfSelect::buildProfList()
 {
     for(int i = 0; i < profPairs.size(); ++i){
         _list.push_back(profPairs[i].profS);
+    }
+
+    for(int i = 0; i < _player->getWeapProf().size(); ++i){
+        _playerProfList.push_back(profPairs[_player->getWeapProf()[i]]);
+        _playerList.push_back(_playerProfList.back().profS);
     }
 }
 

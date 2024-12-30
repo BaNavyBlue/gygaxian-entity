@@ -203,6 +203,8 @@ class ListHighlightProfSelect: public ListHighlight{
 private:
     std::shared_ptr<Entity> _player;
     std::vector<int> _playerOpts;
+    std::vector<profPair> _playerProfList;
+    std::vector<std::string> _playerList;
     std::shared_ptr<ScreenVals> _playerDestScreen;
     int _destCurrPos = 0;
     int _destPrevPos = 0;
