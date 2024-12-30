@@ -63,6 +63,7 @@ protected:
     bool checkRaceStats(RACE race);
     void setClass(CHAR_CLASS cls);
     void setRace(RACE race);
+    void addWeapProf(WEAPON_PROF prof);
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     void loadEntity(std::string file);
 public:

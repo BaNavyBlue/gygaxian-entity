@@ -32,7 +32,7 @@ int main(){
     sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
 
     // Console Command to set terminal dimensions
-    std::cout << "\e[8;50;200t";
+    std::cout << "\e[8;42;180t";
 
     hidecursor();
     setConsoleTitle("Gygaxian-Entity");
@@ -478,6 +478,9 @@ void createRollScreen()
     stats newStats[2];
     rollStats(newStats[0], newStats[1]);
     Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    Perimeter profPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL, MAGENTA, MAGENTA, MAGENTA, BLACK);
+    profPerim.leftTee = L_TEE_RAIL;
+    profPerim.rightTee = R_TEE_RAIL;
 
     std::string choices = "Keep current roll? (y/n).";
     do{
@@ -693,6 +696,8 @@ void createRollScreen()
 
     Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
     
+
+
     std::vector<std::string> emptyString;
     emptyString.push_back("One Thing");
     std::vector<int> emptyOptions;
@@ -700,7 +705,8 @@ void createRollScreen()
     emptyOptions.push_back(HORZ_RAIL);
     emptyOptions.push_back(DOWN_ARROW);
     emptyOptions.push_back(INV_PENT);
-    AccessInventory dudesInventory(emptyString, dude, primaryScreen, "Inventory", emptyOptions, rollPerim, textCorner);
+    ListHighlightProfSelect profScreen(dude, primaryScreen, emptyOptions, profPerim, textCorner);
+    //AccessInventory dudesInventory(emptyString, dude, primaryScreen, "Inventory", emptyOptions, rollPerim, textCorner);
 
     dude.saveChar();
 

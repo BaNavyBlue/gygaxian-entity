@@ -278,6 +278,13 @@ struct thiefTable{
 struct classTable2{
 
 };
+
+struct textAndColor{
+    std::vector<int> text;
+    std::vector<uint16_t> txtColor;
+    std::vector<uint16_t> txtBGColor;
+};
+
 // For pairing string with Enum
 struct racePair{
     RACE race;

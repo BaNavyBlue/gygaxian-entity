@@ -1001,6 +1001,7 @@ bool Entity::checkRaceStats(RACE race)
             _race = race;
             return true;
     }
+    return false;
 }
 
 // void Entity::reRollStats()
@@ -1112,6 +1113,10 @@ void Entity::setAlignLanguages()
         default:
             break;
     }
+}
+
+void Entity::addWeapProf(WEAPON_PROF prof){
+    _weaponProf.push_back(prof);
 }
 
 strengthTable Entity::getStrTbl()

@@ -199,6 +199,26 @@ public:
     int getPartyIdx();
 };
 
+class ListHighlightProfSelect: public ListHighlight{
+private:
+    std::shared_ptr<Entity> _player;
+    std::vector<int> _playerOpts;
+    std::shared_ptr<ScreenVals> _playerDestScreen;
+    int _destCurrPos = 0;
+    int _destPrevPos = 0;
+    int _destStartIdx = 0;
+    int _selIdx = 0;
+    bool _highlightDest = false;
+    bool playerSelected = false;
+    const std::vector<std::string> _optMain = {"(F)inalize Selection"};
+    void navigateSelection() override;
+    void listNavigate() override;
+    void buildProfList();
+public:
+    ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions,
+                            Perimeter inPerim, DrawRange inRange);
+};
+
 class LoadFileList{
 protected:
     std::vector<std::string> _fileList;
