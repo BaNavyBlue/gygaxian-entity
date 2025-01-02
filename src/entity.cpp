@@ -47,6 +47,9 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     if(_chrClass[0] != MONK){
         _armorRating += _dexTbl.defenseAdj;
     }
+    _nonProfPenalty = _chrSkills[0]->getNonProfPenalty();
+    _numWeapProf = _chrSkills[0]->getInitNumWeap();
+    _addWeapLevelDenom = _chrSkills[0]->getAddedWeapLevDen();
 }
 
 Entity::~Entity()
@@ -1238,6 +1241,9 @@ bool Entity::saveChar()
     outTxt += "        \"weightAllow\":" + std::to_string(_weightAllowedGP) + ",\r\n";
     outTxt += "        \"totalWeight\":" + std::to_string(_totalWeightGP) + ",\r\n";
     outTxt += "        \"armorRating\":" + std::to_string(_armorRating) + ",\r\n";
+    outTxt += "        \"numWeapProf\":" + std::to_string(_numWeapProf) + ",\r\n";
+    outTxt += "        \"nonProfPen\":" + std::to_string(_nonProfPenalty) + ",\r\n";
+    outTxt += "        \"addWeapDenom\":" + std::to_string(_addWeapLevelDenom) + ",\r\n";
     outTxt += "        \"class\":{\r\n";// + std::to_string(_chrClass[0]) + ",\r\n"; // vector for multiclass
     outTxt += "            \"count\":" + std::to_string(_chrClass.size()) + ",\r\n";
     outTxt += "            \"index\":{\r\n";
@@ -1428,6 +1434,9 @@ void Entity::loadEntity(std::string file)
     _weightAllowedGP = double(charData["data"]["weightAllow"]);
     _totalWeightGP = double(charData["data"]["totalWeight"]);
     _armorRating = uint64_t(charData["data"]["armorRating"]);
+    _numWeapProf = uint64_t(charData["data"]["numWeapProf"]);
+    _nonProfPenalty = int64_t(charData["data"]["nonProfPen"]);
+    _addWeapLevelDenom = uint64_t(charData["data"]["addWeapDenom"]);
 
     auto money = charData["data"]["money"];
 

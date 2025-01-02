@@ -67,6 +67,21 @@ std::vector<std::string> CHR_CLASS_SKILLS::getClassSkills()
 
 }
 
+unsigned CHR_CLASS_SKILLS::getInitNumWeap()
+{
+    return _initNumWeap;
+}
+
+int CHR_CLASS_SKILLS::getNonProfPenalty()
+{
+    return _nonProfPenalty;
+}
+
+unsigned CHR_CLASS_SKILLS::getAddedWeapLevDen()
+{
+    return _addedWeapLvlDen;
+}
+
 Cleric::Cleric(){
     _classTbl.HitDieType = 8;
     _classTbl.MaxHitDie = 9;

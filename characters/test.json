@@ -1,19 +1,22 @@
 {
     "data":{
         "name":"test",
-        "alignment":1,
+        "alignment":0,
         "sex":3,
-        "race":0,
+        "race":2,
         "level":1,
-        "maxHP":7,
-        "curHP":7,
-        "weightAllow":850.000000,
-        "totalWeight":130.000000,
-        "armorRating":6,
+        "maxHP":3,
+        "curHP":3,
+        "weightAllow":1100.000000,
+        "totalWeight":50.000000,
+        "armorRating":8,
+        "numWeapProf":3,
+        "nonProfPen":-2,
+        "addWeapDenom":4,
         "class":{
             "count":1,
             "index":{
-                "0":3
+                "0":8
             }
         },
         "weapProf":{
@@ -26,7 +29,7 @@
             }
         },
         "money":{
-            "gold":130,
+            "gold":50,
             "silver":0,
             "copper":0,
             "electrum":0,
@@ -38,69 +41,71 @@
             }
         },
         "stats":{
-            "strength":17,
-            "excStrength":85,
-            "intelligence":15,
-            "wisdom":17,
-            "dexterity":18,
-            "constitution":16,
-            "charisma":18,
-            "raceCharisma":18
+            "strength":18,
+            "excStrength":0,
+            "intelligence":13,
+            "wisdom":14,
+            "dexterity":16,
+            "constitution":14,
+            "charisma":3,
+            "raceCharisma":5
         },
         "modStats":{
-            "strength":17,
-            "excStrength":85,
-            "intelligence":15,
-            "wisdom":17,
-            "dexterity":18,
-            "constitution":16,
-            "charisma":18,
-            "raceCharisma":18
+            "strength":18,
+            "excStrength":0,
+            "intelligence":13,
+            "wisdom":14,
+            "dexterity":16,
+            "constitution":14,
+            "charisma":3,
+            "raceCharisma":5
         },
         "strengthTable":{
             "hitProb":1,
-            "damageAdj":1,
-            "weightAllowMod":500,
+            "damageAdj":2,
+            "weightAllowMod":750,
             "openDoors":3,
-            "bendBarsLiftGatesPer":13
+            "bendBarsLiftGatesPer":16
         },
         "wisTable":{
-            "magicAttackAdj":3,
-            "spellBonus":3,
+            "magicAttackAdj":0,
+            "spellBonus":1,
             "spellFailPer":0
         },
         "intTable":{
-            "chanceToKnowPer":65,
-            "minimumSpellsPer":7,
-            "maximumSpellsPer":11,
-            "possibleAddLang":4
+            "chanceToKnowPer":55,
+            "minimumSpellsPer":4,
+            "maximumSpellsPer":6,
+            "possibleAddLang":3
         },
         "dexTable":{
-            "reactAttkAdj":3,
-            "defenseAdj":-4
+            "reactAttkAdj":1,
+            "defenseAdj":-2
         },
         "dexThief":{
             "pickPocketPer":0,
-            "openLocks":0,
+            "openLocks":5,
             "locRemTraps":0,
             "movSilent":0,
             "hideInShadows":0
         },
         "consTbl":{
-            "hpAdj":2,
-            "sysShockSurPer":95,
-            "resurSurvPer":96
+            "hpAdj":0,
+            "sysShockSurPer":88,
+            "resurSurvPer":92
         },
         "charTbl":{
-            "maxHenchMen":15,
-            "loyaltyBasePer":40,
-            "reactAdjustPer":35
+            "maxHenchMen":1,
+            "loyaltyBasePer":-30,
+            "reactAdjustPer":-25
         },
         "languages":{
-            "count":2,
+            "count":4,
             "index":{
                 "0":10,
-                "1":13
+                "1":6,
+                "2":12,
+                "3":11
             }
         }
     }

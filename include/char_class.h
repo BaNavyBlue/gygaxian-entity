@@ -19,6 +19,9 @@ public:
     virtual unsigned generateGold();
     virtual unsigned rollHP();
     classTable1 getClassTable1();
+    unsigned getInitNumWeap();
+    int getNonProfPenalty();
+    unsigned getAddedWeapLevDen();
 };
 
 class Cleric: public CHR_CLASS_SKILLS{

@@ -37,6 +37,9 @@ protected:
     std::vector<unsigned> _experience; // initialized for each class
     unsigned _hitPointsBase;
     unsigned _curHitPoints;
+    unsigned _numWeapProf;
+    int _nonProfPenalty;
+    unsigned _addWeapLevelDenom;
     short int _armorRating = 10; // base unarmored
     double _weightAllowedGP = 350.0f; //Weight in Gold Pieces
     double _totalWeightGP = 0.0f;
