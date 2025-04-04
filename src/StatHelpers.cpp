@@ -23,7 +23,10 @@ unsigned bestThree(){
     }
     unsigned min_val = rolls[0];
     for(int i = 1; i < 4; ++i){
-        if(rolls[i] < min_val){min_idx = i;}
+        if(rolls[i] < min_val){
+            min_idx = i;
+            min_val = rolls[min_idx];
+        }
     }
     unsigned final_val = 0;
     for(int i = 0; i < 4; ++i){
