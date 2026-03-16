@@ -797,6 +797,11 @@ bool raceStatCheck(stats inStats, RACE race)
                 return false;            
             }
 
+            if(inStats.dexterity < 6){
+                // cleric only dwarves, gnomes, elves, halflings forbidden
+                return false;
+            }
+
             if(inStats.charisma - 1 < 6){
                 stats tmpStats = inStats;
                 tmpStats.constitution += 1;
@@ -862,6 +867,12 @@ bool raceStatCheck(stats inStats, RACE race)
                 //std::cout << "Constitution bellow 8" << std::endl;
                 return false;
             }
+
+            if(inStats.dexterity < 6){
+                // cleric only dwarves, gnomes, elves, halflings forbidden
+                return false;
+            }
+            
             return true;
     }
 }
