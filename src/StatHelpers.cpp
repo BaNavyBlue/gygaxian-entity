@@ -872,7 +872,7 @@ bool raceStatCheck(stats inStats, RACE race)
                 // cleric only dwarves, gnomes, elves, halflings forbidden
                 return false;
             }
-            
+
             return true;
     }
 }
@@ -1037,6 +1037,9 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats)
                 return false;
             }
             if(inStats.constitution < 6){
+                return false;
+            }
+            if(inStats.charisma < 6){
                 return false;
             }
             return true;
