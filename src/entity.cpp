@@ -1118,7 +1118,7 @@ void Entity::setAlignLanguages()
     }
 }
 
-void Entity::addWeapProf(WEAPON_PROF prof){
+void Entity::addWeapProf(profData prof){
     _weaponProf.push_back(prof);
 }
 
@@ -1261,8 +1261,11 @@ bool Entity::saveChar()
     if(_weaponProf.size() > 0){
         outTxt += ",\r\n            \"index\":{\r\n";
         for(std::size_t i = 0; i < _weaponProf.size(); ++i){
-            outTxt += "                \"" + std::to_string(i) + "\":" + std::to_string(_weaponProf[i]);
-            if(i < _chrClass.size() - 1){
+            outTxt += "                \"" + std::to_string(i) + "\":{\r\n";
+            outTxt += "                    \"armID\":" + std::to_string(_weaponProf[i].ARM_ID) + ",\r\n";
+            outTxt += "                    \"enum\":" + std::to_string(_weaponProf[i].prof) + ",\r\n";
+            outTxt += "                    \"string\":" + _weaponProf[i].profS + "\r\n";
+            if(i < _weaponProf.size() - 1){
                 outTxt += ",\r\n";
             } else {
                 outTxt += "\r\n            }\r\n        },\r\n";
@@ -1505,7 +1508,12 @@ void Entity::loadEntity(std::string file)
     if(uint64_t(charData["data"]["weapProf"]["count"]) > 0){
         for(int i = 0; i < uint64_t(charData["data"]["weapProf"]["count"]); ++i){
             std::string idx = std::to_string(i);
-            _weaponProf.push_back((WEAPON_PROF)(uint64_t(charData["data"]["weapProf"]["index"][idx])));            
+            profData prof;
+            prof.ARM_ID = (int64_t(charData["data"]["weapProf"]["index"][idx]["armId"]));
+            prof.prof = (WEAPON_PROF)(int64_t(charData["data"]["weapProf"]["index"][idx]["enum"]));
+            prof.profS = (std::string)charData["data"]["weapProf"]["index"][idx]["string"];
+
+            _weaponProf.push_back(prof);            
         }
     }
 
@@ -1568,12 +1576,12 @@ void Entity::addItem(Items setItem, unsigned amount)
     }
 }
 
-std::vector<WEAPON_PROF> Entity::getWeapProf()
+std::vector<profData> Entity::getWeapProf()
 {
     return _weaponProf;
 }
     
-void Entity::setWeaponProf(WEAPON_PROF newProf)
+void Entity::setWeaponProf(profData newProf)
 {
     _weaponProf.push_back(newProf);
 }

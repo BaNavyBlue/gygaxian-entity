@@ -189,7 +189,9 @@ int main(){
 
     // sleep(2);
 
-    // AccessInventory* inventory = new AccessInventory();
+    //AccessInventory* inventory = new AccessInventory();
+
+    // sleep(10);
 
     while(!quitMain){
         createPrimary(primaryScreen, options);

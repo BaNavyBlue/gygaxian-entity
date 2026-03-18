@@ -2243,6 +2243,7 @@ int ListHighlightPartySelect::getPartyIdx()
 ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions,
                             Perimeter inPerim, DrawRange inRange)
 {
+    _inventory = new AccessInventory();
     _perim = inPerim;
     //_list = inList;
     //_pathList = inPaths;
@@ -2258,12 +2259,17 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
     _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
     _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
     _listScreen->xyLimits.maxX = _cornerDims.maxX = tcols() / 3;
-    _listScreen->xyLimits.maxY = _cornerDims.maxY = trows() - 3;
+    _listScreen->xyLimits.maxY = _cornerDims.maxY = trows() - 6;
 
     _playerDestScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
     _playerDestScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
     _playerDestScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 3 - 3;
-    _playerDestScreen->xyLimits.maxY = trows() - 3;
+    _playerDestScreen->xyLimits.maxY = trows() - 6;
+
+    _descriptionPanel->xyLimits.minX = _listScreen->xyLimits.minX;
+    _descriptionPanel->xyLimits.minY = _listScreen->xyLimits.maxY;
+    _descriptionPanel->xyLimits.maxX = _primaryScreen->xyLimits.maxX - 1;
+    _descriptionPanel->xyLimits.maxY = _listScreen->xyLimits.maxY + 4;
 
     listNavigate();
     createListPerimeter(*_listScreen, _options);
@@ -2299,19 +2305,19 @@ void ListHighlightProfSelect::navigateSelection()
             _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
             _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
             _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
-            _listScreen->xyLimits.maxY = _cornerDims.maxY = vert_char - 3;
+            _listScreen->xyLimits.maxY = _cornerDims.maxY = vert_char - 6;
 
             _playerDestScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
             _playerDestScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
             _playerDestScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 3 - 3;
-            _playerDestScreen->xyLimits.maxY = vert_char - 3;
+            _playerDestScreen->xyLimits.maxY = vert_char - 6;
 
             //createListPerimeter(*_listScreen, _options);
             //createListScreen(*_listScreen, _list, _title);
             listNavigate();
             // formatSelectedParty();
             createListPerimeter(*_playerDestScreen, _playerOpts);
-            createListScreen(*_playerDestScreen, _list, _player->getName(), false);
+            createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
             drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
             drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
                       _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
@@ -2412,12 +2418,12 @@ void ListHighlightProfSelect::listNavigate()
 
 void ListHighlightProfSelect::buildProfList()
 {
-    for(int i = 0; i < profPairs.size(); ++i){
-        _list.push_back(profPairs[i].profS);
+    for(int i = 0; i < profDat.size(); ++i){
+        _list.push_back(profDat[i].profS);
     }
 
     for(int i = 0; i < _player->getWeapProf().size(); ++i){
-        _playerProfList.push_back(profPairs[_player->getWeapProf()[i]]);
+        _playerProfList.push_back(profDat[_player->getWeapProf()[i].prof]);
         _playerList.push_back(_playerProfList.back().profS);
     }
 }
@@ -2680,7 +2686,7 @@ AccessInventory::AccessInventory(std::vector<std::string>& inList, Entity& inEnt
     _listScreen->xyLimits.maxX = _cornerDims.maxX = tcols() / 2;
     _listScreen->xyLimits.maxY = _cornerDims.maxY = trows() - 10;
 
-std::cout << "after listScreen" << std::endl;
+    std::cout << "after listScreen" << std::endl;
     
     _entityListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
     _entityListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
@@ -2873,8 +2879,8 @@ AccessInventory::AccessInventory()
 
     std::cout << "Size of Inventory Vector:" << _inventoryList.size() << std::endl;
 
-
-    sleep(10);    
+    createInventoryList();
+    //sleep(10);    
 }
 
 void AccessInventory::createInventoryList()
@@ -2892,4 +2898,9 @@ void AccessInventory::createInventoryList()
         }
         
     }
+}
+
+std::vector<std::vector<std::shared_ptr<Items>>> AccessInventory::getInventoryList()
+{
+    return _inventoryList;
 }

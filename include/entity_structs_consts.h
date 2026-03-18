@@ -125,7 +125,8 @@ enum WEAPON_TYPE{
     BOLT,     // 8
     DART,     // 9
     BLUNT,    // 10
-    SPEAR     // 11
+    SPEAR,    // 11
+    STAFF     // 12
 };
 
 enum CLOTHING_TYPE{
@@ -397,62 +398,63 @@ enum WEAPON_PROF{
     VOULGUE
 };
 
-struct profPair{
+struct profData{
+    int ARM_ID;
     WEAPON_PROF prof;
     std::string profS;
 };
 
-const std::vector<profPair> profPairs =  {{AXE_BATTLE, "Battle Axe"},
-                                         {AXE_THROWING, "Throwing Axe"},
-                                         {BARDICHE, "Bardiche"},
-                                         {BEC_DE_CORBIN, "Bec De Corbin"},
-                                         {BILL_GUISARME, "Bill Guisarme"},
-                                         {BO_STICK, "Bo Stick"},
-                                         {BOW_COMP_LONG, "Composite Long Bow"},
-                                         {BOW_COM_SHORT, "Composite Short Bow"},
-                                         {BOW_LONG, "Long Bow"},
-                                         {BOW_SHORT, "Short Bow"},
-                                         {CLUB, "Club"},
-                                         {CROSSBOW_HEAVY, "Heavy Crossbow"},
-                                         {CROSSBOW_LIGHT, "Light Crossbow"},
-                                         {DAGGER_PROF, "Dagger"},
-                                         {DART_PROF, "Dart"},
-                                         {FAUCHARD, "Fauchard"},
-                                         {FAUCHARD_FORK, "Fauchard Fork"},
-                                         {FLAIL_FOOTMANS, "Footmans Flail"},
-                                         {FLAIL_HORSEMANS, "Horsemans Flail"},
-                                         {FORK_MILITARY, "Military Fork"},
-                                         {GLAIVE, "Glaive"},
-                                         {GLAIVE_GUISARME, "Glaive Guisarme"},
-                                         {GUISARME, "Guisarme"},
-                                         {GUISARME_VOLGUE, "Guisarme Volgue"},
-                                         {HALBERD, "Halberd"},
-                                         {HAMMER_LUCERN, "Lucern Hammer"},
-                                         {HAMMER, "Hammer"},
-                                         {JAVELIN, "Javelin"},
-                                         {JO_STICK, "Jo Stick"},
-                                         {LANCE_LIGHT_H, "Lance Light Horse"},
-                                         {LANCE_MED_H, "Lance Medium Horse"},
-                                         {LANCE_HEAVY_H, "Lance Heavy Horse"},
-                                         {MACE_FOOTMANS, "Footmans Mace"},
-                                         {MACE_HORSEMANS, "Horsemans Mace"},
-                                         {MORNING_STAR, "Morning Star"},
-                                         {PARTISAN, "Partisan"},
-                                         {PICK_MILITARY_FOOT, "Military Pick Footman"},
-                                         {PICK_MILITARY_HORSE, "Military Pick Horseman"},
-                                         {PIKE_AWL, "Pike Awl"},
-                                         {RANSEUR, "Ranseur"}, 
-                                         {SCIMITAR, "Scimitar"},
-                                         {SLING, "Sling"},
-                                         {SPEAR_PROF, "Spear"},
-                                         {SPETUM, "Spetum"},
-                                         {STAFF_QUARTER, "Quarter Staff"},
-                                         {SWORD_BASTARD, "Bastard Sword"},
-                                         {SWORD_BROAD, "Broad Sword"},
-                                         {SWORD_LONG, "Long Sword"},
-                                         {SWORD_SHORT, "Short Sword"},
-                                         {SWORD_TWO_HAND, "Sword Two Hand"},
-                                         {TRIDENT, "Trident"},
-                                         {VOULGUE, "Voulgue"}};
+const std::vector<profData> profDat =  {{2,AXE_BATTLE, "Battle Axe"},
+                                         {3,AXE_THROWING, "Throwing Axe"},
+                                         {4,BARDICHE, "Bardiche"},
+                                         {5,BEC_DE_CORBIN, "Bec De Corbin"},
+                                         {6,BILL_GUISARME, "Bill Guisarme"},
+                                         {7,BO_STICK, "Bo Stick"},
+                                         {9,BOW_COMP_LONG, "Composite Long Bow"},
+                                         {7,BOW_COM_SHORT, "Composite Short Bow"},
+                                         {10,BOW_LONG, "Long Bow"},
+                                         {11,BOW_SHORT, "Short Bow"},
+                                         {12,CLUB, "Club"},
+                                         {13,CROSSBOW_HEAVY, "Heavy Crossbow"},
+                                         {14,CROSSBOW_LIGHT, "Light Crossbow"},
+                                         {15,DAGGER_PROF, "Dagger"},
+                                         {16,DART_PROF, "Dart"},
+                                         {17,FAUCHARD, "Fauchard"},
+                                         {18,FAUCHARD_FORK, "Fauchard Fork"},
+                                         {19,FLAIL_FOOTMANS, "Footmans Flail"},
+                                         {20,FLAIL_HORSEMANS, "Horsemans Flail"},
+                                         {21,FORK_MILITARY, "Military Fork"},
+                                         {22,GLAIVE, "Glaive"},
+                                         {23,GLAIVE_GUISARME, "Glaive Guisarme"},
+                                         {24,GUISARME, "Guisarme"},
+                                         {25,GUISARME_VOLGUE, "Guisarme Volgue"},
+                                         {26,HALBERD, "Halberd"},
+                                         {27,HAMMER_LUCERN, "Lucern Hammer"},
+                                         {28,HAMMER, "Hammer"},
+                                         {29,JAVELIN, "Javelin"},
+                                         {30,JO_STICK, "Jo Stick"},
+                                         {32,LANCE_LIGHT_H, "Lance Light Horse"},
+                                         {31,LANCE_MED_H, "Lance Medium Horse"},
+                                         {33,LANCE_HEAVY_H, "Lance Heavy Horse"},
+                                         {34,MACE_FOOTMANS, "Footmans Mace"},
+                                         {35,MACE_HORSEMANS, "Horsemans Mace"},
+                                         {36,MORNING_STAR, "Morning Star"},
+                                         {37,PARTISAN, "Partisan"},
+                                         {38,PICK_MILITARY_FOOT, "Military Pick Footman"},
+                                         {39,PICK_MILITARY_HORSE, "Military Pick Horseman"},
+                                         {40,PIKE_AWL, "Pike Awl"},
+                                         {43,RANSEUR, "Ranseur"}, 
+                                         {44,SCIMITAR, "Scimitar"},
+                                         {45,SLING, "Sling"},
+                                         {48,SPEAR_PROF, "Spear"},
+                                         {49,SPETUM, "Spetum"},
+                                         {50,STAFF_QUARTER, "Quarter Staff"},
+                                         {51,SWORD_BASTARD, "Bastard Sword"},
+                                         {52,SWORD_BROAD, "Broad Sword"},
+                                         {53,SWORD_LONG, "Long Sword"},
+                                         {54,SWORD_SHORT, "Short Sword"},
+                                         {55,SWORD_TWO_HAND, "Sword Two Hand"},
+                                         {56,TRIDENT, "Trident"},
+                                         {57,VOULGUE, "Voulgue"}};
 
 #endif

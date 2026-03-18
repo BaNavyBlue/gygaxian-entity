@@ -46,7 +46,7 @@ protected:
     float _meleeAttkRound = 1.0;
     std::vector<CHAR_CLASS> _chrClass; // for multiclass
     std::vector<LANGUAGE> _languages;
-    std::vector<WEAPON_PROF> _weaponProf;
+    std::vector<profData> _weaponProf;
     RACE _race;
     SEX _sex;
     ALIGNMENT _alignment;
@@ -66,7 +66,7 @@ protected:
     bool checkRaceStats(RACE race);
     void setClass(CHAR_CLASS cls);
     void setRace(RACE race);
-    void addWeapProf(WEAPON_PROF prof);
+    void addWeapProf(profData prof);
     bool isFighter(); // Decided Paladin and Ranger are under umbrella of Fighter
     void loadEntity(std::string file);
 public:
@@ -103,8 +103,8 @@ public:
     //void reRollStats();
     std::shared_ptr<RACE_SKILLS> getRaceSkills();
     std::vector<std::shared_ptr<CHR_CLASS_SKILLS>> getCharClassSkills();
-    std::vector<WEAPON_PROF> getWeapProf();
-    void setWeaponProf(WEAPON_PROF newProf);
+    std::vector<profData> getWeapProf();
+    void setWeaponProf(profData newProf);
     bool saveChar();
 };
 #endif

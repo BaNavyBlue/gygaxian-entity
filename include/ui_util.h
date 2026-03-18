@@ -148,6 +148,7 @@ public:
     ListHighlight(std::vector<std::string> inList, ScreenVals& primaryScreen, std::string inName, std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
     ScreenVals& getScreen();
 };
+
 class ListHighlightPair:public ListHighlight{
 private:
     std::vector<std::string> _destList;
@@ -203,9 +204,11 @@ class ListHighlightProfSelect: public ListHighlight{
 private:
     std::shared_ptr<Entity> _player;
     std::vector<int> _playerOpts;
-    std::vector<profPair> _playerProfList;
+    std::vector<profData> _playerProfList;
     std::vector<std::string> _playerList;
     std::shared_ptr<ScreenVals> _playerDestScreen;
+    std::shared_ptr<ScreenVals> _descriptionPanel;
+    class AccessInventory *_inventory;
     int _destCurrPos = 0;
     int _destPrevPos = 0;
     int _destStartIdx = 0;
@@ -251,7 +254,6 @@ public:
 class AccessInventory: public ListHighlight{
 private:
     std::vector<std::vector<std::shared_ptr<Items>>> _inventoryList;
-
     std::shared_ptr<Entity> _player;
     std::shared_ptr<ScreenVals> _entityListScreen;
     std::shared_ptr<ScreenVals> _descriptionScreen;
@@ -280,6 +282,7 @@ public:
                                      ScreenVals& primaryScreen,
                                      std::string inName, std::vector<int> inOptions,
                                      Perimeter inPerim, DrawRange inRange);
+    std::vector<std::vector<std::shared_ptr<Items>>> getInventoryList();
 };
 
 #endif //UI_UTIL_H
