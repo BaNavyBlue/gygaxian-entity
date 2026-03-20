@@ -32,7 +32,7 @@ int main(){
     sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
 
     // Console Command to set terminal dimensions
-    std::cout << "\e[8;42;180t";
+    //std::cout << "\e[8;42;180t"; //This isn't working in kde konsole or windows
 
     hidecursor();
     setConsoleTitle("Gygaxian-Entity");

@@ -1595,15 +1595,16 @@ void ListHighlightPair::navigateSelection()
             createPrimary(*_primaryScreen, _optMain);
             drawPrimary(*_primaryScreen);
 
+            int maxY = vert_char - 3;
             _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
             _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
             _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
-            _listScreen->xyLimits.maxY = _cornerDims.maxY = vert_char - 3;
+            (maxY >= 0) ? _listScreen->xyLimits.maxY = _cornerDims.maxY = maxY : _listScreen->xyLimits.maxY = _cornerDims.maxY = 0;
 
             _destListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
             _destListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
             _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
-            _destListScreen->xyLimits.maxY = vert_char - 3;
+            (maxY >= 0) ? _destListScreen->xyLimits.maxY = maxY : _destListScreen->xyLimits.maxY = maxY;
 
             //createListPerimeter(*_listScreen, _options);
             //createListScreen(*_listScreen, _list, _title);
@@ -1779,15 +1780,16 @@ char ListHighlightPair::navigateDestination()
             createPrimary(*_primaryScreen, _optMain);
             drawPrimary(*_primaryScreen);
 
+            int maxY = vert_char - 3;
             _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
             _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
             _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
-            _listScreen->xyLimits.maxY = _cornerDims.maxY = vert_char - 3;
+            (maxY >= 0) ? _listScreen->xyLimits.maxY = _cornerDims.maxY = maxY : _listScreen->xyLimits.maxY = _cornerDims.maxY = 0;
 
             _destListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
             _destListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
             _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
-            _destListScreen->xyLimits.maxY = vert_char - 3;
+            (maxY >= 0) ? _destListScreen->xyLimits.maxY = maxY : _destListScreen->xyLimits.maxY = maxY;
 
             //createListPerimeter(*_listScreen, _options);
             //createListScreen(*_listScreen, _list, _title);
@@ -1891,6 +1893,7 @@ void ListHighlightPair::listNavigate()
     createListPerimeter(*_listScreen, _options);
 
     int titlePos = _listScreen->xyLimits.maxX - (_listScreen->xyLimits.maxX - _listScreen->xyLimits.minX) / 2 - _title.size() / 2 - 1;
+    if(titlePos < 0) titlePos = 0;
 
     for(int i = 0; i < _title.size(); ++i){
         _listScreen->charMap[_listScreen->xyLimits.minY + 1][i + titlePos] = _title[i];
@@ -1907,6 +1910,7 @@ void ListHighlightPair::listNavigate()
         }
 
         int strdx = i - (_listScreen->xyLimits.minY + 3) + _listStartIdx;
+        if(strdx < 0) strdx = 0;
         
         if (strdx < _list.size()){
             for(int j = 0; j < _list[strdx].size(); ++j){
@@ -1941,6 +1945,7 @@ void ListHighlightPair::destNavigate()
     createListPerimeter(*_destListScreen, _destOptions);
 
     int titlePos = _destListScreen->xyLimits.maxX - (_destListScreen->xyLimits.maxX - _destListScreen->xyLimits.minX) / 2 - _destTitle.size() / 2 - 1;
+    if(titlePos < 0) titlePos = 0;
 
     for(int i = 0; i < _destTitle.size(); ++i){
         _destListScreen->charMap[_destListScreen->xyLimits.minY + 1][i + titlePos] = _destTitle[i];
@@ -1957,7 +1962,7 @@ void ListHighlightPair::destNavigate()
         }
 
         int strdx = i - (_destListScreen->xyLimits.minY + 3) + _destStartIdx;
-        
+        if(strdx < 0) strdx = 0;
         if (strdx < _destList.size()){
             for(int j = 0; j < _destList[strdx].size(); ++j){
                 if(strdx == _destCurrPos && _highlightDest){
@@ -2136,7 +2141,7 @@ void ListHighlightPartySelect::listNavigate()
     createListPerimeter(*_listScreen, _options);
 
     int titlePos = _listScreen->xyLimits.maxX - (_listScreen->xyLimits.maxX - _listScreen->xyLimits.minX) / 2 - _title.size() / 2 - 1;
-
+    if(titlePos < 0) titlePos = 0;
     for(int i = 0; i < _title.size(); ++i){
         _listScreen->charMap[_listScreen->xyLimits.minY + 1][i + titlePos] = _title[i];
         _listScreen->colorMap[_listScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
@@ -2152,7 +2157,7 @@ void ListHighlightPartySelect::listNavigate()
         }
 
         int strdx = i - (_listScreen->xyLimits.minY + 3) + _listStartIdx;
-        
+        if(strdx < 0) strdx = 0;
         if (strdx < _list.size()){
             for(int j = 0; j < _list[strdx].size(); ++j){
                 if(strdx == _currPos && _highlightList){
@@ -2191,7 +2196,7 @@ void ListHighlightPartySelect::populatePartyList()
     createListPerimeter(*_partyListScreen, empty);
 
     int titlePos = _partyListScreen->xyLimits.maxX - (_partyListScreen->xyLimits.maxX - _partyListScreen->xyLimits.minX) / 2 - partyTitle.size() / 2 - 1;
-
+    if(titlePos < 0) titlePos = 0;
     for(int i = 0; i < partyTitle.size(); ++i){
         _partyListScreen->charMap[_partyListScreen->xyLimits.minY + 1][i + titlePos] = partyTitle[i];
         _partyListScreen->colorMap[_partyListScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
@@ -2202,6 +2207,7 @@ void ListHighlightPartySelect::populatePartyList()
         
         
         int curMemb = i - (_partyListScreen->xyLimits.minY + 3);
+        if(curMemb < 0) curMemb = 0;
         //std::cout << "_party.size(): " << _party.size() << " curMemb: " << curMemb << std::endl;
         if(curMemb < _party.size()){
             //std::cout << curMemb << std::endl;
@@ -2253,6 +2259,7 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
     _cornerDims = inRange;
     _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _playerDestScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
+    _descriptionPanel = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _primaryScreen = std::make_shared<ScreenVals>(primaryScreen);
     buildProfList();
     
@@ -2284,7 +2291,60 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
                 _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
                 *_playerDestScreen);
 
+    createDescription();
+    drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
+                _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
+                *_descriptionPanel);
+
     navigateSelection();    
+}
+
+void ListHighlightProfSelect::createDescription()
+{
+    color_code textCol;
+    color_code bgCol;
+    #ifdef _WIN32
+        textCol = BLUE;
+        bgCol = GREY;
+    #else
+        textCol = DARKBLUE;
+        bgCol = WHITE;
+    #endif
+
+    std::string description = _inventory->getInventoryList().at(ARMS).at(profDat[_currPos].ARM_ID)->getDescription();
+    // int titlePos = inScreen.xyLimits.maxX - (inScreen.xyLimits.maxX - inScreen.xyLimits.minX) / 2 - inTitle.size() / 2 - 1;
+    // Print Title
+    for(int i = 0; i < _descriptionPanel->xyLimits.maxX; ++i){
+        if(i < description.size()){
+            _descriptionPanel->charMap[_descriptionPanel->xyLimits.minY][i + 1] = description[i];
+            _descriptionPanel->colorMap[_descriptionPanel->xyLimits.minY][i + 1] = YELLOW;
+        } else {
+            _descriptionPanel->charMap[_descriptionPanel->xyLimits.minY][i + 1] = ' ';
+            _descriptionPanel->colorMap[_descriptionPanel->xyLimits.minY][i + 1] = BLACK;           
+        }
+    }
+
+    // for(int i = inScreen.xyLimits.minY + 3; i < inScreen.xyLimits.maxY - 1; ++i){
+    //     int strdx = i - (inScreen.xyLimits.minY + 3);
+    //     if (strdx < inList.size()){
+    //         int limit = inList[strdx].size();
+
+    //         if(limit > inScreen.xyLimits.maxX - 2){
+    //             limit = inScreen.xyLimits.maxX - 2;
+    //         }
+
+    //         for(int j = 0; j < limit; ++j){
+    //             if(strdx == 0 && highlight){
+    //                 inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
+    //                 inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = textCol;
+    //                 inScreen.bGColorMap[i][j + inScreen.xyLimits.minX + 1] = bgCol;
+    //             } else {
+    //                 inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
+    //                 inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = YELLOW;
+    //             }
+    //         }
+    //     }
+    // }    
 }
 
 void ListHighlightProfSelect::navigateSelection()
@@ -2312,8 +2372,12 @@ void ListHighlightProfSelect::navigateSelection()
             _playerDestScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 3 - 3;
             _playerDestScreen->xyLimits.maxY = vert_char - 6;
 
-            //createListPerimeter(*_listScreen, _options);
-            //createListScreen(*_listScreen, _list, _title);
+            _descriptionPanel->xyLimits.minX = _listScreen->xyLimits.minX;
+            _descriptionPanel->xyLimits.minY = _listScreen->xyLimits.maxY;
+            _descriptionPanel->xyLimits.maxX = _primaryScreen->xyLimits.maxX - 1;
+            _descriptionPanel->xyLimits.maxY = _listScreen->xyLimits.maxY + 4;
+            // createListPerimeter(*_listScreen, _options);
+            // createListScreen(*_listScreen, _list, _title, _highlightList);
             listNavigate();
             // formatSelectedParty();
             createListPerimeter(*_playerDestScreen, _playerOpts);
@@ -2322,6 +2386,11 @@ void ListHighlightProfSelect::navigateSelection()
             drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
                       _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
                       *_playerDestScreen);
+
+            createDescription();
+            drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
+                        _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
+                        *_descriptionPanel);
         }
         
         if(kbhit()){
@@ -2379,6 +2448,7 @@ void ListHighlightProfSelect::listNavigate()
     createListPerimeter(*_listScreen, _options);
 
     int titlePos = _listScreen->xyLimits.maxX - (_listScreen->xyLimits.maxX - _listScreen->xyLimits.minX) / 2 - _title.size() / 2 - 1;
+    if(titlePos < 0) titlePos = 0; 
 
     for(int i = 0; i < _title.size(); ++i){
         _listScreen->charMap[_listScreen->xyLimits.minY + 1][i + titlePos] = _title[i];
@@ -2395,7 +2465,8 @@ void ListHighlightProfSelect::listNavigate()
         }
 
         int strdx = i - (_listScreen->xyLimits.minY + 3) + _listStartIdx;
-        
+        if(strdx < 0) strdx = 0;
+
         if (strdx < _list.size()){
             for(int j = 0; j < _list[strdx].size(); ++j){
                 if(strdx == _currPos && _highlightList){
@@ -2412,6 +2483,10 @@ void ListHighlightProfSelect::listNavigate()
         }
     }   
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+    createDescription();
+    drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
+                _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
+                *_descriptionPanel);
     //formatSelectedParty();
     //populatePartyList();
 }
@@ -2748,18 +2823,6 @@ AccessInventory::AccessInventory(std::vector<std::string>& inList, Entity& inEnt
 AccessInventory::AccessInventory()
 {
 
-    _json = sj::padded_string::load("items/Arms.json");
-    _itemsData = _parser.iterate(_json);
-
-    _itemCount = uint64_t(_itemsData["data"]["count"]);
-
-    std::vector<std::shared_ptr<Items>> armsList;
-    for(unsigned i = 0; i < _itemCount; ++i){
-        armsList.push_back(std::make_shared<Arms>(_itemsData, i));
-    }
-
-    _inventoryList.push_back(armsList);
-
     _json = sj::padded_string::load("items/Armor.json");
     _itemsData = _parser.iterate(_json);
 
@@ -2772,6 +2835,18 @@ AccessInventory::AccessInventory()
     }
 
     _inventoryList.push_back(armorList);
+
+    _json = sj::padded_string::load("items/Arms.json");
+    _itemsData = _parser.iterate(_json);
+
+    _itemCount = uint64_t(_itemsData["data"]["count"]);
+
+    std::vector<std::shared_ptr<Items>> armsList;
+    for(unsigned i = 0; i < _itemCount; ++i){
+        armsList.push_back(std::make_shared<Arms>(_itemsData, i));
+    }
+
+    _inventoryList.push_back(armsList);
 
     _json = sj::padded_string::load("items/Clothing.json");
     _itemsData = _parser.iterate(_json);

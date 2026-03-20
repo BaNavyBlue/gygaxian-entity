@@ -222,6 +222,7 @@ private:
 public:
     ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions,
                             Perimeter inPerim, DrawRange inRange);
+    void createDescription();
 };
 
 class LoadFileList{
