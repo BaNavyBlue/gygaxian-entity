@@ -213,6 +213,8 @@ private:
     int _destPrevPos = 0;
     int _destStartIdx = 0;
     int _selIdx = 0;
+    int _profChosen = 0;
+    int _profAvailable = 0;
     bool _highlightDest = false;
     bool playerSelected = false;
     const std::vector<std::string> _optMain = {"(F)inalize Selection"};

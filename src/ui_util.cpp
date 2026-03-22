@@ -1447,6 +1447,7 @@ void ListHighlight::createListScreen(ScreenVals& inScreen, std::vector<std::stri
 
 
     int titlePos = inScreen.xyLimits.maxX - (inScreen.xyLimits.maxX - inScreen.xyLimits.minX) / 2 - inTitle.size() / 2 - 1;
+    if(titlePos < 0) titlePos = 0;
     // Print Title
     for(int i = 0; i < inTitle.size(); ++i){
         inScreen.charMap[inScreen.xyLimits.minY + 1][i + titlePos] = inTitle[i];
@@ -1455,6 +1456,7 @@ void ListHighlight::createListScreen(ScreenVals& inScreen, std::vector<std::stri
 
     for(int i = inScreen.xyLimits.minY + 3; i < inScreen.xyLimits.maxY - 1; ++i){
         int strdx = i - (inScreen.xyLimits.minY + 3);
+        if (strdx < 0) strdx = 0;
         if (strdx < inList.size()){
             int limit = inList[strdx].size();
 
@@ -2254,7 +2256,9 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
     //_list = inList;
     //_pathList = inPaths;
     _player = std::make_shared<Entity>(inChar);
-    _title = "Weapon Proficiency List";
+    _profChosen = _player->getWeapProf().size();
+    _profAvailable = _player->getCharClassSkills()[0]->getInitNumWeap() + (_player->getLevel() - 1)/_player->getCharClassSkills()[0]->getAddedWeapLevDen() - _profChosen;
+    _title = "Weapon Proficiency List, Remain: ";
     _options = inOptions;
     _cornerDims = inRange;
     _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
@@ -2275,12 +2279,12 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
 
     _descriptionPanel->xyLimits.minX = _listScreen->xyLimits.minX;
     _descriptionPanel->xyLimits.minY = _listScreen->xyLimits.maxY;
-    _descriptionPanel->xyLimits.maxX = _primaryScreen->xyLimits.maxX - 1;
+    _descriptionPanel->xyLimits.maxX = _primaryScreen->xyLimits.maxX - 2;
     _descriptionPanel->xyLimits.maxY = _listScreen->xyLimits.maxY + 4;
 
     listNavigate();
     createListPerimeter(*_listScreen, _options);
-    createListScreen(*_listScreen, _list, _title, _highlightList);
+    createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
     createPrimary(*_primaryScreen, _optMain);
     drawPrimary(*_primaryScreen);
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
@@ -2316,11 +2320,11 @@ void ListHighlightProfSelect::createDescription()
     // Print Title
     for(int i = 0; i < _descriptionPanel->xyLimits.maxX; ++i){
         if(i < description.size()){
-            _descriptionPanel->charMap[_descriptionPanel->xyLimits.minY][i + 1] = description[i];
-            _descriptionPanel->colorMap[_descriptionPanel->xyLimits.minY][i + 1] = YELLOW;
+            _descriptionPanel->charMap[_descriptionPanel->xyLimits.minY + 1][i + 1] = description[i];
+            _descriptionPanel->colorMap[_descriptionPanel->xyLimits.minY + 1][i + 1] = YELLOW;
         } else {
-            _descriptionPanel->charMap[_descriptionPanel->xyLimits.minY][i + 1] = ' ';
-            _descriptionPanel->colorMap[_descriptionPanel->xyLimits.minY][i + 1] = BLACK;           
+            _descriptionPanel->charMap[_descriptionPanel->xyLimits.minY + 1][i + 1] = ' ';
+            _descriptionPanel->colorMap[_descriptionPanel->xyLimits.minY + 1][i + 1] = BLACK;           
         }
     }
 
@@ -2374,10 +2378,11 @@ void ListHighlightProfSelect::navigateSelection()
 
             _descriptionPanel->xyLimits.minX = _listScreen->xyLimits.minX;
             _descriptionPanel->xyLimits.minY = _listScreen->xyLimits.maxY;
-            _descriptionPanel->xyLimits.maxX = _primaryScreen->xyLimits.maxX - 1;
+            _descriptionPanel->xyLimits.maxX = _primaryScreen->xyLimits.maxX - 2;
             _descriptionPanel->xyLimits.maxY = _listScreen->xyLimits.maxY + 4;
+
             // createListPerimeter(*_listScreen, _options);
-            // createListScreen(*_listScreen, _list, _title, _highlightList);
+            // createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
             listNavigate();
             // formatSelectedParty();
             createListPerimeter(*_playerDestScreen, _playerOpts);
@@ -2446,12 +2451,12 @@ void ListHighlightProfSelect::listNavigate()
     #endif
     
     createListPerimeter(*_listScreen, _options);
-
-    int titlePos = _listScreen->xyLimits.maxX - (_listScreen->xyLimits.maxX - _listScreen->xyLimits.minX) / 2 - _title.size() / 2 - 1;
+    std::string title = _title + std::to_string(_profAvailable);
+    int titlePos = _listScreen->xyLimits.maxX - (_listScreen->xyLimits.maxX - _listScreen->xyLimits.minX) / 2 - title.size() / 2 - 1;
     if(titlePos < 0) titlePos = 0; 
 
-    for(int i = 0; i < _title.size(); ++i){
-        _listScreen->charMap[_listScreen->xyLimits.minY + 1][i + titlePos] = _title[i];
+    for(int i = 0; i < title.size(); ++i){
+        _listScreen->charMap[_listScreen->xyLimits.minY + 1][i + titlePos] = title[i];
         _listScreen->colorMap[_listScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
     }
 
@@ -2481,7 +2486,8 @@ void ListHighlightProfSelect::listNavigate()
                 }
             }
         }
-    }   
+    }
+
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     createDescription();
     drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
