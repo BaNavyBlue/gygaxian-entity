@@ -1456,7 +1456,7 @@ void ListHighlight::createListScreen(ScreenVals& inScreen, std::vector<std::stri
 
     for(int i = inScreen.xyLimits.minY + 3; i < inScreen.xyLimits.maxY - 1; ++i){
         int strdx = i - (inScreen.xyLimits.minY + 3);
-        if (strdx < 0) strdx = 0;
+        // if (strdx < 0) strdx = 0;
         if (strdx < inList.size()){
             int limit = inList[strdx].size();
 
@@ -2204,7 +2204,7 @@ void ListHighlightPartySelect::populatePartyList()
         _partyListScreen->colorMap[_partyListScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
     }
 
-    for(int i = _partyListScreen->xyLimits.minY + 2; i < _partyListScreen->xyLimits.maxY - 1; ++i){
+    for(int i = _partyListScreen->xyLimits.minY + 3; i < _partyListScreen->xyLimits.maxY - 1; ++i){
         //int idxOffset = _currPos - _listScreen->xyLimits.maxY + 6;
         
         
@@ -2248,7 +2248,7 @@ int ListHighlightPartySelect::getPartyIdx()
     return _selIdx;
 }
 
-ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions,
+ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions[2],
                             Perimeter inPerim, DrawRange inRange)
 {
     _inventory = new AccessInventory();
@@ -2259,7 +2259,8 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
     _profChosen = _player->getWeapProf().size();
     _profAvailable = _player->getCharClassSkills()[0]->getInitNumWeap() + (_player->getLevel() - 1)/_player->getCharClassSkills()[0]->getAddedWeapLevDen() - _profChosen;
     _title = "Weapon Proficiency List, Remain: ";
-    _options = inOptions;
+    _options = inOptions[0];
+    _playerOpts = inOptions[1];
     _cornerDims = inRange;
     _listScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _playerDestScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
@@ -2287,19 +2288,19 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals& pri
     createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
     createPrimary(*_primaryScreen, _optMain);
     drawPrimary(*_primaryScreen);
-    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     createListPerimeter(*_playerDestScreen, _playerOpts);
     createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
-    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
-    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
-                _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
-                *_playerDestScreen);
+
+
 
     createDescription();
     drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
                 _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
                 *_descriptionPanel);
-
+    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                *_playerDestScreen);
     navigateSelection();    
 }
 
@@ -2382,20 +2383,23 @@ void ListHighlightProfSelect::navigateSelection()
             _descriptionPanel->xyLimits.maxY = _listScreen->xyLimits.maxY + 4;
 
             // createListPerimeter(*_listScreen, _options);
-            // createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
-            listNavigate();
+
+            // listNavigate();
             // formatSelectedParty();
             createListPerimeter(*_playerDestScreen, _playerOpts);
             createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
-            drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
-            drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
-                      _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
-                      *_playerDestScreen);
+            createListPerimeter(*_listScreen, _options);
+            // createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
+            listNavigate();
 
             createDescription();
             drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
                         _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
                         *_descriptionPanel);
+            drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                      _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                      *_playerDestScreen);
+            drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
         }
         
         if(kbhit()){
@@ -2433,10 +2437,10 @@ void ListHighlightProfSelect::navigateSelection()
                         }
                     } else {
                         _playerList.push_back(_list[_currPos]);
-                        _playerProfList.push_back(profDat[currPos]);
+                        _playerProfList.push_back(profDat[_currPos]);
                         _profAvailable--;
                     }
-                    createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
+                    //createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
                     createListPerimeter(*_playerDestScreen, _playerOpts);
                     createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
                     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
@@ -2501,12 +2505,15 @@ void ListHighlightProfSelect::listNavigate()
             }
         }
     }
-
-    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+    
     createDescription();
     drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
                 _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
                 *_descriptionPanel);
+    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                *_playerDestScreen);
+    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     //formatSelectedParty();
     //populatePartyList();
 }

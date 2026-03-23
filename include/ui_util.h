@@ -217,12 +217,12 @@ private:
     int _profAvailable = 0;
     bool _highlightDest = false;
     bool playerSelected = false;
-    const std::vector<std::string> _optMain = {"(F)inalize Selection"};
+    const std::vector<std::string> _optMain = {"[ESC] Back", "(F)inalize Selection"};
     void navigateSelection() override;
     void listNavigate() override;
     void buildProfList();
 public:
-    ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions,
+    ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions[2],
                             Perimeter inPerim, DrawRange inRange);
     void createDescription();
 };

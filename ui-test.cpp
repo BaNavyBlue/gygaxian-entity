@@ -702,12 +702,35 @@ void createRollScreen()
 
     std::vector<std::string> emptyString;
     emptyString.push_back("One Thing");
-    std::vector<int> emptyOptions;
-    emptyOptions.push_back(UP_ARROW);
-    emptyOptions.push_back(HORZ_RAIL);
-    emptyOptions.push_back(DOWN_ARROW);
-    emptyOptions.push_back(INV_PENT);
-    ListHighlightProfSelect profScreen(dude, primaryScreen, emptyOptions, profPerim, textCorner);
+    std::vector<int> profOptions[2];
+    profOptions[0].push_back(UP_ARROW);
+    profOptions[0].push_back(HORZ_RAIL);
+    profOptions[0].push_back(DOWN_ARROW);
+    std::string msg = "  (S)elect ";
+    for(int i = 0; i < msg.size(); ++i){
+        profOptions[0].push_back(msg[i]);
+    }
+
+    for(int i = 0; i < tcols()/3 - profOptions[0].size(); ++i){
+       profOptions[0].push_back(' ');
+    }
+
+    profOptions[0].push_back(RIGHT_ARROW);
+    
+
+    profOptions[1].push_back(LEFT_ARROW);
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(UP_ARROW);
+    profOptions[1].push_back(HORZ_RAIL);
+    profOptions[1].push_back(DOWN_ARROW);
+
+    msg = "    (R)emove";
+    
+    for(int i = 0; i < msg.size(); ++i){
+        profOptions[1].push_back(msg[i]);
+    }
+
+    ListHighlightProfSelect profScreen(dude, primaryScreen, profOptions, profPerim, textCorner);
     //AccessInventory dudesInventory(emptyString, dude, primaryScreen, "Inventory", emptyOptions, rollPerim, textCorner);
 
     dude.saveChar();
