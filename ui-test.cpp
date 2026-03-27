@@ -717,7 +717,8 @@ void createRollScreen()
 
     profOptions[0].push_back(RIGHT_ARROW);
     
-
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(' ');
     profOptions[1].push_back(LEFT_ARROW);
     profOptions[1].push_back(' ');
     profOptions[1].push_back(UP_ARROW);

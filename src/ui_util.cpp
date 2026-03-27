@@ -2404,12 +2404,7 @@ void ListHighlightProfSelect::navigateSelection()
         
         if(kbhit()){
             char k = getkey();
-            if(std::tolower(k) == 'a') {
-
-            } else if(std::tolower(k) == 'v'){
-            DrawRange infoRange;
-
-            } else if(k == KEY_UP){
+            if(k == KEY_UP){
                 if(_currPos > 0){
                     _prevPos = _currPos;
                     _currPos--;
@@ -2440,6 +2435,8 @@ void ListHighlightProfSelect::navigateSelection()
                         _playerProfList.push_back(profDat[_currPos]);
                         _profAvailable--;
                     }
+                    listNavigate();
+                    //createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
                     //createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable), _highlightList);
                     createListPerimeter(*_playerDestScreen, _playerOpts);
                     createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
@@ -2449,8 +2446,149 @@ void ListHighlightProfSelect::navigateSelection()
                             *_playerDestScreen);
                 } else {
                 }
+            } else if (k == KEY_RIGHT){
+                if(_playerList.size() > 0){
+                    _highlightDest = true;
+                    _highlightList = false;
+                    k = navigatePlayerDest();
+                    if(std::tolower(k) == 's'){
+                        if(_playerList.size() > 0){
+                            drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
+                            drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                                    _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                                    *_primaryScreen);
+                            //Perimeter textPerim(TL_LINE, TR_LINE, BL_LINE, BR_LINE, HORZ_LINE, VERT_LINE, MAGENTA, BLACK, BLUE, BLACK);
+                            
+                        }
+                    } else if(k == KEY_ESCAPE){
+                        // drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_primaryScreen);
+                        // drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX,
+                        //         _destListScreen->xyLimits.minY, _destListScreen->xyLimits.maxY + 1,
+                        //         *_primaryScreen);
+                        break;
+                    }
+                }
             } else if (k == KEY_ESCAPE) {
                 break;
+            }
+        }
+    }
+}
+
+char ListHighlightProfSelect::navigatePlayerDest()
+{
+    char choice;
+    std::size_t horz_char = tcols();
+    std::size_t vert_char = trows();
+
+    listNavigate();
+    destNavigate();
+    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+              _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+              *_playerDestScreen);
+     
+    while(true){
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if(horz_char != new_horz || vert_char != new_vert){
+            horz_char = new_horz;
+            vert_char = new_vert;
+            createPrimary(*_primaryScreen, _optMain);
+            drawPrimary(*_primaryScreen);
+
+            int maxY = vert_char - 3;
+            _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
+            _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
+            _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
+            (maxY >= 0) ? _listScreen->xyLimits.maxY = _cornerDims.maxY = maxY : _listScreen->xyLimits.maxY = _cornerDims.maxY = 0;
+
+            _playerDestScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
+            _playerDestScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
+            _playerDestScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
+            (maxY >= 0) ? _playerDestScreen->xyLimits.maxY = maxY : _playerDestScreen->xyLimits.maxY = maxY;
+
+            //createListPerimeter(*_listScreen, _options);
+            //createListScreen(*_listScreen, _list, _title);
+            listNavigate();
+            destNavigate();
+            //createListPerimeter(*_destListScreen, _destOptions);
+            //createListScreen(*_destListScreen, _destList, _destTitle, _highlightDest);
+            drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+            drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                      _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                      *_playerDestScreen);
+        }
+        
+        if(kbhit()){
+            char k = getkey();
+            if(std::tolower(k) == 'r') {
+                if(_playerList.size() > 0){
+                    _playerList.erase(_playerList.begin() + _destCurrPos);
+                    _playerProfList.erase(_playerProfList.begin() + _destCurrPos);
+                    _profAvailable++;
+                    if(_destCurrPos > _playerList.size() - 1){
+                        _destCurrPos--;
+                    }
+                    
+                    listNavigate();
+                    destNavigate();
+                    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                              _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1, *_playerDestScreen);                
+                }
+            } else if(std::tolower(k) == 'v'){
+                DrawRange infoRange;
+                if(_playerList.size() > 0){
+                    infoRange.minX = 1;
+                    infoRange.minY = 1;
+                    listNavigate();
+                    destNavigate();
+                    // createListPerimeter(*_destListScreen, _destOptions);
+                    // createListScreen(*_destListScreen, _destList, _destTitle, _highlightDest);
+                    drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                              _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1, *_playerDestScreen);
+                }
+            } else if(k == KEY_UP){
+                if(_destCurrPos > 0){
+                    _destPrevPos = _destCurrPos;
+                    _destCurrPos--;
+                    destNavigate();
+                }
+            } else if(k == KEY_DOWN){
+                if(_destCurrPos < _playerList.size() - 1){
+                    _destPrevPos = _destCurrPos;
+                    _destCurrPos++;
+                    destNavigate();
+                }
+            } else if (k == KEY_LEFT){
+                _highlightDest = false;
+                _highlightList = true;
+                listNavigate();
+                destNavigate();
+                drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                          _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                          *_playerDestScreen);
+                return k;
+            } else if(std::tolower(k) == 's'){
+                return k;
+            } else if (k == KEY_ESCAPE) {
+            //     drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
+                return KEY_ESCAPE;
+            }
+
+            if(_playerList.size() < 1){
+                _highlightDest = false;
+                _highlightList = true;
+                listNavigate();
+                destNavigate();
+                drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
+                drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
+                          _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1,
+                          *_playerDestScreen);
+                return k;
             }
         }
     }
@@ -2516,6 +2654,56 @@ void ListHighlightProfSelect::listNavigate()
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
     //formatSelectedParty();
     //populatePartyList();
+}
+
+void ListHighlightProfSelect::destNavigate(){
+    color_code textCol;
+    color_code bgCol;
+    #ifdef _WIN32
+        textCol = BLUE;
+        bgCol = GREY;
+    #else
+        textCol = DARKBLUE;
+        bgCol = WHITE;
+    #endif
+    
+    createListPerimeter(*_playerDestScreen, _playerOpts);
+
+    int titlePos = _playerDestScreen->xyLimits.maxX - (_playerDestScreen->xyLimits.maxX - _playerDestScreen->xyLimits.minX) / 2 - _player->getName().size() / 2 - 1;
+    if(titlePos < 0) titlePos = 0;
+
+    for(int i = 0; i < _player->getName().size(); ++i){
+        _playerDestScreen->charMap[_playerDestScreen->xyLimits.minY + 1][i + titlePos] = _player->getName()[i];
+        _playerDestScreen->colorMap[_playerDestScreen->xyLimits.minY + 1][i + titlePos] = YELLOW;
+    }
+
+    for(int i = _playerDestScreen->xyLimits.minY + 3; i < _playerDestScreen->xyLimits.maxY - 1; ++i){
+        //int idxOffset = _currPos - _destListScreen->xyLimits.maxY + 6;
+        
+        if(_destCurrPos > _playerDestScreen->xyLimits.maxY - 6 + _destStartIdx){
+            _destStartIdx++;
+        } else if(_destCurrPos < _destStartIdx){
+            _destStartIdx = _destCurrPos;
+        }
+
+        int strdx = i - (_playerDestScreen->xyLimits.minY + 3) + _destStartIdx;
+        if(strdx < 0) strdx = 0;
+        if (strdx < _playerList.size()){
+            for(int j = 0; j < _playerList[strdx].size(); ++j){
+                if(strdx == _destCurrPos && _highlightDest){
+                    _destPrevPos = _destCurrPos;
+                    _playerDestScreen->charMap[i][j + _playerDestScreen->xyLimits.minX + 1] = _playerList[strdx][j];
+                    _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = textCol;
+                    _playerDestScreen->bGColorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = bgCol;
+                } else {
+                    _playerDestScreen->charMap[i][j + _playerDestScreen->xyLimits.minX + 1] = _playerList[strdx][j];
+                    _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = YELLOW;
+                    _playerDestScreen->bGColorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = BLACK;
+                }
+            }
+        }
+    }   
+    drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX, _playerDestScreen->xyLimits.minY, _playerDestScreen->xyLimits.maxY + 1, *_playerDestScreen);   
 }
 
 void ListHighlightProfSelect::buildProfList()

@@ -219,7 +219,9 @@ private:
     bool playerSelected = false;
     const std::vector<std::string> _optMain = {"[ESC] Back", "(F)inalize Selection"};
     void navigateSelection() override;
+    char navigatePlayerDest();
     void listNavigate() override;
+    void destNavigate();
     void buildProfList();
 public:
     ListHighlightProfSelect(Entity &inChar, ScreenVals& primaryScreen, std::vector<int> inOptions[2],
