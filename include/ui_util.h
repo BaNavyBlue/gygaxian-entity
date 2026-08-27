@@ -258,7 +258,7 @@ public:
   ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen,
                           std::vector<int> inOptions[2], Perimeter inPerim,
                           DrawRange inRange);
-  void createDescription();
+  void createDescription(profData profSel);
 };
 
 class LoadFileList {

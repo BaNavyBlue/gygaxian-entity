@@ -2468,7 +2468,7 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar,
   createListPerimeter(*_playerDestScreen, _playerOpts);
   createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
 
-  createDescription();
+  // createDescription();
   drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
             _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
             *_descriptionPanel);
@@ -2489,7 +2489,7 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar,
             *_primaryScreen);
 }
 
-void ListHighlightProfSelect::createDescription() {
+void ListHighlightProfSelect::createDescription(profData profSel) {
   color_code textCol;
   color_code bgCol;
 #ifdef _WIN32
@@ -2502,7 +2502,7 @@ void ListHighlightProfSelect::createDescription() {
 
   std::string description = _inventory->getInventoryList()
                                 .at(ARMS)
-                                .at(profDat[_currPos].ARM_ID)
+                                .at(profSel.ARM_ID)
                                 ->getDescription();
   // int titlePos = inScreen.xyLimits.maxX - (inScreen.xyLimits.maxX -
   // inScreen.xyLimits.minX) / 2 - inTitle.size() / 2 - 1; Print Title
@@ -2590,7 +2590,7 @@ void ListHighlightProfSelect::navigateSelection() {
       // std::to_string(_profAvailable), _highlightList);
       listNavigate();
 
-      createDescription();
+      createDescription(profDat[_currPos]);
       drawSmall(_descriptionPanel->xyLimits.minX,
                 _descriptionPanel->xyLimits.maxX,
                 _descriptionPanel->xyLimits.minY,
@@ -2694,6 +2694,7 @@ char ListHighlightProfSelect::navigatePlayerDest() {
 
   listNavigate();
   destNavigate();
+  // createListPerimeter(*_listScreen, _options);
   drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY,
             _cornerDims.maxY + 1, *_listScreen);
   drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
@@ -2780,27 +2781,38 @@ char ListHighlightProfSelect::navigatePlayerDest() {
         if (_destCurrPos > 0) {
           _destPrevPos = _destCurrPos;
           _destCurrPos--;
+          listNavigate();
           destNavigate();
+          drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY,
+                    _cornerDims.maxY + 1, *_listScreen);
         }
       } else if (k == KEY_DOWN) {
         if (_destCurrPos < _playerList.size() - 1) {
           _destPrevPos = _destCurrPos;
           _destCurrPos++;
+          listNavigate();
           destNavigate();
+          drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY,
+                    _cornerDims.maxY + 1, *_listScreen);
         }
       } else if (k == KEY_LEFT) {
         _highlightDest = false;
         _highlightList = true;
         listNavigate();
         destNavigate();
+
+        createDescription(profDat[_currPos]);
+        drawSmall(_descriptionPanel->xyLimits.minX,
+                  _descriptionPanel->xyLimits.maxX,
+                  _descriptionPanel->xyLimits.minY,
+                  _descriptionPanel->xyLimits.maxY, *_descriptionPanel);
+
         drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY,
                   _cornerDims.maxY + 1, *_listScreen);
         drawSmall(_playerDestScreen->xyLimits.minX,
                   _playerDestScreen->xyLimits.maxX,
                   _playerDestScreen->xyLimits.minY,
                   _playerDestScreen->xyLimits.maxY + 1, *_playerDestScreen);
-        return k;
-      } else if (std::tolower(k) == 's') {
         return k;
       }
 
@@ -2882,7 +2894,7 @@ void ListHighlightProfSelect::listNavigate() {
     }
   }
 
-  createDescription();
+  createDescription(profDat[_currPos]);
   drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
             _descriptionPanel->xyLimits.minY, _descriptionPanel->xyLimits.maxY,
             *_descriptionPanel);
@@ -2960,6 +2972,14 @@ void ListHighlightProfSelect::destNavigate() {
       }
     }
   }
+  if (_playerProfList.size() > 0) {
+    createDescription(_playerProfList.at(_destCurrPos));
+    drawSmall(_descriptionPanel->xyLimits.minX,
+              _descriptionPanel->xyLimits.maxX,
+              _descriptionPanel->xyLimits.minY,
+              _descriptionPanel->xyLimits.maxY, *_descriptionPanel);
+  }
+
   drawSmall(_playerDestScreen->xyLimits.minX, _playerDestScreen->xyLimits.maxX,
             _playerDestScreen->xyLimits.minY,
             _playerDestScreen->xyLimits.maxY + 1, *_playerDestScreen);
