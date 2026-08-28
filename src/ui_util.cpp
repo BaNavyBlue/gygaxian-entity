@@ -2462,12 +2462,14 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar,
 
   listNavigate();
   createListPerimeter(*_listScreen, _options);
-  createListScreen(*_listScreen, _list, _title + std::to_string(_profAvailable),
-                   _highlightList);
+  createProfListScreen(*_listScreen, _list,
+                       _title + std::to_string(_profAvailable), _highlightList,
+                       LIST);
   createPrimary(*_primaryScreen, _optMain);
   drawPrimary(*_primaryScreen);
   createListPerimeter(*_playerDestScreen, _playerOpts);
-  createListScreen(*_playerDestScreen, _playerList, _player->getName(), false);
+  createProfListScreen(*_playerDestScreen, _playerList, _player->getName(),
+                       false, DEST);
 
   // createDescription();
   drawSmall(_descriptionPanel->xyLimits.minX, _descriptionPanel->xyLimits.maxX,
@@ -2548,10 +2550,9 @@ void ListHighlightProfSelect::createDescription(profData profSel) {
   // }
 }
 
-void ListHighlightProfSelect::createListScreen(ScreenVals &inScreen,
-                                               std::vector<std::string> inList,
-                                               std::string inTitle,
-                                               bool highlight) {
+void ListHighlightProfSelect::createProfListScreen(
+    ScreenVals &inScreen, std::vector<std::string> inList, std::string inTitle,
+    bool highlight, int inPane) {
   color_code textCol;
   color_code bgCol;
 #ifdef _WIN32
@@ -2595,8 +2596,13 @@ void ListHighlightProfSelect::createListScreen(ScreenVals &inScreen,
               inList[strdx][j];
           if (_player->getClass().at(0) == CLERIC ||
               _player->getClass().at(0) == DRUID) {
-            if (profDat[strdx].W_TYPE == BLUNT ||
-                profDat[strdx].W_TYPE == STAFF) {
+            profData currDat;
+            if (inPane == DEST) {
+              currDat = _playerProfList.at(strdx);
+            } else {
+              currDat = profDat[strdx];
+            }
+            if (currDat.W_TYPE == BLUNT || currDat.W_TYPE == STAFF) {
               inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
             } else {
               inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
@@ -2646,8 +2652,8 @@ void ListHighlightProfSelect::navigateSelection() {
       // listNavigate();
       // formatSelectedParty();
       createListPerimeter(*_playerDestScreen, _playerOpts);
-      createListScreen(*_playerDestScreen, _playerList, _player->getName(),
-                       false);
+      createProfListScreen(*_playerDestScreen, _playerList, _player->getName(),
+                           false, DEST);
       createListPerimeter(*_listScreen, _options);
       // createListScreen(*_listScreen, _list, _title +
       // std::to_string(_profAvailable), _highlightList);
@@ -2705,8 +2711,8 @@ void ListHighlightProfSelect::navigateSelection() {
           // createListScreen(*_listScreen, _list, _title +
           // std::to_string(_profAvailable), _highlightList);
           createListPerimeter(*_playerDestScreen, _playerOpts);
-          createListScreen(*_playerDestScreen, _playerList, _player->getName(),
-                           false);
+          createProfListScreen(*_playerDestScreen, _playerList,
+                               _player->getName(), false, DEST);
           drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY,
                     _cornerDims.maxY + 1, *_listScreen);
           drawSmall(_playerDestScreen->xyLimits.minX,
@@ -3046,15 +3052,16 @@ void ListHighlightProfSelect::destNavigate() {
 
             if (_playerProfList[strdx].W_TYPE == BLUNT ||
                 _playerProfList[strdx].W_TYPE == STAFF) {
-              _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+              _playerDestScreen
+                  ->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] =
                   GREEN;
             } else {
-              _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
-                  RED;
+              _playerDestScreen
+                  ->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = RED;
             }
           } else {
-            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
-                GREEN;
+            _playerDestScreen
+                ->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
           }
           _playerDestScreen
               ->bGColorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = BLACK;

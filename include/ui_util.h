@@ -230,6 +230,8 @@ public:
   int getPartyIdx();
 };
 
+enum PANE { LIST, DEST };
+
 class ListHighlightProfSelect : public ListHighlight {
 private:
   std::shared_ptr<Entity> _player;
@@ -253,8 +255,9 @@ private:
   void listNavigate() override;
   void destNavigate();
   void buildProfList();
-  void createListScreen(ScreenVals &inScreen, std::vector<std::string> inList,
-                        std::string inTitle, bool highlight) override;
+  void createProfListScreen(ScreenVals &inScreen,
+                            std::vector<std::string> inList,
+                            std::string inTitle, bool highlight, int inPane);
 
 public:
   ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen,
