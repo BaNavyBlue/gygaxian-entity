@@ -1,4 +1,5 @@
 #include "ui_util.h"
+#include "entity_structs_consts.h"
 #include <cctype>
 
 TextInput::TextInput() {
@@ -2547,6 +2548,68 @@ void ListHighlightProfSelect::createDescription(profData profSel) {
   // }
 }
 
+void ListHighlightProfSelect::createListScreen(ScreenVals &inScreen,
+                                               std::vector<std::string> inList,
+                                               std::string inTitle,
+                                               bool highlight) {
+  color_code textCol;
+  color_code bgCol;
+#ifdef _WIN32
+  textCol = BLUE;
+  bgCol = GREY;
+#else
+  textCol = DARKBLUE;
+  bgCol = WHITE;
+#endif
+
+  int titlePos = inScreen.xyLimits.maxX -
+                 (inScreen.xyLimits.maxX - inScreen.xyLimits.minX) / 2 -
+                 inTitle.size() / 2 - 1;
+  if (titlePos < 0)
+    titlePos = 0;
+  // Print Title
+  for (int i = 0; i < inTitle.size(); ++i) {
+    inScreen.charMap[inScreen.xyLimits.minY + 1][i + titlePos] = inTitle[i];
+    inScreen.colorMap[inScreen.xyLimits.minY + 1][i + titlePos] = YELLOW;
+  }
+
+  for (int i = inScreen.xyLimits.minY + 3; i < inScreen.xyLimits.maxY - 1;
+       ++i) {
+    int strdx = i - (inScreen.xyLimits.minY + 3);
+    // if (strdx < 0) strdx = 0;
+    if (strdx < inList.size()) {
+      int limit = inList[strdx].size();
+
+      if (limit > inScreen.xyLimits.maxX - 2) {
+        limit = inScreen.xyLimits.maxX - 2;
+      }
+
+      for (int j = 0; j < limit; ++j) {
+        if (strdx == 0 && highlight) {
+          inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] =
+              inList[strdx][j];
+          inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = textCol;
+          inScreen.bGColorMap[i][j + inScreen.xyLimits.minX + 1] = bgCol;
+        } else {
+          inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] =
+              inList[strdx][j];
+          if (_player->getClass().at(0) == CLERIC ||
+              _player->getClass().at(0) == DRUID) {
+            if (profDat[strdx].W_TYPE == BLUNT ||
+                profDat[strdx].W_TYPE == STAFF) {
+              inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
+            } else {
+              inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
+            }
+          } else {
+            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
+          }
+        }
+      }
+    }
+  }
+}
+
 void ListHighlightProfSelect::navigateSelection() {
   // formatSelectedParty();
   char choice;
@@ -2886,7 +2949,21 @@ void ListHighlightProfSelect::listNavigate() {
         } else {
           _listScreen->charMap[i][j + _listScreen->xyLimits.minX + 1] =
               _list[strdx][j];
-          _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = YELLOW;
+          if (_player->getClass().at(0) == CLERIC ||
+              _player->getClass().at(0) == DRUID) {
+
+            if (profDat[strdx].W_TYPE == BLUNT ||
+                profDat[strdx].W_TYPE == STAFF) {
+              _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                  GREEN;
+            } else {
+              _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                  RED;
+            }
+          } else {
+            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                GREEN;
+          }
           _listScreen->bGColorMap[i][j + _listScreen->xyLimits.minX + 1] =
               BLACK;
         }
@@ -2964,8 +3041,21 @@ void ListHighlightProfSelect::destNavigate() {
           _playerDestScreen
               ->charMap[i][j + _playerDestScreen->xyLimits.minX + 1] =
               _playerList[strdx][j];
-          _playerDestScreen
-              ->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = YELLOW;
+          if (_player->getClass().at(0) == CLERIC ||
+              _player->getClass().at(0) == DRUID) {
+
+            if (_playerProfList[strdx].W_TYPE == BLUNT ||
+                _playerProfList[strdx].W_TYPE == STAFF) {
+              _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                  GREEN;
+            } else {
+              _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                  RED;
+            }
+          } else {
+            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                GREEN;
+          }
           _playerDestScreen
               ->bGColorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = BLACK;
         }

@@ -253,6 +253,8 @@ private:
   void listNavigate() override;
   void destNavigate();
   void buildProfList();
+  void createListScreen(ScreenVals &inScreen, std::vector<std::string> inList,
+                        std::string inTitle, bool highlight) override;
 
 public:
   ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen,

@@ -463,7 +463,46 @@ void createBruteForceScreen() {
   std::vector<CHAR_CLASS> classVect;
   classVect.push_back(newClass);
 
+  std::vector<std::string> emptyString;
+  emptyString.push_back("One Thing");
+  std::vector<int> profOptions[2];
+  profOptions[0].push_back(UP_ARROW);
+  profOptions[0].push_back(HORZ_RAIL);
+  profOptions[0].push_back(DOWN_ARROW);
+  std::string msg = "  (S)elect ";
+  for (int i = 0; i < msg.size(); ++i) {
+    profOptions[0].push_back(msg[i]);
+  }
+
+  for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
+    profOptions[0].push_back(' ');
+  }
+
+  profOptions[0].push_back(RIGHT_ARROW);
+
+  profOptions[1].push_back(' ');
+  profOptions[1].push_back(' ');
+  profOptions[1].push_back(LEFT_ARROW);
+  profOptions[1].push_back(' ');
+  profOptions[1].push_back(UP_ARROW);
+  profOptions[1].push_back(HORZ_RAIL);
+  profOptions[1].push_back(DOWN_ARROW);
+
+  msg = "    (R)emove";
+
+  for (int i = 0; i < msg.size(); ++i) {
+    profOptions[1].push_back(msg[i]);
+  }
+
   Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
+
+  Perimeter profPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL,
+                      MAGENTA, MAGENTA, MAGENTA, BLACK);
+  profPerim.leftTee = L_TEE_RAIL;
+  profPerim.rightTee = R_TEE_RAIL;
+
+  ListHighlightProfSelect profScreen(dude, primaryScreen, profOptions,
+                                     profPerim, textCorner);
   dude.saveChar();
 
   drawSmall(textBox.getScreen().xyLimits.minX,
