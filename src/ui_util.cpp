@@ -2425,7 +2425,7 @@ ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar,
   _perim = inPerim;
   //_list = inList;
   //_pathList = inPaths;
-  _player = std::make_shared<Entity>(inChar);
+  _player = &inChar;
   _profChosen = _player->getWeapProf().size();
   _profAvailable = _player->getCharClassSkills()[0]->getInitNumWeap() +
                    (_player->getLevel() - 1) /
@@ -2737,7 +2737,7 @@ void ListHighlightProfSelect::navigateSelection() {
               // Perimeter textPerim(TL_LINE, TR_LINE, BL_LINE, BR_LINE,
               // HORZ_LINE, VERT_LINE, MAGENTA, BLACK, BLUE, BLACK);
             }
-          } else if (k == 'f') {
+          } else if (std::tolower(k) == 'f') {
             for (int i = 0; i < _playerProfList.size(); ++i) {
               _player->setWeaponProf(_playerProfList[i]);
             }

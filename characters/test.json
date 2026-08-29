@@ -1,26 +1,33 @@
 {
     "data":{
         "name":"test",
-        "alignment":0,
+        "alignment":2,
         "sex":3,
-        "race":2,
+        "race":0,
         "level":1,
-        "maxHP":3,
-        "curHP":3,
-        "weightAllow":1100.000000,
-        "totalWeight":50.000000,
-        "armorRating":8,
-        "numWeapProf":3,
-        "nonProfPen":-2,
-        "addWeapDenom":4,
+        "maxHP":5,
+        "curHP":5,
+        "weightAllow":350.000000,
+        "totalWeight":30.000000,
+        "armorRating":10,
+        "numWeapProf":1,
+        "nonProfPen":-5,
+        "addWeapDenom":6,
         "class":{
             "count":1,
             "index":{
-                "0":8
+                "0":5
             }
         },
         "weapProf":{
-            "count":0
+            "count":1,
+            "index":{
+                "0":{
+                    "armID":7,
+                    "enum":5,
+                    "string":"Bo Stick"
+                }
+            }
         },
         "experience":{
             "count":1,
@@ -29,7 +36,7 @@
             }
         },
         "money":{
-            "gold":50,
+            "gold":30,
             "silver":0,
             "copper":0,
             "electrum":0,
@@ -41,71 +48,69 @@
             }
         },
         "stats":{
-            "strength":18,
+            "strength":10,
             "excStrength":0,
-            "intelligence":13,
-            "wisdom":14,
-            "dexterity":16,
-            "constitution":14,
-            "charisma":3,
-            "raceCharisma":5
+            "intelligence":18,
+            "wisdom":10,
+            "dexterity":11,
+            "constitution":17,
+            "charisma":16,
+            "raceCharisma":16
         },
         "modStats":{
-            "strength":18,
+            "strength":10,
             "excStrength":0,
-            "intelligence":13,
-            "wisdom":14,
-            "dexterity":16,
-            "constitution":14,
-            "charisma":3,
-            "raceCharisma":5
+            "intelligence":18,
+            "wisdom":10,
+            "dexterity":11,
+            "constitution":17,
+            "charisma":16,
+            "raceCharisma":16
         },
         "strengthTable":{
-            "hitProb":1,
-            "damageAdj":2,
-            "weightAllowMod":750,
-            "openDoors":3,
-            "bendBarsLiftGatesPer":16
+            "hitProb":0,
+            "damageAdj":0,
+            "weightAllowMod":0,
+            "openDoors":2,
+            "bendBarsLiftGatesPer":2
         },
         "wisTable":{
             "magicAttackAdj":0,
-            "spellBonus":1,
-            "spellFailPer":0
+            "spellBonus":0,
+            "spellFailPer":15
         },
         "intTable":{
-            "chanceToKnowPer":55,
-            "minimumSpellsPer":4,
-            "maximumSpellsPer":6,
-            "possibleAddLang":3
+            "chanceToKnowPer":85,
+            "minimumSpellsPer":9,
+            "maximumSpellsPer":18,
+            "possibleAddLang":7
         },
         "dexTable":{
-            "reactAttkAdj":1,
-            "defenseAdj":-2
+            "reactAttkAdj":0,
+            "defenseAdj":0
         },
         "dexThief":{
             "pickPocketPer":0,
-            "openLocks":5,
+            "openLocks":0,
             "locRemTraps":0,
             "movSilent":0,
             "hideInShadows":0
         },
         "consTbl":{
-            "hpAdj":0,
-            "sysShockSurPer":88,
-            "resurSurvPer":92
+            "hpAdj":2,
+            "sysShockSurPer":97,
+            "resurSurvPer":98
         },
         "charTbl":{
-            "maxHenchMen":1,
-            "loyaltyBasePer":-30,
-            "reactAdjustPer":-25
+            "maxHenchMen":8,
+            "loyaltyBasePer":20,
+            "reactAdjustPer":25
         },
         "languages":{
-            "count":4,
+            "count":2,
             "index":{
                 "0":10,
-                "1":6,
-                "2":12,
-                "3":11
+                "1":14
             }
         }
     }

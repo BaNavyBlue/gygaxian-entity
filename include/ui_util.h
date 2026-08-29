@@ -234,7 +234,7 @@ enum PANE { LIST, DEST };
 
 class ListHighlightProfSelect : public ListHighlight {
 private:
-  std::shared_ptr<Entity> _player;
+  Entity *_player;
   std::vector<int> _playerOpts;
   std::vector<profData> _playerProfList;
   std::vector<std::string> _playerList;
