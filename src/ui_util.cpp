@@ -188,6 +188,7 @@ PrintInfo::PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim,
   MakeCharWin();
   MakeStatsWin();
   MakeCmbtWin();
+  MakeProfWin();
   MakeWealthWin();
   MakeLangWin();
   MakeEscTag();
@@ -474,6 +475,78 @@ void PrintInfo::MakeCmbtWin() {
             *_infoScreen[2]);
 }
 
+void PrintInfo::MakeProfWin() {
+  std::vector<profData> profs = _character->getWeapProf();
+  std::vector<std::string> profStr;
+
+  int maxLen = 0;
+  for (int i = 0; i < profs.size(); ++i) {
+    // for(int j = 0; j < basicInfo[i].size(); ++j){
+    if (maxLen < profs[i].profS.size()) {
+      maxLen = profs[i].profS.size();
+    }
+    profStr.push_back(profs[i].profS);
+    //}i
+  }
+
+  DrawRange healCom;
+  _infoScreen.push_back(
+      std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+  _infoScreen[3]->xyLimits.minX = healCom.minX =
+      _infoScreen[2]->xyLimits.maxX + 1;
+  _infoScreen[3]->xyLimits.minY = healCom.minY = _infoScreen[2]->xyLimits.minY;
+  _infoScreen[3]->xyLimits.maxX = healCom.maxX =
+      _infoScreen[2]->xyLimits.maxX + maxLen + 7;
+  _infoScreen[3]->xyLimits.maxY = healCom.maxY =
+      _infoScreen[2]->xyLimits.minY + profs.size() + 1;
+  generatePerimeter(*_infoScreen[3], _infoBoxPerim);
+  _contents.push_back(profStr);
+
+  PlaceInfo(3);
+  drawSmall(_infoScreen[3]->xyLimits.minX, _infoScreen[3]->xyLimits.maxX,
+            _infoScreen[3]->xyLimits.minY, _infoScreen[3]->xyLimits.maxY + 1,
+            *_infoScreen[3]);
+}
+
+void PrintInfo::MakeEscTag() {
+  std::vector<std::string> basicInfo;
+  basicInfo.push_back("Press [esc] to exit");
+
+  int maxLen = 0;
+  for (int i = 0; i < basicInfo.size(); ++i) {
+    // for(int j = 0; j < basicInfo[i].size(); ++j){
+    if (maxLen < basicInfo[i].size()) {
+      maxLen = basicInfo[i].size();
+    }
+    //}
+  }
+
+  color_code border;
+#ifdef _WIN32
+  border = RED;
+#else
+  border = DARKRED;
+#endif
+
+  DrawRange healCom;
+  _infoScreen.push_back(
+      std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK));
+  _infoScreen[6]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX;
+  _infoScreen[6]->xyLimits.minY = healCom.minY =
+      _infoScreen[0]->xyLimits.maxY + 1;
+  _infoScreen[6]->xyLimits.maxX = healCom.maxX =
+      _infoScreen[0]->xyLimits.minX + maxLen + 7;
+  _infoScreen[6]->xyLimits.maxY = healCom.maxY =
+      _infoScreen[6]->xyLimits.minY + basicInfo.size() + 1;
+  generatePerimeter(*_infoScreen[6], _infoBoxPerim);
+  _contents.push_back(basicInfo);
+
+  PlaceInfo(6);
+  drawSmall(_infoScreen[6]->xyLimits.minX, _infoScreen[6]->xyLimits.maxX,
+            _infoScreen[6]->xyLimits.minY, _infoScreen[6]->xyLimits.maxY + 1,
+            *_infoScreen[6]);
+}
+
 void PrintInfo::MakeWealthWin() {
   std::vector<std::string> basicInfo;
   basicInfo.push_back("Wealth:");
@@ -486,37 +559,6 @@ void PrintInfo::MakeWealthWin() {
                       std::to_string(_character->getMoney().electrum));
   basicInfo.push_back("Platinum: " +
                       std::to_string(_character->getMoney().platinum));
-
-  int maxLen = 0;
-  for (int i = 0; i < basicInfo.size(); ++i) {
-    // for(int j = 0; j < basicInfo[i].size(); ++j){
-    if (maxLen < basicInfo[i].size()) {
-      maxLen = basicInfo[i].size();
-    }
-    //}
-  }
-
-  DrawRange healCom;
-  _infoScreen.push_back(
-      std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-  _infoScreen[3]->xyLimits.minX = healCom.minX =
-      _infoScreen[2]->xyLimits.maxX + 1;
-  _infoScreen[3]->xyLimits.minY = healCom.minY = _infoScreen[2]->xyLimits.minY;
-  _infoScreen[3]->xyLimits.maxX = healCom.maxX =
-      _infoScreen[2]->xyLimits.maxX + maxLen + 7;
-  _infoScreen[3]->xyLimits.maxY = healCom.maxY =
-      _infoScreen[2]->xyLimits.minY + basicInfo.size() + 1;
-  generatePerimeter(*_infoScreen[3], _infoBoxPerim);
-  _contents.push_back(basicInfo);
-
-  PlaceInfo(3);
-  drawSmall(_infoScreen[3]->xyLimits.minX, _infoScreen[3]->xyLimits.maxX,
-            _infoScreen[3]->xyLimits.minY, _infoScreen[3]->xyLimits.maxY + 1,
-            *_infoScreen[3]);
-}
-
-void PrintInfo::MakeLangWin() {
-  std::vector<std::string> basicInfo = getLanguages(_character->getLanguages());
 
   int maxLen = 0;
   for (int i = 0; i < basicInfo.size(); ++i) {
@@ -546,9 +588,8 @@ void PrintInfo::MakeLangWin() {
             *_infoScreen[4]);
 }
 
-void PrintInfo::MakeEscTag() {
-  std::vector<std::string> basicInfo;
-  basicInfo.push_back("Press [esc] to exit");
+void PrintInfo::MakeLangWin() {
+  std::vector<std::string> basicInfo = getLanguages(_character->getLanguages());
 
   int maxLen = 0;
   for (int i = 0; i < basicInfo.size(); ++i) {
@@ -559,23 +600,16 @@ void PrintInfo::MakeEscTag() {
     //}
   }
 
-  color_code border;
-#ifdef _WIN32
-  border = RED;
-#else
-  border = DARKRED;
-#endif
-
   DrawRange healCom;
   _infoScreen.push_back(
-      std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK));
-  _infoScreen[5]->xyLimits.minX = healCom.minX = _infoScreen[0]->xyLimits.minX;
-  _infoScreen[5]->xyLimits.minY = healCom.minY =
-      _infoScreen[0]->xyLimits.maxY + 1;
+      std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+  _infoScreen[5]->xyLimits.minX = healCom.minX =
+      _infoScreen[4]->xyLimits.maxX + 1;
+  _infoScreen[5]->xyLimits.minY = healCom.minY = _infoScreen[4]->xyLimits.minY;
   _infoScreen[5]->xyLimits.maxX = healCom.maxX =
-      _infoScreen[0]->xyLimits.minX + maxLen + 7;
+      _infoScreen[4]->xyLimits.maxX + maxLen + 7;
   _infoScreen[5]->xyLimits.maxY = healCom.maxY =
-      _infoScreen[5]->xyLimits.minY + basicInfo.size() + 1;
+      _infoScreen[4]->xyLimits.minY + basicInfo.size() + 1;
   generatePerimeter(*_infoScreen[5], _infoBoxPerim);
   _contents.push_back(basicInfo);
 
@@ -584,6 +618,46 @@ void PrintInfo::MakeEscTag() {
             _infoScreen[5]->xyLimits.minY, _infoScreen[5]->xyLimits.maxY + 1,
             *_infoScreen[5]);
 }
+
+// void PrintInfo::MakeEscTag() {
+//   std::vector<std::string> basicInfo;
+//   basicInfo.push_back("Press [esc] to exit");
+
+//  int maxLen = 0;
+//  for (int i = 0; i < basicInfo.size(); ++i) {
+// for(int j = 0; j < basicInfo[i].size(); ++j){
+//    if (maxLen < basicInfo[i].size()) {
+//      maxLen = basicInfo[i].size();
+//}
+//}
+//}
+
+//  color_code border;
+// #ifdef _WIN32
+//  border = RED;
+// #else
+//  border = DARKRED;
+// #endif
+
+//  DrawRange healCom;
+//  _infoScreen.push_back(
+//      std::make_shared<ScreenVals>(VECT_MAX, ' ', border, BLACK));
+//  _infoScreen[5]->xyLimits.minX = healCom.minX =
+//  _infoScreen[0]->xyLimits.minX; _infoScreen[5]->xyLimits.minY = healCom.minY
+//  =
+//      _infoScreen[0]->xyLimits.maxY + 1;
+//  _infoScreen[5]->xyLimits.maxX = healCom.maxX =
+//      _infoScreen[0]->xyLimits.minX + maxLen + 7;
+//  _infoScreen[5]->xyLimits.maxY = healCom.maxY =
+//      _infoScreen[5]->xyLimits.minY + basicInfo.size() + 1;
+//  generatePerimeter(*_infoScreen[5], _infoBoxPerim);
+//  _contents.push_back(basicInfo);
+
+//  PlaceInfo(5);
+//  drawSmall(_infoScreen[5]->xyLimits.minX, _infoScreen[5]->xyLimits.maxX,
+//            _infoScreen[5]->xyLimits.minY, _infoScreen[5]->xyLimits.maxY + 1,
+//            *_infoScreen[5]);
+//}
 
 void PrintInfo::MakeDexTbl() {
   std::vector<std::string> basicInfo = getDexTbl(_character->getDexTbl());

@@ -797,6 +797,7 @@ void createRollScreen() {
   profOptions[0].push_back(UP_ARROW);
   profOptions[0].push_back(HORZ_RAIL);
   profOptions[0].push_back(DOWN_ARROW);
+
   std::string msg = "  (S)elect ";
   for (int i = 0; i < msg.size(); ++i) {
     profOptions[0].push_back(msg[i]);

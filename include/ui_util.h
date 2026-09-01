@@ -105,6 +105,7 @@ protected:
   void MakeCharWin();
   void MakeStatsWin();
   void MakeCmbtWin();
+  void MakeProfWin();
   void MakeWealthWin();
   void MakeLangWin();
   void MakeEscTag();
