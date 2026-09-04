@@ -77,11 +77,17 @@ void TextInput::getText() {
     hidecursor();
 }
 
-ScreenVals &TextInput::getScreen() { return *_textScreen; }
+ScreenVals &TextInput::getScreen() {
+    return *_textScreen;
+}
 
-std::string TextInput::getAquiredString() { return _receivedString; }
+std::string TextInput::getAquiredString() {
+    return _receivedString;
+}
 
-void TextInput::purgeRecieved() { _receivedString.clear(); }
+void TextInput::purgeRecieved() {
+    _receivedString.clear();
+}
 
 void OptionWindow::PlaceOptions() {
     for (std::size_t i = _optScreen->xyLimits.minY; i < _optScreen->xyLimits.maxY + 1; ++i) {
@@ -103,7 +109,8 @@ void OptionWindow::PlaceOptions() {
               _optScreen->xyLimits.maxY + 1, *_optScreen);
 }
 
-OptionWindow::OptionWindow() {}
+OptionWindow::OptionWindow() {
+}
 
 AlignOptWindow::AlignOptWindow(CHAR_CLASS inClass) {
     std::string alignList = "Select Alignment:";
@@ -160,11 +167,17 @@ void AlignOptWindow::createWindow(DrawRange uRandWidth, Perimeter inPerim) {
 //     _optScreen->xyLimits.minY, _optScreen->xyLimits.maxY + 1, *_optScreen);
 // }
 
-ALIGNMENT AlignOptWindow::getAlign(char inChar) { return _aList[inChar]; }
+ALIGNMENT AlignOptWindow::getAlign(char inChar) {
+    return _aList[inChar];
+}
 
-ScreenVals &AlignOptWindow::getScreen() { return *_optScreen; }
+ScreenVals &AlignOptWindow::getScreen() {
+    return *_optScreen;
+}
 
-int AlignOptWindow::getOptIdx() { return _aList.size(); }
+int AlignOptWindow::getOptIdx() {
+    return _aList.size();
+}
 
 PrintInfo::PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert) {
     _primaryScreen = std::make_shared<ScreenVals>(primary);
@@ -715,7 +728,8 @@ void PrintInfo::MakeRaceSkills() {
               _infoScreen[10]->xyLimits.maxY + 1, *_infoScreen[10]);
 }
 
-void PrintInfo::MakeThiefDexTbl() {}
+void PrintInfo::MakeThiefDexTbl() {
+}
 
 void PrintInfo::createPrimary() {
 
@@ -876,7 +890,9 @@ bool WarnMessage::waitForAnswer() {
     }
 }
 
-ScreenVals &WarnMessage::getScreen() { return *_warnScreen; }
+ScreenVals &WarnMessage::getScreen() {
+    return *_warnScreen;
+}
 
 void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals &inScreen) {
     for (int i = startY; i < maxY; ++i) {
@@ -1039,7 +1055,9 @@ void ChooseOpt::createWindow(DrawRange uRandWidth, Perimeter inPerim) {
     PlaceOptions();
 }
 
-ScreenVals &ChooseOpt::getScreen() { return *_optScreen; }
+ScreenVals &ChooseOpt::getScreen() {
+    return *_optScreen;
+}
 
 char ChooseOpt::getChoice(char optChoice) {
     _choice = optChoice;
@@ -1210,7 +1228,9 @@ RollScreen::RollScreen(stats inStats, ScreenVals &primaryScreen) {
     drawSmall(1, rollScreen->xyLimits.maxX, 1, rollScreen->xyLimits.maxY, *rollScreen);
 }
 
-std::shared_ptr<ScreenVals> RollScreen::getScreen() { return rollScreen; }
+std::shared_ptr<ScreenVals> RollScreen::getScreen() {
+    return rollScreen;
+}
 
 bool doesRecordExist(std::string name, std::string path, std::string suffix) {
     std::string file = path + name + suffix;
@@ -1218,7 +1238,8 @@ bool doesRecordExist(std::string name, std::string path, std::string suffix) {
     return charJson.good();
 }
 
-ListHighlight::ListHighlight() {}
+ListHighlight::ListHighlight() {
+}
 
 ListHighlight::ListHighlight(std::vector<std::string> inList, ScreenVals &primaryScreen, std::string inName,
                              std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange) {
@@ -1234,7 +1255,8 @@ ListHighlight::ListHighlight(std::vector<std::string> inList, ScreenVals &primar
     drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
 }
 
-void ListHighlight::navigateSelection() {}
+void ListHighlight::navigateSelection() {
+}
 
 // void ListHighlightPartySelect::navigateSelection()
 // {
@@ -1439,7 +1461,8 @@ void ListHighlight::navigateSelection() {}
 //     }
 // }
 
-void ListHighlight::listNavigate() {}
+void ListHighlight::listNavigate() {
+}
 
 void ListHighlight::createListScreen(ScreenVals &inScreen, std::vector<std::string> inList, std::string inTitle,
                                      bool highlight) {
@@ -1546,7 +1569,9 @@ void ListHighlight::createListPerimeter(ScreenVals &inScreen, std::vector<int> i
     }
 }
 
-ScreenVals &ListHighlight::getScreen() { return *_listScreen; }
+ScreenVals &ListHighlight::getScreen() {
+    return *_listScreen;
+}
 
 ListHighlightPair::ListHighlightPair(std::vector<std::string> &inList, std::vector<Entity> &inPlayers,
                                      std::vector<std::string> &inPaths, ScreenVals &primaryScreen, std::string inName,
@@ -2013,9 +2038,13 @@ void ListHighlightPair::destNavigate() {
 
 // }
 
-ScreenVals &ListHighlightPair::getDestScreen() { return *_destListScreen; }
+ScreenVals &ListHighlightPair::getDestScreen() {
+    return *_destListScreen;
+}
 
-std::vector<Entity> &ListHighlightPair::getEntityList() { return _players; }
+std::vector<Entity> &ListHighlightPair::getEntityList() {
+    return _players;
+}
 
 ListHighlightPartySelect::ListHighlightPartySelect(std::vector<std::string> &inList,
                                                    std::vector<std::vector<Entity>> &inParties,
@@ -2256,9 +2285,13 @@ void ListHighlightPartySelect::formatSelectedParty() {
     }
 }
 
-std::vector<Entity> ListHighlightPartySelect::returnParty() { return _parties[_selIdx]; }
+std::vector<Entity> ListHighlightPartySelect::returnParty() {
+    return _parties[_selIdx];
+}
 
-int ListHighlightPartySelect::getPartyIdx() { return _selIdx; }
+int ListHighlightPartySelect::getPartyIdx() {
+    return _selIdx;
+}
 
 ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen,
                                                  std::vector<int> inOptions[2], Perimeter inPerim, DrawRange inRange) {
@@ -2436,7 +2469,9 @@ void ListHighlightProfSelect::createProfListScreen(ScreenVals &inScreen, std::ve
     }
 }
 
-void testSpacing(int wtf) { std::string binch = std::to_string(wtf) + " What now how do?"; }
+void testSpacing(int wtf) {
+    std::string binch = std::to_string(wtf) + " What now how do?";
+}
 
 void ListHighlightProfSelect::navigateSelection() {
     // formatSelectedParty();
@@ -2866,7 +2901,8 @@ void ListHighlightProfSelect::buildProfList() {
     }
 }
 
-LoadFileList::LoadFileList() {}
+LoadFileList::LoadFileList() {
+}
 
 LoadFileList::LoadFileList(std::string directory) {
     const std::filesystem::path files{directory};
@@ -2887,9 +2923,13 @@ LoadFileList::LoadFileList(std::string directory) {
     }
 }
 
-std::vector<std::string> &LoadFileList::getFileList() { return _fileList; }
+std::vector<std::string> &LoadFileList::getFileList() {
+    return _fileList;
+}
 
-std::vector<std::string> &LoadFileList::getPathList() { return _pathList; }
+std::vector<std::string> &LoadFileList::getPathList() {
+    return _pathList;
+}
 
 LoadCharList::LoadCharList(std::string directory) {
     const std::filesystem::path files{directory};
@@ -2933,9 +2973,13 @@ LoadPartyList::LoadPartyList(std::string directory) {
     }
 }
 
-std::vector<std::vector<Entity>> &LoadPartyList::getParties() { return _parties; }
+std::vector<std::vector<Entity>> &LoadPartyList::getParties() {
+    return _parties;
+}
 
-std::vector<Entity> &LoadCharList::getEntityList() { return _players; }
+std::vector<Entity> &LoadCharList::getEntityList() {
+    return _players;
+}
 
 void clearPrevScreen(const std::vector<ScreenVals> &screens) {
     drawSmall(screens.back().xyLimits.minX, screens.back().xyLimits.maxX, screens.back().xyLimits.minY,
@@ -3316,4 +3360,6 @@ void AccessInventory::createInventoryList() {
     }
 }
 
-std::vector<std::vector<std::shared_ptr<Items>>> AccessInventory::getInventoryList() { return _inventoryList; }
+std::vector<std::vector<std::shared_ptr<Items>>> AccessInventory::getInventoryList() {
+    return _inventoryList;
+}
