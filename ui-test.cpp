@@ -19,616 +19,849 @@ ScreenVals primaryScreen(VECT_MAX, ' ', GREEN, BLACK);
 
 int main() {
 
-  setlocale(LC_ALL, "");
-  srand((unsigned int)time(NULL));
+    setlocale(LC_ALL, "");
+    srand((unsigned int)time(NULL));
 
-  char reset_screen[64];
+    char reset_screen[64];
 
-  sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
+    sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
 
-  start_horz = horz_char = tcols();
-  start_vert = vert_char = trows();
+    start_horz = horz_char = tcols();
+    start_vert = vert_char = trows();
 
-  sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
+    sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
 
-  // Console Command to set terminal dimensions
-  // std::cout << "\e[8;42;180t"; //This isn't working in kde konsole or windows
+    // Console Command to set terminal dimensions
+    // std::cout << "\e[8;42;180t"; //This isn't working in kde konsole or windows
 
-  hidecursor();
-  setConsoleTitle("Gygaxian-Entity");
+    hidecursor();
+    setConsoleTitle("Gygaxian-Entity");
 
-  struct termios oldt, newt;
-  int ch;
-  tcgetattr(STDIN_FILENO, &oldt);
-  newt = oldt;
-  newt.c_lflag &= ~(ICANON | ECHO);
-  tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    struct termios oldt, newt;
+    int ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
-  bool quitMain = false;
+    bool quitMain = false;
 
-  // std::cout << "loading: " << "items/Arms.json" << std::endl;
-  // sj::ondemand::parser parser;
-  // sj::padded_string json = sj::padded_string::load("items/Arms.json");
-  // sj::ondemand::document itemsData = parser.iterate(json);
+    // std::cout << "loading: " << "items/Arms.json" << std::endl;
+    // sj::ondemand::parser parser;
+    // sj::padded_string json = sj::padded_string::load("items/Arms.json");
+    // sj::ondemand::document itemsData = parser.iterate(json);
 
-  // std::vector<std::shared_ptr<Items>> armsList;
-  // std::vector<std::shared_ptr<Items>> armorList;
-  // std::vector<std::shared_ptr<Items>> clothingList;
-  // std::vector<std::shared_ptr<Items>> herbList;
-  // std::vector<std::shared_ptr<Items>> liveStockList;
-  // std::vector<std::shared_ptr<Items>> miscList;
-  // std::vector<std::shared_ptr<Items>> provisionList;
-  // std::vector<std::shared_ptr<Items>> religiousList;
-  // std::vector<std::shared_ptr<Items>> tackHarnessList;
-  // std::vector<std::shared_ptr<Items>> transportList;
+    // std::vector<std::shared_ptr<Items>> armsList;
+    // std::vector<std::shared_ptr<Items>> armorList;
+    // std::vector<std::shared_ptr<Items>> clothingList;
+    // std::vector<std::shared_ptr<Items>> herbList;
+    // std::vector<std::shared_ptr<Items>> liveStockList;
+    // std::vector<std::shared_ptr<Items>> miscList;
+    // std::vector<std::shared_ptr<Items>> provisionList;
+    // std::vector<std::shared_ptr<Items>> religiousList;
+    // std::vector<std::shared_ptr<Items>> tackHarnessList;
+    // std::vector<std::shared_ptr<Items>> transportList;
 
-  // unsigned itemCount = uint64_t(itemsData["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     armsList.push_back(std::make_shared<Arms>(itemsData, i));
-  // }
+    // unsigned itemCount = uint64_t(itemsData["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     armsList.push_back(std::make_shared<Arms>(itemsData, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Armor.json" << std::endl;
-  // sj::ondemand::parser parser2;
-  // sj::padded_string json2 = sj::padded_string::load("items/Armor.json");
-  // sj::ondemand::document itemsData2 = parser.iterate(json2);
+    // std::cout << std:: endl << "loading: " << "items/Armor.json" << std::endl;
+    // sj::ondemand::parser parser2;
+    // sj::padded_string json2 = sj::padded_string::load("items/Armor.json");
+    // sj::ondemand::document itemsData2 = parser.iterate(json2);
 
-  // itemCount = uint64_t(itemsData2["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     armorList.push_back(std::make_shared<Armor>(itemsData2, i));
-  // }
+    // itemCount = uint64_t(itemsData2["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     armorList.push_back(std::make_shared<Armor>(itemsData2, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Clothing.json" <<
-  // std::endl; sj::ondemand::parser parser3; sj::padded_string json3 =
-  // sj::padded_string::load("items/Clothing.json"); sj::ondemand::document
-  // itemsData3 = parser3.iterate(json3);
+    // std::cout << std:: endl << "loading: " << "items/Clothing.json" <<
+    // std::endl; sj::ondemand::parser parser3; sj::padded_string json3 =
+    // sj::padded_string::load("items/Clothing.json"); sj::ondemand::document
+    // itemsData3 = parser3.iterate(json3);
 
-  // itemCount = uint64_t(itemsData3["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     clothingList.push_back(std::make_shared<Clothing>(itemsData3, i));
-  // }
+    // itemCount = uint64_t(itemsData3["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     clothingList.push_back(std::make_shared<Clothing>(itemsData3, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Herbs.json" << std::endl;
-  // sj::ondemand::parser parser4;
-  // sj::padded_string json4 = sj::padded_string::load("items/Herbs.json");
-  // sj::ondemand::document itemsData4 = parser4.iterate(json4);
+    // std::cout << std:: endl << "loading: " << "items/Herbs.json" << std::endl;
+    // sj::ondemand::parser parser4;
+    // sj::padded_string json4 = sj::padded_string::load("items/Herbs.json");
+    // sj::ondemand::document itemsData4 = parser4.iterate(json4);
 
-  // itemCount = uint64_t(itemsData4["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     herbList.push_back(std::make_shared<Herbs>(itemsData4, i));
-  // }
+    // itemCount = uint64_t(itemsData4["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     herbList.push_back(std::make_shared<Herbs>(itemsData4, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Livestock.json" <<
-  // std::endl; sj::ondemand::parser parser5; sj::padded_string json5 =
-  // sj::padded_string::load("items/Livestock.json"); sj::ondemand::document
-  // itemsData5 = parser5.iterate(json5);
+    // std::cout << std:: endl << "loading: " << "items/Livestock.json" <<
+    // std::endl; sj::ondemand::parser parser5; sj::padded_string json5 =
+    // sj::padded_string::load("items/Livestock.json"); sj::ondemand::document
+    // itemsData5 = parser5.iterate(json5);
 
-  // itemCount = uint64_t(itemsData5["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     liveStockList.push_back(std::make_shared<Livestock>(itemsData5, i));
-  // }
+    // itemCount = uint64_t(itemsData5["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     liveStockList.push_back(std::make_shared<Livestock>(itemsData5, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Misc.json" << std::endl;
-  // sj::ondemand::parser parser6;
-  // sj::padded_string json6 = sj::padded_string::load("items/Misc.json");
-  // sj::ondemand::document itemsData6 = parser6.iterate(json6);
+    // std::cout << std:: endl << "loading: " << "items/Misc.json" << std::endl;
+    // sj::ondemand::parser parser6;
+    // sj::padded_string json6 = sj::padded_string::load("items/Misc.json");
+    // sj::ondemand::document itemsData6 = parser6.iterate(json6);
 
-  // itemCount = uint64_t(itemsData6["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     miscList.push_back(std::make_shared<MiscItems>(itemsData6, i));
-  // }
+    // itemCount = uint64_t(itemsData6["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     miscList.push_back(std::make_shared<MiscItems>(itemsData6, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Provisions.json" <<
-  // std::endl; sj::ondemand::parser parser7; sj::padded_string json7 =
-  // sj::padded_string::load("items/Provisions.json"); sj::ondemand::document
-  // itemsData7 = parser7.iterate(json7);
+    // std::cout << std:: endl << "loading: " << "items/Provisions.json" <<
+    // std::endl; sj::ondemand::parser parser7; sj::padded_string json7 =
+    // sj::padded_string::load("items/Provisions.json"); sj::ondemand::document
+    // itemsData7 = parser7.iterate(json7);
 
-  // itemCount = uint64_t(itemsData7["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     provisionList.push_back(std::make_shared<Provisions>(itemsData7, i));
-  // }
+    // itemCount = uint64_t(itemsData7["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     provisionList.push_back(std::make_shared<Provisions>(itemsData7, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Religious.json" <<
-  // std::endl; sj::ondemand::parser parser8; sj::padded_string json8 =
-  // sj::padded_string::load("items/Religious.json"); sj::ondemand::document
-  // itemsData8 = parser8.iterate(json8);
+    // std::cout << std:: endl << "loading: " << "items/Religious.json" <<
+    // std::endl; sj::ondemand::parser parser8; sj::padded_string json8 =
+    // sj::padded_string::load("items/Religious.json"); sj::ondemand::document
+    // itemsData8 = parser8.iterate(json8);
 
-  // itemCount = uint64_t(itemsData8["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     religiousList.push_back(std::make_shared<Religious>(itemsData8, i));
-  // }
+    // itemCount = uint64_t(itemsData8["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     religiousList.push_back(std::make_shared<Religious>(itemsData8, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/TackHarness.json" <<
-  // std::endl; sj::ondemand::parser parser9; sj::padded_string json9 =
-  // sj::padded_string::load("items/TackHarness.json"); sj::ondemand::document
-  // itemsData9 = parser9.iterate(json9);
+    // std::cout << std:: endl << "loading: " << "items/TackHarness.json" <<
+    // std::endl; sj::ondemand::parser parser9; sj::padded_string json9 =
+    // sj::padded_string::load("items/TackHarness.json"); sj::ondemand::document
+    // itemsData9 = parser9.iterate(json9);
 
-  // itemCount = uint64_t(itemsData9["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     tackHarnessList.push_back(std::make_shared<TackHarness>(itemsData9,
-  //     i));
-  // }
+    // itemCount = uint64_t(itemsData9["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     tackHarnessList.push_back(std::make_shared<TackHarness>(itemsData9,
+    //     i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // std::cout << std:: endl << "loading: " << "items/Transport.json" <<
-  // std::endl; sj::ondemand::parser parser10; sj::padded_string json10 =
-  // sj::padded_string::load("items/Transport.json"); sj::ondemand::document
-  // itemsData10 = parser10.iterate(json10);
+    // std::cout << std:: endl << "loading: " << "items/Transport.json" <<
+    // std::endl; sj::ondemand::parser parser10; sj::padded_string json10 =
+    // sj::padded_string::load("items/Transport.json"); sj::ondemand::document
+    // itemsData10 = parser10.iterate(json10);
 
-  // itemCount = uint64_t(itemsData10["data"]["count"]);
-  // std::cout << "itemCount: " << itemCount << std::endl;
-  // for(unsigned i = 0; i < itemCount; ++i){
-  //     transportList.push_back(std::make_shared<Transport>(itemsData10, i));
-  // }
+    // itemCount = uint64_t(itemsData10["data"]["count"]);
+    // std::cout << "itemCount: " << itemCount << std::endl;
+    // for(unsigned i = 0; i < itemCount; ++i){
+    //     transportList.push_back(std::make_shared<Transport>(itemsData10, i));
+    // }
 
-  // sleep(2);
+    // sleep(2);
 
-  // AccessInventory* inventory = new AccessInventory();
+    // AccessInventory* inventory = new AccessInventory();
 
-  // sleep(10);
+    // sleep(10);
 
-  while (!quitMain) {
-    createPrimary(primaryScreen, options);
-    drawPrimary(primaryScreen);
-
-    std::vector<Entity> partyVect;
-    std::string partyName;
-    bool partyMode = false;
-    // printf("\u26e7\r\n");
-    //  std::string test("\u26e7");
-    //  printf("%s\r\n", test.c_str());
-    //  for(int i = 0; i < test.size(); ++i){
-    //      printf("%c %d\r\n", test.c_str()[i], test.c_str()[i]);
-    //  }
-
-    while (true) {
-      std::size_t new_horz = tcols();
-      std::size_t new_vert = trows();
-      if (horz_char != new_horz || vert_char != new_vert) {
-        horz_char = new_horz;
-        vert_char = new_vert;
+    while (!quitMain) {
         createPrimary(primaryScreen, options);
         drawPrimary(primaryScreen);
-      }
-      if (kbhit()) {
-        char k = getkey();
-        if (std::tolower(k) == 'c') {
-          std::vector<std::string> charCreate;
-          charCreate.push_back("Creation Option:");
-          charCreate.push_back("Classic Creation");
-          charCreate.push_back("Brute Force Class");
-          ChooseOpt createOpt(charCreate);
-          std::vector<ScreenVals> screens;
-          screens.push_back(primaryScreen);
-          screens.push_back(createOpt.getScreen());
-          if (createOpt.getChoice(selOpt(screens, charCreate.size() - 1)) ==
-              '1') {
-            clearPrevScreen(screens);
-            screens.clear();
-            createBruteForceScreen();
-          } else {
-            clearPrevScreen(screens);
-            screens.clear();
-            createRollScreen();
-          }
-        } else if (std::tolower(k) == 'p') {
-          // printf("p pressed \r\n");
-          LoadCharList charList("characters");
-          color_code border;
+
+        std::vector<Entity> partyVect;
+        std::string partyName;
+        bool partyMode = false;
+        // printf("\u26e7\r\n");
+        //  std::string test("\u26e7");
+        //  printf("%s\r\n", test.c_str());
+        //  for(int i = 0; i < test.size(); ++i){
+        //      printf("%c %d\r\n", test.c_str()[i], test.c_str()[i]);
+        //  }
+
+        while (true) {
+            std::size_t new_horz = tcols();
+            std::size_t new_vert = trows();
+            if (horz_char != new_horz || vert_char != new_vert) {
+                horz_char = new_horz;
+                vert_char = new_vert;
+                createPrimary(primaryScreen, options);
+                drawPrimary(primaryScreen);
+            }
+            if (kbhit()) {
+                char k = getkey();
+                if (std::tolower(k) == 'c') {
+                    std::vector<std::string> charCreate;
+                    charCreate.push_back("Creation Option:");
+                    charCreate.push_back("Classic Creation");
+                    charCreate.push_back("Brute Force Class");
+                    ChooseOpt createOpt(charCreate);
+                    std::vector<ScreenVals> screens;
+                    screens.push_back(primaryScreen);
+                    screens.push_back(createOpt.getScreen());
+                    if (createOpt.getChoice(selOpt(screens, charCreate.size() - 1)) == '1') {
+                        clearPrevScreen(screens);
+                        screens.clear();
+                        createBruteForceScreen();
+                    } else {
+                        clearPrevScreen(screens);
+                        screens.clear();
+                        createRollScreen();
+                    }
+                } else if (std::tolower(k) == 'p') {
+                    // printf("p pressed \r\n");
+                    LoadCharList charList("characters");
+                    color_code border;
 #ifdef _WIN32
-          border = BLUE;
+                    border = BLUE;
 #else
-          border = DARKPURPLE;
+                    border = DARKPURPLE;
 #endif
-          Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL,
-                              VERT_RAIL, border, BLACK, border, BLACK);
-          listPerim.leftTee = L_TEE_RAIL;
-          listPerim.rightTee = R_TEE_RAIL;
-          DrawRange listDims;
-          listDims.minX = primaryScreen.xyLimits.minX + 1;
-          listDims.minY = primaryScreen.xyLimits.minY + 1;
-          listDims.maxX = tcols() / 3;
-          listDims.maxY = trows() - 3;
-          std::vector<int> listOptions;
-          std::string opts("  (A)dd (V)iew ");
+                    Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL, border, BLACK, border,
+                                        BLACK);
+                    listPerim.leftTee = L_TEE_RAIL;
+                    listPerim.rightTee = R_TEE_RAIL;
+                    DrawRange listDims;
+                    listDims.minX = primaryScreen.xyLimits.minX + 1;
+                    listDims.minY = primaryScreen.xyLimits.minY + 1;
+                    listDims.maxX = tcols() / 3;
+                    listDims.maxY = trows() - 3;
+                    std::vector<int> listOptions;
+                    std::string opts("  (A)dd (V)iew ");
 
-          // Encode Option Code message as ints for utf8 characters.
-          for (int i = 0; i < opts.size(); ++i) {
-            listOptions.push_back(opts[i]);
-          }
-          listOptions.push_back(UP_ARROW);
-          listOptions.push_back(DOWN_ARROW);
-          for (int i = 0; i < 5; ++i) {
-            listOptions.push_back(' ');
-          }
-          listOptions.push_back(RIGHT_ARROW);
+                    // Encode Option Code message as ints for utf8 characters.
+                    for (int i = 0; i < opts.size(); ++i) {
+                        listOptions.push_back(opts[i]);
+                    }
+                    listOptions.push_back(UP_ARROW);
+                    listOptions.push_back(DOWN_ARROW);
+                    for (int i = 0; i < 5; ++i) {
+                        listOptions.push_back(' ');
+                    }
+                    listOptions.push_back(RIGHT_ARROW);
 
-          std::vector<int> destOptions;
-          destOptions.push_back(' ');
-          std::string destOpts("  (R)emove (V)iew   ");
-          destOptions.push_back(LEFT_ARROW);
-          // Encode Option Code message as ints for utf8 characters.
-          for (int i = 0; i < destOpts.size(); ++i) {
-            destOptions.push_back(destOpts[i]);
-          }
-          destOptions.push_back(UP_ARROW);
-          destOptions.push_back(DOWN_ARROW);
-          for (int i = 0; i < 5; ++i) {
-            destOptions.push_back(' ');
-          }
+                    std::vector<int> destOptions;
+                    destOptions.push_back(' ');
+                    std::string destOpts("  (R)emove (V)iew   ");
+                    destOptions.push_back(LEFT_ARROW);
+                    // Encode Option Code message as ints for utf8 characters.
+                    for (int i = 0; i < destOpts.size(); ++i) {
+                        destOptions.push_back(destOpts[i]);
+                    }
+                    destOptions.push_back(UP_ARROW);
+                    destOptions.push_back(DOWN_ARROW);
+                    for (int i = 0; i < 5; ++i) {
+                        destOptions.push_back(' ');
+                    }
 
-          ListHighlightPair partyBuildList(
-              charList.getFileList(), charList.getEntityList(),
-              charList.getPathList(), primaryScreen, "Select Party Member",
-              "Party Members", listOptions, destOptions, listPerim, listDims);
-          createPrimary(primaryScreen, options);
-          drawPrimary(primaryScreen);
-          // printf("%s\r\n", options.c_str());
-        } else if (std::tolower(k) == 'l') {
-          // printf("p pressed \r\n");
-          LoadPartyList parties("parties");
-          color_code border;
+                    ListHighlightPair partyBuildList(charList.getFileList(), charList.getEntityList(),
+                                                     charList.getPathList(), primaryScreen, "Select Party Member",
+                                                     "Party Members", listOptions, destOptions, listPerim, listDims);
+                    createPrimary(primaryScreen, options);
+                    drawPrimary(primaryScreen);
+                    // printf("%s\r\n", options.c_str());
+                } else if (std::tolower(k) == 'l') {
+                    // printf("p pressed \r\n");
+                    LoadPartyList parties("parties");
+                    color_code border;
 #ifdef _WIN32
-          border = BLUE;
+                    border = BLUE;
 #else
-          border = DARKPURPLE;
+                    border = DARKPURPLE;
 #endif
-          Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL,
-                              VERT_RAIL, border, BLACK, border, BLACK);
-          listPerim.leftTee = L_TEE_RAIL;
-          listPerim.rightTee = R_TEE_RAIL;
-          DrawRange listDims;
-          listDims.minX = primaryScreen.xyLimits.minX + 1;
-          listDims.minY = primaryScreen.xyLimits.minY + 1;
-          listDims.maxX = tcols() / 3;
-          listDims.maxY = trows() - 3;
-          std::vector<int> listOptions;
-          std::string opts("  (S)elect Party ");
+                    Perimeter listPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL, border, BLACK, border,
+                                        BLACK);
+                    listPerim.leftTee = L_TEE_RAIL;
+                    listPerim.rightTee = R_TEE_RAIL;
+                    DrawRange listDims;
+                    listDims.minX = primaryScreen.xyLimits.minX + 1;
+                    listDims.minY = primaryScreen.xyLimits.minY + 1;
+                    listDims.maxX = tcols() / 3;
+                    listDims.maxY = trows() - 3;
+                    std::vector<int> listOptions;
+                    std::string opts("  (S)elect Party ");
 
-          // Encode Option Code message as ints for utf8 characters.
-          for (int i = 0; i < opts.size(); ++i) {
-            listOptions.push_back(opts[i]);
-          }
-          listOptions.push_back(UP_ARROW);
-          listOptions.push_back(DOWN_ARROW);
-          ListHighlightPartySelect partyList(
-              parties.getFileList(), parties.getParties(),
-              parties.getPathList(), primaryScreen, "Parties", listOptions,
-              listPerim, listDims);
-          if (partyList.partySelected) {
-            partyMode = true;
-            partyVect = partyList.returnParty();
-            partyName = parties.getFileList()[partyList.getPartyIdx()];
-            createPrimary(primaryScreen, options);
-            drawPrimary(primaryScreen);
-            break;
-          }
-          createPrimary(primaryScreen, options);
-          drawPrimary(primaryScreen);
-        } else if (k == KEY_ESCAPE) {
-          quitMain = true;
-          break;
-        } else {
-          createPrimary(primaryScreen, options);
+                    // Encode Option Code message as ints for utf8 characters.
+                    for (int i = 0; i < opts.size(); ++i) {
+                        listOptions.push_back(opts[i]);
+                    }
+                    listOptions.push_back(UP_ARROW);
+                    listOptions.push_back(DOWN_ARROW);
+                    ListHighlightPartySelect partyList(parties.getFileList(), parties.getParties(),
+                                                       parties.getPathList(), primaryScreen, "Parties", listOptions,
+                                                       listPerim, listDims);
+                    if (partyList.partySelected) {
+                        partyMode = true;
+                        partyVect = partyList.returnParty();
+                        partyName = parties.getFileList()[partyList.getPartyIdx()];
+                        createPrimary(primaryScreen, options);
+                        drawPrimary(primaryScreen);
+                        break;
+                    }
+                    createPrimary(primaryScreen, options);
+                    drawPrimary(primaryScreen);
+                } else if (k == KEY_ESCAPE) {
+                    quitMain = true;
+                    break;
+                } else {
+                    createPrimary(primaryScreen, options);
+                }
+            }
         }
-      }
+
+        if (partyMode) {
+            std::cout << "Party Pants Activate!" << std::endl;
+            std::cout << "Party Path: " << partyName << std::endl;
+            for (int i = 0; i < partyVect.size(); ++i) {
+                std::cout << partyVect[i].getName() << std::endl;
+            }
+            sleep(1);
+        }
     }
 
-    if (partyMode) {
-      std::cout << "Party Pants Activate!" << std::endl;
-      std::cout << "Party Path: " << partyName << std::endl;
-      for (int i = 0; i < partyVect.size(); ++i) {
-        std::cout << partyVect[i].getName() << std::endl;
-      }
-      sleep(1);
-    }
-  }
-
-  std::cout << reset_screen;
-  cls();
-  showcursor();
-  tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-  return 0;
+    std::cout << reset_screen;
+    cls();
+    showcursor();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return 0;
 }
 
 /************************************************************************************
     All of these function definitions were moved to ui_util.h
 ************************************************************************************/
 void createBruteForceScreen() {
-  // printf("CreateBF Screen\n");
-  std::vector<std::string> classList;
-  classList.push_back("Select Class to Brute Force:");
-  std::vector<CHAR_CLASS> classEnums = classToForce();
+    // printf("CreateBF Screen\n");
+    std::vector<std::string> classList;
+    classList.push_back("Select Class to Brute Force:");
+    std::vector<CHAR_CLASS> classEnums = classToForce();
 
-  for (int i = 0; i < classEnums.size(); ++i) {
-    classList.push_back(classPairs.at(classEnums.at(i)).cS);
-  }
-
-  ChooseOpt classChoice(classList);
-  std::vector<ScreenVals> screenVect;
-  screenVect.push_back(primaryScreen);
-  screenVect.push_back(classChoice.getScreen());
-  char choice = selOpt(screenVect, classEnums.size());
-  drawSmall(screenVect.back().xyLimits.minX, screenVect.back().xyLimits.maxX,
-            screenVect.back().xyLimits.minY, screenVect.back().xyLimits.maxY,
-            primaryScreen);
-  CHAR_CLASS newClass = classEnums[choice - 48];
-  stats newStats[2];
-  stats dummyStats[2];
-  std::shared_ptr<ScreenVals> tempScreen;
-  do {
-    bool passRoll = false;
-    while (!passRoll) {
-      rollStats(newStats[0], newStats[1]);
-      passRoll = checkClassStats(newClass, newStats[0]);
+    for (int i = 0; i < classEnums.size(); ++i) {
+        classList.push_back(classPairs.at(classEnums.at(i)).cS);
     }
 
-    RollScreen rollScreen(newStats[0], primaryScreen);
-    tempScreen = std::make_shared<ScreenVals>(rollScreen.getScreen());
-  } while (reRollOptions(dummyStats[0], dummyStats[1], *tempScreen));
-  drawSmall(1, tempScreen->xyLimits.maxX, tempScreen->xyLimits.maxY - 1,
-            tempScreen->xyLimits.maxY, primaryScreen);
+    ChooseOpt classChoice(classList);
+    std::vector<ScreenVals> screenVect;
+    screenVect.push_back(primaryScreen);
+    screenVect.push_back(classChoice.getScreen());
+    char choice = selOpt(screenVect, classEnums.size());
+    drawSmall(screenVect.back().xyLimits.minX, screenVect.back().xyLimits.maxX, screenVect.back().xyLimits.minY,
+              screenVect.back().xyLimits.maxY, primaryScreen);
+    CHAR_CLASS newClass = classEnums[choice - 48];
+    stats newStats[2];
+    stats dummyStats[2];
+    std::shared_ptr<ScreenVals> tempScreen;
+    do {
+        bool passRoll = false;
+        while (!passRoll) {
+            rollStats(newStats[0], newStats[1]);
+            passRoll = checkClassStats(newClass, newStats[0]);
+        }
 
-  ScreenVals sexScreen(VECT_MAX, ' ', YELLOW, BLACK);
-  ScreenVals raceScreen(VECT_MAX, ' ', YELLOW, BLACK);
+        RollScreen rollScreen(newStats[0], primaryScreen);
+        tempScreen = rollScreen.getScreen();
+    } while (reRollOptions(dummyStats[0], dummyStats[1], *tempScreen));
+    drawSmall(1, tempScreen->xyLimits.maxX, tempScreen->xyLimits.maxY - 1, tempScreen->xyLimits.maxY, primaryScreen);
 
-  RACE newRace;
-  SEX newSex = selSexScreen(sexScreen, *tempScreen);
-  createRaceScreenBF(newRace, newClass, newStats[0], *tempScreen, sexScreen,
-                     raceScreen);
+    ScreenVals sexScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals raceScreen(VECT_MAX, ' ', YELLOW, BLACK);
 
-  DrawRange alignCorner;
-  alignCorner.minX = raceScreen.xyLimits.maxX + 1;
-  alignCorner.minY = raceScreen.xyLimits.minY;
+    RACE newRace;
+    SEX newSex = selSexScreen(sexScreen, *tempScreen);
+    createRaceScreenBF(newRace, newClass, newStats[0], *tempScreen, sexScreen, raceScreen);
 
-  AlignOptWindow alignWin(newClass);
-  Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA,
-                      BLACK, BLUE, BLACK);
-  alignWin.createWindow(alignCorner, rollPerim);
+    DrawRange alignCorner;
+    alignCorner.minX = raceScreen.xyLimits.maxX + 1;
+    alignCorner.minY = raceScreen.xyLimits.minY;
 
-  std::vector<ScreenVals> screenVec;
-  screenVec.push_back(*tempScreen);
-  screenVec.push_back(sexScreen);
-  screenVec.push_back(raceScreen);
-  screenVec.push_back(alignWin.getScreen());
+    AlignOptWindow alignWin(newClass);
+    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    alignWin.createWindow(alignCorner, rollPerim);
 
-  ALIGNMENT newAlign =
-      alignWin.getAlign(selOpt(screenVec, alignWin.getOptIdx()));
+    std::vector<ScreenVals> screenVec;
+    screenVec.push_back(*tempScreen);
+    screenVec.push_back(sexScreen);
+    screenVec.push_back(raceScreen);
+    screenVec.push_back(alignWin.getScreen());
 
-  TextInput textBox;
-  DrawRange textCorner;
-  textCorner.minX = sexScreen.xyLimits.minX;
-  textCorner.minY = sexScreen.xyLimits.maxY + 1;
+    ALIGNMENT newAlign = alignWin.getAlign(selOpt(screenVec, alignWin.getOptIdx()));
 
-  std::string newName;
-  bool confirmName = false;
+    TextInput textBox;
+    DrawRange textCorner;
+    textCorner.minX = sexScreen.xyLimits.minX;
+    textCorner.minY = sexScreen.xyLimits.maxY + 1;
 
-  do {
-    confirmName = false;
-    // newName.erase(std::remove(newName.begin(), newName.end(), '0'),
-    // newName.end());
-    textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
-    newName = textBox.getAquiredString();
-    if (doesRecordExist(newName, "characters/", ".json")) {
-      WarnMessage nameExists("Name already in use", "Overwrite? (y/n)");
-      confirmName = nameExists.waitForAnswer();
-      drawSmall(nameExists.getScreen().xyLimits.minX,
-                nameExists.getScreen().xyLimits.maxX,
-                nameExists.getScreen().xyLimits.minY,
-                nameExists.getScreen().xyLimits.maxY + 1, primaryScreen);
-      drawSmall(alignWin.getScreen().xyLimits.minX,
-                alignWin.getScreen().xyLimits.maxX,
-                alignWin.getScreen().xyLimits.minY,
-                alignWin.getScreen().xyLimits.maxY + 1, alignWin.getScreen());
-      drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX,
-                raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1,
-                raceScreen);
-      drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX,
-                sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
-                sexScreen);
-      drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX,
-                tempScreen->xyLimits.minY, tempScreen->xyLimits.maxY - 1,
-                *tempScreen);
+    std::string newName;
+    bool confirmName = false;
+
+    do {
+        confirmName = false;
+        // newName.erase(std::remove(newName.begin(), newName.end(), '0'),
+        // newName.end());
+        textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
+        newName = textBox.getAquiredString();
+        if (doesRecordExist(newName, "characters/", ".json")) {
+            WarnMessage nameExists("Name already in use", "Overwrite? (y/n)");
+            confirmName = nameExists.waitForAnswer();
+            drawSmall(nameExists.getScreen().xyLimits.minX, nameExists.getScreen().xyLimits.maxX,
+                      nameExists.getScreen().xyLimits.minY, nameExists.getScreen().xyLimits.maxY + 1, primaryScreen);
+            drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX,
+                      alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, alignWin.getScreen());
+            drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY,
+                      raceScreen.xyLimits.maxY + 1, raceScreen);
+            drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY,
+                      sexScreen.xyLimits.maxY + 1, sexScreen);
+            drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX, tempScreen->xyLimits.minY,
+                      tempScreen->xyLimits.maxY - 1, *tempScreen);
+        }
+        if (confirmName) {
+            textBox.purgeRecieved();
+        }
+    } while (confirmName);
+
+    std::vector<CHAR_CLASS> classVect;
+    classVect.push_back(newClass);
+
+    std::vector<std::string> emptyString;
+    emptyString.push_back("One Thing");
+    std::vector<int> profOptions[2];
+    profOptions[0].push_back(UP_ARROW);
+    profOptions[0].push_back(HORZ_RAIL);
+    profOptions[0].push_back(DOWN_ARROW);
+    std::string msg = "  (S)elect ";
+    for (int i = 0; i < msg.size(); ++i) {
+        profOptions[0].push_back(msg[i]);
     }
-    if (confirmName) {
-      textBox.purgeRecieved();
+
+    for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
+        profOptions[0].push_back(' ');
     }
-  } while (confirmName);
 
-  std::vector<CHAR_CLASS> classVect;
-  classVect.push_back(newClass);
+    profOptions[0].push_back(RIGHT_ARROW);
 
-  std::vector<std::string> emptyString;
-  emptyString.push_back("One Thing");
-  std::vector<int> profOptions[2];
-  profOptions[0].push_back(UP_ARROW);
-  profOptions[0].push_back(HORZ_RAIL);
-  profOptions[0].push_back(DOWN_ARROW);
-  std::string msg = "  (S)elect ";
-  for (int i = 0; i < msg.size(); ++i) {
-    profOptions[0].push_back(msg[i]);
-  }
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(LEFT_ARROW);
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(UP_ARROW);
+    profOptions[1].push_back(HORZ_RAIL);
+    profOptions[1].push_back(DOWN_ARROW);
 
-  for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
-    profOptions[0].push_back(' ');
-  }
+    msg = "    (R)emove";
 
-  profOptions[0].push_back(RIGHT_ARROW);
+    for (int i = 0; i < msg.size(); ++i) {
+        profOptions[1].push_back(msg[i]);
+    }
 
-  profOptions[1].push_back(' ');
-  profOptions[1].push_back(' ');
-  profOptions[1].push_back(LEFT_ARROW);
-  profOptions[1].push_back(' ');
-  profOptions[1].push_back(UP_ARROW);
-  profOptions[1].push_back(HORZ_RAIL);
-  profOptions[1].push_back(DOWN_ARROW);
+    Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
 
-  msg = "    (R)emove";
+    Perimeter profPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL, MAGENTA, MAGENTA, MAGENTA, BLACK);
+    profPerim.leftTee = L_TEE_RAIL;
+    profPerim.rightTee = R_TEE_RAIL;
 
-  for (int i = 0; i < msg.size(); ++i) {
-    profOptions[1].push_back(msg[i]);
-  }
+    ListHighlightProfSelect profScreen(dude, primaryScreen, profOptions, profPerim, textCorner);
+    dude.saveChar();
 
-  Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
+    drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY,
+              textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX,
+              alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY,
+              raceScreen.xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
+              primaryScreen);
+    // usleep(40000);
+    drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX, tempScreen->xyLimits.minY,
+              tempScreen->xyLimits.maxY - 1, primaryScreen);
 
-  Perimeter profPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL,
-                      MAGENTA, MAGENTA, MAGENTA, BLACK);
-  profPerim.leftTee = L_TEE_RAIL;
-  profPerim.rightTee = R_TEE_RAIL;
-
-  ListHighlightProfSelect profScreen(dude, primaryScreen, profOptions,
-                                     profPerim, textCorner);
-  dude.saveChar();
-
-  drawSmall(textBox.getScreen().xyLimits.minX,
-            textBox.getScreen().xyLimits.maxX,
-            textBox.getScreen().xyLimits.minY,
-            textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
-  // usleep(40000);
-  drawSmall(alignWin.getScreen().xyLimits.minX,
-            alignWin.getScreen().xyLimits.maxX,
-            alignWin.getScreen().xyLimits.minY,
-            alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
-  // usleep(40000);
-  drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX,
-            raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1,
-            primaryScreen);
-  // usleep(40000);
-  drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX,
-            sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
-            primaryScreen);
-  // usleep(40000);
-  drawSmall(tempScreen->xyLimits.minX, tempScreen->xyLimits.maxX,
-            tempScreen->xyLimits.minY, tempScreen->xyLimits.maxY - 1,
-            primaryScreen);
-
-  DrawRange infoRange;
-  infoRange.minX = 1;
-  infoRange.minY = 1;
-  PrintInfo showChar(dude, infoRange, rollPerim, primaryScreen, horz_char,
-                     vert_char);
-  screenVec.clear();
+    DrawRange infoRange;
+    infoRange.minX = 1;
+    infoRange.minY = 1;
+    PrintInfo showChar(dude, infoRange, rollPerim, primaryScreen, horz_char, vert_char);
+    screenVec.clear();
 }
 
 std::vector<CHAR_CLASS> classToForce() {
-  std::vector<CHAR_CLASS> retClass = {DRUID,       PALADIN,  RANGER,
-                                      ILLUSIONIST, ASSASSIN, MONK};
-  return retClass;
+    std::vector<CHAR_CLASS> retClass = {DRUID, PALADIN, RANGER, ILLUSIONIST, ASSASSIN, MONK};
+    return retClass;
 }
 
 void createRollScreen() {
-  int prevMax = 0;
-  int prevRow = 0;
-  ScreenVals rollScreen(VECT_MAX, ' ', YELLOW, BLACK);
-  ScreenVals sexScreen(VECT_MAX, ' ', YELLOW, BLACK);
-  ScreenVals raceScreen(VECT_MAX, ' ', YELLOW, BLACK);
-  ScreenVals classScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    int prevMax = 0;
+    int prevRow = 0;
+    ScreenVals rollScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals sexScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals raceScreen(VECT_MAX, ' ', YELLOW, BLACK);
+    ScreenVals classScreen(VECT_MAX, ' ', YELLOW, BLACK);
 
-  stats newStats[2];
-  rollStats(newStats[0], newStats[1]);
-  Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA,
-                      BLACK, BLUE, BLACK);
-  Perimeter profPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL,
-                      MAGENTA, MAGENTA, MAGENTA, BLACK);
-  profPerim.leftTee = L_TEE_RAIL;
-  profPerim.rightTee = R_TEE_RAIL;
+    stats newStats[2];
+    rollStats(newStats[0], newStats[1]);
+    Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    Perimeter profPerim(TL_RAIL, TR_RAIL, BL_RAIL, BR_RAIL, HORZ_RAIL, VERT_RAIL, MAGENTA, MAGENTA, MAGENTA, BLACK);
+    profPerim.leftTee = L_TEE_RAIL;
+    profPerim.rightTee = R_TEE_RAIL;
 
-  std::string choices = "Keep current roll? (y/n).";
-  do {
+    std::string choices = "Keep current roll? (y/n).";
+    do {
+        int maxLen = 0;
+        int addRow = 0;
+
+        char tmp[4];
+        sprintf(tmp, "%3u", newStats[0].strength);
+        std::string strength = "            Strength:";
+        strength += tmp;
+        strength += " Fails - " + strenFails(newStats[0]);
+        sprintf(tmp, "%3u", newStats[0].excStren);
+        std::string exceptStr = "Exceptional Strength:";
+        exceptStr += tmp;
+        exceptStr += " Fighter, Paladin and Ranger only!";
+        sprintf(tmp, "%3u", newStats[0].intelligence);
+        std::string intelligence = "        Intelligence:";
+        intelligence += tmp;
+        intelligence += " Fails - " + intFails(newStats[0]);
+        sprintf(tmp, "%3u", newStats[0].wisdom);
+        std::string wisdom = "              Wisdom:";
+        wisdom += tmp;
+        wisdom += " Fails - " + wisFails(newStats[0]);
+        sprintf(tmp, "%3u", newStats[0].dexterity);
+        std::string dexterity = "           Dexterity:";
+        dexterity += tmp;
+        dexterity += " Fails - " + dexFails(newStats[0]);
+        sprintf(tmp, "%3u", newStats[0].charisma);
+        std::string charisma = "            Charisma:";
+        charisma += tmp;
+        charisma += " Fails - " + charisFails(newStats[0]);
+        sprintf(tmp, "%3u", newStats[0].constitution);
+        std::string constitution = "        Constitution:";
+        constitution += tmp;
+        constitution += " Fails - " + consFails(newStats[0]);
+        std::string stats = "stats";
+
+        std::vector<int> lengths;
+        lengths.push_back(strength.size());
+        lengths.push_back(intelligence.size());
+        lengths.push_back(wisdom.size());
+        lengths.push_back(dexterity.size());
+        lengths.push_back(charisma.size());
+        lengths.push_back(constitution.size());
+        lengths.push_back(exceptStr.size());
+        lengths.push_back(choices.size());
+
+        for (int i = 0; i < lengths.size(); ++i) {
+            if (lengths[i] > maxLen) {
+                maxLen = lengths[i];
+            }
+        }
+
+        if (newStats[0].strength > 17) {
+            addRow = 1;
+        } else {
+            addRow = 0;
+        }
+
+        if (prevMax < maxLen) {
+            prevMax = maxLen;
+        }
+
+        if (prevRow < addRow) {
+            prevRow = addRow;
+        }
+        drawSmall(1, prevMax + 5, 1, 10 + prevRow, primaryScreen);
+
+        rollScreen.xyLimits.minX = 1;
+        rollScreen.xyLimits.maxX = maxLen + 5;
+        rollScreen.xyLimits.minY = 1;
+        rollScreen.xyLimits.maxY = 10 + addRow - 2;
+
+        color_code border;
+#ifdef _WIN32
+        border = RED;
+#else
+        border = DARKRED;
+#endif
+
+        generatePerimeter(rollScreen, rollPerim);
+
+        rollScreen.xyLimits.maxY = 10 + addRow;
+
+        for (std::size_t i = 1; i < 10 + addRow; ++i) {
+            for (std::size_t j = 1; j < maxLen + 6; ++j) {
+                if (i == 2 && j == 3) {
+                    for (std::size_t k = 0; k < strength.size(); ++k) {
+                        rollScreen.charMap[i][j] = strength[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 2 + addRow && j == 3 && addRow) {
+                    for (std::size_t k = 0; k < exceptStr.size(); ++k) {
+                        rollScreen.charMap[i][j] = exceptStr[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 3 + addRow && j == 3) {
+                    for (std::size_t k = 0; k < intelligence.size(); ++k) {
+                        rollScreen.charMap[i][j] = intelligence[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 4 + addRow && j == 3) {
+                    for (std::size_t k = 0; k < wisdom.size(); ++k) {
+                        rollScreen.charMap[i][j] = wisdom[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 5 + addRow && j == 3) {
+                    for (std::size_t k = 0; k < dexterity.size(); ++k) {
+                        rollScreen.charMap[i][j] = dexterity[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 6 + addRow && j == 3) {
+                    for (std::size_t k = 0; k < charisma.size(); ++k) {
+                        rollScreen.charMap[i][j] = charisma[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 7 + addRow && j == 3) {
+                    for (std::size_t k = 0; k < constitution.size(); ++k) {
+                        rollScreen.charMap[i][j] = constitution[k];
+                        rollScreen.colorMap[i][j] = YELLOW;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j--;
+                } else if (i == 9 + addRow && j == 3) {
+                    rollScreen.charMap[i][j - 2] = ' ';
+                    rollScreen.colorMap[i][j - 2] = border;
+                    rollScreen.bGColorMap[i][j - 2] = BLACK;
+                    rollScreen.charMap[i][j - 1] = ' ';
+                    rollScreen.colorMap[i][j - 1] = border;
+                    rollScreen.bGColorMap[i][j - 1] = BLACK;
+                    for (std::size_t k = 0; k < choices.size(); ++k) {
+                        rollScreen.charMap[i][j] = choices[k];
+                        rollScreen.colorMap[i][j] = border;
+                        rollScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    int x = 0;
+                    while (j + x < maxLen + 5) {
+                        rollScreen.charMap[i][j + x] = ' ';
+                        rollScreen.colorMap[i][j + x] = border;
+                        rollScreen.bGColorMap[i][j + x] = BLACK;
+                        ++x;
+                    }
+                    j--;
+                }
+            }
+        }
+        drawSmall(1, rollScreen.xyLimits.maxX, 1, rollScreen.xyLimits.maxY, rollScreen);
+    } while (reRollOptions(newStats[0], newStats[1], rollScreen));
+    drawSmall(1, rollScreen.xyLimits.maxX, rollScreen.xyLimits.maxY - 1, rollScreen.xyLimits.maxY, primaryScreen);
+    RACE newRace;
+    SEX newSex = selSexScreen(sexScreen, rollScreen);
+    createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
+    CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen, sexScreen, raceScreen, classScreen);
+
+    DrawRange alignCorner;
+    alignCorner.minX = classScreen.xyLimits.maxX + 1;
+    alignCorner.minY = classScreen.xyLimits.minY;
+
+    AlignOptWindow alignWin(newClass);
+    alignWin.createWindow(alignCorner, rollPerim);
+
+    std::vector<ScreenVals> screenVec;
+    screenVec.push_back(rollScreen);
+    screenVec.push_back(sexScreen);
+    screenVec.push_back(raceScreen);
+    screenVec.push_back(classScreen);
+    screenVec.push_back(alignWin.getScreen());
+
+    ALIGNMENT newAlign = alignWin.getAlign(selOpt(screenVec, alignWin.getOptIdx()));
+
+    TextInput textBox;
+    DrawRange textCorner;
+    textCorner.minX = sexScreen.xyLimits.minX;
+    textCorner.minY = sexScreen.xyLimits.maxY + 1;
+
+    std::string newName;
+    bool confirmName = false;
+
+    do {
+        confirmName = false;
+        // newName.erase(std::remove(newName.begin(), newName.end(), '0'),
+        // newName.end());
+        textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
+        newName = textBox.getAquiredString();
+        if (doesRecordExist(newName, "characters/", ".json")) {
+            WarnMessage nameExists("Name already in use", "Overwrite? (y/n)");
+            confirmName = nameExists.waitForAnswer();
+            drawSmall(nameExists.getScreen().xyLimits.minX, nameExists.getScreen().xyLimits.maxX,
+                      nameExists.getScreen().xyLimits.minY, nameExists.getScreen().xyLimits.maxY + 1, primaryScreen);
+            drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX,
+                      alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, alignWin.getScreen());
+            drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY,
+                      classScreen.xyLimits.maxY + 1, classScreen);
+            drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY,
+                      raceScreen.xyLimits.maxY + 1, raceScreen);
+            drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY,
+                      sexScreen.xyLimits.maxY + 1, sexScreen);
+            drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY,
+                      rollScreen.xyLimits.maxY - 1, rollScreen);
+        }
+        if (confirmName) {
+            textBox.purgeRecieved();
+        }
+    } while (confirmName);
+
+    std::vector<CHAR_CLASS> classVect;
+    classVect.push_back(newClass);
+
+    Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
+
+    std::vector<std::string> emptyString;
+    emptyString.push_back("One Thing");
+    std::vector<int> profOptions[2];
+    profOptions[0].push_back(UP_ARROW);
+    profOptions[0].push_back(HORZ_RAIL);
+    profOptions[0].push_back(DOWN_ARROW);
+
+    std::string msg = "  (S)elect ";
+    for (int i = 0; i < msg.size(); ++i) {
+        profOptions[0].push_back(msg[i]);
+    }
+
+    for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
+        profOptions[0].push_back(' ');
+    }
+
+    profOptions[0].push_back(RIGHT_ARROW);
+
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(LEFT_ARROW);
+    profOptions[1].push_back(' ');
+    profOptions[1].push_back(UP_ARROW);
+    profOptions[1].push_back(HORZ_RAIL);
+    profOptions[1].push_back(DOWN_ARROW);
+
+    msg = "    (R)emove";
+
+    for (int i = 0; i < msg.size(); ++i) {
+        profOptions[1].push_back(msg[i]);
+    }
+
+    ListHighlightProfSelect profScreen(dude, primaryScreen, profOptions, profPerim, textCorner);
+    // AccessInventory dudesInventory(emptyString, dude, primaryScreen,
+    // "Inventory", emptyOptions, rollPerim, textCorner);
+
+    dude.saveChar();
+
+    drawSmall(textBox.getScreen().xyLimits.minX, textBox.getScreen().xyLimits.maxX, textBox.getScreen().xyLimits.minY,
+              textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(alignWin.getScreen().xyLimits.minX, alignWin.getScreen().xyLimits.maxX,
+              alignWin.getScreen().xyLimits.minY, alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY,
+              classScreen.xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX, raceScreen.xyLimits.minY,
+              raceScreen.xyLimits.maxY + 1, primaryScreen);
+    // usleep(40000);
+    drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
+              primaryScreen);
+    // usleep(40000);
+    drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX, rollScreen.xyLimits.minY,
+              rollScreen.xyLimits.maxY - 1, primaryScreen);
+
+    DrawRange infoRange;
+    infoRange.minX = 1;
+    infoRange.minY = 1;
+    PrintInfo showChar(dude, infoRange, rollPerim, primaryScreen, horz_char, vert_char);
+}
+
+bool createRaceScreen(RACE &newRace, stats &inStats, ScreenVals &inScreen, ScreenVals &inScreen2,
+                      ScreenVals &inScreen3) {
+    // ScreenVals raceScreen(VECT_MAX, ' ', GREEN, BLACK);
+    std::vector<std::string> viable;
+    std::vector<std::string> nonViable;
+
+    viable.push_back("Select Race:");
+    nonViable.push_back("Non-Viable Races:");
+    std::unordered_map<char, RACE> rMap;
+    char idx = '0';
+    int nonV = 0;
+    for (unsigned i = 0; i < racePairs.size(); ++i) {
+        if (raceStatCheck(inStats, racePairs[i].race) /*&&checkRaceStats(racePairs[i].race, inStats)*/) {
+            rMap[idx] = racePairs[i].race;
+            viable.push_back(racePairs[i].raceS + ": " + idx);
+            idx++;
+        } else {
+            nonViable.push_back(racePairs[i].raceS);
+            nonV++;
+        }
+    }
+
     int maxLen = 0;
     int addRow = 0;
+    int totalStrings = viable.size();
 
-    char tmp[4];
-    sprintf(tmp, "%3u", newStats[0].strength);
-    std::string strength = "            Strength:";
-    strength += tmp;
-    strength += " Fails - " + strenFails(newStats[0]);
-    sprintf(tmp, "%3u", newStats[0].excStren);
-    std::string exceptStr = "Exceptional Strength:";
-    exceptStr += tmp;
-    exceptStr += " Fighter, Paladin and Ranger only!";
-    sprintf(tmp, "%3u", newStats[0].intelligence);
-    std::string intelligence = "        Intelligence:";
-    intelligence += tmp;
-    intelligence += " Fails - " + intFails(newStats[0]);
-    sprintf(tmp, "%3u", newStats[0].wisdom);
-    std::string wisdom = "              Wisdom:";
-    wisdom += tmp;
-    wisdom += " Fails - " + wisFails(newStats[0]);
-    sprintf(tmp, "%3u", newStats[0].dexterity);
-    std::string dexterity = "           Dexterity:";
-    dexterity += tmp;
-    dexterity += " Fails - " + dexFails(newStats[0]);
-    sprintf(tmp, "%3u", newStats[0].charisma);
-    std::string charisma = "            Charisma:";
-    charisma += tmp;
-    charisma += " Fails - " + charisFails(newStats[0]);
-    sprintf(tmp, "%3u", newStats[0].constitution);
-    std::string constitution = "        Constitution:";
-    constitution += tmp;
-    constitution += " Fails - " + consFails(newStats[0]);
-    std::string stats = "stats";
-
-    std::vector<int> lengths;
-    lengths.push_back(strength.size());
-    lengths.push_back(intelligence.size());
-    lengths.push_back(wisdom.size());
-    lengths.push_back(dexterity.size());
-    lengths.push_back(charisma.size());
-    lengths.push_back(constitution.size());
-    lengths.push_back(exceptStr.size());
-    lengths.push_back(choices.size());
-
-    for (int i = 0; i < lengths.size(); ++i) {
-      if (lengths[i] > maxLen) {
-        maxLen = lengths[i];
-      }
+    for (int i = 0; i < viable.size(); ++i) {
+        if (maxLen < viable[i].size()) {
+            maxLen = viable[i].size();
+        }
     }
 
-    if (newStats[0].strength > 17) {
-      addRow = 1;
-    } else {
-      addRow = 0;
+    if (nonViable.size() > 1) {
+        for (int i = 0; i < nonViable.size(); ++i) {
+            if (maxLen < nonViable[i].size()) {
+                maxLen = nonViable[i].size();
+            }
+        }
+        totalStrings += nonViable.size();
+        addRow = 1;
     }
 
-    if (prevMax < maxLen) {
-      prevMax = maxLen;
-    }
+    inScreen3.xyLimits.minX = inScreen2.xyLimits.maxX + 1;
+    inScreen3.xyLimits.maxX = inScreen2.xyLimits.maxX + 1 + maxLen + 6;
+    inScreen3.xyLimits.minY = inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    inScreen3.xyLimits.maxY = inScreen.xyLimits.maxY + totalStrings + addRow;
 
-    if (prevRow < addRow) {
-      prevRow = addRow;
-    }
-    drawSmall(1, prevMax + 5, 1, 10 + prevRow, primaryScreen);
-
-    rollScreen.xyLimits.minX = 1;
-    rollScreen.xyLimits.maxX = maxLen + 5;
-    rollScreen.xyLimits.minY = 1;
-    rollScreen.xyLimits.maxY = 10 + addRow - 2;
+    Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(inScreen3, racePerim);
 
     color_code border;
 #ifdef _WIN32
@@ -637,873 +870,547 @@ void createRollScreen() {
     border = DARKRED;
 #endif
 
-    generatePerimeter(rollScreen, rollPerim);
-
-    rollScreen.xyLimits.maxY = 10 + addRow;
-
-    for (std::size_t i = 1; i < 10 + addRow; ++i) {
-      for (std::size_t j = 1; j < maxLen + 6; ++j) {
-        if (i == 2 && j == 3) {
-          for (std::size_t k = 0; k < strength.size(); ++k) {
-            rollScreen.charMap[i][j] = strength[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 2 + addRow && j == 3 && addRow) {
-          for (std::size_t k = 0; k < exceptStr.size(); ++k) {
-            rollScreen.charMap[i][j] = exceptStr[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 3 + addRow && j == 3) {
-          for (std::size_t k = 0; k < intelligence.size(); ++k) {
-            rollScreen.charMap[i][j] = intelligence[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 4 + addRow && j == 3) {
-          for (std::size_t k = 0; k < wisdom.size(); ++k) {
-            rollScreen.charMap[i][j] = wisdom[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 5 + addRow && j == 3) {
-          for (std::size_t k = 0; k < dexterity.size(); ++k) {
-            rollScreen.charMap[i][j] = dexterity[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 6 + addRow && j == 3) {
-          for (std::size_t k = 0; k < charisma.size(); ++k) {
-            rollScreen.charMap[i][j] = charisma[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 7 + addRow && j == 3) {
-          for (std::size_t k = 0; k < constitution.size(); ++k) {
-            rollScreen.charMap[i][j] = constitution[k];
-            rollScreen.colorMap[i][j] = YELLOW;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j--;
-        } else if (i == 9 + addRow && j == 3) {
-          rollScreen.charMap[i][j - 2] = ' ';
-          rollScreen.colorMap[i][j - 2] = border;
-          rollScreen.bGColorMap[i][j - 2] = BLACK;
-          rollScreen.charMap[i][j - 1] = ' ';
-          rollScreen.colorMap[i][j - 1] = border;
-          rollScreen.bGColorMap[i][j - 1] = BLACK;
-          for (std::size_t k = 0; k < choices.size(); ++k) {
-            rollScreen.charMap[i][j] = choices[k];
-            rollScreen.colorMap[i][j] = border;
-            rollScreen.bGColorMap[i][j++] = BLACK;
-          }
-          int x = 0;
-          while (j + x < maxLen + 5) {
-            rollScreen.charMap[i][j + x] = ' ';
-            rollScreen.colorMap[i][j + x] = border;
-            rollScreen.bGColorMap[i][j + x] = BLACK;
-            ++x;
-          }
-          j--;
-        }
-      }
-    }
-    drawSmall(1, rollScreen.xyLimits.maxX, 1, rollScreen.xyLimits.maxY,
-              rollScreen);
-  } while (reRollOptions(newStats[0], newStats[1], rollScreen));
-  drawSmall(1, rollScreen.xyLimits.maxX, rollScreen.xyLimits.maxY - 1,
-            rollScreen.xyLimits.maxY, primaryScreen);
-  RACE newRace;
-  SEX newSex = selSexScreen(sexScreen, rollScreen);
-  createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
-  CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen,
-                                       sexScreen, raceScreen, classScreen);
-
-  DrawRange alignCorner;
-  alignCorner.minX = classScreen.xyLimits.maxX + 1;
-  alignCorner.minY = classScreen.xyLimits.minY;
-
-  AlignOptWindow alignWin(newClass);
-  alignWin.createWindow(alignCorner, rollPerim);
-
-  std::vector<ScreenVals> screenVec;
-  screenVec.push_back(rollScreen);
-  screenVec.push_back(sexScreen);
-  screenVec.push_back(raceScreen);
-  screenVec.push_back(classScreen);
-  screenVec.push_back(alignWin.getScreen());
-
-  ALIGNMENT newAlign =
-      alignWin.getAlign(selOpt(screenVec, alignWin.getOptIdx()));
-
-  TextInput textBox;
-  DrawRange textCorner;
-  textCorner.minX = sexScreen.xyLimits.minX;
-  textCorner.minY = sexScreen.xyLimits.maxY + 1;
-
-  std::string newName;
-  bool confirmName = false;
-
-  do {
-    confirmName = false;
-    // newName.erase(std::remove(newName.begin(), newName.end(), '0'),
-    // newName.end());
-    textBox.createTextInput(textCorner, rollPerim, "Enter Name:");
-    newName = textBox.getAquiredString();
-    if (doesRecordExist(newName, "characters/", ".json")) {
-      WarnMessage nameExists("Name already in use", "Overwrite? (y/n)");
-      confirmName = nameExists.waitForAnswer();
-      drawSmall(nameExists.getScreen().xyLimits.minX,
-                nameExists.getScreen().xyLimits.maxX,
-                nameExists.getScreen().xyLimits.minY,
-                nameExists.getScreen().xyLimits.maxY + 1, primaryScreen);
-      drawSmall(alignWin.getScreen().xyLimits.minX,
-                alignWin.getScreen().xyLimits.maxX,
-                alignWin.getScreen().xyLimits.minY,
-                alignWin.getScreen().xyLimits.maxY + 1, alignWin.getScreen());
-      drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX,
-                classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1,
-                classScreen);
-      drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX,
-                raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1,
-                raceScreen);
-      drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX,
-                sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
-                sexScreen);
-      drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX,
-                rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1,
-                rollScreen);
-    }
-    if (confirmName) {
-      textBox.purgeRecieved();
-    }
-  } while (confirmName);
-
-  std::vector<CHAR_CLASS> classVect;
-  classVect.push_back(newClass);
-
-  Entity dude(newStats, newName, newSex, newRace, classVect, newAlign);
-
-  std::vector<std::string> emptyString;
-  emptyString.push_back("One Thing");
-  std::vector<int> profOptions[2];
-  profOptions[0].push_back(UP_ARROW);
-  profOptions[0].push_back(HORZ_RAIL);
-  profOptions[0].push_back(DOWN_ARROW);
-
-  std::string msg = "  (S)elect ";
-  for (int i = 0; i < msg.size(); ++i) {
-    profOptions[0].push_back(msg[i]);
-  }
-
-  for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
-    profOptions[0].push_back(' ');
-  }
-
-  profOptions[0].push_back(RIGHT_ARROW);
-
-  profOptions[1].push_back(' ');
-  profOptions[1].push_back(' ');
-  profOptions[1].push_back(LEFT_ARROW);
-  profOptions[1].push_back(' ');
-  profOptions[1].push_back(UP_ARROW);
-  profOptions[1].push_back(HORZ_RAIL);
-  profOptions[1].push_back(DOWN_ARROW);
-
-  msg = "    (R)emove";
-
-  for (int i = 0; i < msg.size(); ++i) {
-    profOptions[1].push_back(msg[i]);
-  }
-
-  ListHighlightProfSelect profScreen(dude, primaryScreen, profOptions,
-                                     profPerim, textCorner);
-  // AccessInventory dudesInventory(emptyString, dude, primaryScreen,
-  // "Inventory", emptyOptions, rollPerim, textCorner);
-
-  dude.saveChar();
-
-  drawSmall(textBox.getScreen().xyLimits.minX,
-            textBox.getScreen().xyLimits.maxX,
-            textBox.getScreen().xyLimits.minY,
-            textBox.getScreen().xyLimits.maxY + 1, primaryScreen);
-  // usleep(40000);
-  drawSmall(alignWin.getScreen().xyLimits.minX,
-            alignWin.getScreen().xyLimits.maxX,
-            alignWin.getScreen().xyLimits.minY,
-            alignWin.getScreen().xyLimits.maxY + 1, primaryScreen);
-  // usleep(40000);
-  drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX,
-            classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1,
-            primaryScreen);
-  // usleep(40000);
-  drawSmall(raceScreen.xyLimits.minX, raceScreen.xyLimits.maxX,
-            raceScreen.xyLimits.minY, raceScreen.xyLimits.maxY + 1,
-            primaryScreen);
-  // usleep(40000);
-  drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX,
-            sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
-            primaryScreen);
-  // usleep(40000);
-  drawSmall(rollScreen.xyLimits.minX, rollScreen.xyLimits.maxX,
-            rollScreen.xyLimits.minY, rollScreen.xyLimits.maxY - 1,
-            primaryScreen);
-
-  DrawRange infoRange;
-  infoRange.minX = 1;
-  infoRange.minY = 1;
-  PrintInfo showChar(dude, infoRange, rollPerim, primaryScreen, horz_char,
-                     vert_char);
-}
-
-bool createRaceScreen(RACE &newRace, stats &inStats, ScreenVals &inScreen,
-                      ScreenVals &inScreen2, ScreenVals &inScreen3) {
-  // ScreenVals raceScreen(VECT_MAX, ' ', GREEN, BLACK);
-  std::vector<std::string> viable;
-  std::vector<std::string> nonViable;
-
-  viable.push_back("Select Race:");
-  nonViable.push_back("Non-Viable Races:");
-  std::unordered_map<char, RACE> rMap;
-  char idx = '0';
-  int nonV = 0;
-  for (unsigned i = 0; i < racePairs.size(); ++i) {
-    if (raceStatCheck(
-            inStats,
-            racePairs[i]
-                .race) /*&&checkRaceStats(racePairs[i].race, inStats)*/) {
-      rMap[idx] = racePairs[i].race;
-      viable.push_back(racePairs[i].raceS + ": " + idx);
-      idx++;
-    } else {
-      nonViable.push_back(racePairs[i].raceS);
-      nonV++;
-    }
-  }
-
-  int maxLen = 0;
-  int addRow = 0;
-  int totalStrings = viable.size();
-
-  for (int i = 0; i < viable.size(); ++i) {
-    if (maxLen < viable[i].size()) {
-      maxLen = viable[i].size();
-    }
-  }
-
-  if (nonViable.size() > 1) {
-    for (int i = 0; i < nonViable.size(); ++i) {
-      if (maxLen < nonViable[i].size()) {
-        maxLen = nonViable[i].size();
-      }
-    }
-    totalStrings += nonViable.size();
-    addRow = 1;
-  }
-
-  inScreen3.xyLimits.minX = inScreen2.xyLimits.maxX + 1;
-  inScreen3.xyLimits.maxX = inScreen2.xyLimits.maxX + 1 + maxLen + 6;
-  inScreen3.xyLimits.minY =
-      inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
-  inScreen3.xyLimits.maxY = inScreen.xyLimits.maxY + totalStrings + addRow;
-
-  Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA,
-                      BLACK, BLUE, BLACK);
-  generatePerimeter(inScreen3, racePerim);
-
-  color_code border;
-#ifdef _WIN32
-  border = RED;
-#else
-  border = DARKRED;
-#endif
-
-  for (std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1;
-       ++i) {
-    for (std::size_t j = inScreen3.xyLimits.minX;
-         j < inScreen3.xyLimits.maxX + 1; ++j) {
-      if ((i == inScreen3.xyLimits.minY + 1) &&
-          j == inScreen3.xyLimits.minX + 3) {
-        if (nonViable.size() > 1) {
-          for (int m = 0; m < nonViable.size(); ++m) {
-            for (int n = 0; n < nonViable[m].size(); ++n) {
-              inScreen3.charMap[i][j] = nonViable[m][n];
-              inScreen3.colorMap[i][j] = border;
-              inScreen3.bGColorMap[i][j++] = BLACK;
+    for (std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i) {
+        for (std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1; ++j) {
+            if ((i == inScreen3.xyLimits.minY + 1) && j == inScreen3.xyLimits.minX + 3) {
+                if (nonViable.size() > 1) {
+                    for (int m = 0; m < nonViable.size(); ++m) {
+                        for (int n = 0; n < nonViable[m].size(); ++n) {
+                            inScreen3.charMap[i][j] = nonViable[m][n];
+                            inScreen3.colorMap[i][j] = border;
+                            inScreen3.bGColorMap[i][j++] = BLACK;
+                        }
+                        j = inScreen3.xyLimits.minX + 4;
+                        i++;
+                    }
+                    i++;
+                    j = inScreen3.xyLimits.minX + 3;
+                }
+                for (int m = 0; m < viable.size(); ++m) {
+                    for (int n = 0; n < viable[m].size(); ++n) {
+                        inScreen3.charMap[i][j] = viable[m][n];
+                        inScreen3.colorMap[i][j] = YELLOW;
+                        inScreen3.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = inScreen3.xyLimits.minX + 4;
+                    i++;
+                }
             }
-            j = inScreen3.xyLimits.minX + 4;
-            i++;
-          }
-          i++;
-          j = inScreen3.xyLimits.minX + 3;
         }
-        for (int m = 0; m < viable.size(); ++m) {
-          for (int n = 0; n < viable[m].size(); ++n) {
-            inScreen3.charMap[i][j] = viable[m][n];
-            inScreen3.colorMap[i][j] = YELLOW;
-            inScreen3.bGColorMap[i][j++] = BLACK;
-          }
-          j = inScreen3.xyLimits.minX + 4;
-          i++;
-        }
-      }
     }
-  }
 
-  drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX,
-            inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
+    drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1,
+              inScreen3);
 
-  char raceSelection = selRace(idx, inScreen, inScreen2, inScreen3);
-  if (raceSelection < 0) {
-    printf("Something Unpossible happened!\r\n");
-    return false;
-  } else {
-    newRace = rMap[raceSelection];
-  }
-  return true;
+    char raceSelection = selRace(idx, inScreen, inScreen2, inScreen3);
+    if (raceSelection < 0) {
+        printf("Something Unpossible happened!\r\n");
+        return false;
+    } else {
+        newRace = rMap[raceSelection];
+    }
+    return true;
 }
 
-bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats &inStats,
-                        ScreenVals &inScreen, ScreenVals &inScreen2,
+bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats &inStats, ScreenVals &inScreen, ScreenVals &inScreen2,
                         ScreenVals &inScreen3) {
-  // ScreenVals raceScreen(VECT_MAX, ' ', GREEN, BLACK);
-  std::vector<std::string> viable;
-  std::vector<std::string> nonViable;
+    // ScreenVals raceScreen(VECT_MAX, ' ', GREEN, BLACK);
+    std::vector<std::string> viable;
+    std::vector<std::string> nonViable;
 
-  viable.push_back("Select Race:");
-  nonViable.push_back("Non-Viable Races:");
-  std::unordered_map<char, RACE> rMap;
-  char idx = '0';
-  int nonV = 0;
-  for (unsigned i = 0; i < racePairs.size(); ++i) {
-    if (raceStatCheck(inStats, racePairs[i].race) &&
-        classRaceCheck(inClass, racePairs[i].race)) {
-      rMap[idx] = racePairs[i].race;
-      viable.push_back(racePairs[i].raceS + ": " + idx);
-      idx++;
-    } else {
-      nonViable.push_back(racePairs[i].raceS);
-      nonV++;
+    viable.push_back("Select Race:");
+    nonViable.push_back("Non-Viable Races:");
+    std::unordered_map<char, RACE> rMap;
+    char idx = '0';
+    int nonV = 0;
+    for (unsigned i = 0; i < racePairs.size(); ++i) {
+        if (raceStatCheck(inStats, racePairs[i].race) && classRaceCheck(inClass, racePairs[i].race)) {
+            rMap[idx] = racePairs[i].race;
+            viable.push_back(racePairs[i].raceS + ": " + idx);
+            idx++;
+        } else {
+            nonViable.push_back(racePairs[i].raceS);
+            nonV++;
+        }
     }
-  }
 
-  int maxLen = 0;
-  int addRow = 0;
-  int totalStrings = viable.size();
+    int maxLen = 0;
+    int addRow = 0;
+    int totalStrings = viable.size();
 
-  for (int i = 0; i < viable.size(); ++i) {
-    if (maxLen < viable[i].size()) {
-      maxLen = viable[i].size();
+    for (int i = 0; i < viable.size(); ++i) {
+        if (maxLen < viable[i].size()) {
+            maxLen = viable[i].size();
+        }
     }
-  }
 
-  if (nonViable.size() > 1) {
-    for (int i = 0; i < nonViable.size(); ++i) {
-      if (maxLen < nonViable[i].size()) {
-        maxLen = nonViable[i].size();
-      }
+    if (nonViable.size() > 1) {
+        for (int i = 0; i < nonViable.size(); ++i) {
+            if (maxLen < nonViable[i].size()) {
+                maxLen = nonViable[i].size();
+            }
+        }
+        totalStrings += nonViable.size();
+        addRow = 1;
     }
-    totalStrings += nonViable.size();
-    addRow = 1;
-  }
 
-  inScreen3.xyLimits.minX = inScreen2.xyLimits.maxX + 1;
-  inScreen3.xyLimits.maxX = inScreen2.xyLimits.maxX + 1 + maxLen + 6;
-  inScreen3.xyLimits.minY =
-      inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
-  inScreen3.xyLimits.maxY = inScreen.xyLimits.maxY + totalStrings + addRow;
+    inScreen3.xyLimits.minX = inScreen2.xyLimits.maxX + 1;
+    inScreen3.xyLimits.maxX = inScreen2.xyLimits.maxX + 1 + maxLen + 6;
+    inScreen3.xyLimits.minY = inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    inScreen3.xyLimits.maxY = inScreen.xyLimits.maxY + totalStrings + addRow;
 
-  Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA,
-                      BLACK, BLUE, BLACK);
-  generatePerimeter(inScreen3, racePerim);
+    Perimeter racePerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(inScreen3, racePerim);
 
-  color_code border;
+    color_code border;
 #ifdef _WIN32
-  border = RED;
+    border = RED;
 #else
-  border = DARKRED;
+    border = DARKRED;
 #endif
 
-  for (std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1;
-       ++i) {
-    for (std::size_t j = inScreen3.xyLimits.minX;
-         j < inScreen3.xyLimits.maxX + 1; ++j) {
-      if ((i == inScreen3.xyLimits.minY + 1) &&
-          j == inScreen3.xyLimits.minX + 3) {
-        if (nonViable.size() > 1) {
-          for (int m = 0; m < nonViable.size(); ++m) {
-            for (int n = 0; n < nonViable[m].size(); ++n) {
-              inScreen3.charMap[i][j] = nonViable[m][n];
-              inScreen3.colorMap[i][j] = border;
-              inScreen3.bGColorMap[i][j++] = BLACK;
+    for (std::size_t i = inScreen3.xyLimits.minY; i < inScreen3.xyLimits.maxY + 1; ++i) {
+        for (std::size_t j = inScreen3.xyLimits.minX; j < inScreen3.xyLimits.maxX + 1; ++j) {
+            if ((i == inScreen3.xyLimits.minY + 1) && j == inScreen3.xyLimits.minX + 3) {
+                if (nonViable.size() > 1) {
+                    for (int m = 0; m < nonViable.size(); ++m) {
+                        for (int n = 0; n < nonViable[m].size(); ++n) {
+                            inScreen3.charMap[i][j] = nonViable[m][n];
+                            inScreen3.colorMap[i][j] = border;
+                            inScreen3.bGColorMap[i][j++] = BLACK;
+                        }
+                        j = inScreen3.xyLimits.minX + 4;
+                        i++;
+                    }
+                    i++;
+                    j = inScreen3.xyLimits.minX + 3;
+                }
+                for (int m = 0; m < viable.size(); ++m) {
+                    for (int n = 0; n < viable[m].size(); ++n) {
+                        inScreen3.charMap[i][j] = viable[m][n];
+                        inScreen3.colorMap[i][j] = YELLOW;
+                        inScreen3.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = inScreen3.xyLimits.minX + 4;
+                    i++;
+                }
             }
-            j = inScreen3.xyLimits.minX + 4;
-            i++;
-          }
-          i++;
-          j = inScreen3.xyLimits.minX + 3;
         }
-        for (int m = 0; m < viable.size(); ++m) {
-          for (int n = 0; n < viable[m].size(); ++n) {
-            inScreen3.charMap[i][j] = viable[m][n];
-            inScreen3.colorMap[i][j] = YELLOW;
-            inScreen3.bGColorMap[i][j++] = BLACK;
-          }
-          j = inScreen3.xyLimits.minX + 4;
-          i++;
-        }
-      }
     }
-  }
 
-  drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX,
-            inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1, inScreen3);
+    drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1,
+              inScreen3);
 
-  char raceSelection = selRace(idx, inScreen, inScreen2, inScreen3);
-  if (raceSelection < 0) {
-    printf("Something Unpossible happened!\r\n");
-    return false;
-  } else {
-    newRace = rMap[raceSelection];
-  }
-  return true;
+    char raceSelection = selRace(idx, inScreen, inScreen2, inScreen3);
+    if (raceSelection < 0) {
+        printf("Something Unpossible happened!\r\n");
+        return false;
+    } else {
+        newRace = rMap[raceSelection];
+    }
+    return true;
 }
 
 SEX selSexScreen(ScreenVals &sexScreen, ScreenVals &inScreen) {
-  std::vector<std::string> sexList;
-  sexList.push_back("Select Sex:");
-  sexList.push_back("Futa: 0");
-  sexList.push_back("Intersex*: 1");
-  sexList.push_back("Female**: 2");
-  sexList.push_back("Male: 3");
-  sexList.push_back("");
-  sexList.push_back("*Intersex");
-  sexList.push_back("const -1.");
-  sexList.push_back("charis +1.");
-  sexList.push_back("");
-  sexList.push_back("**Females");
-  sexList.push_back("have stren.");
-  sexList.push_back("caps.");
+    std::vector<std::string> sexList;
+    sexList.push_back("Select Sex:");
+    sexList.push_back("Futa: 0");
+    sexList.push_back("Intersex*: 1");
+    sexList.push_back("Female**: 2");
+    sexList.push_back("Male: 3");
+    sexList.push_back("");
+    sexList.push_back("*Intersex");
+    sexList.push_back("const -1.");
+    sexList.push_back("charis +1.");
+    sexList.push_back("");
+    sexList.push_back("**Females");
+    sexList.push_back("have stren.");
+    sexList.push_back("caps.");
 
-  int maxLen = 0;
+    int maxLen = 0;
 
-  for (int i = 0; i < sexList.size(); ++i) {
-    if (maxLen < sexList[i].size()) {
-      maxLen = sexList[i].size();
-    }
-  }
-
-  sexScreen.xyLimits.minX = inScreen.xyLimits.minX;
-  sexScreen.xyLimits.maxX = maxLen + 6;
-  sexScreen.xyLimits.minY =
-      inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
-  sexScreen.xyLimits.maxY = inScreen.xyLimits.maxY + sexList.size();
-
-  Perimeter sexPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA,
-                     BLACK, BLUE, BLACK);
-  generatePerimeter(sexScreen, sexPerim);
-
-  for (std::size_t i = sexScreen.xyLimits.minY; i < sexScreen.xyLimits.maxY + 1;
-       ++i) {
-    for (std::size_t j = 1; j < maxLen + 7; ++j) {
-      if ((i == sexScreen.xyLimits.minY + 1) && j == 4) {
-        for (int m = 0; m < sexList.size(); ++m) {
-          for (int n = 0; n < sexList[m].size(); ++n) {
-            sexScreen.charMap[i][j] = sexList[m][n];
-            sexScreen.colorMap[i][j] = YELLOW;
-            sexScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j = 5;
-          i++;
+    for (int i = 0; i < sexList.size(); ++i) {
+        if (maxLen < sexList[i].size()) {
+            maxLen = sexList[i].size();
         }
-      }
-    }
-  }
-  drawSmall(1, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY,
-            sexScreen.xyLimits.maxY + 1, sexScreen);
-  char choice;
-  while (true) {
-    std::size_t new_horz = tcols();
-    std::size_t new_vert = trows();
-    if (horz_char != new_horz || vert_char != new_vert) {
-      horz_char = new_horz;
-      vert_char = new_vert;
-      std::vector<std::string> options;
-      createPrimary(primaryScreen, options);
-      drawPrimary(primaryScreen);
-      drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX,
-                inScreen.xyLimits.minY, inScreen.xyLimits.maxY - 1, inScreen);
-      drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX,
-                sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1,
-                sexScreen);
     }
 
-    if (kbhit()) {
-      char k = getkey();
-      if (k >= '0' && k < '4') {
-        switch (k) {
-        case '0':
-          return FUTA;
-        case '1':
-          return INTERSEX;
-        case '2':
-          return FEMALE;
-        case '3':
-          return MALE;
+    sexScreen.xyLimits.minX = inScreen.xyLimits.minX;
+    sexScreen.xyLimits.maxX = maxLen + 6;
+    sexScreen.xyLimits.minY = inScreen.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    sexScreen.xyLimits.maxY = inScreen.xyLimits.maxY + sexList.size();
+
+    Perimeter sexPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(sexScreen, sexPerim);
+
+    for (std::size_t i = sexScreen.xyLimits.minY; i < sexScreen.xyLimits.maxY + 1; ++i) {
+        for (std::size_t j = 1; j < maxLen + 7; ++j) {
+            if ((i == sexScreen.xyLimits.minY + 1) && j == 4) {
+                for (int m = 0; m < sexList.size(); ++m) {
+                    for (int n = 0; n < sexList[m].size(); ++n) {
+                        sexScreen.charMap[i][j] = sexList[m][n];
+                        sexScreen.colorMap[i][j] = YELLOW;
+                        sexScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = 5;
+                    i++;
+                }
+            }
         }
-      }
     }
-  }
-  return FUTA;
+    drawSmall(1, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY, sexScreen.xyLimits.maxY + 1, sexScreen);
+    char choice;
+    while (true) {
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if (horz_char != new_horz || vert_char != new_vert) {
+            horz_char = new_horz;
+            vert_char = new_vert;
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
+            drawPrimary(primaryScreen);
+            drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY,
+                      inScreen.xyLimits.maxY - 1, inScreen);
+            drawSmall(sexScreen.xyLimits.minX, sexScreen.xyLimits.maxX, sexScreen.xyLimits.minY,
+                      sexScreen.xyLimits.maxY + 1, sexScreen);
+        }
+
+        if (kbhit()) {
+            char k = getkey();
+            if (k >= '0' && k < '4') {
+                switch (k) {
+                case '0':
+                    return FUTA;
+                case '1':
+                    return INTERSEX;
+                case '2':
+                    return FEMALE;
+                case '3':
+                    return MALE;
+                }
+            }
+        }
+    }
+    return FUTA;
 }
 
 bool reRollOptions(stats &stats1, stats &stats2, ScreenVals &inScreen) {
-  // std::cout << std::endl << "Would you like to keep stats? y/n: ";
-  char choice;
-  while (true) {
-    std::size_t new_horz = tcols();
-    std::size_t new_vert = trows();
-    if (horz_char != new_horz || vert_char != new_vert) {
-      horz_char = new_horz;
-      vert_char = new_vert;
-      std::vector<std::string> options;
-      createPrimary(primaryScreen, options);
-      drawPrimary(primaryScreen);
-      drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX,
-                inScreen.xyLimits.minY, inScreen.xyLimits.maxY, inScreen);
-    }
+    // std::cout << std::endl << "Would you like to keep stats? y/n: ";
+    char choice;
+    while (true) {
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if (horz_char != new_horz || vert_char != new_vert) {
+            horz_char = new_horz;
+            vert_char = new_vert;
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
+            drawPrimary(primaryScreen);
+            drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY, inScreen.xyLimits.maxY,
+                      inScreen);
+        }
 
-    if (kbhit()) {
-      char k = getkey();
-      if (std::tolower(k) == 'n') {
-        rollStats(stats1, stats2);
-        drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX,
-                  inScreen.xyLimits.minY, inScreen.xyLimits.maxY,
-                  primaryScreen);
-        return true;
-      } else if (std::tolower(k) == 'y') {
-        return false;
-      }
-      // else if (k == KEY_ESCAPE) {
-      //     drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX,
-      //     inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
-      //     return false;
-      // }
+        if (kbhit()) {
+            char k = getkey();
+            if (std::tolower(k) == 'n') {
+                rollStats(stats1, stats2);
+                drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX, inScreen.xyLimits.minY,
+                          inScreen.xyLimits.maxY, primaryScreen);
+                return true;
+            } else if (std::tolower(k) == 'y') {
+                return false;
+            }
+            // else if (k == KEY_ESCAPE) {
+            //     drawSmall(inScreen.xyLimits.minX, inScreen.xyLimits.maxX,
+            //     inScreen.xyLimits.minY, inScreen.xyLimits.maxY, primaryScreen);
+            //     return false;
+            // }
+        }
     }
-  }
-  return false;
+    return false;
 }
 
-char selRace(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2,
-             ScreenVals &inScreen3) {
-  // std::cout << std::endl << "Would you like to keep stats? y/n: ";
-  char choice;
-  while (true) {
-    std::size_t new_horz = tcols();
-    std::size_t new_vert = trows();
-    if (horz_char != new_horz || vert_char != new_vert) {
-      horz_char = new_horz;
-      vert_char = new_vert;
-      std::vector<std::string> options;
-      createPrimary(primaryScreen, options);
-      drawPrimary(primaryScreen);
-      drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX,
-                inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1,
-                inScreen1);
-      drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX,
-                inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1,
-                inScreen2);
-      drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX,
-                inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1,
-                inScreen3);
-    }
+char selRace(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3) {
+    // std::cout << std::endl << "Would you like to keep stats? y/n: ";
+    char choice;
+    while (true) {
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if (horz_char != new_horz || vert_char != new_vert) {
+            horz_char = new_horz;
+            vert_char = new_vert;
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
+            drawPrimary(primaryScreen);
+            drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY,
+                      inScreen1.xyLimits.maxY - 1, inScreen1);
+            drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY,
+                      inScreen2.xyLimits.maxY + 1, inScreen2);
+            drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY,
+                      inScreen3.xyLimits.maxY + 1, inScreen3);
+        }
 
-    if (kbhit()) {
-      char k = getkey();
-      if (k >= '0' && k < maxIdx) {
-        return k;
-      }
+        if (kbhit()) {
+            char k = getkey();
+            if (k >= '0' && k < maxIdx) {
+                return k;
+            }
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
-CHAR_CLASS selClassScreen(stats &inStats, RACE inRace, ScreenVals &inScreen1,
-                          ScreenVals &inScreen2, ScreenVals &inScreen3,
-                          ScreenVals &classScreen) {
-  std::vector<std::string> classList;
-  classList.push_back("Select Class:");
-  std::vector<std::string> nonViable;
-  nonViable.push_back("Non-Viable Classes: ");
-  std::unordered_map<char, CHAR_CLASS> cList;
-  char idx = '0';
-  int nonV = 0;
-  stats tempStats =
-      checkRaceStats(inRace, inStats); // Fix that race stat mods aren't taken
-                                       // into class consideration;
-  for (unsigned i = 0; i < classPairs.size(); ++i) {
-    if (classRaceCheck(classPairs[i].cClass, inRace) &&
-        classStatCheck(classPairs[i].cClass, tempStats)) {
-      cList[idx] = classPairs[i].cClass;
-      classList.push_back(classPairs[i].cS + ": " + idx);
-      idx++;
-    } else {
-      nonViable.push_back(classPairs[i].cS);
-      nonV++;
+CHAR_CLASS selClassScreen(stats &inStats, RACE inRace, ScreenVals &inScreen1, ScreenVals &inScreen2,
+                          ScreenVals &inScreen3, ScreenVals &classScreen) {
+    std::vector<std::string> classList;
+    classList.push_back("Select Class:");
+    std::vector<std::string> nonViable;
+    nonViable.push_back("Non-Viable Classes: ");
+    std::unordered_map<char, CHAR_CLASS> cList;
+    char idx = '0';
+    int nonV = 0;
+    stats tempStats = checkRaceStats(inRace, inStats); // Fix that race stat mods aren't taken
+                                                       // into class consideration;
+    for (unsigned i = 0; i < classPairs.size(); ++i) {
+        if (classRaceCheck(classPairs[i].cClass, inRace) && classStatCheck(classPairs[i].cClass, tempStats)) {
+            cList[idx] = classPairs[i].cClass;
+            classList.push_back(classPairs[i].cS + ": " + idx);
+            idx++;
+        } else {
+            nonViable.push_back(classPairs[i].cS);
+            nonV++;
+        }
     }
-  }
 
-  int maxLen = 0;
-  int addRow = 0;
-  int totalStrings = classList.size();
+    int maxLen = 0;
+    int addRow = 0;
+    int totalStrings = classList.size();
 
-  for (int i = 0; i < classList.size(); ++i) {
-    if (maxLen < classList[i].size()) {
-      maxLen = classList[i].size();
+    for (int i = 0; i < classList.size(); ++i) {
+        if (maxLen < classList[i].size()) {
+            maxLen = classList[i].size();
+        }
     }
-  }
 
-  if (nonViable.size() > 1) {
-    for (int i = 0; i < nonViable.size(); ++i) {
-      if (maxLen < nonViable[i].size()) {
-        maxLen = nonViable[i].size();
-      }
+    if (nonViable.size() > 1) {
+        for (int i = 0; i < nonViable.size(); ++i) {
+            if (maxLen < nonViable[i].size()) {
+                maxLen = nonViable[i].size();
+            }
+        }
+        totalStrings += nonViable.size();
+        addRow = 1;
     }
-    totalStrings += nonViable.size();
-    addRow = 1;
-  }
 
-  classScreen.xyLimits.minX = inScreen3.xyLimits.maxX + 1;
-  classScreen.xyLimits.maxX = inScreen3.xyLimits.maxX + 1 + maxLen + 6;
-  classScreen.xyLimits.minY =
-      inScreen1.xyLimits.maxY - 1; // - 1 because of the previous prompt
-  classScreen.xyLimits.maxY = inScreen1.xyLimits.maxY + totalStrings + addRow;
+    classScreen.xyLimits.minX = inScreen3.xyLimits.maxX + 1;
+    classScreen.xyLimits.maxX = inScreen3.xyLimits.maxX + 1 + maxLen + 6;
+    classScreen.xyLimits.minY = inScreen1.xyLimits.maxY - 1; // - 1 because of the previous prompt
+    classScreen.xyLimits.maxY = inScreen1.xyLimits.maxY + totalStrings + addRow;
 
-  Perimeter classPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA,
-                       BLACK, BLUE, BLACK);
-  generatePerimeter(classScreen, classPerim);
-  drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX,
-            classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1,
-            classScreen);
+    Perimeter classPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
+    generatePerimeter(classScreen, classPerim);
+    drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY,
+              classScreen.xyLimits.maxY + 1, classScreen);
 
-  color_code border;
+    color_code border;
 #ifdef _WIN32
-  border = RED;
+    border = RED;
 #else
-  border = DARKRED;
+    border = DARKRED;
 #endif
 
-  for (std::size_t i = classScreen.xyLimits.minY;
-       i < classScreen.xyLimits.maxY + 1; ++i) {
-    for (std::size_t j = classScreen.xyLimits.minX;
-         j < classScreen.xyLimits.maxX + 1; ++j) {
-      if ((i == classScreen.xyLimits.minY + 1) &&
-          j == classScreen.xyLimits.minX + 3) {
-        if (nonViable.size() > 1) {
-          for (int m = 0; m < nonViable.size(); ++m) {
-            for (int n = 0; n < nonViable[m].size(); ++n) {
-              classScreen.charMap[i][j] = nonViable[m][n];
-              classScreen.colorMap[i][j] = border;
-              classScreen.bGColorMap[i][j++] = BLACK;
+    for (std::size_t i = classScreen.xyLimits.minY; i < classScreen.xyLimits.maxY + 1; ++i) {
+        for (std::size_t j = classScreen.xyLimits.minX; j < classScreen.xyLimits.maxX + 1; ++j) {
+            if ((i == classScreen.xyLimits.minY + 1) && j == classScreen.xyLimits.minX + 3) {
+                if (nonViable.size() > 1) {
+                    for (int m = 0; m < nonViable.size(); ++m) {
+                        for (int n = 0; n < nonViable[m].size(); ++n) {
+                            classScreen.charMap[i][j] = nonViable[m][n];
+                            classScreen.colorMap[i][j] = border;
+                            classScreen.bGColorMap[i][j++] = BLACK;
+                        }
+                        j = classScreen.xyLimits.minX + 4;
+                        i++;
+                    }
+                    i++;
+                    j = classScreen.xyLimits.minX + 3;
+                }
+                for (int m = 0; m < classList.size(); ++m) {
+                    for (int n = 0; n < classList[m].size(); ++n) {
+                        classScreen.charMap[i][j] = classList[m][n];
+                        classScreen.colorMap[i][j] = YELLOW;
+                        classScreen.bGColorMap[i][j++] = BLACK;
+                    }
+                    j = classScreen.xyLimits.minX + 4;
+                    i++;
+                }
             }
-            j = classScreen.xyLimits.minX + 4;
-            i++;
-          }
-          i++;
-          j = classScreen.xyLimits.minX + 3;
         }
-        for (int m = 0; m < classList.size(); ++m) {
-          for (int n = 0; n < classList[m].size(); ++n) {
-            classScreen.charMap[i][j] = classList[m][n];
-            classScreen.colorMap[i][j] = YELLOW;
-            classScreen.bGColorMap[i][j++] = BLACK;
-          }
-          j = classScreen.xyLimits.minX + 4;
-          i++;
-        }
-      }
     }
-  }
 
-  drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX,
-            classScreen.xyLimits.minY, classScreen.xyLimits.maxY + 1,
-            classScreen);
-  char classKey = selClass(idx, inScreen1, inScreen2, inScreen3, classScreen);
-  return cList[classKey];
-  return CLERIC;
+    drawSmall(classScreen.xyLimits.minX, classScreen.xyLimits.maxX, classScreen.xyLimits.minY,
+              classScreen.xyLimits.maxY + 1, classScreen);
+    char classKey = selClass(idx, inScreen1, inScreen2, inScreen3, classScreen);
+    return cList[classKey];
+    return CLERIC;
 }
 
-char selClass(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2,
-              ScreenVals &inScreen3, ScreenVals &inScreen4) {
-  // std::cout << std::endl << "Would you like to keep stats? y/n: ";
-  char choice;
-  while (true) {
-    std::size_t new_horz = tcols();
-    std::size_t new_vert = trows();
-    if (horz_char != new_horz || vert_char != new_vert) {
-      horz_char = new_horz;
-      vert_char = new_vert;
-      std::vector<std::string> options;
-      createPrimary(primaryScreen, options);
-      drawPrimary(primaryScreen);
-      drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX,
-                inScreen1.xyLimits.minY, inScreen1.xyLimits.maxY - 1,
-                inScreen1);
-      drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX,
-                inScreen2.xyLimits.minY, inScreen2.xyLimits.maxY + 1,
-                inScreen2);
-      drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX,
-                inScreen3.xyLimits.minY, inScreen3.xyLimits.maxY + 1,
-                inScreen3);
-      drawSmall(inScreen4.xyLimits.minX, inScreen4.xyLimits.maxX,
-                inScreen4.xyLimits.minY, inScreen4.xyLimits.maxY + 1,
-                inScreen4);
-    }
+char selClass(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3, ScreenVals &inScreen4) {
+    // std::cout << std::endl << "Would you like to keep stats? y/n: ";
+    char choice;
+    while (true) {
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if (horz_char != new_horz || vert_char != new_vert) {
+            horz_char = new_horz;
+            vert_char = new_vert;
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
+            drawPrimary(primaryScreen);
+            drawSmall(inScreen1.xyLimits.minX, inScreen1.xyLimits.maxX, inScreen1.xyLimits.minY,
+                      inScreen1.xyLimits.maxY - 1, inScreen1);
+            drawSmall(inScreen2.xyLimits.minX, inScreen2.xyLimits.maxX, inScreen2.xyLimits.minY,
+                      inScreen2.xyLimits.maxY + 1, inScreen2);
+            drawSmall(inScreen3.xyLimits.minX, inScreen3.xyLimits.maxX, inScreen3.xyLimits.minY,
+                      inScreen3.xyLimits.maxY + 1, inScreen3);
+            drawSmall(inScreen4.xyLimits.minX, inScreen4.xyLimits.maxX, inScreen4.xyLimits.minY,
+                      inScreen4.xyLimits.maxY + 1, inScreen4);
+        }
 
-    if (kbhit()) {
-      char k = getkey();
-      if (k >= '0' && k < maxIdx) {
-        return k;
-      }
+        if (kbhit()) {
+            char k = getkey();
+            if (k >= '0' && k < maxIdx) {
+                return k;
+            }
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
 char selOpt(const std::vector<ScreenVals> &inScreens, int idx) {
-  while (true) {
-    std::size_t new_horz = tcols();
-    std::size_t new_vert = trows();
-    if (horz_char != new_horz || vert_char != new_vert) {
-      horz_char = new_horz;
-      vert_char = new_vert;
-      std::vector<std::string> options;
-      createPrimary(primaryScreen, options);
-      drawPrimary(primaryScreen);
-      for (int i = 0; i < inScreens.size(); ++i) {
-        int offSet = 1;
-        if (i < 1) {
-          offSet = -1;
+    while (true) {
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if (horz_char != new_horz || vert_char != new_vert) {
+            horz_char = new_horz;
+            vert_char = new_vert;
+            std::vector<std::string> options;
+            createPrimary(primaryScreen, options);
+            drawPrimary(primaryScreen);
+            for (int i = 0; i < inScreens.size(); ++i) {
+                int offSet = 1;
+                if (i < 1) {
+                    offSet = -1;
+                }
+                drawSmall(inScreens.at(i).xyLimits.minX, inScreens.at(i).xyLimits.maxX, inScreens.at(i).xyLimits.minY,
+                          inScreens.at(i).xyLimits.maxY + offSet, inScreens.at(i));
+            }
         }
-        drawSmall(inScreens.at(i).xyLimits.minX, inScreens.at(i).xyLimits.maxX,
-                  inScreens.at(i).xyLimits.minY,
-                  inScreens.at(i).xyLimits.maxY + offSet, inScreens.at(i));
-      }
-    }
 
-    if (kbhit()) {
-      char k = getkey();
-      if (k >= '0' && k < idx + '0') {
-        return k;
-      }
+        if (kbhit()) {
+            char k = getkey();
+            if (k >= '0' && k < idx + '0') {
+                return k;
+            }
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
-std::string getName(ScreenVals &inScreen1, ScreenVals &inScreen2,
-                    ScreenVals &inScreen3, ScreenVals &inScreen4) {
-  return "nothing";
+std::string getName(ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3, ScreenVals &inScreen4) {
+    return "nothing";
 }
 
 void createPrimary(ScreenVals &primaryScreen, std::vector<std::string> inOpts) {
-  color_code border;
+    color_code border;
 #ifdef _WIN32
-  border = RED;
+    border = RED;
 #else
-  border = DARKRED;
+    border = DARKRED;
 #endif
-  std::string line1 = "Welcome To Gygaxian-Entity";
-  std::string line2 = "Character Creator";
+    std::string line1 = "Welcome To Gygaxian-Entity";
+    std::string line2 = "Character Creator";
 
-  int msg1L = line1.size() / 2;
-  int msg2L = line2.size() / 2;
-  primaryScreen.xyLimits.maxX = tcols();
-  primaryScreen.xyLimits.maxY = trows();
+    int msg1L = line1.size() / 2;
+    int msg2L = line2.size() / 2;
+    primaryScreen.xyLimits.maxX = tcols();
+    primaryScreen.xyLimits.maxY = trows();
 
-  for (std::size_t i = 0; i < trows(); ++i) {
-    for (std::size_t j = 0; j < tcols(); ++j) {
-      if (i == trows() / 2 - 1 && j == tcols() / 2 - msg1L) {
-        for (std::size_t k = 0; k < line1.size(); ++k) {
-          primaryScreen.charMap[i][j] = line1[k];
-          primaryScreen.colorMap[i][j] = GREEN;
-          primaryScreen.bGColorMap[i][j++] = BLACK;
+    for (std::size_t i = 0; i < trows(); ++i) {
+        for (std::size_t j = 0; j < tcols(); ++j) {
+            if (i == trows() / 2 - 1 && j == tcols() / 2 - msg1L) {
+                for (std::size_t k = 0; k < line1.size(); ++k) {
+                    primaryScreen.charMap[i][j] = line1[k];
+                    primaryScreen.colorMap[i][j] = GREEN;
+                    primaryScreen.bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if (i == trows() / 2 && j == tcols() / 2 - msg2L) {
+                for (std::size_t k = 0; k < line2.size(); ++k) {
+                    primaryScreen.charMap[i][j] = line2[k];
+                    primaryScreen.colorMap[i][j] = GREEN;
+                    primaryScreen.bGColorMap[i][j++] = BLACK;
+                }
+                j--;
+            } else if (i == trows() - 1 && j == 0) {
+                primaryScreen.charMap[i][j] = 0x2551;
+                primaryScreen.colorMap[i][j] = border;
+                primaryScreen.bGColorMap[i][j++] = WHITE;
+                for (std::size_t opt = 0; opt < inOpts.size(); ++opt) {
+                    for (std::size_t k = 0; k < inOpts[opt].size(); ++k) {
+                        primaryScreen.charMap[i][j] = inOpts[opt][k];
+                        primaryScreen.colorMap[i][j] = border;
+                        primaryScreen.bGColorMap[i][j++] = WHITE;
+                    }
+                    primaryScreen.charMap[i][j] = 0x2551;
+                    primaryScreen.colorMap[i][j] = border;
+                    primaryScreen.bGColorMap[i][j++] = WHITE;
+                }
+                j--;
+            } else if (i == 0 && j == 0) {
+                primaryScreen.charMap[i][j] = 0x2554;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            } else if (i == 0 && j == horz_char - 1) {
+                primaryScreen.charMap[i][j] = 0x2557;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            } else if (i == trows() - 2 && j == 0) {
+                primaryScreen.charMap[i][j] = 0x255A;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            } else if (i == trows() - 2 && j == tcols() - 1) {
+                primaryScreen.charMap[i][j] = 0x255D;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            } else if (i == 0 || i == trows() - 2) {
+                primaryScreen.charMap[i][j] = 0x2550;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            } else if ((j == 0 || j == tcols() - 1) && i < trows() - 1) {
+                primaryScreen.charMap[i][j] = 0x2551;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            } else {
+                primaryScreen.charMap[i][j] = 0x0020;
+                primaryScreen.colorMap[i][j] = GREEN;
+                primaryScreen.bGColorMap[i][j] = BLACK;
+            }
         }
-        j--;
-      } else if (i == trows() / 2 && j == tcols() / 2 - msg2L) {
-        for (std::size_t k = 0; k < line2.size(); ++k) {
-          primaryScreen.charMap[i][j] = line2[k];
-          primaryScreen.colorMap[i][j] = GREEN;
-          primaryScreen.bGColorMap[i][j++] = BLACK;
-        }
-        j--;
-      } else if (i == trows() - 1 && j == 0) {
-        primaryScreen.charMap[i][j] = 0x2551;
-        primaryScreen.colorMap[i][j] = border;
-        primaryScreen.bGColorMap[i][j++] = WHITE;
-        for (std::size_t opt = 0; opt < inOpts.size(); ++opt) {
-          for (std::size_t k = 0; k < inOpts[opt].size(); ++k) {
-            primaryScreen.charMap[i][j] = inOpts[opt][k];
-            primaryScreen.colorMap[i][j] = border;
-            primaryScreen.bGColorMap[i][j++] = WHITE;
-          }
-          primaryScreen.charMap[i][j] = 0x2551;
-          primaryScreen.colorMap[i][j] = border;
-          primaryScreen.bGColorMap[i][j++] = WHITE;
-        }
-        j--;
-      } else if (i == 0 && j == 0) {
-        primaryScreen.charMap[i][j] = 0x2554;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      } else if (i == 0 && j == horz_char - 1) {
-        primaryScreen.charMap[i][j] = 0x2557;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      } else if (i == trows() - 2 && j == 0) {
-        primaryScreen.charMap[i][j] = 0x255A;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      } else if (i == trows() - 2 && j == tcols() - 1) {
-        primaryScreen.charMap[i][j] = 0x255D;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      } else if (i == 0 || i == trows() - 2) {
-        primaryScreen.charMap[i][j] = 0x2550;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      } else if ((j == 0 || j == tcols() - 1) && i < trows() - 1) {
-        primaryScreen.charMap[i][j] = 0x2551;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      } else {
-        primaryScreen.charMap[i][j] = 0x0020;
-        primaryScreen.colorMap[i][j] = GREEN;
-        primaryScreen.bGColorMap[i][j] = BLACK;
-      }
     }
-  }
 }
 
 void drawPrimary(ScreenVals &primaryScreen) {
-  cls();
-  locate(1, 1);
-  for (std::size_t i = 0; i < trows(); ++i) {
-    for (std::size_t j = 0; j < tcols(); ++j) {
-      int forPrint = primaryScreen.charMap[i][j];
-      locate(j + 1, i + 1);
-      std::string utfChar = getUTF(forPrint);
-      colorPrintUTF(primaryScreen.colorMap[i][j],
-                    primaryScreen.bGColorMap[i][j], utfChar.c_str());
+    cls();
+    locate(1, 1);
+    for (std::size_t i = 0; i < trows(); ++i) {
+        for (std::size_t j = 0; j < tcols(); ++j) {
+            int forPrint = primaryScreen.charMap[i][j];
+            locate(j + 1, i + 1);
+            std::string utfChar = getUTF(forPrint);
+            colorPrintUTF(primaryScreen.colorMap[i][j], primaryScreen.bGColorMap[i][j], utfChar.c_str());
+        }
     }
-  }
-  locate(1, 1);
-  fflush(stdout);
+    locate(1, 1);
+    fflush(stdout);
 }

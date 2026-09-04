@@ -7,38 +7,20 @@
 #include <string>
 #include <vector>
 
-enum RACIAL_BIAS {
-  HATE,
-  ANTIPATHY,
-  NEUTRALITY,
-  TOLERANCE,
-  GOODWILL,
-  PREFERRED
-};
+enum RACIAL_BIAS { HATE, ANTIPATHY, NEUTRALITY, TOLERANCE, GOODWILL, PREFERRED };
 
-enum CHAR_CLASS {
-  CLERIC,
-  DRUID,
-  FIGHTER,
-  RANGER,
-  PALADIN,
-  MAGIC_USER,
-  ILLUSIONIST,
-  THIEF,
-  ASSASSIN,
-  MONK
-};
+enum CHAR_CLASS { CLERIC, DRUID, FIGHTER, RANGER, PALADIN, MAGIC_USER, ILLUSIONIST, THIEF, ASSASSIN, MONK };
 
 enum ALIGNMENT {
-  CHAOTIC_EVIL,
-  CHAOTIC_GOOD,
-  CHAOTIC_NEUTRAL,
-  LAWFUL_EVIL,
-  LAWFUL_GOOD,
-  LAWFUL_NEUTRAL,
-  NEUTRAL_EVIL,
-  NEUTRAL_GOOD,
-  TRUE_NEUTRAL
+    CHAOTIC_EVIL,
+    CHAOTIC_GOOD,
+    CHAOTIC_NEUTRAL,
+    LAWFUL_EVIL,
+    LAWFUL_GOOD,
+    LAWFUL_NEUTRAL,
+    NEUTRAL_EVIL,
+    NEUTRAL_GOOD,
+    TRUE_NEUTRAL
 };
 
 enum RACE { HUMAN, ELF, HALF_ORC, HALFLING, DWARF, HALF_ELF, GNOME, CREATURE };
@@ -46,381 +28,364 @@ enum RACE { HUMAN, ELF, HALF_ORC, HALFLING, DWARF, HALF_ELF, GNOME, CREATURE };
 enum SEX { FUTA, INTERSEX, FEMALE, MALE };
 
 enum LANGUAGE {
-  ELVISH,
-  GNOMISH,
-  DWARVISH,
-  HALFLING_L,
-  GOBLIN_L,
-  HOBGOBLIN_L,
-  ORCISH,
-  GNOLL,
-  KOBOLD,
-  BURROWING_ANIMALS,
-  COMMON_L,
-  THIEVES_CANT,
-  CHAO_EV_LANG,
-  CHAO_GD_LANG,
-  CHAO_NU_LANG,
-  LAW_EV_LANG,
-  LAW_GD_LANG,
-  LAW_NU_LANG,
-  NU_EV_LANG,
-  NU_GD_LANG,
-  TRU_NU_LANG
+    ELVISH,
+    GNOMISH,
+    DWARVISH,
+    HALFLING_L,
+    GOBLIN_L,
+    HOBGOBLIN_L,
+    ORCISH,
+    GNOLL,
+    KOBOLD,
+    BURROWING_ANIMALS,
+    COMMON_L,
+    THIEVES_CANT,
+    CHAO_EV_LANG,
+    CHAO_GD_LANG,
+    CHAO_NU_LANG,
+    LAW_EV_LANG,
+    LAW_GD_LANG,
+    LAW_NU_LANG,
+    NU_EV_LANG,
+    NU_GD_LANG,
+    TRU_NU_LANG
 };
 
 enum EQUIP_TYPE {
-  ARMOR,
-  ARMS,
-  AMMO,
-  PROJECTILE,
-  CLOTHING,
-  LIVESTOCK,
-  MISC,
-  PROVISIONS,
-  HERBS,
-  RELIGIOUS,
-  TACK_HARNESS,
-  TRANSPORT,
-  HELMETS
+    ARMOR,
+    ARMS,
+    AMMO,
+    PROJECTILE,
+    CLOTHING,
+    LIVESTOCK,
+    MISC,
+    PROVISIONS,
+    HERBS,
+    RELIGIOUS,
+    TACK_HARNESS,
+    TRANSPORT,
+    HELMETS
 };
 
-enum ARMOR_TYPE {
-  LEATHER,
-  PADDED,
-  STUDDED,
-  CHAIN,
-  SCALE,
-  BANDED,
-  SPLINT,
-  PLATE,
-  RING,
-  SHIELD
-};
+enum ARMOR_TYPE { LEATHER, PADDED, STUDDED, CHAIN, SCALE, BANDED, SPLINT, PLATE, RING, SHIELD };
 
 enum WEAPON_TYPE {
-  KNIFE,    // 0
-  DAGGER,   // 1
-  SWORD,    // 2
-  AXE,      // 3
-  POLEARM,  // 4
-  BOW,      // 5
-  CROSSBOW, // 6
-  ARROW,    // 7
-  BOLT,     // 8
-  DART,     // 9
-  BLUNT,    // 10
-  SPEAR,    // 11
-  STAFF     // 12
+    KNIFE,    // 0
+    DAGGER,   // 1
+    SWORD,    // 2
+    AXE,      // 3
+    POLEARM,  // 4
+    BOW,      // 5
+    CROSSBOW, // 6
+    ARROW,    // 7
+    BOLT,     // 8
+    DART,     // 9
+    BLUNT,    // 10
+    SPEAR,    // 11
+    STAFF     // 12
 };
 
 enum CLOTHING_TYPE { BELT, BOOTS, CAP, CLOAK, GIRDLE, HAT, ROBE };
 
 enum BULK { NON, FAIRLY, BULKY };
 struct ULPair {
-  unsigned lower;
-  unsigned upper;
+    unsigned lower;
+    unsigned upper;
 };
 
 struct DefenseAdj {
-  int8_t a2;
-  int8_t a3;
-  int8_t a4;
-  int8_t a5;
-  int8_t a6;
-  int8_t a7;
-  int8_t a8;
-  int8_t a9;
-  int8_t a10;
+    int8_t a2;
+    int8_t a3;
+    int8_t a4;
+    int8_t a5;
+    int8_t a6;
+    int8_t a7;
+    int8_t a8;
+    int8_t a9;
+    int8_t a10;
 };
 
 struct Range {
-  unsigned shortRange;
-  unsigned medRange;
-  unsigned longRange;
+    unsigned shortRange;
+    unsigned medRange;
+    unsigned longRange;
 };
 struct langPair {
-  LANGUAGE langE;
-  std::string langS;
+    LANGUAGE langE;
+    std::string langS;
 };
 
-const std::vector<langPair> langPairs = {
-    {ELVISH, "Elvish"},
-    {GNOMISH, "Gnomish"},
-    {DWARVISH, "Dwarvish"},
-    {HALFLING_L, "Halfling"},
-    {GOBLIN_L, "Goblin"},
-    {HOBGOBLIN_L, "Hobgoblin"},
-    {ORCISH, "Orcish"},
-    {KOBOLD, "Kobold"},
-    {BURROWING_ANIMALS, "Burrowing Animals"},
-    {COMMON_L, "Common"},
-    {GNOLL, "Gnoll"},
-    {THIEVES_CANT, "Thieves' Cant"},
-    {CHAO_EV_LANG, "Chaotic Evil"},
-    {CHAO_GD_LANG, "Chaotic Good"},
-    {CHAO_NU_LANG, "Chaotic Neutral"},
-    {LAW_EV_LANG, "Lawful Evil"},
-    {LAW_GD_LANG, "Lawful Good"},
-    {LAW_NU_LANG, "Lawful Neutral"},
-    {NU_EV_LANG, "Neutral Evil"},
-    {NU_GD_LANG, "Neutral Good"},
-    {TRU_NU_LANG, "True Neutral"}};
+const std::vector<langPair> langPairs = {{ELVISH, "Elvish"},
+                                         {GNOMISH, "Gnomish"},
+                                         {DWARVISH, "Dwarvish"},
+                                         {HALFLING_L, "Halfling"},
+                                         {GOBLIN_L, "Goblin"},
+                                         {HOBGOBLIN_L, "Hobgoblin"},
+                                         {ORCISH, "Orcish"},
+                                         {KOBOLD, "Kobold"},
+                                         {BURROWING_ANIMALS, "Burrowing Animals"},
+                                         {COMMON_L, "Common"},
+                                         {GNOLL, "Gnoll"},
+                                         {THIEVES_CANT, "Thieves' Cant"},
+                                         {CHAO_EV_LANG, "Chaotic Evil"},
+                                         {CHAO_GD_LANG, "Chaotic Good"},
+                                         {CHAO_NU_LANG, "Chaotic Neutral"},
+                                         {LAW_EV_LANG, "Lawful Evil"},
+                                         {LAW_GD_LANG, "Lawful Good"},
+                                         {LAW_NU_LANG, "Lawful Neutral"},
+                                         {NU_EV_LANG, "Neutral Evil"},
+                                         {NU_GD_LANG, "Neutral Good"},
+                                         {TRU_NU_LANG, "True Neutral"}};
 
 struct stats {
-  unsigned strength;
-  unsigned excStren = 0;
-  unsigned intelligence;
-  unsigned wisdom;
-  unsigned charisma;
-  unsigned raceCharisma;
-  unsigned dexterity;
-  unsigned constitution;
+    unsigned strength;
+    unsigned excStren = 0;
+    unsigned intelligence;
+    unsigned wisdom;
+    unsigned charisma;
+    unsigned raceCharisma;
+    unsigned dexterity;
+    unsigned constitution;
 };
 
 struct money {
-  unsigned gold = 0;
-  unsigned silver = 0;
-  unsigned copper = 0;
-  unsigned electrum = 0;
-  unsigned platinum = 0;
+    unsigned gold = 0;
+    unsigned silver = 0;
+    unsigned copper = 0;
+    unsigned electrum = 0;
+    unsigned platinum = 0;
 };
 
 struct strengthTable { // pg. 9
-  int hitProb = 0;
-  int damageAdj = 0;
-  int weightAllowMod = 0;
-  unsigned openDoors = 1;
-  unsigned bendBarsLiftGatesPer = 1;
+    int hitProb = 0;
+    int damageAdj = 0;
+    int weightAllowMod = 0;
+    unsigned openDoors = 1;
+    unsigned bendBarsLiftGatesPer = 1;
 };
 
 struct intelligenceTable { // pg. 10
-  unsigned chanceToKnowPer = 10;
-  unsigned minumumSpellsPerLevel = 2;
-  unsigned maxiumSpellsPerlevel = 3;
-  unsigned possibAddLang = 0;
+    unsigned chanceToKnowPer = 10;
+    unsigned minumumSpellsPerLevel = 2;
+    unsigned maxiumSpellsPerlevel = 3;
+    unsigned possibAddLang = 0;
 };
 
 struct wisdomTable { // pg. 11
-  int magicAttackAdj = 0;
-  unsigned spellBonus = 0;
-  unsigned spellFailPer = 0;
+    int magicAttackAdj = 0;
+    unsigned spellBonus = 0;
+    unsigned spellFailPer = 0;
 };
 
 struct dexterityTable {
-  int reactAttkAdj = 0;
-  int defenseAdj = 0;
+    int reactAttkAdj = 0;
+    int defenseAdj = 0;
 };
 
 struct dexThieves { // pg. 12
-  int pickPocketPer = 0;
-  int openLocks = 0;
-  int locRemTraps = 0;
-  int movSilent = 0;
-  int hideInShadows = 0;
+    int pickPocketPer = 0;
+    int openLocks = 0;
+    int locRemTraps = 0;
+    int movSilent = 0;
+    int hideInShadows = 0;
 };
 
 struct constitutionTable { // pg. 12
-  int hpAdj = 0;
-  unsigned sysShockSurPer = 70; // for const 10
-  unsigned resurSurvPer = 75;
+    int hpAdj = 0;
+    unsigned sysShockSurPer = 70; // for const 10
+    unsigned resurSurvPer = 75;
 };
 
 struct charismaTable {
-  unsigned maxHenchMen = 4; // for charisma 10
-  int loyaltyBasePer = 0;
-  int reactAdjustPer = 0;
+    unsigned maxHenchMen = 4; // for charisma 10
+    int loyaltyBasePer = 0;
+    int reactAdjustPer = 0;
 };
 
 struct classTable1 { // pg 19
-  unsigned HitDieType;
-  unsigned MaxHitDie;
-  bool spellAbility;
-  int LevelLimit;
+    unsigned HitDieType;
+    unsigned MaxHitDie;
+    bool spellAbility;
+    int LevelLimit;
 };
 
 struct thiefTable {
-  unsigned pickPockets = 30;
-  unsigned openLocks = 25;
-  unsigned findRemoveTraps = 20;
-  unsigned moveSilently = 15;
-  unsigned hideInShadows = 10;
-  unsigned hearNoise = 10;
-  float climbWalls = 85.0;
-  unsigned readLanguages = 0;
+    int16_t pickPockets = 30;
+    int16_t openLocks = 25;
+    int16_t findRemoveTraps = 20;
+    int16_t moveSilently = 15;
+    int16_t hideInShadows = 10;
+    int16_t hearNoise = 10;
+    float climbWalls = 85.0;
+    int16_t readLanguages = 0;
 };
 
 struct classTable2 {};
 
 struct textAndColor {
-  std::vector<int> text;
-  std::vector<uint16_t> txtColor;
-  std::vector<uint16_t> txtBGColor;
+    std::vector<int> text;
+    std::vector<uint16_t> txtColor;
+    std::vector<uint16_t> txtBGColor;
 };
 
 // For pairing string with Enum
 struct racePair {
-  RACE race;
-  std::string raceS;
+    RACE race;
+    std::string raceS;
 };
 
 /************NOTE CAN'T INITIALIZE VECTOR IN HEADER UNLESS DEFINED AS
  * CONST***********/
 // These vectors are just to help with printing friendly human readable info in
 // the terminal
-const std::vector<racePair> racePairs = {
-    {HUMAN, "Human"}, {ELF, "Elf"},           {HALF_ORC, "Half-Orc"},
-    {DWARF, "Dwarf"}, {HALFLING, "Halfling"}, {HALF_ELF, "Half-Elf"},
-    {GNOME, "Gnome"}};
+const std::vector<racePair> racePairs = {{HUMAN, "Human"}, {ELF, "Elf"},           {HALF_ORC, "Half-Orc"},
+                                         {DWARF, "Dwarf"}, {HALFLING, "Halfling"}, {HALF_ELF, "Half-Elf"},
+                                         {GNOME, "Gnome"}};
 
 struct classPair {
-  CHAR_CLASS cClass;
-  std::string cS;
+    CHAR_CLASS cClass;
+    std::string cS;
 };
 
-const std::vector<classPair> classPairs = {
-    {CLERIC, "Cleric"},           {DRUID, "Druid"},
-    {FIGHTER, "Fighter"},         {RANGER, "Ranger"},
-    {PALADIN, "Paladin"},         {MAGIC_USER, "Magic-User"},
-    {ILLUSIONIST, "Illusionist"}, {THIEF, "Thief"},
-    {ASSASSIN, "Assassin"},       {MONK, "Monk"}};
+const std::vector<classPair> classPairs = {{CLERIC, "Cleric"},           {DRUID, "Druid"},
+                                           {FIGHTER, "Fighter"},         {RANGER, "Ranger"},
+                                           {PALADIN, "Paladin"},         {MAGIC_USER, "Magic-User"},
+                                           {ILLUSIONIST, "Illusionist"}, {THIEF, "Thief"},
+                                           {ASSASSIN, "Assassin"},       {MONK, "Monk"}};
 
 struct alignPair {
-  ALIGNMENT align;
-  std::string alignS;
+    ALIGNMENT align;
+    std::string alignS;
 };
 
 const std::vector<alignPair> alignPairs = {
-    {CHAOTIC_EVIL, "Chaotic Evil"},       {CHAOTIC_GOOD, "Chaotic Good"},
-    {CHAOTIC_NEUTRAL, "Chaotic Neutral"}, {LAWFUL_EVIL, "Lawful Evil"},
-    {LAWFUL_GOOD, "Lawful Good"},         {LAWFUL_NEUTRAL, "Lawful Neutral"},
-    {NEUTRAL_EVIL, "Neutral Evil"},       {NEUTRAL_GOOD, "Neutral Good"},
-    {TRUE_NEUTRAL, "True Neutral"}};
+    {CHAOTIC_EVIL, "Chaotic Evil"}, {CHAOTIC_GOOD, "Chaotic Good"}, {CHAOTIC_NEUTRAL, "Chaotic Neutral"},
+    {LAWFUL_EVIL, "Lawful Evil"},   {LAWFUL_GOOD, "Lawful Good"},   {LAWFUL_NEUTRAL, "Lawful Neutral"},
+    {NEUTRAL_EVIL, "Neutral Evil"}, {NEUTRAL_GOOD, "Neutral Good"}, {TRUE_NEUTRAL, "True Neutral"}};
 
 struct rollPair {
-  u8 sidedDie;
-  u8 maxRange;
+    u8 sidedDie;
+    u8 maxRange;
 };
 
 struct indexItemList {
-  uint32_t typeIndex;
-  uint32_t itemIndex;
+    uint32_t typeIndex;
+    uint32_t itemIndex;
 };
 
 enum WEAPON_PROF {
-  AXE_BATTLE,
-  AXE_THROWING,
-  BARDICHE,
-  BEC_DE_CORBIN,
-  BILL_GUISARME,
-  BO_STICK,
-  BOW_COMP_LONG,
-  BOW_COM_SHORT,
-  BOW_LONG,
-  BOW_SHORT,
-  CLUB,
-  CROSSBOW_HEAVY,
-  CROSSBOW_LIGHT,
-  DAGGER_PROF,
-  DART_PROF,
-  FAUCHARD,
-  FAUCHARD_FORK,
-  FLAIL_FOOTMANS,
-  FLAIL_HORSEMANS,
-  FORK_MILITARY,
-  GLAIVE,
-  GLAIVE_GUISARME,
-  GUISARME,
-  GUISARME_VOLGUE,
-  HALBERD,
-  HAMMER_LUCERN,
-  HAMMER,
-  JAVELIN,
-  JO_STICK,
-  LANCE_LIGHT_H,
-  LANCE_MED_H,
-  LANCE_HEAVY_H,
-  MACE_FOOTMANS,
-  MACE_HORSEMANS,
-  MORNING_STAR,
-  PARTISAN,
-  PICK_MILITARY_FOOT,
-  PICK_MILITARY_HORSE,
-  PIKE_AWL,
-  RANSEUR,
-  SCIMITAR,
-  SLING,
-  SPEAR_PROF,
-  SPETUM,
-  STAFF_QUARTER,
-  SWORD_BASTARD,
-  SWORD_BROAD,
-  SWORD_LONG,
-  SWORD_SHORT,
-  SWORD_TWO_HAND,
-  TRIDENT,
-  VOULGUE
+    AXE_BATTLE,
+    AXE_THROWING,
+    BARDICHE,
+    BEC_DE_CORBIN,
+    BILL_GUISARME,
+    BO_STICK,
+    BOW_COMP_LONG,
+    BOW_COM_SHORT,
+    BOW_LONG,
+    BOW_SHORT,
+    CLUB,
+    CROSSBOW_HEAVY,
+    CROSSBOW_LIGHT,
+    DAGGER_PROF,
+    DART_PROF,
+    FAUCHARD,
+    FAUCHARD_FORK,
+    FLAIL_FOOTMANS,
+    FLAIL_HORSEMANS,
+    FORK_MILITARY,
+    GLAIVE,
+    GLAIVE_GUISARME,
+    GUISARME,
+    GUISARME_VOLGUE,
+    HALBERD,
+    HAMMER_LUCERN,
+    HAMMER,
+    JAVELIN,
+    JO_STICK,
+    LANCE_LIGHT_H,
+    LANCE_MED_H,
+    LANCE_HEAVY_H,
+    MACE_FOOTMANS,
+    MACE_HORSEMANS,
+    MORNING_STAR,
+    PARTISAN,
+    PICK_MILITARY_FOOT,
+    PICK_MILITARY_HORSE,
+    PIKE_AWL,
+    RANSEUR,
+    SCIMITAR,
+    SLING,
+    SPEAR_PROF,
+    SPETUM,
+    STAFF_QUARTER,
+    SWORD_BASTARD,
+    SWORD_BROAD,
+    SWORD_LONG,
+    SWORD_SHORT,
+    SWORD_TWO_HAND,
+    TRIDENT,
+    VOULGUE
 };
 
 struct profData {
-  int ARM_ID;
-  int prof;
-  int W_TYPE;
-  std::string profS;
+    int ARM_ID;
+    int prof;
+    int W_TYPE;
+    std::string profS;
 };
 
-const std::vector<profData> profDat = {
-    {2, AXE_BATTLE, AXE, "Battle Axe"},
-    {3, AXE_THROWING, AXE, "Throwing Axe"},
-    {4, BARDICHE, POLEARM, "Bardiche"},
-    {5, BEC_DE_CORBIN, POLEARM, "Bec De Corbin"},
-    {6, BILL_GUISARME, POLEARM, "Bill Guisarme"},
-    {7, BO_STICK, STAFF, "Bo Stick"},
-    {9, BOW_COMP_LONG, BOW, "Composite Long Bow"},
-    {8, BOW_COM_SHORT, BOW, "Composite Short Bow"},
-    {10, BOW_LONG, BOW, "Long Bow"},
-    {11, BOW_SHORT, BOW, "Short Bow"},
-    {12, CLUB, BLUNT, "Club"},
-    {13, CROSSBOW_HEAVY, CROSSBOW, "Heavy Crossbow"},
-    {14, CROSSBOW_LIGHT, CROSSBOW, "Light Crossbow"},
-    {15, DAGGER_PROF, DAGGER, "Dagger"},
-    {16, DART_PROF, DART, "Dart"},
-    {17, FAUCHARD, POLEARM, "Fauchard"},
-    {18, FAUCHARD_FORK, POLEARM, "Fauchard Fork"},
-    {19, FLAIL_FOOTMANS, BLUNT, "Footmans Flail"},
-    {20, FLAIL_HORSEMANS, BLUNT, "Horsemans Flail"},
-    {21, FORK_MILITARY, POLEARM, "Military Fork"},
-    {22, GLAIVE, POLEARM, "Glaive"},
-    {23, GLAIVE_GUISARME, POLEARM, "Glaive Guisarme"},
-    {24, GUISARME, POLEARM, "Guisarme"},
-    {25, GUISARME_VOLGUE, POLEARM, "Guisarme Volgue"},
-    {26, HALBERD, POLEARM, "Halberd"},
-    {27, HAMMER_LUCERN, BLUNT, "Lucern Hammer"},
-    {28, HAMMER, BLUNT, "Hammer"},
-    {29, JAVELIN, SPEAR, "Javelin"},
-    {30, JO_STICK, STAFF, "Jo Stick"},
-    {32, LANCE_LIGHT_H, POLEARM, "Lance Light Horse"},
-    {31, LANCE_MED_H, POLEARM, "Lance Medium Horse"},
-    {33, LANCE_HEAVY_H, POLEARM, "Lance Heavy Horse"},
-    {34, MACE_FOOTMANS, BLUNT, "Footmans Mace"},
-    {35, MACE_HORSEMANS, BLUNT, "Horsemans Mace"},
-    {36, MORNING_STAR, BLUNT, "Morning Star"},
-    {37, PARTISAN, POLEARM, "Partisan"},
-    {38, PICK_MILITARY_FOOT, AXE, "Military Pick Footman"},
-    {39, PICK_MILITARY_HORSE, AXE, "Military Pick Horseman"},
-    {40, PIKE_AWL, POLEARM, "Pike Awl"},
-    {43, RANSEUR, POLEARM, "Ranseur"},
-    {44, SCIMITAR, SWORD, "Scimitar"},
-    {45, SLING, BOW, "Sling"},
-    {48, SPEAR_PROF, SPEAR, "Spear"},
-    {49, SPETUM, POLEARM, "Spetum"},
-    {50, STAFF_QUARTER, STAFF, "Quarter Staff"},
-    {51, SWORD_BASTARD, SWORD, "Bastard Sword"},
-    {52, SWORD_BROAD, SWORD, "Broad Sword"},
-    {53, SWORD_LONG, SWORD, "Long Sword"},
-    {54, SWORD_SHORT, SWORD, "Short Sword"},
-    {55, SWORD_TWO_HAND, SWORD, "Sword Two Hand"},
-    {56, TRIDENT, POLEARM, "Trident"},
-    {57, VOULGUE, POLEARM, "Voulgue"}};
+const std::vector<profData> profDat = {{2, AXE_BATTLE, AXE, "Battle Axe"},
+                                       {3, AXE_THROWING, AXE, "Throwing Axe"},
+                                       {4, BARDICHE, POLEARM, "Bardiche"},
+                                       {5, BEC_DE_CORBIN, POLEARM, "Bec De Corbin"},
+                                       {6, BILL_GUISARME, POLEARM, "Bill Guisarme"},
+                                       {7, BO_STICK, STAFF, "Bo Stick"},
+                                       {9, BOW_COMP_LONG, BOW, "Composite Long Bow"},
+                                       {8, BOW_COM_SHORT, BOW, "Composite Short Bow"},
+                                       {10, BOW_LONG, BOW, "Long Bow"},
+                                       {11, BOW_SHORT, BOW, "Short Bow"},
+                                       {12, CLUB, BLUNT, "Club"},
+                                       {13, CROSSBOW_HEAVY, CROSSBOW, "Heavy Crossbow"},
+                                       {14, CROSSBOW_LIGHT, CROSSBOW, "Light Crossbow"},
+                                       {15, DAGGER_PROF, DAGGER, "Dagger"},
+                                       {16, DART_PROF, DART, "Dart"},
+                                       {17, FAUCHARD, POLEARM, "Fauchard"},
+                                       {18, FAUCHARD_FORK, POLEARM, "Fauchard Fork"},
+                                       {19, FLAIL_FOOTMANS, BLUNT, "Footmans Flail"},
+                                       {20, FLAIL_HORSEMANS, BLUNT, "Horsemans Flail"},
+                                       {21, FORK_MILITARY, POLEARM, "Military Fork"},
+                                       {22, GLAIVE, POLEARM, "Glaive"},
+                                       {23, GLAIVE_GUISARME, POLEARM, "Glaive Guisarme"},
+                                       {24, GUISARME, POLEARM, "Guisarme"},
+                                       {25, GUISARME_VOLGUE, POLEARM, "Guisarme Volgue"},
+                                       {26, HALBERD, POLEARM, "Halberd"},
+                                       {27, HAMMER_LUCERN, BLUNT, "Lucern Hammer"},
+                                       {28, HAMMER, BLUNT, "Hammer"},
+                                       {29, JAVELIN, SPEAR, "Javelin"},
+                                       {30, JO_STICK, STAFF, "Jo Stick"},
+                                       {32, LANCE_LIGHT_H, POLEARM, "Lance Light Horse"},
+                                       {31, LANCE_MED_H, POLEARM, "Lance Medium Horse"},
+                                       {33, LANCE_HEAVY_H, POLEARM, "Lance Heavy Horse"},
+                                       {34, MACE_FOOTMANS, BLUNT, "Footmans Mace"},
+                                       {35, MACE_HORSEMANS, BLUNT, "Horsemans Mace"},
+                                       {36, MORNING_STAR, BLUNT, "Morning Star"},
+                                       {37, PARTISAN, POLEARM, "Partisan"},
+                                       {38, PICK_MILITARY_FOOT, AXE, "Military Pick Footman"},
+                                       {39, PICK_MILITARY_HORSE, AXE, "Military Pick Horseman"},
+                                       {40, PIKE_AWL, POLEARM, "Pike Awl"},
+                                       {43, RANSEUR, POLEARM, "Ranseur"},
+                                       {44, SCIMITAR, SWORD, "Scimitar"},
+                                       {45, SLING, BOW, "Sling"},
+                                       {48, SPEAR_PROF, SPEAR, "Spear"},
+                                       {49, SPETUM, POLEARM, "Spetum"},
+                                       {50, STAFF_QUARTER, STAFF, "Quarter Staff"},
+                                       {51, SWORD_BASTARD, SWORD, "Bastard Sword"},
+                                       {52, SWORD_BROAD, SWORD, "Broad Sword"},
+                                       {53, SWORD_LONG, SWORD, "Long Sword"},
+                                       {54, SWORD_SHORT, SWORD, "Short Sword"},
+                                       {55, SWORD_TWO_HAND, SWORD, "Sword Two Hand"},
+                                       {56, TRIDENT, POLEARM, "Trident"},
+                                       {57, VOULGUE, POLEARM, "Voulgue"}};
 
 #endif

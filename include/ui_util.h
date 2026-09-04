@@ -8,325 +8,304 @@
 
 // Some of these prototypes defined in ui-test.cpp for now.
 void drawPrimary(ScreenVals &primaryScreen);
-void drawSmall(int startX, int maxX, int startY, int maxY,
-               const ScreenVals &inScreen);
+void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals &inScreen);
 void createPrimary(ScreenVals &primaryScreen, std::vector<std::string> inOpts);
 void createRollScreen();
 void createBruteForceScreen();
 std::vector<CHAR_CLASS> classToForce();
-bool createRaceScreen(RACE &newRace, stats &inStats, ScreenVals &inScreen,
-                      ScreenVals &inScreen2, ScreenVals &inScreen3);
-bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats &inStats,
-                        ScreenVals &inScreen, ScreenVals &inScreen2,
+bool createRaceScreen(RACE &newRace, stats &inStats, ScreenVals &inScreen, ScreenVals &inScreen2,
+                      ScreenVals &inScreen3);
+bool createRaceScreenBF(RACE &newRace, CHAR_CLASS inClass, stats &inStats, ScreenVals &inScreen, ScreenVals &inScreen2,
                         ScreenVals &inScreen3);
 SEX selSexScreen(ScreenVals &sexScreen, ScreenVals &inScreen);
-char selRace(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2,
-             ScreenVals &inScreen3);
-char selClass(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2,
-              ScreenVals &inScreen3, ScreenVals &inScreen4);
-CHAR_CLASS selClassScreen(stats &inStats, RACE inRace, ScreenVals &inScreen1,
-                          ScreenVals &inScreen2, ScreenVals &inScreen3,
-                          ScreenVals &classScreen);
+char selRace(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3);
+char selClass(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3, ScreenVals &inScreen4);
+CHAR_CLASS selClassScreen(stats &inStats, RACE inRace, ScreenVals &inScreen1, ScreenVals &inScreen2,
+                          ScreenVals &inScreen3, ScreenVals &classScreen);
 std::string getUTF(int inCode);
 bool reRollOptions(stats &stats1, stats &stats2, ScreenVals &inScreen);
 void reDoStatScreen();
 void generatePerimeter(ScreenVals &inScreen, Perimeter inPerim);
-std::string getName(ScreenVals &inScreen1, ScreenVals &inScreen2,
-                    ScreenVals &inScreen3, ScreenVals &inScreen4);
+std::string getName(ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3, ScreenVals &inScreen4);
 char selOpt(const std::vector<ScreenVals> &inScreens, int idx);
 bool doesRecordExist(std::string name, std::string path, std::string suffix);
 void clearPrevScreen(const std::vector<ScreenVals> &screens);
 
 class TextInput {
 private:
-  std::string _receivedString;
-  std::string _prompt;
-  std::shared_ptr<ScreenVals> _textScreen;
-  Perimeter _textBoxPerim;
-  void PlacePrompt();
-  void getText();
+    std::string _receivedString;
+    std::string _prompt;
+    std::shared_ptr<ScreenVals> _textScreen;
+    Perimeter _textBoxPerim;
+    void PlacePrompt();
+    void getText();
 
 public:
-  TextInput();
-  void createTextInput(DrawRange uRandWidth, Perimeter inPerim,
-                       std::string message);
-  std::string getAquiredString();
-  ScreenVals &getScreen();
-  void purgeRecieved();
+    TextInput();
+    void createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::string message);
+    std::string getAquiredString();
+    ScreenVals &getScreen();
+    void purgeRecieved();
 };
 
 class OptionWindow {
 protected:
-  std::vector<std::string> _list;
-  std::shared_ptr<ScreenVals> _optScreen;
-  Perimeter _optionBoxPerim;
-  virtual void PlaceOptions();
+    std::vector<std::string> _list;
+    std::shared_ptr<ScreenVals> _optScreen;
+    Perimeter _optionBoxPerim;
+    virtual void PlaceOptions();
 
 public:
-  OptionWindow();
-  virtual void createWindow(DrawRange uRandWidth, Perimeter inPerim) = 0;
+    OptionWindow();
+    virtual void createWindow(DrawRange uRandWidth, Perimeter inPerim) = 0;
 };
 
 class AlignOptWindow : public OptionWindow {
 private:
-  // ALIGNMENT _align;
-  std::unordered_map<char, ALIGNMENT> _aList;
-  // void PlaceOptions() override;
+    // ALIGNMENT _align;
+    std::unordered_map<char, ALIGNMENT> _aList;
+    // void PlaceOptions() override;
 public:
-  AlignOptWindow(CHAR_CLASS inClass);
-  void createWindow(DrawRange uRandWidth, Perimeter inPerim);
-  ALIGNMENT getAlign(char inChar);
-  ScreenVals &getScreen();
-  int getOptIdx();
+    AlignOptWindow(CHAR_CLASS inClass);
+    void createWindow(DrawRange uRandWidth, Perimeter inPerim);
+    ALIGNMENT getAlign(char inChar);
+    ScreenVals &getScreen();
+    int getOptIdx();
 };
 
 class ChooseOpt : public OptionWindow {
 private:
-  // void PlaceOptions() override;
-  char _choice;
+    // void PlaceOptions() override;
+    char _choice;
 
 public:
-  ChooseOpt(std::vector<std::string> inOpts);
-  void createWindow(DrawRange uRandWidth, Perimeter inPerim);
-  ScreenVals &getScreen();
-  char getChoice(char optChoice);
+    ChooseOpt(std::vector<std::string> inOpts);
+    void createWindow(DrawRange uRandWidth, Perimeter inPerim);
+    ScreenVals &getScreen();
+    char getChoice(char optChoice);
 };
 
 class PrintInfo {
 protected:
-  std::shared_ptr<ScreenVals> _primaryScreen;
-  int _horz;
-  int _vert;
-  std::vector<std::vector<std::string>> _contents;
-  std::vector<std::shared_ptr<ScreenVals>> _infoScreen;
-  Perimeter _infoBoxPerim;
-  DrawRange _firstBox;
-  Entity *_character;
-  void MakeCharWin();
-  void MakeStatsWin();
-  void MakeCmbtWin();
-  void MakeProfWin();
-  void MakeWealthWin();
-  void MakeLangWin();
-  void MakeEscTag();
-  void MakeDexTbl();
-  void MakeThiefDexTbl();
-  void MakeRaceSkills();
-  void MakeGenTbl(std::vector<std::string> stringVect);
-  void SelectTbl();
-  void PlaceInfo(int vectIdx);
-  void createPrimary();
-  void drawPrimary();
+    std::shared_ptr<ScreenVals> _primaryScreen;
+    int _horz;
+    int _vert;
+    std::vector<std::vector<std::string>> _contents;
+    std::vector<std::shared_ptr<ScreenVals>> _infoScreen;
+    Perimeter _infoBoxPerim;
+    DrawRange _firstBox;
+    Entity *_character;
+    void MakeCharWin();
+    void MakeStatsWin();
+    void MakeCmbtWin();
+    void MakeProfWin();
+    void MakeWealthWin();
+    void MakeLangWin();
+    void MakeEscTag();
+    void MakeDexTbl();
+    void MakeThiefDexTbl();
+    void MakeRaceSkills();
+    void MakeGenTbl(std::vector<std::string> stringVect);
+    void SelectTbl();
+    void PlaceInfo(int vectIdx);
+    void createPrimary();
+    void drawPrimary();
 
 public:
-  PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim,
-            ScreenVals &primary, int horz, int vert);
+    PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert);
 };
 
 class WarnMessage {
 private:
-  std::shared_ptr<ScreenVals> _warnScreen;
+    std::shared_ptr<ScreenVals> _warnScreen;
 
 public:
-  WarnMessage(std::string warning, std::string question);
-  bool waitForAnswer();
-  ScreenVals &getScreen();
+    WarnMessage(std::string warning, std::string question);
+    bool waitForAnswer();
+    ScreenVals &getScreen();
 };
 
 class RollScreen {
 private:
-  std::shared_ptr<ScreenVals> rollScreen;
+    std::shared_ptr<ScreenVals> rollScreen;
 
 public:
-  RollScreen(stats inStats, ScreenVals &primaryScreen);
-  ScreenVals &getScreen();
+    RollScreen(stats inStats, ScreenVals &primaryScreen);
+    std::shared_ptr<ScreenVals> getScreen();
 };
 
 class ListHighlight {
 protected:
-  std::vector<std::string> _list;
-  std::string _title;
-  std::vector<std::string> _pathList;
-  std::vector<int> _options;
-  // std::vector<std::vector<FrmtChar>> _selScreen;
-  int _currPos = 0;
-  int _prevPos = 0;
-  int _listStartIdx = 0;
-  bool _highlightList = true;
-  Perimeter _perim;
-  DrawRange _cornerDims;
-  std::shared_ptr<ScreenVals> _listScreen;
-  std::shared_ptr<ScreenVals> _primaryScreen;
-  virtual void createListScreen(ScreenVals &inScreen,
-                                std::vector<std::string> inList,
-                                std::string inTitle, bool highlight);
-  virtual void createListPerimeter(ScreenVals &inScreen,
-                                   std::vector<int> inOpts);
-  virtual void navigateSelection();
-  virtual void listNavigate();
+    std::vector<std::string> _list;
+    std::string _title;
+    std::vector<std::string> _pathList;
+    std::vector<int> _options;
+    // std::vector<std::vector<FrmtChar>> _selScreen;
+    int _currPos = 0;
+    int _prevPos = 0;
+    int _listStartIdx = 0;
+    bool _highlightList = true;
+    Perimeter _perim;
+    DrawRange _cornerDims;
+    std::shared_ptr<ScreenVals> _listScreen;
+    std::shared_ptr<ScreenVals> _primaryScreen;
+    virtual void createListScreen(ScreenVals &inScreen, std::vector<std::string> inList, std::string inTitle,
+                                  bool highlight);
+    virtual void createListPerimeter(ScreenVals &inScreen, std::vector<int> inOpts);
+    virtual void navigateSelection();
+    virtual void listNavigate();
 
 public:
-  ListHighlight();
-  ListHighlight(std::vector<std::string> inList, ScreenVals &primaryScreen,
-                std::string inName, std::vector<int> inOptions,
-                Perimeter inPerim, DrawRange inRange);
-  ScreenVals &getScreen();
+    ListHighlight();
+    ListHighlight(std::vector<std::string> inList, ScreenVals &primaryScreen, std::string inName,
+                  std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
+    ScreenVals &getScreen();
 };
 
 class ListHighlightPair : public ListHighlight {
 private:
-  std::vector<std::string> _destList;
-  std::vector<int> _destIdx;
-  std::string _destTitle;
-  std::shared_ptr<ScreenVals> _destListScreen;
-  std::vector<int> _destOptions;
-  std::vector<Entity> _players;
-  const std::vector<std::string> _optMain = {"[ESC] Back", "(S)ave Party"};
-  int _destCurrPos = 0;
-  int _destPrevPos = 0;
-  int _destStartIdx = 0;
-  bool _highlightDest = false;
-  void navigateSelection() override;
-  char navigateDestination();
-  void listNavigate() override;
-  void destNavigate();
+    std::vector<std::string> _destList;
+    std::vector<int> _destIdx;
+    std::string _destTitle;
+    std::shared_ptr<ScreenVals> _destListScreen;
+    std::vector<int> _destOptions;
+    std::vector<Entity> _players;
+    const std::vector<std::string> _optMain = {"[ESC] Back", "(S)ave Party"};
+    int _destCurrPos = 0;
+    int _destPrevPos = 0;
+    int _destStartIdx = 0;
+    bool _highlightDest = false;
+    void navigateSelection() override;
+    char navigateDestination();
+    void listNavigate() override;
+    void destNavigate();
 
 public:
-  ListHighlightPair(std::vector<std::string> &inList,
-                    std::vector<Entity> &inPlayers,
-                    std::vector<std::string> &inPaths,
-                    ScreenVals &primaryScreen, std::string inName,
-                    std::string destTitle, std::vector<int> inOptions,
-                    std::vector<int> destOptions, Perimeter inPerim,
-                    DrawRange inRange);
-  ScreenVals &getDestScreen();
-  std::vector<Entity> &getEntityList();
+    ListHighlightPair(std::vector<std::string> &inList, std::vector<Entity> &inPlayers,
+                      std::vector<std::string> &inPaths, ScreenVals &primaryScreen, std::string inName,
+                      std::string destTitle, std::vector<int> inOptions, std::vector<int> destOptions,
+                      Perimeter inPerim, DrawRange inRange);
+    ScreenVals &getDestScreen();
+    std::vector<Entity> &getEntityList();
 };
 
 class ListHighlightPartySelect : public ListHighlight {
 private:
-  std::vector<std::vector<Entity>> _parties;
-  std::string _partyTitle;
-  // std::vector<std::string> _memberList;
-  std::vector<int> _partyOptions;
-  std::shared_ptr<ScreenVals> _partyListScreen;
-  const std::vector<std::string> _optMain = {"[ESC] Back", "(S)elect Party"};
-  std::vector<std::string> _party;
-  int _selIdx = 0;
-  void formatSelectedParty();
-  void navigateSelection() override;
-  void listNavigate() override;
-  void populatePartyList();
+    std::vector<std::vector<Entity>> _parties;
+    std::string _partyTitle;
+    // std::vector<std::string> _memberList;
+    std::vector<int> _partyOptions;
+    std::shared_ptr<ScreenVals> _partyListScreen;
+    const std::vector<std::string> _optMain = {"[ESC] Back", "(S)elect Party"};
+    std::vector<std::string> _party;
+    int _selIdx = 0;
+    void formatSelectedParty();
+    void navigateSelection() override;
+    void listNavigate() override;
+    void populatePartyList();
 
 public:
-  bool partySelected = false;
-  // ListHighlightPartySelect();
-  ListHighlightPartySelect(std::vector<std::string> &inList,
-                           std::vector<std::vector<Entity>> &inParties,
-                           std::vector<std::string> &inPaths,
-                           ScreenVals &primaryScreen, std::string inName,
-                           std::vector<int> inOptions, Perimeter inPerim,
-                           DrawRange inRange);
-  std::vector<Entity> returnParty();
-  int getPartyIdx();
+    bool partySelected = false;
+    // ListHighlightPartySelect();
+    ListHighlightPartySelect(std::vector<std::string> &inList, std::vector<std::vector<Entity>> &inParties,
+                             std::vector<std::string> &inPaths, ScreenVals &primaryScreen, std::string inName,
+                             std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
+    std::vector<Entity> returnParty();
+    int getPartyIdx();
 };
 
 enum PANE { LIST, DEST };
 
 class ListHighlightProfSelect : public ListHighlight {
 private:
-  Entity *_player;
-  std::vector<int> _playerOpts;
-  std::vector<profData> _playerProfList;
-  std::vector<std::string> _playerList;
-  std::shared_ptr<ScreenVals> _playerDestScreen;
-  std::shared_ptr<ScreenVals> _descriptionPanel;
-  class AccessInventory *_inventory;
-  int _destCurrPos = 0;
-  int _destPrevPos = 0;
-  int _destStartIdx = 0;
-  int _selIdx = 0;
-  int _profChosen = 0;
-  int _profAvailable = 0;
-  bool _highlightDest = false;
-  bool playerSelected = false;
-  const std::vector<std::string> _optMain = {"(F)inalize Selection"};
-  void navigateSelection() override;
-  char navigatePlayerDest();
-  void listNavigate() override;
-  void destNavigate();
-  void buildProfList();
-  void createProfListScreen(ScreenVals &inScreen,
-                            std::vector<std::string> inList,
-                            std::string inTitle, bool highlight, int inPane);
+    Entity *_player;
+    std::vector<int> _playerOpts;
+    std::vector<profData> _playerProfList;
+    std::vector<std::string> _playerList;
+    std::shared_ptr<ScreenVals> _playerDestScreen;
+    std::shared_ptr<ScreenVals> _descriptionPanel;
+    class AccessInventory *_inventory;
+    int _destCurrPos = 0;
+    int _destPrevPos = 0;
+    int _destStartIdx = 0;
+    int _selIdx = 0;
+    int _profChosen = 0;
+    int _profAvailable = 0;
+    bool _highlightDest = false;
+    bool playerSelected = false;
+    const std::vector<std::string> _optMain = {"(F)inalize Selection"};
+    void navigateSelection() override;
+    char navigatePlayerDest();
+    void listNavigate() override;
+    void destNavigate();
+    void buildProfList();
+    void createProfListScreen(ScreenVals &inScreen, std::vector<std::string> inList, std::string inTitle,
+                              bool highlight, int inPane);
 
 public:
-  ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen,
-                          std::vector<int> inOptions[2], Perimeter inPerim,
-                          DrawRange inRange);
-  void createDescription(profData profSel);
+    ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen, std::vector<int> inOptions[2], Perimeter inPerim,
+                            DrawRange inRange);
+    void createDescription(profData profSel);
 };
 
 class LoadFileList {
 protected:
-  std::vector<std::string> _fileList;
-  std::vector<std::string> _pathList;
+    std::vector<std::string> _fileList;
+    std::vector<std::string> _pathList;
 
 public:
-  LoadFileList();
-  LoadFileList(std::string directory);
-  std::vector<std::string> &getFileList();
-  std::vector<std::string> &getPathList();
+    LoadFileList();
+    LoadFileList(std::string directory);
+    std::vector<std::string> &getFileList();
+    std::vector<std::string> &getPathList();
 };
 
 class LoadCharList : public LoadFileList {
 private:
-  std::vector<Entity> _players;
+    std::vector<Entity> _players;
 
 public:
-  LoadCharList(std::string directory);
-  std::vector<Entity> &getEntityList();
+    LoadCharList(std::string directory);
+    std::vector<Entity> &getEntityList();
 };
 
 class LoadPartyList : public LoadFileList {
 private:
-  std::vector<std::vector<Entity>> _parties;
+    std::vector<std::vector<Entity>> _parties;
 
 public:
-  LoadPartyList(std::string directory);
-  std::vector<std::vector<Entity>> &getParties();
+    LoadPartyList(std::string directory);
+    std::vector<std::vector<Entity>> &getParties();
 };
 
 class AccessInventory : public ListHighlight {
 private:
-  std::vector<std::vector<std::shared_ptr<Items>>> _inventoryList;
-  std::shared_ptr<Entity> _player;
-  std::shared_ptr<ScreenVals> _entityListScreen;
-  std::shared_ptr<ScreenVals> _descriptionScreen;
-  std::shared_ptr<ScreenVals> _moneyEncumbScreen;
+    std::vector<std::vector<std::shared_ptr<Items>>> _inventoryList;
+    std::shared_ptr<Entity> _player;
+    std::shared_ptr<ScreenVals> _entityListScreen;
+    std::shared_ptr<ScreenVals> _descriptionScreen;
+    std::shared_ptr<ScreenVals> _moneyEncumbScreen;
 
-  sj::ondemand::parser _parser;
-  sj::padded_string _json;
-  sj::ondemand::document _itemsData;
+    sj::ondemand::parser _parser;
+    sj::padded_string _json;
+    sj::ondemand::document _itemsData;
 
-  std::vector<std::string> _entityInv;
-  std::vector<indexItemList> _indexItems;
+    std::vector<std::string> _entityInv;
+    std::vector<indexItemList> _indexItems;
 
-  void createInventoryList();
+    void createInventoryList();
 
-  unsigned _itemCount = 0;
+    unsigned _itemCount = 0;
 
-  const std::vector<std::string> _optMain = {"(F)inish Purchasing Inventory"};
+    const std::vector<std::string> _optMain = {"(F)inish Purchasing Inventory"};
 
-  // CreateInventoryScreen();
+    // CreateInventoryScreen();
 
 public:
-  AccessInventory();
-  AccessInventory(std::vector<std::string> &inList, Entity &inEntity,
-                  ScreenVals &primaryScreen, std::string inName,
-                  std::vector<int> inOptions, Perimeter inPerim,
-                  DrawRange inRange);
-  std::vector<std::vector<std::shared_ptr<Items>>> getInventoryList();
+    AccessInventory();
+    AccessInventory(std::vector<std::string> &inList, Entity &inEntity, ScreenVals &primaryScreen, std::string inName,
+                    std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
+    std::vector<std::vector<std::shared_ptr<Items>>> getInventoryList();
 };
 
 #endif // UI_UTIL_H

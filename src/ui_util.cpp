@@ -423,12 +423,11 @@ void PrintInfo::MakeCmbtWin() {
         //}
     }
 
-    DrawRange healCom;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[2]->xyLimits.minX = healCom.minX = _infoScreen[1]->xyLimits.maxX + 1;
-    _infoScreen[2]->xyLimits.minY = healCom.minY = _infoScreen[1]->xyLimits.minY;
-    _infoScreen[2]->xyLimits.maxX = healCom.maxX = _infoScreen[1]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[2]->xyLimits.maxY = healCom.maxY = _infoScreen[1]->xyLimits.minY + basicInfo.size() + 1;
+    _infoScreen[2]->xyLimits.minX = _infoScreen[1]->xyLimits.maxX + 1;
+    _infoScreen[2]->xyLimits.minY = _infoScreen[1]->xyLimits.minY;
+    _infoScreen[2]->xyLimits.maxX = _infoScreen[1]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[2]->xyLimits.maxY = _infoScreen[1]->xyLimits.minY + basicInfo.size() + 1;
     generatePerimeter(*_infoScreen[2], _infoBoxPerim);
     _contents.push_back(basicInfo);
 
@@ -441,6 +440,8 @@ void PrintInfo::MakeProfWin() {
     std::vector<profData> profs = _character->getWeapProf();
     std::vector<std::string> profStr;
 
+    profStr.push_back("Weapon Proficiencies: ");
+
     int maxLen = 0;
     for (int i = 0; i < profs.size(); ++i) {
         // for(int j = 0; j < basicInfo[i].size(); ++j){
@@ -451,12 +452,11 @@ void PrintInfo::MakeProfWin() {
         //}i
     }
 
-    DrawRange healCom;
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    _infoScreen[3]->xyLimits.minX = healCom.minX = _infoScreen[2]->xyLimits.maxX + 1;
-    _infoScreen[3]->xyLimits.minY = healCom.minY = _infoScreen[2]->xyLimits.minY;
-    _infoScreen[3]->xyLimits.maxX = healCom.maxX = _infoScreen[2]->xyLimits.maxX + maxLen + 7;
-    _infoScreen[3]->xyLimits.maxY = healCom.maxY = _infoScreen[2]->xyLimits.minY + profs.size() + 1;
+    _infoScreen[3]->xyLimits.minX = _infoScreen[2]->xyLimits.maxX + 1;
+    _infoScreen[3]->xyLimits.minY = _infoScreen[2]->xyLimits.minY;
+    _infoScreen[3]->xyLimits.maxX = _infoScreen[2]->xyLimits.maxX + maxLen + 7;
+    _infoScreen[3]->xyLimits.maxY = _infoScreen[2]->xyLimits.minY + profStr.size() + 1;
     generatePerimeter(*_infoScreen[3], _infoBoxPerim);
     _contents.push_back(profStr);
 
@@ -1210,7 +1210,7 @@ RollScreen::RollScreen(stats inStats, ScreenVals &primaryScreen) {
     drawSmall(1, rollScreen->xyLimits.maxX, 1, rollScreen->xyLimits.maxY, *rollScreen);
 }
 
-ScreenVals &RollScreen::getScreen() { return *rollScreen; }
+std::shared_ptr<ScreenVals> RollScreen::getScreen() { return rollScreen; }
 
 bool doesRecordExist(std::string name, std::string path, std::string suffix) {
     std::string file = path + name + suffix;
