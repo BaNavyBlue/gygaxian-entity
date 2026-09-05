@@ -274,7 +274,18 @@ void PrintInfo::MakeGenTbl(std::vector<std::string> stringVect) {
 
 void PrintInfo::SelectTbl() {
     bool selectWin = true;
+    std::size_t horz_char = tcols();
+    std::size_t vert_char = trows();
     while (selectWin) {
+        std::size_t new_horz = tcols();
+        std::size_t new_vert = trows();
+        if (horz_char != new_horz || vert_char != new_vert) {
+            horz_char = new_horz;
+            vert_char = new_vert;
+            //  createPrimary(_primaryScreen, "[ESC] to exit");
+            // drawPrimary(_primaryScreen);
+        }
+
         if (kbhit()) {
             char k = getkey();
             if (k == KEY_ESCAPE) {
@@ -455,7 +466,7 @@ void PrintInfo::MakeProfWin() {
 
     profStr.push_back("Weapon Proficiencies: ");
 
-    int maxLen = 0;
+    int maxLen = profStr.at(0).size();
     for (int i = 0; i < profs.size(); ++i) {
         // for(int j = 0; j < basicInfo[i].size(); ++j){
         if (maxLen < profs[i].profS.size()) {

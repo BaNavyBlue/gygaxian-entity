@@ -235,6 +235,8 @@ int main() {
                         screens.clear();
                         createRollScreen();
                     }
+                    createPrimary(primaryScreen, options);
+                    drawPrimary(primaryScreen);
                 } else if (std::tolower(k) == 'p') {
                     // printf("p pressed \r\n");
                     LoadCharList charList("characters");
