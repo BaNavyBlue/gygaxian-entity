@@ -5,6 +5,7 @@
 #include "party.h"
 #include "project_headers.h"
 #include "ui_structs.h"
+#include <memory>
 
 // Some of these prototypes defined in ui-test.cpp for now.
 void drawPrimary(ScreenVals &primaryScreen);
@@ -224,7 +225,7 @@ private:
     std::vector<std::string> _playerList;
     std::shared_ptr<ScreenVals> _playerDestScreen;
     std::shared_ptr<ScreenVals> _descriptionPanel;
-    class AccessInventory *_inventory;
+    std::unique_ptr<class AccessInventory> _inventory;
     int _destCurrPos = 0;
     int _destPrevPos = 0;
     int _destStartIdx = 0;

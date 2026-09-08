@@ -24,8 +24,6 @@ int main() {
 
     char reset_screen[64];
 
-    sprintf(reset_screen, "\e[8;%d;%dt", start_vert, start_horz);
-
     start_horz = horz_char = tcols();
     start_vert = vert_char = trows();
 
@@ -1254,7 +1252,7 @@ CHAR_CLASS selClassScreen(stats &inStats, RACE inRace, ScreenVals &inScreen1, Sc
               classScreen.xyLimits.maxY + 1, classScreen);
     char classKey = selClass(idx, inScreen1, inScreen2, inScreen3, classScreen);
     return cList[classKey];
-    return CLERIC;
+    // return CLERIC;
 }
 
 char selClass(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3, ScreenVals &inScreen4) {

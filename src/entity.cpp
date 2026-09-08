@@ -329,6 +329,7 @@ void Entity::setWisTbl() {
     case 6:
     case 7:
         _wisTbl.magicAttackAdj = -1;
+        break;
     case 8:
     case 9:
         _wisTbl.magicAttackAdj = 0;
@@ -859,7 +860,6 @@ bool Entity::checkRaceStats(RACE race) {
             // std::cout << "Half-Orc strength set to cap 18" << std::endl;
             _stats.strength = _modStats.strength = 18;
         } else {
-            _stats.strength++;
             _stats.strength++;
         }
 

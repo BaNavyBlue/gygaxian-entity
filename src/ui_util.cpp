@@ -2306,7 +2306,7 @@ int ListHighlightPartySelect::getPartyIdx() {
 
 ListHighlightProfSelect::ListHighlightProfSelect(Entity &inChar, ScreenVals &primaryScreen,
                                                  std::vector<int> inOptions[2], Perimeter inPerim, DrawRange inRange) {
-    _inventory = new AccessInventory();
+    _inventory = std::make_unique<AccessInventory>(); // note syntax
     _perim = inPerim;
     //_list = inList;
     //_pathList = inPaths;

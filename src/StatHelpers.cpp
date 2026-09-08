@@ -16,10 +16,10 @@
 
 // Stat Dice Helper Function best 3 out of 4
 unsigned bestThree() {
-    std::vector<unsigned> rolls;
+    unsigned rolls[4];
     int min_idx = 0;
     for (int i = 0; i < 4; ++i) {
-        rolls.push_back(rollDice(6, false));
+        rolls[i] = rollDice(6, false);
     }
     unsigned min_val = rolls[0];
     for (int i = 1; i < 4; ++i) {
@@ -137,6 +137,7 @@ SEX inputSex() {
         //}
     } while (true);
     std::cout << std::endl;
+    return MALE;
 }
 
 RACE inputRace(stats inStats, std::vector<std::string> &viable, std::vector<std::string> &nonViable) {
@@ -401,6 +402,9 @@ void printSex(SEX sex) {
     case MALE:
         std::cout << "Male." << std::endl;
         break;
+    default:
+        std::cout << "Snail" << std::endl;
+        break;
     }
 }
 
@@ -416,6 +420,7 @@ std::string getSex(SEX sex) {
     case MALE:
         return "Male";
     }
+    return "Snail";
 }
 
 void printStats(stats inStats) {
@@ -596,7 +601,10 @@ std::string getRace(RACE inRace) {
         return "Half-Elf";
     case GNOME:
         return "Gnome";
+    case CREATURE:
+        return "Rangoon";
     }
+    return "Fake-Race";
 }
 
 void printStrTbl(strengthTable strTbl) {
@@ -848,6 +856,8 @@ bool raceStatCheck(stats inStats, RACE race) {
         }
 
         return true;
+    default:
+        return false;
     }
 }
 
@@ -1086,6 +1096,8 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats) {
             return false;
         }
         return true;
+    default:
+        return false;
     }
 }
 
@@ -1308,13 +1320,13 @@ bool rollFailure(stats inStats, bool printMsg) {
     }
 
     if (!atLeastOneClassViable) {
-        if (true) {
+        if (printMsg) {
             std::cout << "\r\n[SYSTEM] Cursed Roll No viable classes for these stats. Auto-rerolling..." << std::endl;
-            std::cout << "strength: " << inStats.strength << "\r\nintelligence: " << inStats.intelligence
-                      << "\r\nwisdom: " << inStats.wisdom;
-            std::cout << "\r\nDexterity: " << inStats.dexterity << "\r\ncharisma: " << inStats.charisma
-                      << "\r\nconstitution: " << inStats.constitution << std::endl;
-            sleep(2);
+            std::cout << "strength: " << inStats.strength << " \r\nintelligence: " << inStats.intelligence
+                      << " \r\nwisdom: " << inStats.wisdom;
+            std::cout << " \r\nDexterity: " << inStats.dexterity << "\r\ncharisma: " << inStats.charisma
+                      << " \r\nconstitution: " << inStats.constitution << " " << std::endl;
+            // sleep(2);
         }
         return false; // Triggers the do-while loop to roll again
     }
