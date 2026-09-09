@@ -82,7 +82,8 @@ enum WEAPON_TYPE {
     DART,     // 9
     BLUNT,    // 10
     SPEAR,    // 11
-    STAFF     // 12
+    STAFF,    // 12
+    SLING     // 13
 };
 
 enum CLOTHING_TYPE { BELT, BOOTS, CAP, CLOAK, GIRDLE, HAT, ROBE };
@@ -315,7 +316,7 @@ enum WEAPON_PROF {
     PIKE_AWL,
     RANSEUR,
     SCIMITAR,
-    SLING,
+    SLING_PROF,
     SPEAR_PROF,
     SPETUM,
     STAFF_QUARTER,
@@ -376,7 +377,7 @@ const std::vector<profData> profDat = {{2, AXE_BATTLE, AXE, "Battle Axe"},
                                        {40, PIKE_AWL, POLEARM, "Pike Awl"},
                                        {43, RANSEUR, POLEARM, "Ranseur"},
                                        {44, SCIMITAR, SWORD, "Scimitar"},
-                                       {45, SLING, BOW, "Sling"},
+                                       {45, SLING_PROF, SLING, "Sling"},
                                        {48, SPEAR_PROF, SPEAR, "Spear"},
                                        {49, SPETUM, POLEARM, "Spetum"},
                                        {50, STAFF_QUARTER, STAFF, "Quarter Staff"},

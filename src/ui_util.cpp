@@ -2471,6 +2471,14 @@ void ListHighlightProfSelect::createProfListScreen(ScreenVals &inScreen, std::ve
                         } else {
                             inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
                         }
+                    } else if (_player->getClass().at(0) == RANGER && _player->getLevel() < 5) {
+                        if (currDat.W_TYPE == BOW || currDat.W_TYPE == DAGGER || currDat.W_TYPE == SWORD ||
+                            currDat.W_TYPE == KNIFE || currDat.prof == AXE_BATTLE || currDat.prof == AXE_THROWING ||
+                            currDat.W_TYPE == SPEAR || currDat.prof == CROSSBOW_LIGHT) {
+                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
+                        } else {
+                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
+                        }
                     } else {
                         inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
                     }
@@ -2800,6 +2808,15 @@ void ListHighlightProfSelect::listNavigate() {
                         } else {
                             _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = RED;
                         }
+                    } else if (_player->getClass().at(0) == RANGER && _player->getLevel() < 5) {
+                        if (profDat[strdx].W_TYPE == BOW || profDat[strdx].W_TYPE == DAGGER ||
+                            profDat[strdx].W_TYPE == SWORD || profDat[strdx].W_TYPE == KNIFE ||
+                            profDat[strdx].prof == AXE_BATTLE || profDat[strdx].prof == AXE_THROWING ||
+                            profDat[strdx].W_TYPE == SPEAR || profDat[strdx].prof == CROSSBOW_LIGHT) {
+                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
+                        } else {
+                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = RED;
+                        }
                     } else {
                         _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
                     }
@@ -2879,9 +2896,18 @@ void ListHighlightProfSelect::destNavigate() {
                     } else if (_player->getClass().at(0) == MAGIC_USER || _player->getClass().at(0) == ILLUSIONIST) {
                         if (_playerProfList[strdx].W_TYPE == STAFF || _playerProfList[strdx].W_TYPE == DAGGER ||
                             _playerProfList[strdx].W_TYPE == DART || _playerProfList[strdx].W_TYPE == KNIFE) {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
+                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
                         } else {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = RED;
+                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = RED;
+                        }
+                    } else if (_player->getClass().at(0) == RANGER && _player->getLevel() < 5) {
+                        if (_playerProfList[strdx].W_TYPE == BOW || _playerProfList[strdx].W_TYPE == DAGGER ||
+                            _playerProfList[strdx].W_TYPE == SWORD || _playerProfList[strdx].W_TYPE == KNIFE ||
+                            _playerProfList[strdx].prof == AXE_BATTLE || _playerProfList[strdx].prof == AXE_THROWING ||
+                            _playerProfList[strdx].W_TYPE == SPEAR || _playerProfList[strdx].prof == CROSSBOW_LIGHT) {
+                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
+                        } else {
+                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = RED;
                         }
                     } else {
                         _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
@@ -3023,17 +3049,6 @@ AccessInventory::AccessInventory(std::vector<std::string> &inList, Entity &inEnt
     _descriptionScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
     _moneyEncumbScreen = std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK);
 
-    _json = sj::padded_string::load("items/Arms.json");
-    _itemsData = _parser.iterate(_json);
-
-    _itemCount = uint64_t(_itemsData["data"]["count"]);
-    std::vector<std::shared_ptr<Items>> armsList;
-    for (unsigned i = 0; i < _itemCount; ++i) {
-        armsList.push_back(std::make_shared<Arms>(_itemsData, i));
-    }
-
-    _inventoryList.push_back(armsList);
-
     _json = sj::padded_string::load("items/Armor.json");
     _itemsData = _parser.iterate(_json);
 
@@ -3046,6 +3061,17 @@ AccessInventory::AccessInventory(std::vector<std::string> &inList, Entity &inEnt
     }
 
     _inventoryList.push_back(armorList);
+
+    _json = sj::padded_string::load("items/Arms.json");
+    _itemsData = _parser.iterate(_json);
+
+    _itemCount = uint64_t(_itemsData["data"]["count"]);
+    std::vector<std::shared_ptr<Items>> armsList;
+    for (unsigned i = 0; i < _itemCount; ++i) {
+        armsList.push_back(std::make_shared<Arms>(_itemsData, i));
+    }
+
+    _inventoryList.push_back(armsList);
 
     _json = sj::padded_string::load("items/Clothing.json");
     _itemsData = _parser.iterate(_json);
