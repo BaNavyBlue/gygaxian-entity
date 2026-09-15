@@ -153,7 +153,7 @@ std::vector<std::string> Elf::getRaceSkills() {
     skillList.push_back("Resist sleep or charm d" + std::to_string(resistSlpChrm.sidedDie) + " succeeds: 1-" +
                         std::to_string(resistSlpChrm.maxRange));
     skillList.push_back("Detect secret or concealed door passive within 10' d" +
-                        std::to_string(secConDoorActv.sidedDie) + " succeeds: 1-" +
+                        std::to_string(secConDoorPsv.sidedDie) + " succeeds: 1-" +
                         std::to_string(secConDoorPsv.maxRange));
     skillList.push_back("Detect secret or concealed door active d" + std::to_string(secConDoorActv.sidedDie) +
                         " succeeds: 1-" + std::to_string(secConDoorActv.maxRange));
@@ -199,7 +199,7 @@ void Gnome::listRaceSkills() {
               << (int)dtctDepth.maxRange << std::endl;
     std::cout << "Infravision up to " << infraVision << " feet" << std::endl;
     std::cout << "To hit bonus while fighting Half-Orc, Goblin, Hobgoblin and Orc +" << toHitBonus << std::endl;
-    std::cout << "Certain Adversary to hit penalty to Dwarf " << adversaryHitPenalty << std::endl;
+    std::cout << "Certain Adversary to hit penalty to Gnome " << adversaryHitPenalty << std::endl;
     std::cout << "Defense against Wands, staves, rods and spells: +" << defensiveBonus << std::endl;
 }
 
@@ -217,7 +217,7 @@ std::vector<std::string> Gnome::getRaceSkills() {
     skillList.push_back("Infravision up to " + std::to_string(infraVision) + "'");
     skillList.push_back("To hit bonus while fighting Half-Orc, Goblin, Hobgoblin and Orc +" +
                         std::to_string(toHitBonus));
-    skillList.push_back("Certain Adversary to hit penalty to Dwarf " + std::to_string(adversaryHitPenalty));
+    skillList.push_back("Certain Adversary to hit penalty to Gnome " + std::to_string(adversaryHitPenalty));
     skillList.push_back("Defense against Wands, staves, rods and spells: +" + std::to_string(defensiveBonus));
     return skillList;
 }
@@ -259,7 +259,7 @@ std::vector<std::string> HalfElf::getRaceSkills() {
     skillList.push_back("Resist sleep or charm d" + std::to_string(resistSlpChrm.sidedDie) + " succeeds: 1-" +
                         std::to_string(resistSlpChrm.maxRange));
     skillList.push_back("Detect secret or concealed door passive within 10' d" +
-                        std::to_string(secConDoorActv.sidedDie) + " succeeds: 1-" +
+                        std::to_string(secConDoorPsv.sidedDie) + " succeeds: 1-" +
                         std::to_string(secConDoorPsv.maxRange));
     skillList.push_back("Detect secret or concealed door active d" + std::to_string(secConDoorActv.sidedDie) +
                         " succeeds: 1-" + std::to_string(secConDoorActv.maxRange));

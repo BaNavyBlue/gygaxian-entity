@@ -1,5 +1,6 @@
 #include "ui_util.h"
 #include "entity_structs_consts.h"
+#include "rogueutil.h"
 #include <cctype>
 
 TextInput::TextInput() {
@@ -2413,6 +2414,45 @@ void ListHighlightProfSelect::createDescription(profData profSel) {
     // }
 }
 
+// New, free function — no list, no index, no pane, no member access
+color_code weaponSuitabilityColor(CHAR_CLASS cls, unsigned level, const profData &weapon) {
+    switch (cls) {
+    case CLERIC:
+    case DRUID:
+        return (weapon.W_TYPE == BLUNT || weapon.W_TYPE == STAFF) ? GREEN : RED;
+    case MAGIC_USER:
+    case ILLUSIONIST:
+        return (weapon.W_TYPE == STAFF || weapon.W_TYPE == DAGGER || weapon.W_TYPE == DART || weapon.W_TYPE == KNIFE)
+                   ? GREEN
+                   : RED;
+    case RANGER:
+        if (level < 5) {
+            return (weapon.W_TYPE == BOW || weapon.W_TYPE == DAGGER || weapon.W_TYPE == SWORD ||
+                    weapon.W_TYPE == KNIFE || weapon.prof == AXE_BATTLE || weapon.prof == AXE_THROWING ||
+                    weapon.W_TYPE == SPEAR || weapon.prof == CROSSBOW_LIGHT)
+                       ? GREEN
+                       : RED;
+        }
+        return GREEN;
+    case THIEF:
+        if (weapon.W_TYPE == DAGGER || weapon.prof == SWORD_BROAD || weapon.W_TYPE == KNIFE ||
+            weapon.prof == SWORD_SHORT || weapon.prof == SWORD_LONG || weapon.prof == CLUB) {
+            return GREEN;
+        }
+        if (weapon.W_TYPE == DART || weapon.W_TYPE == SLING || weapon.prof == BOW_SHORT) {
+            return YELLOW;
+        }
+        return RED;
+    case ASSASSIN:
+        return (weapon.W_TYPE == DAGGER || weapon.prof == SWORD_BROAD || weapon.W_TYPE == KNIFE ||
+                weapon.prof == SWORD_SHORT || weapon.prof == SWORD_LONG || weapon.prof == CLUB)
+                   ? GREEN
+                   : YELLOW;
+    default:
+        return GREEN;
+    }
+}
+
 void ListHighlightProfSelect::createProfListScreen(ScreenVals &inScreen, std::vector<std::string> inList,
                                                    std::string inTitle, bool highlight, int inPane) {
     color_code textCol;
@@ -2458,30 +2498,8 @@ void ListHighlightProfSelect::createProfListScreen(ScreenVals &inScreen, std::ve
                     inScreen.bGColorMap[i][j + inScreen.xyLimits.minX + 1] = bgCol;
                 } else {
                     inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
-                    if (_player->getClass().at(0) == CLERIC || _player->getClass().at(0) == DRUID) {
-                        if (currDat.W_TYPE == BLUNT || currDat.W_TYPE == STAFF) {
-                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
-                        } else {
-                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
-                        }
-                    } else if (_player->getClass().at(0) == MAGIC_USER || _player->getClass().at(0) == ILLUSIONIST) {
-                        if (currDat.W_TYPE == STAFF || currDat.W_TYPE == DAGGER || currDat.W_TYPE == DART ||
-                            currDat.W_TYPE == KNIFE) {
-                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
-                        } else {
-                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
-                        }
-                    } else if (_player->getClass().at(0) == RANGER && _player->getLevel() < 5) {
-                        if (currDat.W_TYPE == BOW || currDat.W_TYPE == DAGGER || currDat.W_TYPE == SWORD ||
-                            currDat.W_TYPE == KNIFE || currDat.prof == AXE_BATTLE || currDat.prof == AXE_THROWING ||
-                            currDat.W_TYPE == SPEAR || currDat.prof == CROSSBOW_LIGHT) {
-                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
-                        } else {
-                            inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = RED;
-                        }
-                    } else {
-                        inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = GREEN;
-                    }
+                    inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] =
+                        weaponSuitabilityColor(_player->getClass().at(0), _player->getLevel(), currDat);
                 }
             }
         }
@@ -2794,32 +2812,9 @@ void ListHighlightProfSelect::listNavigate() {
                     _listScreen->bGColorMap[i][j + _listScreen->xyLimits.minX + 1] = bgCol;
                 } else {
                     _listScreen->charMap[i][j + _listScreen->xyLimits.minX + 1] = _list[strdx][j];
-                    if (_player->getClass().at(0) == CLERIC || _player->getClass().at(0) == DRUID) {
+                    _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] =
+                        weaponSuitabilityColor(_player->getClass().at(0), _player->getLevel(), profDat[strdx]);
 
-                        if (profDat[strdx].W_TYPE == BLUNT || profDat[strdx].W_TYPE == STAFF) {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
-                        } else {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = RED;
-                        }
-                    } else if (_player->getClass().at(0) == MAGIC_USER || _player->getClass().at(0) == ILLUSIONIST) {
-                        if (profDat[strdx].W_TYPE == STAFF || profDat[strdx].W_TYPE == DAGGER ||
-                            profDat[strdx].W_TYPE == DART || profDat[strdx].W_TYPE == KNIFE) {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
-                        } else {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = RED;
-                        }
-                    } else if (_player->getClass().at(0) == RANGER && _player->getLevel() < 5) {
-                        if (profDat[strdx].W_TYPE == BOW || profDat[strdx].W_TYPE == DAGGER ||
-                            profDat[strdx].W_TYPE == SWORD || profDat[strdx].W_TYPE == KNIFE ||
-                            profDat[strdx].prof == AXE_BATTLE || profDat[strdx].prof == AXE_THROWING ||
-                            profDat[strdx].W_TYPE == SPEAR || profDat[strdx].prof == CROSSBOW_LIGHT) {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
-                        } else {
-                            _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = RED;
-                        }
-                    } else {
-                        _listScreen->colorMap[i][j + _listScreen->xyLimits.minX + 1] = GREEN;
-                    }
                     _listScreen->bGColorMap[i][j + _listScreen->xyLimits.minX + 1] = BLACK;
                 }
             }
@@ -2886,32 +2881,8 @@ void ListHighlightProfSelect::destNavigate() {
                     _playerDestScreen->bGColorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = bgCol;
                 } else {
                     _playerDestScreen->charMap[i][j + _playerDestScreen->xyLimits.minX + 1] = _playerList[strdx][j];
-                    if (_player->getClass().at(0) == CLERIC || _player->getClass().at(0) == DRUID) {
-
-                        if (_playerProfList[strdx].W_TYPE == BLUNT || _playerProfList[strdx].W_TYPE == STAFF) {
-                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
-                        } else {
-                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = RED;
-                        }
-                    } else if (_player->getClass().at(0) == MAGIC_USER || _player->getClass().at(0) == ILLUSIONIST) {
-                        if (_playerProfList[strdx].W_TYPE == STAFF || _playerProfList[strdx].W_TYPE == DAGGER ||
-                            _playerProfList[strdx].W_TYPE == DART || _playerProfList[strdx].W_TYPE == KNIFE) {
-                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
-                        } else {
-                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = RED;
-                        }
-                    } else if (_player->getClass().at(0) == RANGER && _player->getLevel() < 5) {
-                        if (_playerProfList[strdx].W_TYPE == BOW || _playerProfList[strdx].W_TYPE == DAGGER ||
-                            _playerProfList[strdx].W_TYPE == SWORD || _playerProfList[strdx].W_TYPE == KNIFE ||
-                            _playerProfList[strdx].prof == AXE_BATTLE || _playerProfList[strdx].prof == AXE_THROWING ||
-                            _playerProfList[strdx].W_TYPE == SPEAR || _playerProfList[strdx].prof == CROSSBOW_LIGHT) {
-                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
-                        } else {
-                            _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = RED;
-                        }
-                    } else {
-                        _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = GREEN;
-                    }
+                    _playerDestScreen->colorMap[i][j + _playerDestScreen->xyLimits.minX + 1] =
+                        weaponSuitabilityColor(_player->getClass().at(0), _player->getLevel(), _playerProfList[strdx]);
                     _playerDestScreen->bGColorMap[i][j + _playerDestScreen->xyLimits.minX + 1] = BLACK;
                 }
             }

@@ -992,7 +992,7 @@ bool classStatCheck(CHAR_CLASS cClass, stats inStats) {
         if (inStats.strength < 13) {
             return false;
         }
-        if (inStats.intelligence < 6) {
+        if (inStats.intelligence < 13) {
             return false;
         }
         if (inStats.wisdom < 14) {
