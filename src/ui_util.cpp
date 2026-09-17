@@ -3,6 +3,19 @@
 #include "rogueutil.h"
 #include <cctype>
 
+bool terminalResized() {
+    static int cachedCols = tcols();
+    static int cachedRows = trows();
+    const int cols = tcols();
+    const int rows = trows();
+    if (cols == cachedCols && rows == cachedRows) {
+        return false;
+    }
+    cachedCols = cols;
+    cachedRows = rows;
+    return true;
+}
+
 TextInput::TextInput() {
     // std::cout << "woopty woo" << std::endl;
 }
@@ -23,6 +36,7 @@ void TextInput::createTextInput(DrawRange uRandWidth, Perimeter inPerim, std::st
 
     drawSmall(_textScreen->xyLimits.minX, _textScreen->xyLimits.maxX, _textScreen->xyLimits.minY,
               _textScreen->xyLimits.maxY + 1, *_textScreen);
+    ScreenGuard gText(*_textScreen);
     getText();
 }
 
@@ -38,12 +52,16 @@ void TextInput::PlacePrompt() {
 
 void TextInput::getText() {
     showcursor();
-    int cursX = _textScreen->xyLimits.minX + 2;
-    int cursY = _textScreen->xyLimits.minY + 3;
-    int cursLeftLim = cursX;
+    const int cursY = _textScreen->xyLimits.minY + 3;
+    const int cursLeftLim = _textScreen->xyLimits.minX + 2;
+    int cursX = cursLeftLim;
     locate(cursX, cursY);
     bool gather = true;
     while (gather) {
+        if (terminalResized()) {
+            ScreenStack::redrawAll({});
+            locate(cursX, cursY); // redraw moved the cursor; put it back
+        }
         if (kbhit()) {
             int k = getkey();
             switch (k) {
@@ -53,7 +71,9 @@ void TextInput::getText() {
             case KEY_NRMLDEL:
                 if (_receivedString.size() > 0) {
                     _receivedString.pop_back();
-                    locate(--cursX, cursY);
+                    --cursX;
+                    _textScreen->charMap[cursY][cursX] = ' '; // buffer
+                    locate(cursX, cursY);
                     colorPrintUTF(YELLOW, BLACK, " ");
                     locate(cursX, cursY);
                 }
@@ -67,6 +87,8 @@ void TextInput::getText() {
                 if (k > 31 && k < 127 || k > 127) {
                     if (_receivedString.size() < _textScreen->xyLimits.maxX - 3) {
                         _receivedString.push_back(k);
+                        _textScreen->charMap[cursY][cursX] = k; // buffer
+                        _textScreen->colorMap[cursY][cursX] = YELLOW;
                         colorPrintUTF(YELLOW, BLACK, getUTF(k).c_str());
                         locate(++cursX, cursY);
                     }
@@ -205,6 +227,69 @@ PrintInfo::PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, Scr
                   _infoScreen[i]->xyLimits.maxY + 1, *_primaryScreen);
     }
     _infoScreen.clear();
+}
+
+void PrintInfo::showTbl(char key) {
+    switch (tolower(key)) {
+    case 'c':
+        MakeGenTbl(_character->getCharClassSkills()[0]->getClassSkills());
+        break;
+    case 'r':
+        MakeGenTbl(_character->getRaceSkills()->getRaceSkills());
+        break;
+    case 's':
+        MakeGenTbl(getStrTbl(_character->getStrTbl()));
+        break;
+    case 'i':
+        MakeGenTbl(getIntTbl(_character->getIntTbl()));
+        break;
+    case 'w':
+        MakeGenTbl(getWisTbl(_character->getWisTbl()));
+        break;
+    case 'd':
+        MakeDexTbl();
+        break;
+    case 'o':
+        MakeGenTbl(getConsTbl(_character->getConsTbl()));
+        break;
+    case 'h':
+        MakeGenTbl(getCharTbl(_character->getCharTbl()));
+        break;
+    default:
+        return; // not a table key — don't record it
+    }
+    _lastTblKey = key;
+}
+
+void PrintInfo::closeTbl() {
+    while (_infoScreen.size() > _basePanels) {
+        const auto &L = _infoScreen.back()->xyLimits;
+        drawSmall(L.minX, L.maxX, L.minY, L.maxY + 1, *_primaryScreen);
+        _infoScreen.pop_back();
+        _contents.pop_back();
+    }
+    _lastTblKey = 0;
+}
+
+void PrintInfo::relayout() {
+    const char reopen = _lastTblKey;
+    _horz = tcols();
+    _vert = trows();
+    _infoScreen.clear();
+    _contents.clear();
+    _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
+    createPrimary();
+    drawPrimary(); // cls()
+    MakeCharWin();
+    MakeStatsWin();
+    MakeCmbtWin();
+    MakeProfWin();
+    MakeWealthWin();
+    MakeLangWin();
+    MakeEscTag();
+    _basePanels = _infoScreen.size();
+    if (reopen)
+        showTbl(reopen);
 }
 
 void PrintInfo::PlaceInfo(int vectIdx) {
@@ -886,10 +971,16 @@ WarnMessage::WarnMessage(std::string warning, std::string question) {
     }
 
     drawSmall(boxCorners.minX, boxCorners.maxX, boxCorners.minY, boxCorners.maxY + 1, *_warnScreen);
+    _guard = std::make_unique<ScreenGuard>(*_warnScreen);
 }
 
 bool WarnMessage::waitForAnswer() {
     while (true) {
+
+        if (terminalResized()) {
+            ScreenStack::redrawAll({});
+        }
+
         if (kbhit()) {
             char k = getkey();
             switch (tolower(k)) {
@@ -1251,6 +1342,9 @@ bool doesRecordExist(std::string name, std::string path, std::string suffix) {
 }
 
 ListHighlight::ListHighlight() {
+}
+
+void ListHighlight::onResize() {
 }
 
 ListHighlight::ListHighlight(std::vector<std::string> inList, ScreenVals &primaryScreen, std::string inName,
@@ -1630,32 +1724,8 @@ void ListHighlightPair::navigateSelection() {
     while (true) {
         std::size_t new_horz = tcols();
         std::size_t new_vert = trows();
-        if (horz_char != new_horz || vert_char != new_vert) {
-            horz_char = new_horz;
-            vert_char = new_vert;
-            createPrimary(*_primaryScreen, _optMain);
-            drawPrimary(*_primaryScreen);
-
-            int maxY = vert_char - 3;
-            _listScreen->xyLimits.minX = _cornerDims.minX = _primaryScreen->xyLimits.minX + 1;
-            _listScreen->xyLimits.minY = _cornerDims.minY = _primaryScreen->xyLimits.minY + 1;
-            _listScreen->xyLimits.maxX = _cornerDims.maxX = horz_char / 3;
-            (maxY >= 0) ? _listScreen->xyLimits.maxY = _cornerDims.maxY = maxY
-                        : _listScreen->xyLimits.maxY = _cornerDims.maxY = 0;
-
-            _destListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
-            _destListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
-            _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
-            (maxY >= 0) ? _destListScreen->xyLimits.maxY = maxY : _destListScreen->xyLimits.maxY = maxY;
-
-            // createListPerimeter(*_listScreen, _options);
-            // createListScreen(*_listScreen, _list, _title);
-            listNavigate();
-            createListPerimeter(*_destListScreen, _destOptions);
-            createListScreen(*_destListScreen, _destList, _destTitle, _highlightDest);
-            drawSmall(_cornerDims.minX, _cornerDims.maxX, _cornerDims.minY, _cornerDims.maxY + 1, *_listScreen);
-            drawSmall(_destListScreen->xyLimits.minX, _destListScreen->xyLimits.maxX, _destListScreen->xyLimits.minY,
-                      _destListScreen->xyLimits.maxY + 1, *_destListScreen);
+        if (terminalResized()) {
+            ScreenStack::redrawAll({});
         }
 
         if (kbhit()) {
@@ -2475,32 +2545,34 @@ void ListHighlightProfSelect::createProfListScreen(ScreenVals &inScreen, std::ve
         inScreen.colorMap[inScreen.xyLimits.minY + 1][i + titlePos] = YELLOW;
     }
 
+    // Resolve everything that depends on which pane we're drawing, once, up front.
+    const int startIdx = (inPane == DEST) ? _destStartIdx : _listStartIdx;
+    const int cursorIdx = (inPane == DEST) ? _destCurrPos : _currPos;
+    const CHAR_CLASS cls = _player->getClass().at(0);
+    const unsigned level = _player->getLevel();
+
     for (int i = inScreen.xyLimits.minY + 3; i < inScreen.xyLimits.maxY - 1; ++i) {
-        int strdx = i - (inScreen.xyLimits.minY + 3);
-        // if (strdx < 0) strdx = 0;
-        if (strdx < inList.size()) {
-            int limit = inList[strdx].size();
+        int strdx = i - (inScreen.xyLimits.minY + 3) + startIdx;
+        if (strdx < 0 || strdx >= inList.size()) {
+            continue;
+        }
 
-            if (limit > inScreen.xyLimits.maxX - 2) {
-                limit = inScreen.xyLimits.maxX - 2;
-            }
+        int limit = inList[strdx].size();
+        if (limit > inScreen.xyLimits.maxX - 2) {
+            limit = inScreen.xyLimits.maxX - 2;
+        }
 
-            for (int j = 0; j < limit; ++j) {
-                profData currDat;
-                if (inPane == DEST) {
-                    currDat = _playerProfList.at(strdx);
-                } else {
-                    currDat = profDat[strdx];
-                }
-                if (strdx == 0 && highlight) {
-                    inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
-                    inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] = textCol;
-                    inScreen.bGColorMap[i][j + inScreen.xyLimits.minX + 1] = bgCol;
-                } else {
-                    inScreen.charMap[i][j + inScreen.xyLimits.minX + 1] = inList[strdx][j];
-                    inScreen.colorMap[i][j + inScreen.xyLimits.minX + 1] =
-                        weaponSuitabilityColor(_player->getClass().at(0), _player->getLevel(), currDat);
-                }
+        // Same for every character on this row — resolve once per row, not per character.
+        const profData &currDat = (inPane == DEST) ? _playerProfList.at(strdx) : profDat[strdx];
+        const bool isCursor = highlight && (strdx == cursorIdx);
+        const color_code rowColor = isCursor ? textCol : weaponSuitabilityColor(cls, level, currDat);
+
+        for (int j = 0; j < limit; ++j) {
+            const int col = j + inScreen.xyLimits.minX + 1;
+            inScreen.charMap[i][col] = inList[strdx][j];
+            inScreen.colorMap[i][col] = rowColor;
+            if (isCursor) {
+                inScreen.bGColorMap[i][col] = bgCol;
             }
         }
     }
@@ -3370,4 +3442,27 @@ void AccessInventory::createInventoryList() {
 
 std::vector<std::vector<std::shared_ptr<Items>>> AccessInventory::getInventoryList() {
     return _inventoryList;
+}
+
+static std::vector<VisibleScreen> g_visible;
+extern ScreenVals primaryScreen; // already a global in ui-test.cpp
+
+void ScreenStack::push(const ScreenVals &s, int maxYAdj) {
+    g_visible.push_back({&s, maxYAdj});
+}
+
+void ScreenStack::pop() {
+    if (!g_visible.empty()) {
+        g_visible.pop_back();
+    }
+}
+
+void ScreenStack::redrawAll(const std::vector<std::string> &primaryOpts) {
+    createPrimary(primaryScreen, primaryOpts);
+    drawPrimary(primaryScreen); // cls() happens here
+    for (const auto &v : g_visible) {
+        const auto &L = v.screen->xyLimits;
+        drawSmall(L.minX, L.maxX, L.minY, L.maxY + v.maxYAdj, *v.screen);
+    }
+    std::ofstream("resize.log", std::ios::app) << "redraw, stack size " << g_visible.size() << "\n";
 }

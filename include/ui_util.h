@@ -32,6 +32,25 @@ char selOpt(const std::vector<ScreenVals> &inScreens, int idx);
 bool doesRecordExist(std::string name, std::string path, std::string suffix);
 void clearPrevScreen(const std::vector<ScreenVals> &screens);
 
+bool terminalResized();
+
+class ScreenStack {
+public:
+    static void push(const ScreenVals &s, int maxYAdj = 1);
+    static void pop();
+    static void redrawAll(const std::vector<std::string> &primaryOpts);
+};
+
+// RAII: registers on construction, unregisters on scope exit
+struct ScreenGuard {
+    ScreenGuard(const ScreenVals &s, int maxYAdj = 1) {
+        ScreenStack::push(s, maxYAdj);
+    }
+    ~ScreenGuard() {
+        ScreenStack::pop();
+    }
+};
+
 class TextInput {
 private:
     std::string _receivedString;
@@ -111,6 +130,11 @@ protected:
     void PlaceInfo(int vectIdx);
     void createPrimary();
     void drawPrimary();
+    char _lastTblKey = 0;   // which table is open, 0 = none
+    size_t _basePanels = 0; // how many panels the fixed layout has
+    void showTbl(char key);
+    void closeTbl();
+    void relayout();
 
 public:
     PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert);
@@ -119,6 +143,7 @@ public:
 class WarnMessage {
 private:
     std::shared_ptr<ScreenVals> _warnScreen;
+    std::unique_ptr<ScreenGuard> _guard;
 
 public:
     WarnMessage(std::string warning, std::string question);
@@ -155,6 +180,7 @@ protected:
     virtual void createListPerimeter(ScreenVals &inScreen, std::vector<int> inOpts);
     virtual void navigateSelection();
     virtual void listNavigate();
+    virtual void onResize();
 
 public:
     ListHighlight();
@@ -307,6 +333,11 @@ public:
     AccessInventory(std::vector<std::string> &inList, Entity &inEntity, ScreenVals &primaryScreen, std::string inName,
                     std::vector<int> inOptions, Perimeter inPerim, DrawRange inRange);
     std::vector<std::vector<std::shared_ptr<Items>>> getInventoryList();
+};
+
+struct VisibleScreen {
+    const ScreenVals *screen;
+    int maxYAdj; // the existing -1 / +1 convention, per screen
 };
 
 #endif // UI_UTIL_H

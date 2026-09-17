@@ -404,6 +404,7 @@ void createBruteForceScreen() {
     Perimeter rollPerim(0x256D, 0x256E, 0x2570, 0x256F, 0x2500, 0x2502, MAGENTA, BLACK, BLUE, BLACK);
     alignWin.createWindow(alignCorner, rollPerim);
 
+    ScreenGuard gAlign(alignWin.getScreen());
     std::vector<ScreenVals> screenVec;
     screenVec.push_back(*tempScreen);
     screenVec.push_back(sexScreen);
@@ -530,6 +531,7 @@ void createRollScreen() {
     profPerim.leftTee = L_TEE_RAIL;
     profPerim.rightTee = R_TEE_RAIL;
 
+    ScreenGuard gRoll(rollScreen);
     std::string choices = "Keep current roll? (y/n).";
     do {
         int maxLen = 0;
@@ -690,15 +692,18 @@ void createRollScreen() {
         drawSmall(1, rollScreen.xyLimits.maxX, 1, rollScreen.xyLimits.maxY, rollScreen);
     } while (reRollOptions(newStats[0], newStats[1], rollScreen));
     drawSmall(1, rollScreen.xyLimits.maxX, rollScreen.xyLimits.maxY - 1, rollScreen.xyLimits.maxY, primaryScreen);
+
     RACE newRace;
+    ScreenGuard gSex(sexScreen);
     SEX newSex = selSexScreen(sexScreen, rollScreen);
+    ScreenGuard gRace(raceScreen);
     createRaceScreen(newRace, newStats[0], rollScreen, sexScreen, raceScreen);
+    ScreenGuard gClass(classScreen);
     CHAR_CLASS newClass = selClassScreen(newStats[0], newRace, rollScreen, sexScreen, raceScreen, classScreen);
 
     DrawRange alignCorner;
     alignCorner.minX = classScreen.xyLimits.maxX + 1;
     alignCorner.minY = classScreen.xyLimits.minY;
-
     AlignOptWindow alignWin(newClass);
     alignWin.createWindow(alignCorner, rollPerim);
 
