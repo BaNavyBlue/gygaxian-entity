@@ -52,15 +52,15 @@ void TextInput::PlacePrompt() {
 
 void TextInput::getText() {
     showcursor();
-    const int cursY = _textScreen->xyLimits.minY + 3;
-    const int cursLeftLim = _textScreen->xyLimits.minX + 2;
+    const int cursY = _textScreen->xyLimits.minY + 2;
+    const int cursLeftLim = _textScreen->xyLimits.minX + 1;
     int cursX = cursLeftLim;
-    locate(cursX, cursY);
+    locate(cursX + 1, cursY + 1);
     bool gather = true;
     while (gather) {
         if (terminalResized()) {
             ScreenStack::redrawAll({});
-            locate(cursX, cursY); // redraw moved the cursor; put it back
+            locate(cursX + 1, cursY + 1); // redraw moved the cursor; put it back
         }
         if (kbhit()) {
             int k = getkey();
@@ -73,9 +73,9 @@ void TextInput::getText() {
                     _receivedString.pop_back();
                     --cursX;
                     _textScreen->charMap[cursY][cursX] = ' '; // buffer
-                    locate(cursX, cursY);
+                    locate(cursX + 1, cursY + 1);
                     colorPrintUTF(YELLOW, BLACK, " ");
-                    locate(cursX, cursY);
+                    locate(cursX + 1, cursY + 1);
                 }
                 break;
             case KEY_ENTER:
@@ -90,7 +90,8 @@ void TextInput::getText() {
                         _textScreen->charMap[cursY][cursX] = k; // buffer
                         _textScreen->colorMap[cursY][cursX] = YELLOW;
                         colorPrintUTF(YELLOW, BLACK, getUTF(k).c_str());
-                        locate(++cursX, cursY);
+                        ++cursX;
+                        locate(cursX + 1, cursY + 1);
                     }
                 }
                 break;
@@ -164,6 +165,8 @@ void AlignOptWindow::createWindow(DrawRange uRandWidth, Perimeter inPerim) {
 
     generatePerimeter(*_optScreen, inPerim);
     PlaceOptions();
+
+    // ScreenGuard gAlign(*_optScreen);
 }
 
 // void AlignOptWindow::PlaceOptions()

@@ -706,7 +706,7 @@ void createRollScreen() {
     alignCorner.minY = classScreen.xyLimits.minY;
     AlignOptWindow alignWin(newClass);
     alignWin.createWindow(alignCorner, rollPerim);
-
+    ScreenGuard gAlign(alignWin.getScreen());
     std::vector<ScreenVals> screenVec;
     screenVec.push_back(rollScreen);
     screenVec.push_back(sexScreen);
@@ -1376,7 +1376,7 @@ void createPrimary(ScreenVals &primaryScreen, std::vector<std::string> inOpts) {
                 primaryScreen.charMap[i][j] = 0x2554;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if (i == 0 && j == horz_char - 1) {
+            } else if (i == 0 && j == tcols() - 1) {
                 primaryScreen.charMap[i][j] = 0x2557;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
