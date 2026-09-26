@@ -205,13 +205,16 @@ int main() {
         //  }
 
         while (true) {
-            std::size_t new_horz = tcols();
-            std::size_t new_vert = trows();
-            if (horz_char != new_horz || vert_char != new_vert) {
-                horz_char = new_horz;
-                vert_char = new_vert;
-                createPrimary(primaryScreen, options);
-                drawPrimary(primaryScreen);
+            // std::size_t new_horz = tcols();
+            // std::size_t new_vert = trows();
+            // if (horz_char != new_horz || vert_char != new_vert) {
+            //     horz_char = new_horz;
+            //     vert_char = new_vert;
+            //     createPrimary(primaryScreen, options);
+            //     drawPrimary(primaryScreen);
+            // }
+            if (terminalResized()) {
+                ScreenStack::redrawAll({});
             }
             if (kbhit()) {
                 char k = getkey();
@@ -222,8 +225,9 @@ int main() {
                     charCreate.push_back("Brute Force Class");
                     ChooseOpt createOpt(charCreate);
                     std::vector<ScreenVals> screens;
-                    screens.push_back(primaryScreen);
+                    // screens.push_back(primaryScreen);
                     screens.push_back(createOpt.getScreen());
+                    ScreenGuard gCreateOpt(createOpt.getScreen());
                     if (createOpt.getChoice(selOpt(screens, charCreate.size() - 1)) == '1') {
                         clearPrevScreen(screens);
                         screens.clear();
@@ -1294,24 +1298,13 @@ char selClass(char maxIdx, ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenV
 
 char selOpt(const std::vector<ScreenVals> &inScreens, int idx) {
     while (true) {
-        std::size_t new_horz = tcols();
-        std::size_t new_vert = trows();
-        if (horz_char != new_horz || vert_char != new_vert) {
-            horz_char = new_horz;
-            vert_char = new_vert;
-            std::vector<std::string> options;
-            createPrimary(primaryScreen, options);
+        if (terminalResized()) {
+            createPrimary(primaryScreen, {});
             drawPrimary(primaryScreen);
-            for (int i = 0; i < inScreens.size(); ++i) {
-                int offSet = 1;
-                if (i < 1) {
-                    offSet = -1;
-                }
-                drawSmall(inScreens.at(i).xyLimits.minX, inScreens.at(i).xyLimits.maxX, inScreens.at(i).xyLimits.minY,
-                          inScreens.at(i).xyLimits.maxY + offSet, inScreens.at(i));
+            for (const ScreenVals &s : inScreens) {
+                drawSmall(s.xyLimits.minX, s.xyLimits.maxX, s.xyLimits.minY, s.xyLimits.maxY + 1, s);
             }
         }
-
         if (kbhit()) {
             char k = getkey();
             if (k >= '0' && k < idx + '0') {
@@ -1319,7 +1312,6 @@ char selOpt(const std::vector<ScreenVals> &inScreens, int idx) {
             }
         }
     }
-    return -1;
 }
 
 std::string getName(ScreenVals &inScreen1, ScreenVals &inScreen2, ScreenVals &inScreen3, ScreenVals &inScreen4) {

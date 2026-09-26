@@ -83,7 +83,8 @@ enum WEAPON_TYPE {
     BLUNT,    // 10
     SPEAR,    // 11
     STAFF,    // 12
-    SLING     // 13
+    SLING,    // 13
+    LANCE     // 14
 };
 
 enum CLOTHING_TYPE { BELT, BOOTS, CAP, CLOAK, GIRDLE, HAT, ROBE };
@@ -361,13 +362,13 @@ const std::vector<profData> profDat = {{2, AXE_BATTLE, AXE, "Battle Axe"},
                                        {24, GUISARME, POLEARM, "Guisarme"},
                                        {25, GUISARME_VOLGUE, POLEARM, "Guisarme Volgue"},
                                        {26, HALBERD, POLEARM, "Halberd"},
-                                       {27, HAMMER_LUCERN, BLUNT, "Lucern Hammer"},
+                                       {27, HAMMER_LUCERN, POLEARM, "Lucern Hammer"},
                                        {28, HAMMER, BLUNT, "Hammer"},
                                        {29, JAVELIN, SPEAR, "Javelin"},
                                        {30, JO_STICK, STAFF, "Jo Stick"},
-                                       {32, LANCE_LIGHT_H, POLEARM, "Lance Light Horse"},
-                                       {31, LANCE_MED_H, POLEARM, "Lance Medium Horse"},
-                                       {33, LANCE_HEAVY_H, POLEARM, "Lance Heavy Horse"},
+                                       {32, LANCE_LIGHT_H, LANCE, "Lance Light Horse"},
+                                       {31, LANCE_MED_H, LANCE, "Lance Medium Horse"},
+                                       {33, LANCE_HEAVY_H, LANCE, "Lance Heavy Horse"},
                                        {34, MACE_FOOTMANS, BLUNT, "Footmans Mace"},
                                        {35, MACE_HORSEMANS, BLUNT, "Horsemans Mace"},
                                        {36, MORNING_STAR, BLUNT, "Morning Star"},

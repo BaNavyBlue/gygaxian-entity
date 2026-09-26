@@ -281,8 +281,9 @@ void PrintInfo::relayout() {
     _infoScreen.clear();
     _contents.clear();
     _infoScreen.push_back(std::make_shared<ScreenVals>(VECT_MAX, ' ', YELLOW, BLACK));
-    createPrimary();
-    drawPrimary(); // cls()
+    // wherever PrintInfo currently calls its own createPrimary()/drawPrimary():
+    createPrimary(*_primaryScreen, {"[ESC] to Quit", "Create New (P)arty"});
+    drawPrimary(*_primaryScreen);
     MakeCharWin();
     MakeStatsWin();
     MakeCmbtWin();
@@ -363,14 +364,9 @@ void PrintInfo::MakeGenTbl(std::vector<std::string> stringVect) {
 
 void PrintInfo::SelectTbl() {
     bool selectWin = true;
-    std::size_t horz_char = tcols();
-    std::size_t vert_char = trows();
     while (selectWin) {
-        std::size_t new_horz = tcols();
-        std::size_t new_vert = trows();
-        if (horz_char != new_horz || vert_char != new_vert) {
-            horz_char = new_horz;
-            vert_char = new_vert;
+        if (terminalResized()) {
+            ScreenStack::redrawAll({});
             //  createPrimary(_primaryScreen, "[ESC] to exit");
             // drawPrimary(_primaryScreen);
         }
@@ -831,107 +827,107 @@ void PrintInfo::MakeRaceSkills() {
 void PrintInfo::MakeThiefDexTbl() {
 }
 
-void PrintInfo::createPrimary() {
+// void PrintInfo::createPrimary() {
+//
+//     color_code border;
+// #ifdef _WIN32
+//     border = RED;
+// #else
+//     border = DARKRED;
+// #endif
+//
+//     std::string line1 = "Welcome To Gygaxian-Entity";
+//     std::string line2 = "Character Creator";
+//     std::string options = "[ESC] to Quit";
+//     std::string options1 = "(C)reate New Character";
+//     std::string options2 = "Create New (P)arty";
+//     int msg1L = line1.size() / 2;
+//     int msg2L = line2.size() / 2;
+//     for (std::size_t i = 0; i < _vert; ++i) {
+//         for (std::size_t j = 0; j < _horz; ++j) {
+//             if (i == _vert / 2 - 1 && j == _horz / 2 - msg1L) {
+//                 for (std::size_t k = 0; k < line1.size(); ++k) {
+//                     _primaryScreen->charMap[i][j] = line1[k];
+//                     _primaryScreen->colorMap[i][j] = GREEN;
+//                     _primaryScreen->bGColorMap[i][j++] = BLACK;
+//                 }
+//                 j--;
+//             } else if (i == _vert / 2 && j == _horz / 2 - msg2L) {
+//                 for (std::size_t k = 0; k < line2.size(); ++k) {
+//                     _primaryScreen->charMap[i][j] = line2[k];
+//                     _primaryScreen->colorMap[i][j] = GREEN;
+//                     _primaryScreen->bGColorMap[i][j++] = BLACK;
+//                 }
+//                 j--;
+//             } else if (i == _vert - 1 && j == 0) {
+//                 _primaryScreen->charMap[i][j] = 0x2551;
+//                 _primaryScreen->colorMap[i][j] = border;
+//                 _primaryScreen->bGColorMap[i][j++] = WHITE;
+//                 for (std::size_t k = 0; k < options.size(); ++k) {
+//                     _primaryScreen->charMap[i][j] = options[k];
+//                     _primaryScreen->colorMap[i][j] = border;
+//                    _primaryScreen->bGColorMap[i][j++] = WHITE;
+//                 }
+//                 _primaryScreen->charMap[i][j] = 0x2551;
+//                 _primaryScreen->colorMap[i][j] = border;
+//                 _primaryScreen->bGColorMap[i][j++] = WHITE;
+//                 for (std::size_t k = 0; k < options2.size(); ++k) {
+//                     _primaryScreen->charMap[i][j] = options2[k];
+//                     _primaryScreen->colorMap[i][j] = border;
+//                     _primaryScreen->bGColorMap[i][j++] = WHITE;
+//                 }
+//                 _primaryScreen->charMap[i][j] = 0x2551;
+//                 _primaryScreen->colorMap[i][j] = border;
+//                 _primaryScreen->bGColorMap[i][j++] = WHITE;
+//                 // j--;
+//             } else if (i == 0 && j == 0) {
+//                 _primaryScreen->charMap[i][j] = 0x2554;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             } else if (i == 0 && j == _horz - 1) {
+//                 _primaryScreen->charMap[i][j] = 0x2557;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             } else if (i == _vert - 2 && j == 0) {
+//                 _primaryScreen->charMap[i][j] = 0x255A;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             } else if (i == _vert - 2 && j == _horz - 1) {
+//                 _primaryScreen->charMap[i][j] = 0x255D;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             } else if (i == 0 || i == _vert - 2) {
+//                 _primaryScreen->charMap[i][j] = 0x2550;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             } else if ((j == 0 || j == _horz - 1) && i < _vert - 1) {
+//                 _primaryScreen->charMap[i][j] = 0x2551;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             } else {
+//                 _primaryScreen->charMap[i][j] = 0x0020;
+//                 _primaryScreen->colorMap[i][j] = GREEN;
+//                 _primaryScreen->bGColorMap[i][j] = BLACK;
+//             }
+//         }
+//     }
+// }
 
-    color_code border;
-#ifdef _WIN32
-    border = RED;
-#else
-    border = DARKRED;
-#endif
-
-    std::string line1 = "Welcome To Gygaxian-Entity";
-    std::string line2 = "Character Creator";
-    std::string options = "[ESC] to Quit";
-    std::string options1 = "(C)reate New Character";
-    std::string options2 = "Create New (P)arty";
-    int msg1L = line1.size() / 2;
-    int msg2L = line2.size() / 2;
-    for (std::size_t i = 0; i < _vert; ++i) {
-        for (std::size_t j = 0; j < _horz; ++j) {
-            if (i == _vert / 2 - 1 && j == _horz / 2 - msg1L) {
-                for (std::size_t k = 0; k < line1.size(); ++k) {
-                    _primaryScreen->charMap[i][j] = line1[k];
-                    _primaryScreen->colorMap[i][j] = GREEN;
-                    _primaryScreen->bGColorMap[i][j++] = BLACK;
-                }
-                j--;
-            } else if (i == _vert / 2 && j == _horz / 2 - msg2L) {
-                for (std::size_t k = 0; k < line2.size(); ++k) {
-                    _primaryScreen->charMap[i][j] = line2[k];
-                    _primaryScreen->colorMap[i][j] = GREEN;
-                    _primaryScreen->bGColorMap[i][j++] = BLACK;
-                }
-                j--;
-            } else if (i == _vert - 1 && j == 0) {
-                _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = border;
-                _primaryScreen->bGColorMap[i][j++] = WHITE;
-                for (std::size_t k = 0; k < options.size(); ++k) {
-                    _primaryScreen->charMap[i][j] = options[k];
-                    _primaryScreen->colorMap[i][j] = border;
-                    _primaryScreen->bGColorMap[i][j++] = WHITE;
-                }
-                _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = border;
-                _primaryScreen->bGColorMap[i][j++] = WHITE;
-                for (std::size_t k = 0; k < options2.size(); ++k) {
-                    _primaryScreen->charMap[i][j] = options2[k];
-                    _primaryScreen->colorMap[i][j] = border;
-                    _primaryScreen->bGColorMap[i][j++] = WHITE;
-                }
-                _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = border;
-                _primaryScreen->bGColorMap[i][j++] = WHITE;
-                // j--;
-            } else if (i == 0 && j == 0) {
-                _primaryScreen->charMap[i][j] = 0x2554;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if (i == 0 && j == _horz - 1) {
-                _primaryScreen->charMap[i][j] = 0x2557;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if (i == _vert - 2 && j == 0) {
-                _primaryScreen->charMap[i][j] = 0x255A;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if (i == _vert - 2 && j == _horz - 1) {
-                _primaryScreen->charMap[i][j] = 0x255D;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if (i == 0 || i == _vert - 2) {
-                _primaryScreen->charMap[i][j] = 0x2550;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else if ((j == 0 || j == _horz - 1) && i < _vert - 1) {
-                _primaryScreen->charMap[i][j] = 0x2551;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            } else {
-                _primaryScreen->charMap[i][j] = 0x0020;
-                _primaryScreen->colorMap[i][j] = GREEN;
-                _primaryScreen->bGColorMap[i][j] = BLACK;
-            }
-        }
-    }
-}
-
-void PrintInfo::drawPrimary() {
-    cls();
-    locate(1, 1);
-    for (std::size_t i = 0; i < _vert; ++i) {
-        for (std::size_t j = 0; j < _horz; ++j) {
-            int forPrint = _primaryScreen->charMap[i][j];
-
-            locate(j + 1, i + 1);
-            std::string utfChar = getUTF(forPrint);
-            colorPrintUTF(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], utfChar.c_str());
-        }
-    }
-    locate(1, 1);
-    fflush(stdout);
-}
+// void PrintInfo::drawPrimary() {
+//     cls();
+//     locate(1, 1);
+//     for (std::size_t i = 0; i < _vert; ++i) {
+//         for (std::size_t j = 0; j < _horz; ++j) {
+//             int forPrint = _primaryScreen->charMap[i][j];
+//
+//             locate(j + 1, i + 1);
+//             std::string utfChar = getUTF(forPrint);
+//             colorPrintUTF(_primaryScreen->colorMap[i][j], _primaryScreen->bGColorMap[i][j], utfChar.c_str());
+//         }
+//     }
+//     locate(1, 1);
+//     fflush(stdout);
+// }
 
 WarnMessage::WarnMessage(std::string warning, std::string question) {
 

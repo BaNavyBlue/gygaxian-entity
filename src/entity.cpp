@@ -217,7 +217,7 @@ void Entity::setStrenTbl() {
         if (_modStats.excStren > 0 && isFighter()) {
             if (_modStats.excStren < 51) {
                 _strTbl.hitProb = 1;
-                _strTbl.damageAdj = 2;
+                _strTbl.damageAdj = 3;
                 _strTbl.weightAllowMod = 1000;
                 _strTbl.openDoors = 3;
                 _strTbl.bendBarsLiftGatesPer = 20;
@@ -283,7 +283,7 @@ void Entity::setIntTbl() {
     case 14:
         _intTbl.chanceToKnowPer = 55;
         _intTbl.minumumSpellsPerLevel = 4;
-        _intTbl.maxiumSpellsPerlevel = 6;
+        _intTbl.maxiumSpellsPerlevel = 9;
         break;
     case 15:
     case 16:
@@ -539,6 +539,7 @@ void Entity::setDexThief() {
         _dexThief.hideInShadows = 5;
         break;
     case 18:
+    case 19:
         _dexThief.pickPocketPer = 10;
         _dexThief.openLocks = 15;
         _dexThief.locRemTraps = 5;
@@ -861,6 +862,7 @@ bool Entity::checkRaceStats(RACE race) {
             _stats.strength = _modStats.strength = 18;
         } else {
             _stats.strength++;
+            _modStats.strength++;
         }
 
         _stats.constitution++;

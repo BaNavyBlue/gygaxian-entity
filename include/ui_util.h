@@ -128,8 +128,8 @@ protected:
     void MakeGenTbl(std::vector<std::string> stringVect);
     void SelectTbl();
     void PlaceInfo(int vectIdx);
-    void createPrimary();
-    void drawPrimary();
+    //    void createPrimary();
+    // void drawPrimary();
     char _lastTblKey = 0;   // which table is open, 0 = none
     size_t _basePanels = 0; // how many panels the fixed layout has
     void showTbl(char key);
