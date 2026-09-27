@@ -1,19 +1,24 @@
 #include "char_class.h"
 #include <algorithm>
-CHR_CLASS_SKILLS::CHR_CLASS_SKILLS() {}
+CHR_CLASS_SKILLS::CHR_CLASS_SKILLS() {
+}
 
 unsigned CHR_CLASS_SKILLS::generateGold() {
     return (rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false)) *
            10;
 }
 
-unsigned CHR_CLASS_SKILLS::rollHP() { return rollDice(_classTbl.HitDieType, false); }
+unsigned CHR_CLASS_SKILLS::rollHP() {
+    return rollDice(_classTbl.HitDieType, false);
+}
 
 CHR_CLASS_SKILLS::~CHR_CLASS_SKILLS() {
     // std::cout << "In CHR_CLASS_SKILLS destructor." << std::endl;
 }
 
-classTable1 CHR_CLASS_SKILLS::getClassTable1() { return _classTbl; }
+classTable1 CHR_CLASS_SKILLS::getClassTable1() {
+    return _classTbl;
+}
 
 void CHR_CLASS_SKILLS::listClassSkills() {
     std::cout << "Hit Die Type d" << (int)_classTbl.HitDieType << " Max Hit Die: " << (int)_classTbl.MaxHitDie
@@ -56,11 +61,17 @@ std::vector<std::string> CHR_CLASS_SKILLS::getClassSkills() {
     return stringVect;
 }
 
-unsigned CHR_CLASS_SKILLS::getInitNumWeap() { return _initNumWeap; }
+unsigned CHR_CLASS_SKILLS::getInitNumWeap() {
+    return _initNumWeap;
+}
 
-int CHR_CLASS_SKILLS::getNonProfPenalty() { return _nonProfPenalty; }
+int CHR_CLASS_SKILLS::getNonProfPenalty() {
+    return _nonProfPenalty;
+}
 
-unsigned CHR_CLASS_SKILLS::getAddedWeapLevDen() { return _addedWeapLvlDen; }
+unsigned CHR_CLASS_SKILLS::getAddedWeapLevDen() {
+    return _addedWeapLvlDen;
+}
 
 Cleric::Cleric() {
     _classTbl.HitDieType = 8;
@@ -78,7 +89,9 @@ Cleric::~Cleric() {
     // std::cout << "Cleric Destructor" << std::endl;
 }
 
-unsigned Cleric::generateGold() { return (rollDice(6, false) + rollDice(6, false) + rollDice(6, false)) * 10; }
+unsigned Cleric::generateGold() {
+    return (rollDice(6, false) + rollDice(6, false) + rollDice(6, false)) * 10;
+}
 
 Druid::Druid() {
     _classTbl.HitDieType = 8;
@@ -95,7 +108,9 @@ Druid::~Druid() {
     // std::cout << "Druid Destructor" << std::endl;
 }
 
-unsigned Druid::generateGold() { return (rollDice(6, false) + rollDice(6, false) + rollDice(6, false)) * 10; }
+unsigned Druid::generateGold() {
+    return (rollDice(6, false) + rollDice(6, false) + rollDice(6, false)) * 10;
+}
 
 Fighter::Fighter() {
     _classTbl.HitDieType = 10;
@@ -232,7 +247,9 @@ MagicUser::~MagicUser() {
     // std::cout << "MagicUser Destructor" << std::endl;
 }
 
-unsigned MagicUser::generateGold() { return (rollDice(4, false) + rollDice(4, false)) * 10; }
+unsigned MagicUser::generateGold() {
+    return (rollDice(4, false) + rollDice(4, false)) * 10;
+}
 
 Illusionist::Illusionist() {
     _classTbl.HitDieType = 4;
@@ -249,9 +266,12 @@ Illusionist::~Illusionist() {
     // std::cout << "Illusionist Destructor" << std::endl;
 }
 
-unsigned Illusionist::generateGold() { return (rollDice(4, false) + rollDice(4, false)) * 10; }
+unsigned Illusionist::generateGold() {
+    return (rollDice(4, false) + rollDice(4, false)) * 10;
+}
 
-Thief::Thief() {}
+Thief::Thief() {
+}
 
 Thief::Thief(RACE inRace, unsigned inLevel) {
     _classTbl.HitDieType = 6;
@@ -269,7 +289,9 @@ Thief::~Thief() {
     // std::cout << "Thief Destructor" << std::endl;
 }
 
-unsigned Thief::generateGold() { return (rollDice(6, false) + rollDice(6, false)) * 10; }
+unsigned Thief::generateGold() {
+    return (rollDice(6, false) + rollDice(6, false)) * 10;
+}
 
 void Thief::listClassSkills() {
     std::cout << "Hit Die Type d" << (int)_classTbl.HitDieType << " Max Hit Die: " << (int)_classTbl.MaxHitDie
@@ -326,7 +348,9 @@ std::vector<std::string> Thief::getClassSkills() {
     stringVect.push_back("Move silently: " + std::to_string(_thiefTbl.moveSilently) + "%");
     stringVect.push_back("Hide in Shadows: " + std::to_string(_thiefTbl.hideInShadows) + "%");
     stringVect.push_back("Hear Noise: " + std::to_string(_thiefTbl.hearNoise) + "%");
-    stringVect.push_back("Climb Walls: " + std::to_string(_thiefTbl.climbWalls) + "%");
+    char cw[8];
+    snprintf(cw, sizeof(cw), "%.1f", _thiefTbl.climbWalls);
+    stringVect.push_back("Climb Walls: " + std::string(cw) + "%");
     stringVect.push_back("Read Languages: " + std::to_string(_thiefTbl.readLanguages) + "%");
 
     return stringVect;

@@ -35,11 +35,14 @@ Entity::Entity(stats inStats[2], std::string name, SEX sex, RACE race, std::vect
     _totalWeightGP += _money.gold;
 
     // First HP roll for Ranger and Monk is double.
-    if (_chrClass[0] == RANGER || _chrClass[0] == MONK) {
-        _hitPointsBase = _curHitPoints = _chrSkills[0]->rollHP() + _chrSkills[0]->rollHP() + _consTbl.hpAdj;
-    } else {
-        _hitPointsBase = _curHitPoints = _chrSkills[0]->rollHP() + _consTbl.hpAdj;
+    // Claude solution to avoid unsigned wrap around or 0 HP
+    int dice = (_chrClass[0] == RANGER || _chrClass[0] == MONK) ? 2 : 1;
+    int hp = 0;
+    for (int d = 0; d < dice; ++d) {
+        int roll = static_cast<int>(_chrSkills[0]->rollHP()) + _consTbl.hpAdj;
+        hp += (roll < 1) ? 1 : roll;
     }
+    _hitPointsBase = _curHitPoints = hp;
     // unsigned str_mod = 0;
 
     // Armor Mod;
@@ -282,7 +285,7 @@ void Entity::setIntTbl() {
     case 13:
     case 14:
         _intTbl.chanceToKnowPer = 55;
-        _intTbl.minumumSpellsPerLevel = 4;
+        _intTbl.minumumSpellsPerLevel = 6;
         _intTbl.maxiumSpellsPerlevel = 9;
         break;
     case 15:
@@ -428,6 +431,8 @@ void Entity::setDexTbl() {
         _dexTbl.defenseAdj = -3;
         break;
     case 18:
+    case 19:
+    case 20:
         _dexTbl.reactAttkAdj = 3;
         _dexTbl.defenseAdj = -4;
         break;
@@ -443,6 +448,7 @@ void Entity::setPossLang() {
     case 5:
     case 6:
     case 7:
+        _intTbl.possibAddLang = 0;
     case 8:
     case 9:
         _intTbl.possibAddLang = 1;
@@ -471,6 +477,31 @@ void Entity::setPossLang() {
     default:
         break;
     }
+
+    unsigned racialCap = _intTbl.possibAddLang;
+    switch (_race) {
+    case DWARF:
+        racialCap = 2;
+        break;
+    case GNOME:
+        racialCap = 2;
+        break;
+    case HALF_ORC:
+        racialCap = 2;
+        break;
+    case ELF:
+        racialCap = (_modStats.intelligence > 15) ? _modStats.intelligence - 15 : 0;
+        break;
+    case HALF_ELF:
+        racialCap = (_modStats.intelligence > 16) ? _modStats.intelligence - 16 : 0;
+        break;
+    case HALFLING:
+        racialCap = (_modStats.intelligence > 16) ? _modStats.intelligence - 16 : 0;
+        break;
+    default:
+        break;
+    }
+    _intTbl.possibAddLang = std::min(_intTbl.possibAddLang, racialCap);
 }
 
 void Entity::setDexThief() {
@@ -639,6 +670,8 @@ void Entity::setConsTbl() {
         _consTbl.resurSurvPer = 98;
         break;
     case 18:
+    case 19:
+    case 20:
         if (_chrClass[0] == FIGHTER || _chrClass[0] == PALADIN || _chrClass[0] == RANGER) {
             _consTbl.hpAdj = 4;
         } else {
@@ -647,6 +680,11 @@ void Entity::setConsTbl() {
 
         _consTbl.sysShockSurPer = 99;
         _consTbl.resurSurvPer = 100;
+        break;
+    default:
+        _consTbl.hpAdj = -2;
+        _consTbl.sysShockSurPer = 35;
+        _consTbl.resurSurvPer = 40;
         break;
     }
 }
@@ -780,14 +818,17 @@ void Entity::setRace(RACE race) {
 }
 
 bool Entity::checkRaceStats(RACE race) {
+
+    const unsigned HalfOrcCap = (_sex == FEMALE) ? 75 : 99;
+
     switch (race) {
     // check for failures before adding race bonus's
     case HUMAN:
         // Check Stat Limitation.
-        if (_stats.excStren > 51 && _sex == FEMALE) {
+        if (_stats.excStren > 50 && _sex == FEMALE) {
             // std::cout << "Human Female Exceptional Strength Capped at 51" <<
             // std::endl;
-            _stats.excStren = _modStats.excStren = 51;
+            _stats.excStren = _modStats.excStren = 50;
         }
         _race = race;
         return true;
@@ -812,6 +853,10 @@ bool Entity::checkRaceStats(RACE race) {
         if (_sex == FEMALE && _stats.strength > 16) {
             // std::cout << "Elf Female Strength Capped at 16" << std::endl;
             _stats.strength = _modStats.strength = 16;
+        }
+
+        if (_stats.excStren > 75) {
+            _stats.excStren = _modStats.excStren = 75;
         }
         // Apply Standard Elf Modifiers
         _stats.constitution--;
@@ -865,6 +910,10 @@ bool Entity::checkRaceStats(RACE race) {
             _modStats.strength++;
         }
 
+        if (_stats.excStren > HalfOrcCap) {
+            _stats.excStren = _modStats.excStren = HalfOrcCap;
+        }
+
         _stats.constitution++;
         _modStats.constitution++;
         _race = race;
@@ -898,6 +947,9 @@ bool Entity::checkRaceStats(RACE race) {
             _modStats.charisma--;
         }
 
+        if (_stats.excStren > 75) {
+            _stats.excStren = _modStats.excStren = 75;
+        }
         _stats.constitution++;
         _modStats.constitution++;
         _race = race;
@@ -937,8 +989,13 @@ bool Entity::checkRaceStats(RACE race) {
             _stats.wisdom = _modStats.wisdom = 17;
         }
 
-        _stats.dexterity++;
-        _modStats.dexterity++;
+        if (_stats.dexterity + 1 > 18) {
+            _stats.dexterity = _modStats.dexterity = 18;
+        } else {
+            _stats.dexterity++;
+            _modStats.dexterity++;
+        }
+
         _race = race;
         return true;
     case HALF_ELF:
@@ -988,6 +1045,10 @@ bool Entity::checkRaceStats(RACE race) {
         if (_stats.strength > 15 && _sex == FEMALE) {
             // std::cout << "Female Gnome strength cap 15" << std::endl;
             _stats.strength = _modStats.strength = 15;
+        }
+
+        if (_stats.excStren > 75) {
+            _stats.excStren = _modStats.excStren = 75;
         }
 
         _race = race;

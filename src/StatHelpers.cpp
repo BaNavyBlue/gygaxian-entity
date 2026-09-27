@@ -40,6 +40,7 @@ unsigned bestThree() {
 void rollStats(stats &_stats, stats &_modStats) {
     do {
         _stats.strength = _modStats.strength = bestThree();
+        _stats.excStren = _modStats.excStren = 0;
         if (_stats.strength > 17) {
             _stats.excStren = _modStats.excStren = rollDice(10, true) + rollDice(10, true) * 10 + 1;
         }
@@ -1125,6 +1126,7 @@ bool alignClassCheck(CHAR_CLASS inClass, ALIGNMENT inAlign) {
         if (inAlign != CHAOTIC_GOOD && inAlign != NEUTRAL_GOOD && inAlign != LAWFUL_GOOD) {
             return false;
         }
+        return true;
     case MAGIC_USER:
         return true;
     case ILLUSIONIST:
@@ -1371,7 +1373,7 @@ std::string strenFails(stats inStats) {
     switch (inStats.strength) {
     case 3:
     case 4:
-        failures += "Half-Orc";
+        failures += "Half-Orc ";
         failures += "Halfling Gnome Dwarf and all classes but Magic-User";
         return failures;
     case 5:
@@ -1418,6 +1420,7 @@ std::string intFails(stats inStats) {
         failures += "Assassin ";
     case 11:
     case 12:
+        failures += "Ranger ";
     case 13:
     case 14:
         failures += "Illusionist ";
@@ -1461,8 +1464,7 @@ std::string dexFails(stats inStats) {
         return failures;
     case 6:
         // Halfling dex + 1
-        failures += "Magic-User ";
-        failures += "Halfling Elf ";
+        failures += "Halfling ";
     case 7:
     case 8:
         failures += "Thief ";
@@ -1486,7 +1488,7 @@ std::string consFails(stats inStats) {
     case 3:
     case 4:
     case 5:
-        failures += "Half-Elf Halfling Gnome Dwarf Half-Orc and all classes but Illusionist ";
+        failures += "Elf Half-Elf Halfling Gnome Dwarf Half-Orc and all classes but Illusionist ";
         return failures;
     case 6:
         // Elf constitution - 1

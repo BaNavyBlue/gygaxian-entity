@@ -105,7 +105,7 @@ std::vector<std::string> Dwarf::getRaceSkills() {
     skillList.push_back("To hit bonus while fighting Half-Orc, Goblin, Hobgoblin and Orc +" +
                         std::to_string(toHitBonus));
     skillList.push_back("Certain Adversary to hit penalty to Dwarf " + std::to_string(adversaryHitPenalty));
-    skillList.push_back("Defense against Wands, staves, rods and spells: +" + std::to_string(defensiveBonus));
+    skillList.push_back("Defense against Wands, staves, rods and spells poison: +" + std::to_string(defensiveBonus));
     return skillList;
 }
 
@@ -142,7 +142,7 @@ void Elf::listRaceSkills() {
     std::cout << "Detect concealed portal d" << (int)conPortal.sidedDie << " succeeds: 1-" << (int)conPortal.maxRange
               << std::endl;
     std::cout << "Infravision up to " << infraVision << " feet" << std::endl;
-    std::cout << "To hit bonus while using short sword, long sword, bow and crossbow +" << toHitBonus << std::endl;
+    std::cout << "To hit bonus while using short sword, long sword, bow and +" << toHitBonus << std::endl;
     std::cout << "Chance to surprise creatures in a party of all Elves, or Elves and Halflings d"
               << (int)chanceToSurprise.sidedDie << " succeeds: 1-" << (int)chanceToSurprise.maxRange << std::endl;
 }
@@ -160,8 +160,7 @@ std::vector<std::string> Elf::getRaceSkills() {
     skillList.push_back("Detect concealed portal d" + std::to_string(conPortal.sidedDie) + " succeeds: 1-" +
                         std::to_string(conPortal.maxRange));
     skillList.push_back("Infravision up to " + std::to_string(infraVision) + "'");
-    skillList.push_back("To hit bonus while using short sword, long sword, bow and crossbow +" +
-                        std::to_string(toHitBonus));
+    skillList.push_back("To hit bonus while using short sword, long sword, bow +" + std::to_string(toHitBonus));
     skillList.push_back("Chance to surprise creatures in a party of all Elves, or Elves and Halflings d" +
                         std::to_string(chanceToSurprise.sidedDie) + " succeeds: 1-" +
                         std::to_string(chanceToSurprise.maxRange));
@@ -198,7 +197,7 @@ void Gnome::listRaceSkills() {
     std::cout << "Detect depth bellow ground roll d" << (int)dtctDepth.sidedDie << " succeeds: 1-"
               << (int)dtctDepth.maxRange << std::endl;
     std::cout << "Infravision up to " << infraVision << " feet" << std::endl;
-    std::cout << "To hit bonus while fighting Half-Orc, Goblin, Hobgoblin and Orc +" << toHitBonus << std::endl;
+    std::cout << "To hit bonus while fighting Kobold and Goblin +" << toHitBonus << std::endl;
     std::cout << "Certain Adversary to hit penalty to Gnome " << adversaryHitPenalty << std::endl;
     std::cout << "Defense against Wands, staves, rods and spells: +" << defensiveBonus << std::endl;
 }
@@ -215,8 +214,7 @@ std::vector<std::string> Gnome::getRaceSkills() {
     skillList.push_back("Detect depth bellow ground roll d" + std::to_string(dtctDepth.sidedDie) + " succeeds: 1-" +
                         std::to_string(dtctDepth.maxRange));
     skillList.push_back("Infravision up to " + std::to_string(infraVision) + "'");
-    skillList.push_back("To hit bonus while fighting Half-Orc, Goblin, Hobgoblin and Orc +" +
-                        std::to_string(toHitBonus));
+    skillList.push_back("To hit bonus while fighting Kobold and Goblin +" + std::to_string(toHitBonus));
     skillList.push_back("Certain Adversary to hit penalty to Gnome " + std::to_string(adversaryHitPenalty));
     skillList.push_back("Defense against Wands, staves, rods and spells: +" + std::to_string(defensiveBonus));
     return skillList;
@@ -278,8 +276,8 @@ Halfling::~Halfling() {
 }
 
 void Halfling::setRaceSkills(stats inStats) {
-    detectGrade.sidedDie = 10;
-    detectGrade.maxRange = 8;
+    detectGrade.sidedDie = 4;
+    detectGrade.maxRange = 3;
     detDirecUG.sidedDie = 10;
     detDirecUG.maxRange = 5;
     chanceToSurprise.sidedDie = 6;
@@ -297,7 +295,7 @@ void Halfling::listRaceSkills() {
     std::cout << "Chance to surprise creatures in a party of all Elves, or Elves and Halflings d"
               << (int)chanceToSurprise.sidedDie << " succeeds: 1-" << (int)chanceToSurprise.maxRange << std::endl;
     std::cout << "Infravision up to " << infraVision << " feet" << std::endl;
-    std::cout << "Defense against Wands, staves, rods and spells and poinson: +" << defensiveBonus << std::endl;
+    std::cout << "Defense against Wands, staves, rods and spells and poison: +" << defensiveBonus << std::endl;
 }
 
 std::vector<std::string> Halfling::getRaceSkills() {
