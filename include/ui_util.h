@@ -137,7 +137,7 @@ protected:
     void relayout();
 
 public:
-    PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert);
+    PrintInfo(Entity &chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert);
 };
 
 class WarnMessage {

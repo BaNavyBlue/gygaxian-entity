@@ -205,7 +205,7 @@ int AlignOptWindow::getOptIdx() {
     return _aList.size();
 }
 
-PrintInfo::PrintInfo(Entity chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert) {
+PrintInfo::PrintInfo(Entity &chrctr, DrawRange uRandWidth, Perimeter inPerim, ScreenVals &primary, int horz, int vert) {
     _primaryScreen = std::make_shared<ScreenVals>(primary);
     _horz = horz;
     _vert = vert;
@@ -997,27 +997,28 @@ ScreenVals &WarnMessage::getScreen() {
 }
 
 void drawSmall(int startX, int maxX, int startY, int maxY, const ScreenVals &inScreen) {
+    std::string out;
+    char esc[48];
+    int lastFg = -1;
+    int lastBg = -1;
     for (int i = startY; i < maxY; ++i) {
-        for (int j = startX; j < maxX + 1; ++j) {
-            int forPrint = inScreen.charMap.at(i).at(j);
-            // if(primaryScreen[i][j] == ' '){
-
-            locate(j + 1, i + 1);
-            // if(forPrint > 127){
-            // std::string utfCode = std::to_string(forPrint);
-            std::string utfChar = getUTF(forPrint);
-
-            // printf("%s\n", utfChar.c_str());
-            colorPrintUTF(inScreen.colorMap.at(i).at(j), inScreen.bGColorMap.at(i).at(j), utfChar.c_str());
-            // } else {
-            //     char singleChar[2];
-            //     singleChar[0] = forPrint;
-            //     singleChar[1] = '\0';
-            //     colorPrint(inScreen.colorMap.at(i).at(j),
-            //     inScreen.bGColorMap.at(i).at(j), singleChar);
-            // }
+        for (int j = startX; j <= maxX; ++j) {
+            int fg = inScreen.colorMap.at(i).at(j);
+            int bg = inScreen.bGColorMap.at(i).at(j);
+            snprintf(esc, sizeof(esc), "\033[%d;%dH", i + 1, j + 1);
+            out += esc;
+            if (fg != lastFg || bg != lastBg) {
+                snprintf(esc, sizeof(esc), "\033[38;5;%dm\033[48;5;%dm", fg, bg);
+                out += esc;
+                lastFg = fg;
+                lastBg = bg;
+            }
+            out += getUTF(inScreen.charMap.at(i).at(j));
         }
     }
+    out += "\033[0m";
+    fwrite(out.data(), 1, out.size(), stdout);
+    fflush(stdout);
 }
 
 // Unicode to UTF-8 conversion created care of CHAT GPT 3.5
@@ -1915,7 +1916,7 @@ char ListHighlightPair::navigateDestination() {
             _destListScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
             _destListScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
             _destListScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
-            (maxY >= 0) ? _destListScreen->xyLimits.maxY = maxY : _destListScreen->xyLimits.maxY = maxY;
+            (maxY >= 0) ? _destListScreen->xyLimits.maxY = maxY : _destListScreen->xyLimits.maxY = 0;
 
             // createListPerimeter(*_listScreen, _options);
             // createListScreen(*_listScreen, _list, _title);
@@ -2486,12 +2487,18 @@ void ListHighlightProfSelect::createDescription(profData profSel) {
 // New, free function — no list, no index, no pane, no member access
 color_code weaponSuitabilityColor(CHAR_CLASS cls, unsigned level, const profData &weapon) {
     switch (cls) {
-    case CLERIC:
     case DRUID:
-        return (weapon.W_TYPE == BLUNT || weapon.W_TYPE == STAFF) ? GREEN : RED;
+        return (weapon.W_TYPE == STAFF || weapon.prof == CLUB || weapon.W_TYPE == DAGGER || weapon.prof == SCIMITAR ||
+                weapon.W_TYPE == DART || weapon.prof == HAMMER_LUCERN || weapon.prof == HAMMER ||
+                weapon.W_TYPE == SLING || weapon.W_TYPE == SPEAR)
+                   ? GREEN
+                   : RED;
+    case CLERIC:
+        return (weapon.W_TYPE == BLUNT || weapon.prof == STAFF_QUARTER) ? GREEN : RED;
     case MAGIC_USER:
     case ILLUSIONIST:
-        return (weapon.W_TYPE == STAFF || weapon.W_TYPE == DAGGER || weapon.W_TYPE == DART || weapon.W_TYPE == KNIFE)
+        return (weapon.prof == STAFF_QUARTER || weapon.W_TYPE == DAGGER || weapon.W_TYPE == DART ||
+                weapon.W_TYPE == KNIFE)
                    ? GREEN
                    : RED;
     case RANGER:
@@ -2517,6 +2524,13 @@ color_code weaponSuitabilityColor(CHAR_CLASS cls, unsigned level, const profData
                 weapon.prof == SWORD_SHORT || weapon.prof == SWORD_LONG || weapon.prof == CLUB)
                    ? GREEN
                    : YELLOW;
+    case MONK:
+        return (weapon.prof == BO_STICK || weapon.prof == CLUB || weapon.W_TYPE == CROSSBOW ||
+                weapon.W_TYPE == DAGGER || weapon.prof == AXE_THROWING || weapon.prof == JAVELIN ||
+                weapon.prof == JO_STICK || weapon.W_TYPE == POLEARM || weapon.prof == SPEAR_PROF ||
+                weapon.prof == STAFF_QUARTER)
+                   ? GREEN
+                   : RED;
     default:
         return GREEN;
     }
@@ -2741,7 +2755,7 @@ char ListHighlightProfSelect::navigatePlayerDest() {
             _playerDestScreen->xyLimits.minX = _listScreen->xyLimits.maxX + 1;
             _playerDestScreen->xyLimits.minY = _primaryScreen->xyLimits.minY + 1;
             _playerDestScreen->xyLimits.maxX = _listScreen->xyLimits.maxX * 2 + 1;
-            (maxY >= 0) ? _playerDestScreen->xyLimits.maxY = maxY : _playerDestScreen->xyLimits.maxY = maxY;
+            (maxY >= 0) ? _playerDestScreen->xyLimits.maxY = maxY : _playerDestScreen->xyLimits.maxY = 0;
 
             // createListPerimeter(*_listScreen, _options);
             // createListScreen(*_listScreen, _list, _title);
@@ -3037,17 +3051,20 @@ LoadPartyList::LoadPartyList(std::string directory) {
         std::vector<std::string> dir;
         for (auto const &dir_entry : std::filesystem::directory_iterator{files}) {
             _pathList.push_back(dir_entry.path().string());
-            std::string fullString(dir_entry.path().string());
-            // Entity newEntity(fullString.c_str());
-            //_players.push_back(newEntity);
-            std::size_t period = fullString.find_first_of(".");
-            fullString = fullString.substr(0, period);
-            std::size_t slash = fullString.find_first_of("/");
-            fullString = fullString.substr(slash + 1, fullString.size());
-            // printf("%s\r\n", fullString.c_str());
+            std::string fullString = dir_entry.path().stem().string();
             _fileList.push_back(fullString);
             LoadParty curParty(fullString);
             _parties.push_back(curParty.getParty());
+            // Entity newEntity(fullString.c_str());
+            //_players.push_back(newEntity);
+            // std::size_t period = fullString.find_first_of(".");
+            // fullString = fullString.substr(0, period);
+            // std::size_t slash = fullString.find_first_of("/");
+            // fullString = fullString.substr(slash + 1, fullString.size());
+            // printf("%s\r\n", fullString.c_str());
+            //_fileList.push_back(fullString);
+            // LoadParty curParty(fullString);
+            //_parties.push_back(curParty.getParty());
         }
     }
 }

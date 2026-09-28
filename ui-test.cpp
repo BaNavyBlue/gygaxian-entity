@@ -4,9 +4,24 @@
 //  #include <string>
 // #include "project_headers.h"
 // #include "rogueutil.h"
+#include "ui_structs.h"
 #include "ui_util.h"
 // #include <cstddef>
+#include <csignal>
 
+static struct termios g_origTermios;
+
+static void restoreTerminal() {
+    const char seq[] = "\033[0m\033[?25h\033[?1049l";
+    write(STDOUT_FILENO, seq, sizeof(seq) - 1);
+    tcsetattr(STDIN_FILENO, TCSANOW, &g_origTermios);
+}
+
+static void onSignal(int sig) {
+    restoreTerminal();
+    signal(sig, SIG_DFL);
+    raise(sig);
+}
 // #define NOCOLOR -1
 
 // naughty globals
@@ -21,7 +36,7 @@ int main() {
 
     setlocale(LC_ALL, "");
     srand((unsigned int)time(NULL));
-
+    std::cout << "\033[?1049h" << std::flush; // draw on the alternate screen buffer
     char reset_screen[64];
 
     start_horz = horz_char = tcols();
@@ -38,6 +53,12 @@ int main() {
     struct termios oldt, newt;
     int ch;
     tcgetattr(STDIN_FILENO, &oldt);
+    g_origTermios = oldt;
+    atexit(restoreTerminal);
+    signal(SIGINT, onSignal);
+    signal(SIGTERM, onSignal);
+    signal(SIGSEGV, onSignal);
+    signal(SIGABRT, onSignal);
     newt = oldt;
     newt.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
@@ -214,7 +235,7 @@ int main() {
             //     drawPrimary(primaryScreen);
             // }
             if (terminalResized()) {
-                ScreenStack::redrawAll({});
+                ScreenStack::redrawAll(options);
             }
             if (kbhit()) {
                 char k = getkey();
@@ -353,6 +374,7 @@ int main() {
     std::cout << reset_screen;
     cls();
     showcursor();
+    std::cout << "\033[?1049l" << std::flush; // back to the shell's screen
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     return 0;
 }
@@ -464,7 +486,7 @@ void createBruteForceScreen() {
         profOptions[0].push_back(msg[i]);
     }
 
-    for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
+    for (int i = 0; i < static_cast<int>(tcols() / 3) - static_cast<int>(profOptions[0].size()); ++i) {
         profOptions[0].push_back(' ');
     }
 
@@ -535,7 +557,7 @@ void createRollScreen() {
     profPerim.leftTee = L_TEE_RAIL;
     profPerim.rightTee = R_TEE_RAIL;
 
-    ScreenGuard gRoll(rollScreen);
+    ScreenGuard gRoll(rollScreen, -1);
     std::string choices = "Keep current roll? (y/n).";
     do {
         int maxLen = 0;
@@ -772,7 +794,7 @@ void createRollScreen() {
         profOptions[0].push_back(msg[i]);
     }
 
-    for (int i = 0; i < tcols() / 3 - profOptions[0].size(); ++i) {
+    for (int i = 0; i < static_cast<int>(tcols() / 3) - static_cast<int>(profOptions[0].size()); ++i) {
         profOptions[0].push_back(' ');
     }
 
@@ -1330,26 +1352,28 @@ void createPrimary(ScreenVals &primaryScreen, std::vector<std::string> inOpts) {
 
     int msg1L = line1.size() / 2;
     int msg2L = line2.size() / 2;
-    primaryScreen.xyLimits.maxX = tcols();
-    primaryScreen.xyLimits.maxY = trows();
+    const int rows = std::min(trows(), VECT_MAX);
+    const int cols = std::min(tcols(), VECT_MAX);
+    primaryScreen.xyLimits.maxX = cols;
+    primaryScreen.xyLimits.maxY = rows;
 
-    for (std::size_t i = 0; i < trows(); ++i) {
-        for (std::size_t j = 0; j < tcols(); ++j) {
-            if (i == trows() / 2 - 1 && j == tcols() / 2 - msg1L) {
+    for (std::size_t i = 0; i < rows; ++i) {
+        for (std::size_t j = 0; j < cols; ++j) {
+            if (i == rows / 2 - 1 && j == cols / 2 - msg1L) {
                 for (std::size_t k = 0; k < line1.size(); ++k) {
                     primaryScreen.charMap[i][j] = line1[k];
                     primaryScreen.colorMap[i][j] = GREEN;
                     primaryScreen.bGColorMap[i][j++] = BLACK;
                 }
                 j--;
-            } else if (i == trows() / 2 && j == tcols() / 2 - msg2L) {
+            } else if (i == rows / 2 && j == cols / 2 - msg2L) {
                 for (std::size_t k = 0; k < line2.size(); ++k) {
                     primaryScreen.charMap[i][j] = line2[k];
                     primaryScreen.colorMap[i][j] = GREEN;
                     primaryScreen.bGColorMap[i][j++] = BLACK;
                 }
                 j--;
-            } else if (i == trows() - 1 && j == 0) {
+            } else if (i == rows - 1 && j == 0) {
                 primaryScreen.charMap[i][j] = 0x2551;
                 primaryScreen.colorMap[i][j] = border;
                 primaryScreen.bGColorMap[i][j++] = WHITE;
@@ -1368,23 +1392,23 @@ void createPrimary(ScreenVals &primaryScreen, std::vector<std::string> inOpts) {
                 primaryScreen.charMap[i][j] = 0x2554;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if (i == 0 && j == tcols() - 1) {
+            } else if (i == 0 && j == cols - 1) {
                 primaryScreen.charMap[i][j] = 0x2557;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if (i == trows() - 2 && j == 0) {
+            } else if (i == rows - 2 && j == 0) {
                 primaryScreen.charMap[i][j] = 0x255A;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if (i == trows() - 2 && j == tcols() - 1) {
+            } else if (i == rows - 2 && j == cols - 1) {
                 primaryScreen.charMap[i][j] = 0x255D;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if (i == 0 || i == trows() - 2) {
+            } else if (i == 0 || i == rows - 2) {
                 primaryScreen.charMap[i][j] = 0x2550;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
-            } else if ((j == 0 || j == tcols() - 1) && i < trows() - 1) {
+            } else if ((j == 0 || j == cols - 1) && i < rows - 1) {
                 primaryScreen.charMap[i][j] = 0x2551;
                 primaryScreen.colorMap[i][j] = GREEN;
                 primaryScreen.bGColorMap[i][j] = BLACK;
@@ -1400,8 +1424,8 @@ void createPrimary(ScreenVals &primaryScreen, std::vector<std::string> inOpts) {
 void drawPrimary(ScreenVals &primaryScreen) {
     cls();
     locate(1, 1);
-    for (std::size_t i = 0; i < trows(); ++i) {
-        for (std::size_t j = 0; j < tcols(); ++j) {
+    for (std::size_t i = 0; i < primaryScreen.xyLimits.maxY; ++i) {
+        for (std::size_t j = 0; j < primaryScreen.xyLimits.maxX; ++j) {
             int forPrint = primaryScreen.charMap[i][j];
             locate(j + 1, i + 1);
             std::string utfChar = getUTF(forPrint);
