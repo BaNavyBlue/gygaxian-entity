@@ -615,7 +615,12 @@ Assassin::Assassin(RACE inRace, unsigned inLevel) {
     _initNumWeap = 3;
     _nonProfPenalty = -2;
     _addedWeapLvlDen = 4;
-    setThiefSkills(inRace, inLevel);
+    // PHB: assassins use thief abilities as a thief two levels lower
+    if (inLevel > 2) {
+        setThiefSkills(inRace, inLevel - 2);
+    } else {
+        _thiefTbl = thiefTable{0, 0, 0, 0, 0, 0, 0.0f, 0};
+    }
     // listClassSkills();
 }
 
@@ -631,11 +636,34 @@ Monk::Monk(RACE inRace, unsigned inLevel) {
     _initNumWeap = 1;
     _nonProfPenalty = -3;
     _addedWeapLvlDen = 2;
+    setThiefSkills(inRace, inLevel);
     // listClassSkills();
 }
 
 unsigned Monk::generateGold() {
     return (rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false) + rollDice(4, false));
+}
+
+std::vector<std::string> Monk::getClassSkills() {
+    std::vector<std::string> stringVect = CHR_CLASS_SKILLS::getClassSkills();
+    char cw[8];
+    snprintf(cw, sizeof(cw), "%.1f", _thiefTbl.climbWalls);
+
+    stringVect.push_back("Effective Armor Class: " + std::to_string(effectiveAC));
+    stringVect.push_back("Movement: " + std::to_string(moveInches) + "\"");
+    stringVect.push_back("Open Hand Attacks/Round: " + std::to_string(openHandMeleeAtk));
+    stringVect.push_back("Open Hand Damage: " + std::to_string(openHandedDLower) + "-" +
+                         std::to_string(openHandedDUpper));
+    stringVect.push_back("Weapon Damage Bonus: +1/2 per level");
+    stringVect.push_back("Chance to be Surprised: " + std::to_string(_chanceToBeSurprise) + "%");
+    stringVect.push_back("Missile Dodge: save vs. petrification");
+    stringVect.push_back("Open Locks: " + std::to_string(_thiefTbl.openLocks) + "%");
+    stringVect.push_back("Find/Remove Traps: " + std::to_string(_thiefTbl.findRemoveTraps) + "%");
+    stringVect.push_back("Move Silently: " + std::to_string(_thiefTbl.moveSilently) + "%");
+    stringVect.push_back("Hide in Shadows: " + std::to_string(_thiefTbl.hideInShadows) + "%");
+    stringVect.push_back("Hear Noise: " + std::to_string(_thiefTbl.hearNoise) + "%");
+    stringVect.push_back("Climb Walls: " + std::string(cw) + "%");
+    return stringVect;
 }
 
 Monk::~Monk() {

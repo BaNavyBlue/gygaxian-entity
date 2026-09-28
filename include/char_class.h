@@ -153,6 +153,7 @@ public:
     Monk(RACE inRace, unsigned inLevel);
     ~Monk();
     unsigned generateGold() override;
+    std::vector<std::string> getClassSkills() override;
     // void listClassSkills();
 };
 #endif
